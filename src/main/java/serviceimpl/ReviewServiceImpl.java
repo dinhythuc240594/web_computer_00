@@ -1,5 +1,6 @@
 package serviceimpl;
 
+import model.PageRequest;
 import model.ReviewDAO;
 import repository.ProductSpecRepository;
 import repository.ReviewRepository;
@@ -19,7 +20,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDAO> getAll() {
+    public List<ReviewDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 

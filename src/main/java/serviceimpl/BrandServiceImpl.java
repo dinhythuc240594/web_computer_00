@@ -1,5 +1,6 @@
 package serviceimpl;
 
+import model.PageRequest;
 import model.ProductDAO;
 import repository.BrandRepository;
 import repositoryimpl.BrandRepositoryImpl;
@@ -17,7 +18,7 @@ public class BrandServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDAO> getAll() {
+    public List<ProductDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 

@@ -1,6 +1,7 @@
 package repositoryimpl;
 
 import model.CategoryDAO;
+import model.PageRequest;
 import repository.CategoryRepository;
 
 import javax.sql.DataSource;
@@ -15,7 +16,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public List<CategoryDAO> getAll() {
+    public List<CategoryDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 

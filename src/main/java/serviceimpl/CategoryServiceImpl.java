@@ -1,6 +1,7 @@
 package serviceimpl;
 
 import model.CategoryDAO;
+import model.PageRequest;
 import repository.BrandRepository;
 import repository.CategoryRepository;
 import repositoryimpl.BrandRepositoryImpl;
@@ -19,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDAO> getAll() {
+    public List<CategoryDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 

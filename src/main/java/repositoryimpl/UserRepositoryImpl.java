@@ -1,5 +1,6 @@
 package repositoryimpl;
 
+import model.PageRequest;
 import model.UserDAO;
 import repository.UserRepository;
 
@@ -15,7 +16,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<UserDAO> getAll() {
+    public List<UserDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 

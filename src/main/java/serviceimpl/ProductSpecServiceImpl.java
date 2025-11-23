@@ -1,5 +1,6 @@
 package serviceimpl;
 
+import model.PageRequest;
 import model.ProductSpecDAO;
 import repository.ProductRepository;
 import repository.ProductSpecRepository;
@@ -19,7 +20,7 @@ public class ProductSpecServiceImpl implements ProductSpecService {
     }
 
     @Override
-    public List<ProductSpecDAO> getAll() {
+    public List<ProductSpecDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 

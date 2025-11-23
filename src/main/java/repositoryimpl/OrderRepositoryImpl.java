@@ -1,6 +1,7 @@
 package repositoryimpl;
 
 import model.OrderDAO;
+import model.PageRequest;
 import repository.OrderRepository;
 
 import javax.sql.DataSource;
@@ -15,7 +16,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public List<OrderDAO> getAll() {
+    public List<OrderDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 

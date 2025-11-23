@@ -1,6 +1,7 @@
 package serviceimpl;
 
 import model.OrderDAO;
+import model.PageRequest;
 import repository.OrderItemRepository;
 import repository.OrderRepository;
 import repositoryimpl.OrderItemRepositoryImpl;
@@ -19,7 +20,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDAO> getAll() {
+    public List<OrderDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 

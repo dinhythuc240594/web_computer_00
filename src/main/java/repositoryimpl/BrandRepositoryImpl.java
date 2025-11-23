@@ -1,6 +1,7 @@
 package repositoryimpl;
 
 import model.BrandDAO;
+import model.PageRequest;
 import repository.BrandRepository;
 
 import javax.sql.DataSource;
@@ -15,7 +16,7 @@ public class BrandRepositoryImpl implements BrandRepository {
     }
 
     @Override
-    public List<BrandDAO> getAll() {
+    public List<BrandDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 
@@ -30,7 +31,7 @@ public class BrandRepositoryImpl implements BrandRepository {
     }
 
     @Override
-    public int count(String keyword) {
+    public int count(String keyword, int stallId, int categoryId) {
         return 0;
     }
 

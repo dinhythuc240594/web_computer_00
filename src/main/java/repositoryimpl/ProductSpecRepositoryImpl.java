@@ -1,5 +1,6 @@
 package repositoryimpl;
 
+import model.PageRequest;
 import model.ProductSpecDAO;
 import repository.ProductSpecRepository;
 
@@ -15,7 +16,7 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
     }
 
     @Override
-    public List<ProductSpecDAO> getAll() {
+    public List<ProductSpecDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 

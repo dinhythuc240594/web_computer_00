@@ -1,5 +1,6 @@
 package serviceimpl;
 
+import model.PageRequest;
 import model.UserDAO;
 import repository.ReviewRepository;
 import repository.UserRepository;
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDAO> getAll() {
+    public List<UserDAO> getAll(PageRequest pageRequest) {
         return List.of();
     }
 
