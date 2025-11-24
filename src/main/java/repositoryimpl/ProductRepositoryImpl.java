@@ -212,7 +212,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public ProductDAO update(ProductDAO entity) {
+    public Boolean update(ProductDAO entity) {
 
         String sql = "UPDATE products SET name = ?, description = ?, price = ?, slug = ?"
                 + "image_url = ?, category_id = ?, brand_id = ?, is_active = ? "
@@ -233,17 +233,12 @@ public class ProductRepositoryImpl implements ProductRepository {
             ps.setInt(9, entity.getId());
             ps.executeUpdate();
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    ProductDAO newEntity = mapResultSetToProductDAO(rs);
-                    return newEntity;
-                }
-            }
+            return true;
         } catch (Exception e) {
             System.err.println("Lỗi update: " + e.getMessage());
             e.printStackTrace();
         }
-        return entity;
+        return false;
     }
 
     private ProductDAO mapResultSetToProductDAO(ResultSet rs) throws SQLException {

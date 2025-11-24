@@ -11,6 +11,6 @@ public interface Repository<T> {
     Boolean deleteById(int id);
     int count(String keyword);
     Boolean create(T entity);
-    T update(T entity);
+    Boolean update(T entity);
 
 }

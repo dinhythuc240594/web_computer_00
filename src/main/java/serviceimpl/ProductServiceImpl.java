@@ -53,8 +53,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDAO update(ProductDAO entity) {
-        return null;
+    public Boolean update(ProductDAO entity) {
+        return false;
     }
 
     @Override

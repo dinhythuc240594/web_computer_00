@@ -44,8 +44,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public CategoryDAO update(CategoryDAO entity) {
-        return null;
+    public Boolean update(CategoryDAO entity) {
+        return false;
     }
 
     private CategoryDAO mapResultSetToCategoryDAO(ResultSet rs) throws SQLException {

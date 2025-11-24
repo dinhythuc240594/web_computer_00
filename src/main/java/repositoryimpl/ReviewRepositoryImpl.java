@@ -44,8 +44,8 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     }
 
     @Override
-    public ReviewDAO update(ReviewDAO entity) {
-        return null;
+    public Boolean update(ReviewDAO entity) {
+        return false;
     }
 
     private ReviewDAO mapResultSetToReviewDAO(ResultSet rs) throws SQLException {

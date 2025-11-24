@@ -42,8 +42,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDAO update(CategoryDAO entity) {
-        return null;
+    public Boolean update(CategoryDAO entity) {
+        return false;
     }
 
     @Override

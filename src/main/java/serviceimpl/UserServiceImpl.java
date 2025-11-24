@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDAO update(UserDAO entity) {
-        return null;
+    public Boolean update(UserDAO entity) {
+        return false;
     }
 }

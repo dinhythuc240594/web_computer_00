@@ -46,7 +46,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public BrandDAO update(BrandDAO entity) {
-        return null;
+    public Boolean update(BrandDAO entity) {
+        return false;
     }
 }

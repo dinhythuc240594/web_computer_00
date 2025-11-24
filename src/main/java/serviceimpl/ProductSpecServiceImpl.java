@@ -45,7 +45,7 @@ public class ProductSpecServiceImpl implements ProductSpecService {
     }
 
     @Override
-    public ProductSpecDAO update(ProductSpecDAO entity) {
-        return null;
+    public Boolean update(ProductSpecDAO entity) {
+        return false;
     }
 }

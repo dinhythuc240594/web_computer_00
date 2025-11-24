@@ -44,8 +44,8 @@ public class BrandRepositoryImpl implements BrandRepository {
     }
 
     @Override
-    public BrandDAO update(BrandDAO entity) {
-        return null;
+    public Boolean update(BrandDAO entity) {
+        return false;
     }
 
     private BrandDAO mapResultSetToBrandDAO(ResultSet rs) throws SQLException {

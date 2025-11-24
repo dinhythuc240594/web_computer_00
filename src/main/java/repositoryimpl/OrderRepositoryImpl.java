@@ -44,8 +44,8 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public OrderDAO update(OrderDAO entity) {
-        return null;
+    public Boolean update(OrderDAO entity) {
+        return false;
     }
 
     private OrderDAO mapResultSetToOrderOrderDAO(ResultSet rs) throws SQLException {

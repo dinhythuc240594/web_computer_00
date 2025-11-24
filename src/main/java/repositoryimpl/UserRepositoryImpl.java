@@ -44,8 +44,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public UserDAO update(UserDAO entity) {
-        return null;
+    public Boolean update(UserDAO entity) {
+        return false;
     }
 
     private UserDAO mapResultSetToUserDAO(ResultSet rs) throws SQLException {

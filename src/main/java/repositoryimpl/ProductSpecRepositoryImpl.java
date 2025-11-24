@@ -44,8 +44,8 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
     }
 
     @Override
-    public ProductSpecDAO update(ProductSpecDAO entity) {
-        return null;
+    public Boolean update(ProductSpecDAO entity) {
+        return false;
     }
 
     private ProductSpecDAO mapResultSetToProductSpecDAO(ResultSet rs) throws SQLException {

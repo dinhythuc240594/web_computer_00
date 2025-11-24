@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDAO update(OrderDAO entity) {
-        return null;
+    public Boolean update(OrderDAO entity) {
+        return false;
     }
 }
