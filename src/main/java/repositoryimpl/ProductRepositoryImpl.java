@@ -93,6 +93,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public ProductDAO findById(int id) {
+
         String sql = "SELECT id, name, description, price,"
                     + " image_url, slug, category_id, stock_quantity, "
                     + " brand_id, is_active "

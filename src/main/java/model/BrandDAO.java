@@ -6,14 +6,16 @@ public class BrandDAO {
     private String name;
     private String code;
     private Boolean is_active;
+    private String logo_url;
 
     public BrandDAO(){};
 
-    public BrandDAO(int id, String name, String code, Boolean is_active) {
+    public BrandDAO(int id, String name, String code, Boolean is_active, String logo_url) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.is_active = is_active;
+        this.logo_url = logo_url;
     }
 
     public int getId() {
@@ -46,5 +48,13 @@ public class BrandDAO {
 
     public void setIs_active(Boolean is_active) {
         this.is_active = is_active;
+    }
+
+    public String getLogo_url() {
+        return logo_url;
+    }
+
+    public void setLogo_url(String logo_url) {
+        this.logo_url = logo_url;
     }
 }

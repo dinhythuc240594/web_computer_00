@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductSpecRepositoryImpl implements ProductSpecRepository {
@@ -21,24 +22,42 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
     }
 
     @Override
-    public List<ProductSpecDAO> getAll(PageRequest pageRequest) {
-        return List.of();
+    public List<ProductSpecDAO> getAll() {
+        List<ProductSpecDAO> items = new ArrayList<>();
+        String sql = "SELECT id, product_id, spec_name, spec_value FROM product_specs";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery(sql)) {
+
+            while (rs.next()) {
+                items.add(mapResultSetToProductSpecDAO(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi lấy tất cả chi tiết đơn hàng.", e);
+        }
+        return items;
     }
 
     @Override
-    public ProductSpecDAO findById(int id) {
+    public ProductSpecDAO findById(int id){
+        return null;
+    }
 
-        String sql = "SELECT id, name, description, value,"
-                    + " image_url, slug, category_id, stock_quantity, "
-                    + " brand_id, is_active "
-                    + "FROM product_specs WHERE id = ?";
+    @Override
+    public ProductSpecDAO findByProductId(int id, int productId) {
+
+        String sql = "SELECT id, product_id, spec_name, spec_value "
+                    + "FROM product_specs WHERE id = ? AND product_id = ?";
 
         try (Connection conn = ds.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, id);
+            ps.setInt(1, id);
+            ps.setInt(1, productId);
 
-            try (ResultSet rs = pstmt.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return mapResultSetToProductSpecDAO(rs);
                 }
@@ -81,7 +100,23 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
 
     @Override
     public Boolean create(ProductSpecDAO entity) {
-        return false;
+        String sql = "INSERT INTO product_specs (spec_name, spec_value, product_id) VALUES (?, ?, ?)";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, entity.getName());
+            ps.setString(2, entity.getvalueSpec());
+            ps.setInt(3, entity.getProductId());
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi thêm chi tiết đơn hàng.", e);
+        }
     }
 
     @Override
@@ -95,7 +130,7 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
 
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getDescription());
-            ps.setInt(3, entity.getValue());
+            ps.setString(3, entity.getvalueSpec());
             ps.setInt(4, entity.getId());
             ps.setInt(5, entity.getProductId());
             ps.executeUpdate();
@@ -114,7 +149,7 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
         item.setId(rs.getInt("id"));
         item.setName(rs.getString("name"));
         item.setDescription(rs.getString("description"));
-        item.setValue(rs.getInt("value"));
+        item.setvalueSpec(rs.getString("value"));
         item.setProductId(rs.getInt("product_id"));
 
         return item;

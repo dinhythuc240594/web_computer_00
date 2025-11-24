@@ -5,16 +5,16 @@ public class ProductSpecDAO {
     private int id;
     private String name;
     private String description;
-    private int value;
+    private String valueSpec;
     private int productId;
 
     public ProductSpecDAO(){}
 
-    public ProductSpecDAO(int id, String name, String description, int value, int productId) {
+    public ProductSpecDAO(int id, String name, String description, String valueSpec, int productId) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.value = value;
+        this.valueSpec = valueSpec;
         this.productId = productId;
     }
 
@@ -42,12 +42,12 @@ public class ProductSpecDAO {
         this.description = description;
     }
 
-    public int getValue() {
-        return value;
+    public String getvalueSpec() {
+        return valueSpec;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setvalueSpec(String valueSpec) {
+        this.valueSpec = valueSpec;
     }
 
     public int getProductId() {
