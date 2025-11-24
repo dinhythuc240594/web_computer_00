@@ -108,7 +108,19 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Boolean deleteById(int id) {
-        return null;
+        String sql = "UPDATE products SET is_active = ? WHERE id = ?";
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setBoolean(1, false);
+            ps.setInt(2, id);
+
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.err.println("Lỗi delete: " + e.getMessage());
+            return false;
+        }
     }
 
     @Override
