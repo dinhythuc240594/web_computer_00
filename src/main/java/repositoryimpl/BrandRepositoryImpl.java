@@ -2,9 +2,12 @@ package repositoryimpl;
 
 import model.BrandDAO;
 import model.PageRequest;
+import model.ProductDAO;
 import repository.BrandRepository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class BrandRepositoryImpl implements BrandRepository {
@@ -31,7 +34,7 @@ public class BrandRepositoryImpl implements BrandRepository {
     }
 
     @Override
-    public int count(String keyword, int stallId, int categoryId) {
+    public int count(String keyword) {
         return 0;
     }
 
@@ -44,4 +47,16 @@ public class BrandRepositoryImpl implements BrandRepository {
     public BrandDAO update(BrandDAO entity) {
         return null;
     }
+
+    private BrandDAO mapResultSetToBrandDAO(ResultSet rs) throws SQLException {
+        BrandDAO item = new BrandDAO();
+
+        item.setId(rs.getInt("id"));
+        item.setName(rs.getString("name"));
+        item.setCode(rs.getString("code"));
+        item.setIs_active(rs.getBoolean("is_active"));
+
+        return item;
+    }
+
 }

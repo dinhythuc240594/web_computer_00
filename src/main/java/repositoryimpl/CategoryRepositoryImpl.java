@@ -1,10 +1,13 @@
 package repositoryimpl;
 
+import model.BrandDAO;
 import model.CategoryDAO;
 import model.PageRequest;
 import repository.CategoryRepository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class CategoryRepositoryImpl implements CategoryRepository {
@@ -44,4 +47,16 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public CategoryDAO update(CategoryDAO entity) {
         return null;
     }
+
+    private CategoryDAO mapResultSetToCategoryDAO(ResultSet rs) throws SQLException {
+        CategoryDAO item = new CategoryDAO();
+
+        item.setId(rs.getInt("id"));
+        item.setName(rs.getString("name"));
+        item.setDescription(rs.getString("description"));
+        item.setIs_active(rs.getBoolean("is_active"));
+
+        return item;
+    }
+
 }

@@ -4,24 +4,24 @@ import java.sql.Date;
 
 public class UserDAO {
 
-    private String id;
+    private int id;
     private String username;
     private String password;
     private String fullname;
     private String email;
     private String phone;
     private String address;
-    private String isActive;
+    private Boolean isActive;
     private String role;
     private Date created_at;
     private Date updated_at;
 
     public UserDAO(){}
 
-    public UserDAO(String id, String username,
+    public UserDAO(int id, String username,
                    String password, String fullname,
                    String email, String phone,
-                   String address, String isActive, String role) {
+                   String address, Boolean isActive, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -33,11 +33,11 @@ public class UserDAO {
         this.role = role;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -89,11 +89,11 @@ public class UserDAO {
         this.address = address;
     }
 
-    public String getIsActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(String isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
 

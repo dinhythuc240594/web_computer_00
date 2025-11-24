@@ -1,10 +1,13 @@
 package repositoryimpl;
 
 import model.PageRequest;
+import model.ProductDAO;
 import model.ProductSpecDAO;
 import repository.ProductSpecRepository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ProductSpecRepositoryImpl implements ProductSpecRepository {
@@ -44,4 +47,16 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
     public ProductSpecDAO update(ProductSpecDAO entity) {
         return null;
     }
+
+    private ProductSpecDAO mapResultSetToProductSpecDAO(ResultSet rs) throws SQLException {
+        ProductSpecDAO item = new ProductSpecDAO();
+
+        item.setId(rs.getInt("id"));
+        item.setName(rs.getString("name"));
+        item.setDescription(rs.getString("description"));
+        item.setValue(rs.getInt("value"));
+
+        return item;
+    }
+
 }

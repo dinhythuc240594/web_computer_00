@@ -78,20 +78,21 @@ public class ProductRepositoryImpl implements ProductRepository {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                double price = rs.getDouble("price");
-                int stock_quantity = rs.getInt("stock_quantity");
-                int category_id = rs.getInt("category_id");
-                String image_url = rs.getString("image_url");
-                String slug = rs.getString("slug");
-                int brand_id = rs.getInt("brand_id");
-                boolean is_active = rs.getBoolean("is_active");
-                String description = rs.getString("description");
+//                int id = rs.getInt("id");
+//                String name = rs.getString("name");
+//                double price = rs.getDouble("price");
+//                int stock_quantity = rs.getInt("stock_quantity");
+//                int category_id = rs.getInt("category_id");
+//                String image_url = rs.getString("image_url");
+//                String slug = rs.getString("slug");
+//                int brand_id = rs.getInt("brand_id");
+//                boolean is_active = rs.getBoolean("is_active");
+//                String description = rs.getString("description");
 
-                ProductDAO productDAO = new ProductDAO(id, name, description, price,
-                        image_url, slug, category_id, stock_quantity, brand_id, is_active);
+//                ProductDAO productDAO = new ProductDAO(id, name, description, price,
+//                        image_url, slug, category_id, stock_quantity, brand_id, is_active);
 
+                ProductDAO productDAO = mapResultSetToProductDAO(rs);
                 products.add(productDAO);
             }
         } catch (Exception e) {

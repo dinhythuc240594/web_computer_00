@@ -1,10 +1,13 @@
 package repositoryimpl;
 
 import model.PageRequest;
+import model.ProductSpecDAO;
 import model.ReviewDAO;
 import repository.ReviewRepository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ReviewRepositoryImpl implements ReviewRepository {
@@ -44,4 +47,17 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     public ReviewDAO update(ReviewDAO entity) {
         return null;
     }
+
+    private ReviewDAO mapResultSetToReviewDAO(ResultSet rs) throws SQLException {
+        ReviewDAO item = new ReviewDAO();
+
+        item.setId(rs.getInt("id"));
+        item.setComment(rs.getString("comment"));
+        item.setRating(rs.getInt("rating"));
+        item.setUserId(rs.getInt("user_id"));
+        item.setProductId(rs.getInt("product_id"));
+
+        return item;
+    }
+
 }

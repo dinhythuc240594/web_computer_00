@@ -1,10 +1,13 @@
 package repositoryimpl;
 
+import model.CategoryDAO;
 import model.OrderItemDAO;
 import model.PageRequest;
 import repository.OrderItemRepository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class OrderItemRepositoryImpl implements OrderItemRepository {
@@ -43,5 +46,17 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     @Override
     public OrderItemDAO update(OrderItemDAO entity) {
         return null;
+    }
+
+    private OrderItemDAO mapResultSetToOrderItemDAO(ResultSet rs) throws SQLException {
+        OrderItemDAO item = new OrderItemDAO();
+
+        item.setId(rs.getInt("id"));
+        item.setOrderId(rs.getInt("order_id"));
+        item.setProductId(rs.getInt("product_id"));
+        item.setQuantity(rs.getInt("quantity"));
+        item.setPrice(rs.getDouble("price"));
+
+        return item;
     }
 }
