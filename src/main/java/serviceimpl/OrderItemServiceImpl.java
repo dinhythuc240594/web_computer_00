@@ -20,7 +20,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public List<OrderItemDAO> getAll(PageRequest pageRequest) {
+    public List<OrderItemDAO> getAll() {
         return List.of();
     }
 
@@ -40,8 +40,8 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public OrderItemDAO create(OrderItemDAO entity) {
-        return null;
+    public Boolean create(OrderItemDAO entity) {
+        return false;
     }
 
     @Override

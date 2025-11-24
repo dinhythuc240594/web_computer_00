@@ -39,8 +39,8 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
     }
 
     @Override
-    public ProductSpecDAO create(ProductSpecDAO entity) {
-        return null;
+    public Boolean create(ProductSpecDAO entity) {
+        return false;
     }
 
     @Override

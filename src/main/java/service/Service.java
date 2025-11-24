@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface Service <T>{
 
-    Page<T> getAll(PageRequest pageRequest);
+    List<T> getAll();
     T findById(int id);
     Boolean deleteById(int id);
     int count(String keyword);
-    T create(T entity);
+    Boolean create(T entity);
     T update(T entity);
 
 }

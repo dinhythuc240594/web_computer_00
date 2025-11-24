@@ -39,8 +39,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public CategoryDAO create(CategoryDAO entity) {
-        return null;
+    public Boolean create(CategoryDAO entity) {
+        return false;
     }
 
     @Override

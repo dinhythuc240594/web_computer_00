@@ -39,8 +39,8 @@ public class BrandRepositoryImpl implements BrandRepository {
     }
 
     @Override
-    public BrandDAO create(BrandDAO entity) {
-        return null;
+    public Boolean create(BrandDAO entity) {
+        return false;
     }
 
     @Override

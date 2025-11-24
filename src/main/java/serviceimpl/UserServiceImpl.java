@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDAO> getAll(PageRequest pageRequest) {
+    public List<UserDAO> getAll() {
         return List.of();
     }
 
@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDAO create(UserDAO entity) {
-        return null;
+    public Boolean create(UserDAO entity) {
+        return false;
     }
 
     @Override

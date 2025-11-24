@@ -39,8 +39,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public UserDAO create(UserDAO entity) {
-        return null;
+    public Boolean create(UserDAO entity) {
+        return false;
     }
 
     @Override

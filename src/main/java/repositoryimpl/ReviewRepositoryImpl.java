@@ -39,8 +39,8 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     }
 
     @Override
-    public ReviewDAO create(ReviewDAO entity) {
-        return null;
+    public Boolean create(ReviewDAO entity) {
+        return false;
     }
 
     @Override

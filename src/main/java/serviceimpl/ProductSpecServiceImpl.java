@@ -20,7 +20,7 @@ public class ProductSpecServiceImpl implements ProductSpecService {
     }
 
     @Override
-    public List<ProductSpecDAO> getAll(PageRequest pageRequest) {
+    public List<ProductSpecDAO> getAll() {
         return List.of();
     }
 
@@ -40,8 +40,8 @@ public class ProductSpecServiceImpl implements ProductSpecService {
     }
 
     @Override
-    public ProductSpecDAO create(ProductSpecDAO entity) {
-        return null;
+    public Boolean create(ProductSpecDAO entity) {
+        return false;
     }
 
     @Override

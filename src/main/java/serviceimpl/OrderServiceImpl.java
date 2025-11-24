@@ -20,7 +20,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDAO> getAll(PageRequest pageRequest) {
+    public List<OrderDAO> getAll() {
         return List.of();
     }
 
@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDAO create(OrderDAO entity) {
+    public Boolean create(OrderDAO entity) {
         return null;
     }
 

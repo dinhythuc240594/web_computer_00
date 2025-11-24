@@ -39,8 +39,8 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public OrderDAO create(OrderDAO entity) {
-        return null;
+    public Boolean create(OrderDAO entity) {
+        return false;
     }
 
     @Override

@@ -64,7 +64,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         params.add(offset);
 
         try (Connection conn = ds.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             for(int i = 0; i < params.size(); i++) {
                 Object param = params.get(i);
@@ -183,13 +183,67 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public ProductDAO create(ProductDAO entity) {
-        return null;
+    public Boolean create(ProductDAO entity) {
+
+        String sql = "INSERT INTO products (name, slug, description, price, "
+                + "stock_quantity, image_url, category_id, brand_id, "
+                + "is_active) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, entity.getName());
+            ps.setString(2, entity.getSlug());
+            ps.setString(3, entity.getDescription());
+            ps.setDouble(4, entity.getPrice());
+            ps.setInt(5, entity.getStock_quantity());
+            ps.setString(6, entity.getImage_url());
+            ps.setInt(7, entity.getCategory_id());
+            ps.setInt(8, entity.getBrand_id());
+            ps.setBoolean(9, entity.getIs_active());
+
+            ps.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public ProductDAO update(ProductDAO entity) {
-        return null;
+
+        String sql = "UPDATE products SET name = ?, description = ?, price = ?, slug = ?"
+                + "image_url = ?, category_id = ?, brand_id = ?, is_active = ? "
+                + "stock_quantity = ?, brand_id = ?, is_active = ? "
+                + " WHERE id = ?";
+
+        try (Connection conn = ds.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);) {
+
+            ps.setString(1, entity.getName());
+            ps.setString(2, entity.getDescription());
+            ps.setDouble(3, entity.getPrice());
+            ps.setString(4, entity.getSlug());
+            ps.setString(5, entity.getImage_url());
+            ps.setInt(6, entity.getCategory_id());
+            ps.setInt(7, entity.getBrand_id());
+            ps.setBoolean(8, entity.getIs_active());
+            ps.setInt(9, entity.getId());
+            ps.executeUpdate();
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    ProductDAO newEntity = mapResultSetToProductDAO(rs);
+                    return newEntity;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Lỗi update: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return entity;
     }
 
     private ProductDAO mapResultSetToProductDAO(ResultSet rs) throws SQLException {

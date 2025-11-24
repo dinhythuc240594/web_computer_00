@@ -20,7 +20,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDAO> getAll(PageRequest pageRequest) {
+    public List<ReviewDAO> getAll() {
         return List.of();
     }
 
@@ -40,8 +40,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDAO create(ReviewDAO entity) {
-        return null;
+    public Boolean create(ReviewDAO entity) {
+        return false;
     }
 
     @Override

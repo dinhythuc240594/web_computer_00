@@ -10,7 +10,7 @@ public interface Repository<T> {
     T findById(int id);
     Boolean deleteById(int id);
     int count(String keyword);
-    T create(T entity);
+    Boolean create(T entity);
     T update(T entity);
 
 }
