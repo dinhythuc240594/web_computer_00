@@ -6,6 +6,7 @@ public class CategoryDAO {
     private String name;
     private String description;
     private Boolean is_active;
+    private int parent_id;
 
     public CategoryDAO(){}
 
@@ -52,5 +53,13 @@ public class CategoryDAO {
 
     public void setIs_active(Boolean is_active) {
         this.is_active = is_active;
+    }
+
+    public int getParent_id() {
+        return parent_id;
+    }
+
+    public void setParent_id(int parent_id) {
+        this.parent_id = parent_id;
     }
 }

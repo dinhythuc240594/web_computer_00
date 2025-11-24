@@ -21,6 +21,7 @@ public class BrandRepositoryImpl implements BrandRepository {
 
     @Override
     public List<BrandDAO> getAll() {
+
         List<BrandDAO> items = new ArrayList<>();
         String sql = "SELECT id, name, code, is_active, logo_url FROM brands";
 
@@ -45,11 +46,11 @@ public class BrandRepositoryImpl implements BrandRepository {
                 + "FROM brands WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, id);
+            ps.setInt(1, id);
 
-            try (ResultSet rs = pstmt.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return mapResultSetToBrandDAO(rs);
                 }
@@ -77,6 +78,7 @@ public class BrandRepositoryImpl implements BrandRepository {
             System.err.println("Lỗi delete: " + e.getMessage());
             return false;
         }
+
     }
 
     @Override
@@ -104,6 +106,7 @@ public class BrandRepositoryImpl implements BrandRepository {
             e.printStackTrace();
             return false;
         }
+
     }
 
     @Override
