@@ -19,7 +19,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public List<CategoryDAO> getAll(PageRequest pageRequest) {
+    public List<CategoryDAO> getAll() {
         return List.of();
     }
 

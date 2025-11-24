@@ -19,7 +19,7 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     }
 
     @Override
-    public List<OrderItemDAO> getAll(PageRequest pageRequest) {
+    public List<OrderItemDAO> getAll() {
         return List.of();
     }
 

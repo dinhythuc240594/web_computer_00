@@ -6,14 +6,16 @@ public class ProductSpecDAO {
     private String name;
     private String description;
     private int value;
+    private int productId;
 
     public ProductSpecDAO(){}
 
-    public ProductSpecDAO(int id, String name, String description, int value) {
+    public ProductSpecDAO(int id, String name, String description, int value, int productId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.value = value;
+        this.productId = productId;
     }
 
     public int getId() {
@@ -46,5 +48,13 @@ public class ProductSpecDAO {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }

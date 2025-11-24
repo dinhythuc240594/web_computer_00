@@ -19,7 +19,7 @@ public class BrandRepositoryImpl implements BrandRepository {
     }
 
     @Override
-    public List<BrandDAO> getAll(PageRequest pageRequest) {
+    public List<BrandDAO> getAll() {
         return List.of();
     }
 

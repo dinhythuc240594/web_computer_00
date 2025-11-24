@@ -21,7 +21,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<ProductDAO> getAll(PageRequest pageRequest) {
+    public List<ProductDAO> findAll(PageRequest pageRequest) {
         List<ProductDAO> products = new ArrayList<>();
 
         int pageSize = pageRequest.getPageSize();
@@ -32,9 +32,9 @@ public class ProductRepositoryImpl implements ProductRepository {
         int brandId = pageRequest.getBrandId();
         int categoryId = pageRequest.getCategoryId();
 
-        String sql = "SELECT id, name, slug, description, " +
-                "price, stock_quantity, image_url, category_id, brand_id, is_active, " +
-                "created_at, updated_at FROM products ";
+        String sql = "SELECT id, name, slug, description, "
+                    + "price, stock_quantity, image_url, category_id, brand_id, is_active, "
+                    + "created_at, updated_at FROM products ";
 
         List<String> conditions = new ArrayList<>();
         List<Object> params = new ArrayList<>();
@@ -77,21 +77,6 @@ public class ProductRepositoryImpl implements ProductRepository {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
-//                int id = rs.getInt("id");
-//                String name = rs.getString("name");
-//                double price = rs.getDouble("price");
-//                int stock_quantity = rs.getInt("stock_quantity");
-//                int category_id = rs.getInt("category_id");
-//                String image_url = rs.getString("image_url");
-//                String slug = rs.getString("slug");
-//                int brand_id = rs.getInt("brand_id");
-//                boolean is_active = rs.getBoolean("is_active");
-//                String description = rs.getString("description");
-
-//                ProductDAO productDAO = new ProductDAO(id, name, description, price,
-//                        image_url, slug, category_id, stock_quantity, brand_id, is_active);
-
                 ProductDAO productDAO = mapResultSetToProductDAO(rs);
                 products.add(productDAO);
             }
@@ -102,25 +87,32 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public ProductDAO findById(int id) {
-        return null;
+    public List<ProductDAO> getAll() {
+        return List.of();
     }
 
     @Override
-    public Boolean deleteById(int id) {
-        String sql = "UPDATE products SET is_active = ? WHERE id = ?";
+    public ProductDAO findById(int id) {
+        String sql = "SELECT id, name, description, price,"
+                    + " image_url, slug, category_id, stock_quantity, "
+                    + " brand_id, is_active "
+                    + "FROM products WHERE id = ?";
+
         try (Connection conn = ds.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            ps.setBoolean(1, false);
-            ps.setInt(2, id);
+            pstmt.setInt(1, id);
 
-            ps.executeUpdate();
-            return true;
-        } catch (Exception e) {
-            System.err.println("Lỗi delete: " + e.getMessage());
-            return false;
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToProductDAO(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi tìm đơn hàng theo ID: " + id, e);
         }
+        return null;
     }
 
     @Override
@@ -130,6 +122,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public int count(String keyword, int brandId, int categoryId) {
+
         String sql = "SELECT COUNT(1) FROM products";
         List<String> conditions = new ArrayList<>();
         List<Object> params = new ArrayList<>();
@@ -239,6 +232,26 @@ public class ProductRepositoryImpl implements ProductRepository {
             e.printStackTrace();
         }
         return false;
+
+    }
+
+    @Override
+    public Boolean deleteById(int id) {
+
+        String sql = "UPDATE products SET is_active = ? WHERE id = ?";
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setBoolean(1, false);
+            ps.setInt(2, id);
+
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.err.println("Lỗi delete: " + e.getMessage());
+            return false;
+        }
+
     }
 
     private ProductDAO mapResultSetToProductDAO(ResultSet rs) throws SQLException {

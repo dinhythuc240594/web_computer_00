@@ -1,5 +1,6 @@
 package serviceimpl;
 
+import model.Page;
 import model.PageRequest;
 import model.UserDAO;
 import repository.ReviewRepository;
@@ -47,5 +48,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean update(UserDAO entity) {
         return false;
+    }
+
+    @Override
+    public Page<UserDAO> findAll(PageRequest pageRequest) {
+        return null;
     }
 }

@@ -19,7 +19,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     }
 
     @Override
-    public List<ReviewDAO> getAll(PageRequest pageRequest) {
+    public List<ReviewDAO> getAll() {
         return List.of();
     }
 

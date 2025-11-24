@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductDAO> findAll(PageRequest pageRequest) {
-        List<ProductDAO> data = this.productRepository.getAll(pageRequest);
+        List<ProductDAO> data = this.productRepository.findAll(pageRequest);
         int totalCount = this.count(pageRequest.getKeyword(), pageRequest.getBrandId(), pageRequest.getCategoryId());
         return new Page<>(data, pageRequest.getPage(), totalCount, pageRequest.getPageSize());
     }

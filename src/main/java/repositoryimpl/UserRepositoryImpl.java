@@ -19,7 +19,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<UserDAO> getAll(PageRequest pageRequest) {
+    public List<UserDAO> getAll() {
         return List.of();
     }
 
@@ -64,4 +64,8 @@ public class UserRepositoryImpl implements UserRepository {
         return item;
     }
 
+    @Override
+    public List<UserDAO> findAll(PageRequest pageRequest) {
+        return List.of();
+    }
 }
