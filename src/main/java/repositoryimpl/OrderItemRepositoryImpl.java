@@ -6,8 +6,11 @@ import model.PageRequest;
 import repository.OrderItemRepository;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItemRepositoryImpl implements OrderItemRepository {
@@ -20,7 +23,23 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
 
     @Override
     public List<OrderItemDAO> getAll() {
-        return List.of();
+
+        List<OrderItemDAO> items = new ArrayList<>();
+        String sql = "SELECT id, order_id, product_id, quantity, price_at_purchase FROM order_items";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery(sql)) {
+
+            while (rs.next()) {
+                items.add(mapResultSetToOrderItemDAO(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi lấy tất cả chi tiết đơn hàng.", e);
+        }
+        return items;
+
     }
 
     @Override
@@ -40,12 +59,52 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
 
     @Override
     public Boolean create(OrderItemDAO entity) {
+
+        String sql = "INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase) " +
+                "VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, entity.getOrderId());
+            ps.setInt(2, entity.getProductId());
+            ps.setInt(3, entity.getQuantity());
+            ps.setDouble(4, entity.getPrice());
+
+            ps.executeUpdate();
+
+            return true;
+        } catch (Exception e) {
+            System.err.println("Lỗi update: " + e.getMessage());
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
     public Boolean update(OrderItemDAO entity) {
+
+        String sql = "UPDATE order_items SET order_id = ?, product_id = ?, "
+                    + "quantity = ?, price_at_purchase = ?"
+                    + " WHERE id = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);) {
+
+            ps.setInt(1, entity.getOrderId());
+            ps.setInt(2, entity.getProductId());
+            ps.setInt(3, entity.getQuantity());
+            ps.setDouble(4, entity.getPrice());
+            ps.setInt(5, entity.getId());
+            ps.executeUpdate();
+
+            return true;
+        } catch (Exception e) {
+            System.err.println("Lỗi update: " + e.getMessage());
+            e.printStackTrace();
+        }
         return false;
+
     }
 
     private OrderItemDAO mapResultSetToOrderItemDAO(ResultSet rs) throws SQLException {

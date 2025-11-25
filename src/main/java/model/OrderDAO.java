@@ -5,6 +5,7 @@ import java.sql.Date;
 public class OrderDAO {
 
     private int id;
+    private int user_id;
     private Date orderDate;
     private double totalPrice;
     private String status;
@@ -15,11 +16,12 @@ public class OrderDAO {
 
     public OrderDAO(){}
 
-    public OrderDAO(int id, Date orderDate,
+    public OrderDAO(int id, int user_id, Date orderDate,
                     double totalPrice, String status,
                     String address, String payment,
                     String note, Boolean is_active) {
         this.id = id;
+        this.user_id = user_id;
         this.orderDate = orderDate;
         this.totalPrice = totalPrice;
         this.status = status;
@@ -91,5 +93,12 @@ public class OrderDAO {
 
     public void setIs_active(Boolean is_active) {
         this.is_active = is_active;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }

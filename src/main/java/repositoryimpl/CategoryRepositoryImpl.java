@@ -1,8 +1,6 @@
 package repositoryimpl;
 
-import model.BrandDAO;
 import model.CategoryDAO;
-import model.PageRequest;
 import repository.CategoryRepository;
 
 import javax.sql.DataSource;
@@ -111,12 +109,13 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             e.printStackTrace();
             return false;
         }
+
     }
 
     @Override
     public Boolean update(CategoryDAO entity) {
 
-        String sql = "UPDATE brands SET name = ?, description = ?, is_active = ?, parent_id = ?"
+        String sql = "UPDATE categories SET name = ?, description = ?, is_active = ?, parent_id = ?"
                 + " WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
