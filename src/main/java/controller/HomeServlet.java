@@ -39,7 +39,7 @@ public class HomeServlet extends HttpServlet {
 
         PageRequest pageReq = new PageRequest(page, PAGE_SIZE, sortField, orderField, keyword);
 
-        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/home.jsp");
         rd.forward(request, response);
 
     }
