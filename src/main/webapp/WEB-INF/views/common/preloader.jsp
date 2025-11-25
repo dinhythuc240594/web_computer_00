@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Windows
-  Date: 25/11/2025
-  Time: 2:18 CH
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <div class="loader-wrap">
         <div class="preloader">
@@ -13,26 +6,23 @@
                 <div class="animation-preloader">
                     <div class="spinner"></div>
                     <div class="txt-loading">
-                            <span data-text-preloader="n" class="letters-loading">
-                                n
+                            <span data-text-preloader="h" class="letters-loading">
+                                H
                             </span>
-                        <span data-text-preloader="e" class="letters-loading">
-                                e
-                            </span>
-                        <span data-text-preloader="x" class="letters-loading">
-                                x
+                        <span data-text-preloader="c" class="letters-loading">
+                                C
                             </span>
                         <span data-text-preloader="m" class="letters-loading">
-                                m
+                                M
                             </span>
-                        <span data-text-preloader="a" class="letters-loading">
-                                a
-                            </span>
-                        <span data-text-preloader="r" class="letters-loading">
-                                r
+                        <span data-text-preloader="u" class="letters-loading">
+                                U
                             </span>
                         <span data-text-preloader="t" class="letters-loading">
-                                t
+                                T
+                            </span>
+                        <span data-text-preloader="e" class="letters-loading">
+                                E
                             </span>
                     </div>
                 </div>

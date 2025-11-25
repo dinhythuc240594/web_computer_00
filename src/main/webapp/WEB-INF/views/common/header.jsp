@@ -9,7 +9,7 @@
                         <div class="category-inner">
                             <div class="select-box">
                                 <select class="wide">
-                                    <option data-display="Select Category">Select Category</option>
+                                    <option data-display="Select Category">Danh Mục</option>
                                     <option value="1">Phone and Tablets</option>
                                     <option value="2">Laptop & Desktop</option>
                                     <option value="3">Sound Equipment</option>
@@ -33,21 +33,9 @@
                         </div>
                     </div>
                     <div class="right-column">
-                        <div class="language-picker js-language-picker mr_40" data-trigger-class="btn btn--subtle">
-                            <form action="index-2.html" class="language-picker__form">
-                                <label for="language-picker-select">Select your language</label>
-                                <select name="language-picker-select" id="language-picker-select">
-                                    <option lang="de" value="deutsch">DE</option>
-                                    <option lang="en" value="english" selected>EN</option>
-                                    <option lang="fr" value="francais">FR</option>
-                                    <option lang="it" value="italiano">IT</option>
-                                </select>
-                            </form>
-                        </div>
                         <div class="support-box">
                             <div class="icon-box"><i class="icon-3"></i></div>
                             <a href="tel:912345678">91 2345 678</a>
-                            <p>Call out Hotline 24/7</p>
                         </div>
                     </div>
                 </div>

@@ -15,9 +15,9 @@
         <div class="contact-info">
             <h4>Contact Info</h4>
             <ul>
-                <li>Chicago 12, Melborne City, USA</li>
-                <li><a href="tel:+8801682648101">+88 01682648101</a></li>
-                <li><a href="mailto:info@example.com">info@example.com</a></li>
+                <li>Số 1 Võ Văn Ngân, Phường Thủ Đức, TP.HCM</li>
+                <li><a href="tel:+8801682648101">+84 0912345678</a></li>
+                <li><a href="mailto:info@example.com">ptchc@hcmute.edu.vn</a></li>
             </ul>
         </div>
         <div class="social-links">

@@ -9,11 +9,10 @@
                                 <div class="support-box">
                                     <div class="icon-box"><i class="icon-3"></i></div>
                                     <a href="tel:912345678">91 2345 678</a>
-                                    <span>Call out Hotline 24/7</span>
                                 </div>
                                 <ul class="info mb_30 clearfix">
-                                    <li>57 heol isaf Station Road, Cardiff, UK</li>
-                                    <li><a href="mailto:info@example.com">info@example.com</a></li>
+                                    <li>Số 1 Võ Văn Ngân, Phường Thủ Đức, TP.HCM</li>
+                                    <li><a href="mailto:info@example.com">ptchc@hcmute.edu.vn</a></li>
                                 </ul>
                                 <ul class="social-links">
                                     <li><a href="index.html"><i class="icon-13"></i></a></li>
@@ -27,12 +26,12 @@
                     <div class="col-lg-2 col-md-6 col-sm-12 footer-column">
                         <div class="footer-widget links-widget">
                             <div class="widget-title">
-                                <h4>Resources</h4>
+                                <h4>Thông tin</h4>
                             </div>
                             <div class="widget-content">
                                 <ul class="links-list clearfix">
                                     <li><a href="about.html">About Us</a></li>
-                                    <li><a href="shop.html">Shop</a></li>
+                                    <li><a href="shop.html">Cửa hàng</a></li>
                                     <li><a href="cart.html">Cart</a></li>
                                     <li><a href="index.html">Brands</a></li>
                                     <li><a href="index.html">Mobile App</a></li>
@@ -94,7 +93,7 @@
             </div>
             <div class="footer-bottom">
                 <div class="bottom-inner">
-                    <div class="copyright"><p>Copyright &copy; 2025 <a href="index.html">Nexmart</a>, Inc. All Rights Reserved</p></div>
+                    <div class="copyright"><p>Copyright &copy; 2025 <a href="index.html">HCMUTE</a>, Inc. All Rights Reserved</p></div>
                     <ul class="footer-card">
                         <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/images/resource/footer-card-1.png" alt=""></a></li>
                         <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/images/resource/footer-card-2.png" alt=""></a></li>
