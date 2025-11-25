@@ -4,7 +4,7 @@
         <div class="header-upper">
             <div class="large-container">
                 <div class="upper-inner">
-                    <figure class="logo-box"><a href="index.html"><img src="assets/images/logo-light.png" alt=""></a></figure>
+                    <figure class="logo-box"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/images/logo-light.png" alt=""></a></figure>
                     <div class="search-area">
                         <div class="category-inner">
                             <div class="select-box">
@@ -100,7 +100,7 @@
                                         <h2><a href="shop-details.html">Buy Gadgets</a></h2>
                                         <h4>From $99.99</h4>
                                         <a href="shop-details.html" class="link">Shop now</a>
-                                        <figure class="image r_0 b_10"><img src="assets/images/shop/shop-1.png" alt=""></figure>
+                                        <figure class="image r_0 b_10"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-1.png" alt=""></figure>
                                     </div>
                                 </div>
                             </li>
@@ -144,7 +144,7 @@
                                         <h2><a href="shop-details.html">Buy the Laptop</a></h2>
                                         <h4>From $399.99</h4>
                                         <a href="shop-details.html" class="link">Shop now</a>
-                                        <figure class="image r_0 b_0"><img src="assets/images/shop/shop-2.png" alt=""></figure>
+                                        <figure class="image r_0 b_0"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-2.png" alt=""></figure>
                                     </div>
                                 </div>
                             </li>
@@ -188,7 +188,7 @@
                                         <h2><a href="shop-details.html">Buy the Speaker</a></h2>
                                         <h4>From $79.99</h4>
                                         <a href="shop-details.html" class="link">Shop now</a>
-                                        <figure class="image r_15 b_10"><img src="assets/images/shop/shop-3.png" alt=""></figure>
+                                        <figure class="image r_15 b_10"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-3.png" alt=""></figure>
                                     </div>
                                 </div>
                             </li>
@@ -234,7 +234,7 @@
                                         <h2><a href="shop-details.html">Buy peripherals</a></h2>
                                         <h4>From $49.99</h4>
                                         <a href="shop-details.html" class="link">Shop now</a>
-                                        <figure class="image r_20 b_30"><img src="assets/images/shop/shop-4.png" alt=""></figure>
+                                        <figure class="image r_20 b_30"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-4.png" alt=""></figure>
                                     </div>
                                 </div>
                             </li>
@@ -278,7 +278,7 @@
                                         <h2><a href="shop-details.html">Buy the Cover</a></h2>
                                         <h4>From $29.99</h4>
                                         <a href="shop-details.html" class="link">Shop now</a>
-                                        <figure class="image r_0 b_0"><img src="assets/images/shop/shop-5.png" alt=""></figure>
+                                        <figure class="image r_0 b_0"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-5.png" alt=""></figure>
                                     </div>
                                 </div>
                             </li>
@@ -322,7 +322,7 @@
                                         <h2><a href="shop-details.html">Buy the Camera</a></h2>
                                         <h4>From $199.99</h4>
                                         <a href="shop-details.html" class="link">Shop now</a>
-                                        <figure class="image r_20 b_0"><img src="assets/images/shop/shop-6.png" alt=""></figure>
+                                        <figure class="image r_20 b_0"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-6.png" alt=""></figure>
                                     </div>
                                 </div>
                             </li>
@@ -355,19 +355,19 @@
                                     <div class="close-icon close-icon-two"><a href="javascript:void(0);"><i class="icon-9"></i></a></div>
                                     <div class="cart-products">
                                         <div class="product">
-                                            <figure class="image-box"><a href="blog-details.html"><img src="assets/images/resource/cart-1.png" alt=""></a></figure>
+                                            <figure class="image-box"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/images/resource/cart-1.png" alt=""></a></figure>
                                             <h5><a href="shop-details.html">Sony Bluetooth Speaker Extra</a></h5>
                                             <span>$66.99 <span class="quentity">x 1</span></span>
                                             <button type="button" class="remove-btn"><i class="icon-9"></i></button>
                                         </div>
                                         <div class="product">
-                                            <figure class="image-box"><a href="blog-details.html"><img src="assets/images/resource/cart-2.png" alt=""></a></figure>
+                                            <figure class="image-box"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/images/resource/cart-2.png" alt=""></a></figure>
                                             <h5><a href="shop-details.html">Iphone 12 Red Color Veriant</a></h5>
                                             <span>$999.99 <span class="quentity">x 1</span></span>
                                             <button type="button" class="remove-btn"><i class="icon-9"></i></button>
                                         </div>
                                         <div class="product">
-                                            <figure class="image-box"><a href="blog-details.html"><img src="assets/images/resource/cart-3.png" alt=""></a></figure>
+                                            <figure class="image-box"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/images/resource/cart-3.png" alt=""></a></figure>
                                             <h5><a href="shop-details.html">Video Game Stick Lite 4K Console</a></h5>
                                             <span>$36.99 <span class="quentity">x 1</span></span>
                                             <button type="button" class="remove-btn"><i class="icon-9"></i></button>
