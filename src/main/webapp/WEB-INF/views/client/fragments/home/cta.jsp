@@ -2,7 +2,7 @@
     <section class="cta-section">
         <div class="large-container">
             <div class="inner-container">
-                <div class="bg-layer" style="background-image: url(${pageContext.request.contextPath}/assets/images/background/cta-bg.jpg);"></div>
+                <div class="bg-layer" style="background-image: url(${pageContext.request.contextPath}/assets/client/images/background/cta-bg.jpg);"></div>
                 <div class="content-box">
                     <span class="text">Trending</span>
                     <h2>Get the Virtual Experience</h2>

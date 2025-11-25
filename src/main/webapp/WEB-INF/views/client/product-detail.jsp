@@ -16,33 +16,33 @@
     <title>Shared on THEMELOCK.COM - Nexmart - HTML 5 Template Preview</title>
 
     <!-- Fav Icon -->
-    <link rel="icon" href="${pageContext.request.contextPath}/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${pageContext.request.contextPath}/assets/client/images/favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link href="${pageContext.request.contextPath}/assets/css/font-awesome-all.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/flaticon.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/owl.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/jquery.fancybox.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/animate.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/nice-select.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/elpath.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/jquery-ui.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/color.css" id="jssDefault" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/rtl.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/header.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/page-title.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/shop-details.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/shop-one.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/shop-two.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/highlights.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/footer.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/responsive.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/font-awesome-all.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/flaticon.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/owl.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/bootstrap.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/jquery.fancybox.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/animate.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/nice-select.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/elpath.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/jquery-ui.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/color.css" id="jssDefault" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/rtl.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/header.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/page-title.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/shop-details.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/shop-one.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/shop-two.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/highlights.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/footer.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/responsive.css" rel="stylesheet">
 
 </head>
 
@@ -108,7 +108,7 @@
         <div class="menu-backdrop"></div>
         <div class="close-btn"><i class="fas fa-times"></i></div>
         <nav class="menu-box">
-            <div class="nav-logo"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" title=""></a></div>
+            <div class="nav-logo"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/logo.png" alt="" title=""></a></div>
             <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
             <div class="contact-info">
                 <h4>Contact Info</h4>
@@ -137,7 +137,7 @@
         <div class="menu-backdrop"></div>
         <div class="outer-box">
             <div class="upper-box">
-                <div class="nav-logo"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/images/logo-2.png" alt="" title=""></a></div>
+                <div class="nav-logo"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/logo-2.png" alt="" title=""></a></div>
                 <div class="close-btn"><i class="icon-9"></i></div>
             </div>
             <p>BROWSE CATEGORIES</p>
@@ -242,21 +242,21 @@
                             <div class="slider-content">
                                 <div class="image-inner">
                                     <div class="image-box">
-                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/images/shop/shop-details-1.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-details-1.png" alt=""></a></figure>
+                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-1.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-1.png" alt=""></a></figure>
                                     </div>
                                     <div class="slider-pager">
                                         <ul class="thumb-box">
                                             <li>
-                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-5.png" alt=""></figure></a>
+                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-5.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-6.png" alt=""></figure></a>
+                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-6.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-7.png" alt=""></figure></a>
+                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-7.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-8.png" alt=""></figure></a>
+                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-8.png" alt=""></figure></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -265,21 +265,21 @@
                             <div class="slider-content">
                                 <div class="image-inner">
                                     <div class="image-box">
-                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/images/shop/shop-details-2.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-details-2.png" alt=""></a></figure>
+                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-2.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-2.png" alt=""></a></figure>
                                     </div>
                                     <div class="slider-pager">
                                         <ul class="thumb-box">
                                             <li>
-                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-5.png" alt=""></figure></a>
+                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-5.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-6.png" alt=""></figure></a>
+                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-6.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-7.png" alt=""></figure></a>
+                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-7.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-8.png" alt=""></figure></a>
+                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-8.png" alt=""></figure></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -288,21 +288,21 @@
                             <div class="slider-content">
                                 <div class="image-inner">
                                     <div class="image-box">
-                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/images/shop/shop-details-3.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-details-3.png" alt=""></a></figure>
+                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-3.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-3.png" alt=""></a></figure>
                                     </div>
                                     <div class="slider-pager">
                                         <ul class="thumb-box">
                                             <li>
-                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-5.png" alt=""></figure></a>
+                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-5.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-6.png" alt=""></figure></a>
+                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-6.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-7.png" alt=""></figure></a>
+                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-7.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-8.png" alt=""></figure></a>
+                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-8.png" alt=""></figure></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -311,21 +311,21 @@
                             <div class="slider-content">
                                 <div class="image-inner">
                                     <div class="image-box">
-                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/images/shop/shop-details-4.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-details-4.png" alt=""></a></figure>
+                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-4.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-4.png" alt=""></a></figure>
                                     </div>
                                     <div class="slider-pager">
                                         <ul class="thumb-box">
                                             <li>
-                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-5.png" alt=""></figure></a>
+                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-5.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-6.png" alt=""></figure></a>
+                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-6.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-7.png" alt=""></figure></a>
+                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-7.png" alt=""></figure></a>
                                             </li>
                                             <li>
-                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/images/shop/thumb-8.png" alt=""></figure></a>
+                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-8.png" alt=""></figure></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -354,7 +354,7 @@
                                 <li><strong>Brand :</strong>Toshiba</li>
                                 <li><strong>Product SKU :</strong>#KKLW30</li>
                                 <li><strong>Category :</strong>front-load washing machines</li>
-                                <li><strong>Availability :</strong><span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span></li>
+                                <li><strong>Availability :</strong><span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span></li>
                             </ul>
                             <div class="color-box mb_30">
                                 <h6>Color<span>*</span></h6>
@@ -461,7 +461,7 @@
                                 <div class="single-review">
                                     <div class="upper-box">
                                         <div class="info-box">
-                                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/resource/review-1.png" alt=""></figure>
+                                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-1.png" alt=""></figure>
                                             <div class="inner">
                                                 <h4>Dania Monjur</h4>
                                                 <span class="date">June 12, 2023</span>
@@ -481,15 +481,15 @@
                                     </ul>
                                     <p>To provide a review of a specific washing machine, I would need to know the brand and model of the washing machine you're interested in reviewing. If you have a particular washing machine in mind, please provide its details, and I can help you create a comprehensive review. Alternatively, if you're looking for a general review of washing machines.</p>
                                     <ul class="image-list">
-                                        <li><img src="${pageContext.request.contextPath}/assets/images/resource/review-img-1.jpg" alt=""></li>
-                                        <li><img src="${pageContext.request.contextPath}/assets/images/resource/review-img-2.jpg" alt=""></li>
-                                        <li><img src="${pageContext.request.contextPath}/assets/images/resource/review-img-3.jpg" alt=""></li>
-                                        <li><img src="${pageContext.request.contextPath}/assets/images/resource/review-img-4.jpg" alt=""></li>
+                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-1.jpg" alt=""></li>
+                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-2.jpg" alt=""></li>
+                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-3.jpg" alt=""></li>
+                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-4.jpg" alt=""></li>
                                     </ul>
                                     <div class="reply-review mt_30">
                                         <div class="upper-box">
                                             <div class="info-box">
-                                                <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/resource/review-2.png" alt=""></figure>
+                                                <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-2.png" alt=""></figure>
                                                 <div class="inner">
                                                     <h4>Seller</h4>
                                                 </div>
@@ -505,7 +505,7 @@
                                 <div class="single-review">
                                     <div class="upper-box">
                                         <div class="info-box">
-                                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/resource/review-3.png" alt=""></figure>
+                                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-3.png" alt=""></figure>
                                             <div class="inner">
                                                 <h4>Dania Monjur</h4>
                                                 <span class="date">June 08, 2023</span>
@@ -525,8 +525,8 @@
                                     </ul>
                                     <p>To provide a review of a specific washing machine, I would need to know the brand and model of the washing machine you're interested in reviewing. If you have a particular washing machine in mind, please provide its details, and I can help you create a comprehensive review. Alternatively, if you're looking for a general review of washing machines.</p>
                                     <ul class="image-list">
-                                        <li><img src="${pageContext.request.contextPath}/assets/images/resource/review-img-5.jpg" alt=""></li>
-                                        <li><img src="${pageContext.request.contextPath}/assets/images/resource/review-img-6.jpg" alt=""></li>
+                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-5.jpg" alt=""></li>
+                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-6.jpg" alt=""></li>
                                     </ul>
                                 </div>
                                 <div class="customer-review">
@@ -614,7 +614,7 @@
                             <h2>Smart TV’s</h2>
                             <h4><span>From</span> $99.99</h4>
                             <div class="link-box"><a href="shop-details.html">Shop now</a></div>
-                            <figure class="image r_0 b_10"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-7.png" alt=""></figure>
+                            <figure class="image r_0 b_10"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-7.png" alt=""></figure>
                         </div>
                     </div>
                 </div>
@@ -625,7 +625,7 @@
                             <h2>Kitchen Kits</h2>
                             <h4><span>From</span> $50 Only</h4>
                             <div class="link-box"><a href="shop-details.html">Shop now</a></div>
-                            <figure class="image r_0 b_10"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-8.png" alt=""></figure>
+                            <figure class="image r_0 b_10"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-8.png" alt=""></figure>
                         </div>
                     </div>
                 </div>
@@ -636,7 +636,7 @@
                             <h2>Smart Device</h2>
                             <h4><span>From</span> $499.99</h4>
                             <div class="link-box"><a href="shop-details.html">Shop now</a></div>
-                            <figure class="image r_0 b_10"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-9.png" alt=""></figure>
+                            <figure class="image r_0 b_10"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-9.png" alt=""></figure>
                         </div>
                     </div>
                 </div>
@@ -657,11 +657,11 @@
                         <div class="image-box">
                             <span class="discount-product p_absolute l_0 t_7">-6%</span>
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-10.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-10.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-10.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-10.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Mobile</span>
@@ -675,7 +675,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(2)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -685,11 +685,11 @@
                         <div class="image-box">
                             <span class="hot-product p_absolute l_0 t_7">Hot</span>
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-11.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-11.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-11.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-11.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Gaming</span>
@@ -703,7 +703,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(4)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -712,11 +712,11 @@
                     <div class="inner-box">
                         <div class="image-box">
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-12.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-12.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-12.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-12.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Storage</span>
@@ -730,7 +730,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(5)</span></li>
                             </ul>
-                            <span class="product-stock-out"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-2.png" alt=""> Stock Out</span>
+                            <span class="product-stock-out"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-2.png" alt=""> Stock Out</span>
                             <div class="cart-btn"><button type="button" class="theme-btn not">Not Available<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -740,11 +740,11 @@
                         <div class="image-box">
                             <span class="hot-product p_absolute l_0 t_7">Hot</span>
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-13.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-13.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-13.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-13.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Music</span>
@@ -758,7 +758,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(2)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -767,11 +767,11 @@
                     <div class="inner-box">
                         <div class="image-box">
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-14.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-14.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-14.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-14.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Music</span>
@@ -785,7 +785,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(5)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -794,11 +794,11 @@
                     <div class="inner-box">
                         <div class="image-box">
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-15.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-15.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-15.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-15.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Power</span>
@@ -812,7 +812,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(4)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -827,7 +827,7 @@
     <section class="highlights-section inner-highlights">
         <div class="large-container">
             <div class="inner-container clearfix">
-                <div class="shape" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-5.png);"></div>
+                <div class="shape" style="background-image: url(${pageContext.request.contextPath}/assets/client/images/shape/shape-5.png);"></div>
                 <div class="highlights-block-one">
                     <div class="inner-box">
                         <div class="icon-box"><i class="icon-23"></i></div>
@@ -878,26 +878,26 @@
 </div>
 
 <!-- jequery plugins -->
-<script src="${pageContext.request.contextPath}/assets/js/jquery.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/owl.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/wow.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/validation.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.fancybox.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/appear.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/isotope.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/parallax-scroll.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.nice-select.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/scrolltop.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/language.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/countdown.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery-ui.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/product-filter.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.bootstrap-touchspin.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/bxslider.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/owl.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/wow.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/validation.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/jquery.fancybox.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/appear.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/isotope.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/parallax-scroll.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/jquery.nice-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/scrolltop.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/language.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/countdown.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/product-filter.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/jquery.bootstrap-touchspin.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/bxslider.js"></script>
 
 <!-- main-js -->
-<script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
 
 </body><!-- End of .page_wrapper -->
 </html>

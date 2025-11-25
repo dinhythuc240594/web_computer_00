@@ -10,11 +10,11 @@
                         <div class="image-box">
                             <span class="discount-product p_absolute l_0 t_7">-6%</span>
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-10.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-10.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-10.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-10.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Mobile</span>
@@ -28,7 +28,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(2)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -38,11 +38,11 @@
                         <div class="image-box">
                             <span class="hot-product p_absolute l_0 t_7">Hot</span>
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-11.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-11.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-11.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-11.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Gaming</span>
@@ -56,7 +56,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(4)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -65,11 +65,11 @@
                     <div class="inner-box">
                         <div class="image-box">
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-12.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-12.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-12.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-12.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Storage</span>
@@ -83,7 +83,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(5)</span></li>
                             </ul>
-                            <span class="product-stock-out"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-2.png" alt=""> Stock Out</span>
+                            <span class="product-stock-out"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-2.png" alt=""> Stock Out</span>
                             <div class="cart-btn"><button type="button" class="theme-btn not">Not Available<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -93,11 +93,11 @@
                         <div class="image-box">
                             <span class="hot-product p_absolute l_0 t_7">Hot</span>
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-13.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-13.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-13.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-13.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Music</span>
@@ -111,7 +111,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(2)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -120,11 +120,11 @@
                     <div class="inner-box">
                         <div class="image-box">
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-14.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-14.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-14.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-14.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Music</span>
@@ -138,7 +138,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(5)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -147,11 +147,11 @@
                     <div class="inner-box">
                         <div class="image-box">
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-15.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-15.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-15.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-15.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Power</span>
@@ -165,7 +165,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(4)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>

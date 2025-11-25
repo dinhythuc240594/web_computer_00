@@ -10,7 +10,7 @@
                     <div class="news-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                         <div class="inner-box">
                             <div class="image-box">
-                                <figure class="image"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/images/news/news-1.jpg" alt=""></a></figure>
+                                <figure class="image"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/client/images/news/news-1.jpg" alt=""></a></figure>
                             </div>
                             <div class="lower-content">
                                 <ul class="post-info">
@@ -26,7 +26,7 @@
                     <div class="news-block-one wow fadeInUp animated" data-wow-delay="200ms" data-wow-duration="1500ms">
                         <div class="inner-box">
                             <div class="image-box">
-                                <figure class="image"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/images/news/news-2.jpg" alt=""></a></figure>
+                                <figure class="image"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/client/images/news/news-2.jpg" alt=""></a></figure>
                             </div>
                             <div class="lower-content">
                                 <ul class="post-info">
@@ -42,7 +42,7 @@
                     <div class="news-block-one wow fadeInUp animated" data-wow-delay="400ms" data-wow-duration="1500ms">
                         <div class="inner-box">
                             <div class="image-box">
-                                <figure class="image"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/images/news/news-3.jpg" alt=""></a></figure>
+                                <figure class="image"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/client/images/news/news-3.jpg" alt=""></a></figure>
                             </div>
                             <div class="lower-content">
                                 <ul class="post-info">
@@ -58,7 +58,7 @@
                     <div class="news-block-one wow fadeInUp animated" data-wow-delay="600ms" data-wow-duration="1500ms">
                         <div class="inner-box">
                             <div class="image-box">
-                                <figure class="image"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/images/news/news-4.jpg" alt=""></a></figure>
+                                <figure class="image"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/client/images/news/news-4.jpg" alt=""></a></figure>
                             </div>
                             <div class="lower-content">
                                 <ul class="post-info">
