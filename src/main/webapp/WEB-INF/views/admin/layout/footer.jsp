@@ -1,11 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Windows
-  Date: 25/11/2025
-  Time: 11:07 CH
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <footer class="content-footer footer bg-footer-theme">
     <div class="container-xxl">
         <div
@@ -15,7 +8,7 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                , made with ❤️ by
+                , made with â¤ï¸ by
                 <a href="https://pixinvent.com" target="_blank" class="footer-link fw-medium">Pixinvent</a>
             </div>
             <div class="d-none d-lg-inline-block">
@@ -40,3 +33,4 @@
         </div>
     </div>
 </footer>
+

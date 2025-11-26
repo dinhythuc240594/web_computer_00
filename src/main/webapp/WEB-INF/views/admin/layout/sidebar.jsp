@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
         <aside id="layout-menu" class="layout-menu menu-vertical menu">
             <div class="app-brand demo">
                 <a href="index.html" class="app-brand-link">
@@ -50,7 +50,7 @@
                   </svg>
                 </span>
               </span>
-                    <span class="app-brand-text demo menu-text fw-semibold ms-2">Materialize</span>
+                    <span class="app-brand-text demo menu-text fw-semibold ms-2">Quáº£n Trá»‹</span>
                 </a>
 
                 <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
@@ -1211,3 +1211,4 @@
                 <i class="ri ri-arrow-right-s-line icon-base"></i>
             </a>
         </div>
+

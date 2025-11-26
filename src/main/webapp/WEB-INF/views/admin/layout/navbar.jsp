@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
             <nav
                     class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
                     id="layout-navbar">
@@ -227,11 +227,11 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="../../assets/admin/img/avatars/1.png" alt="avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/1.png" alt="avatar" class="rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="small mb-1">Congratulation Lettie 🎉</h6>
+                                                    <h6 class="small mb-1">Congratulation Lettie ðŸŽ‰</h6>
                                                     <small class="mb-1 d-block text-body">Won the monthly best seller gold badge</small>
                                                     <small class="text-body-secondary">1h ago</small>
                                                 </div>
@@ -271,11 +271,11 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="../../assets/admin/img/avatars/2.png" alt="avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/2.png" alt="avatar" class="rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="small mb-1">New Message ✉️</h6>
+                                                    <h6 class="small mb-1">New Message âœ‰ï¸</h6>
                                                     <small class="mb-1 d-block text-body">You have new message from Natalie</small>
                                                     <small class="text-body-secondary">1h ago</small>
                                                 </div>
@@ -299,7 +299,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="small mb-1">Whoo! You have new order 🛒</h6>
+                                                    <h6 class="small mb-1">Whoo! You have new order ðŸ›’</h6>
                                                     <small class="mb-1 d-block text-body">ACME Inc. made new order $1,154</small>
                                                     <small class="text-body-secondary">1 day ago</small>
                                                 </div>
@@ -317,11 +317,11 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="../../assets/admin/img/avatars/9.png" alt="avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/9.png" alt="avatar" class="rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="small mb-1">Application has been approved 🚀</h6>
+                                                    <h6 class="small mb-1">Application has been approved ðŸš€</h6>
                                                     <small class="mb-1 d-block text-body"
                                                     >Your ABC project application has been approved.</small
                                                     >
@@ -365,7 +365,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="../../assets/admin/img/avatars/5.png" alt="avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/5.png" alt="avatar" class="rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -387,7 +387,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="../../assets/admin/img/avatars/6.png" alt="avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/6.png" alt="avatar" class="rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -448,7 +448,7 @@
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="../../assets/admin/img/avatars/1.png" alt="avatar" class="rounded-circle" />
+                                    <img src="${adminAssetsPath}/img/avatars/1.png" alt="avatar" class="rounded-circle" />
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
@@ -458,7 +458,7 @@
                                             <div class="flex-shrink-0 me-2">
                                                 <div class="avatar avatar-online">
                                                     <img
-                                                            src="../../assets/admin/img/avatars/1.png"
+                                                            src="${adminAssetsPath}/img/avatars/1.png"
                                                             alt="alt"
                                                             class="w-px-40 h-auto rounded-circle" />
                                                 </div>
@@ -523,3 +523,4 @@
                     </ul>
                 </div>
             </nav>
+

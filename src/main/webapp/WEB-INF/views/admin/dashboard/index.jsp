@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../layout/init.jspf" %>
 <!doctype html>
 
 <html
@@ -7,7 +8,7 @@
         dir="ltr"
         data-skin="default"
         data-bs-theme="light"
-        data-assets-path="../../assets/admin/"
+        data-assets-path="${adminAssetsPath}/"
         data-template="vertical-menu-template">
 <head>
     <meta charset="utf-8" />
@@ -20,7 +21,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../assets/admin/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="${adminAssetsPath}/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,44 +30,44 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
             rel="stylesheet" />
 
-    <link rel="stylesheet" href="../../assets/admin/vendor/fonts/iconify-icons.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/fonts/iconify-icons.css" />
 
     <!-- Core CSS -->
     <!-- build:css assets/vendor/css/theme.css -->
 
-    <link rel="stylesheet" href="../../assets/admin/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/node-waves/node-waves.css" />
 
-    <script src="../../assets/admin/vendor/libs/@algolia/autocomplete-js.js"></script>
+    <script src="${adminAssetsPath}/vendor/libs/@algolia/autocomplete-js.js"></script>
 
-    <link rel="stylesheet" href="../../assets/admin/vendor/libs/pickr/pickr-themes.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/pickr/pickr-themes.css" />
 
-    <link rel="stylesheet" href="../../assets/admin/vendor/css/core.css" />
-    <link rel="stylesheet" href="../../assets/admin/css/demo.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/css/core.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/css/demo.css" />
 
     <!-- Vendors CSS -->
 
-    <link rel="stylesheet" href="../../assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <!-- endbuild -->
 
-    <link rel="stylesheet" href="../../assets/admin/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
-    <link rel="stylesheet" href="../../assets/admin/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
-    <link rel="stylesheet" href="../../assets/admin/vendor/libs/apex-charts/apex-charts.css" />
-    <link rel="stylesheet" href="../../assets/admin/vendor/libs/swiper/swiper.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/swiper/swiper.css" />
 
     <!-- Page CSS -->
-    <link rel="stylesheet" href="../../assets/admin/vendor/css/pages/app-ecommerce-dashboard.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/css/pages/app-ecommerce-dashboard.css" />
 
     <!-- Helpers -->
-    <script src="../../assets/admin/vendor/js/helpers.js"></script>
+    <script src="${adminAssetsPath}/vendor/js/helpers.js"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js. -->
-    <script src="../../assets/admin/vendor/js/template-customizer.js"></script>
+    <script src="${adminAssetsPath}/vendor/js/template-customizer.js"></script>
 
     <!--? Config: Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file. -->
 
-    <script src="../../assets/admin/js/config.js"></script>
+    <script src="${adminAssetsPath}/js/config.js"></script>
 </head>
 
 <body>
@@ -177,7 +178,7 @@
                                     <div class="col-6 text-end d-flex align-items-end">
                                         <div class="card-body pb-0 pt-7">
                                             <img
-                                                    src="../../assets/admin/img/illustrations/card-ratings-illustration.png"
+                                                    src="${adminAssetsPath}/img/illustrations/card-ratings-illustration.png"
                                                     alt="Ratings"
                                                     class="img-fluid"
                                                     width="95" />
@@ -207,7 +208,7 @@
                                     <div class="col-6 text-end d-flex align-items-end">
                                         <div class="card-body pb-0 pt-7">
                                             <img
-                                                    src="../../assets/admin/img/illustrations/card-session-illustration.png"
+                                                    src="${adminAssetsPath}/img/illustrations/card-session-illustration.png"
                                                     alt="Ratings"
                                                     class="img-fluid"
                                                     width="81" />
@@ -267,7 +268,7 @@
                                             </div>
                                             <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-2 my-md-0 text-center">
                                                 <img
-                                                        src="../../assets/admin/img/products/card-weekly-sales-phone.png"
+                                                        src="${adminAssetsPath}/img/products/card-weekly-sales-phone.png"
                                                         alt="weekly sales"
                                                         width="240"
                                                         class="weekly-sales-img" />
@@ -317,7 +318,7 @@
                                             </div>
                                             <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-2 my-md-0 text-center">
                                                 <img
-                                                        src="../../assets/admin/img/products/card-weekly-sales-controller.png"
+                                                        src="${adminAssetsPath}/img/products/card-weekly-sales-controller.png"
                                                         alt="weekly sales"
                                                         width="240"
                                                         class="weekly-sales-img" />
@@ -367,7 +368,7 @@
                                             </div>
                                             <div class="col-lg-5 col-md-3 col-12 order-1 order-md-2 my-2 my-md-0 text-center">
                                                 <img
-                                                        src="../../assets/admin/img/products/card-weekly-sales-watch.png"
+                                                        src="${adminAssetsPath}/img/products/card-weekly-sales-watch.png"
                                                         alt="weekly sales"
                                                         width="240"
                                                         class="weekly-sales-img" />
@@ -488,7 +489,7 @@
                                                 <p class="mb-2">Invoices have been paid to the company</p>
                                                 <div class="d-flex align-items-center mb-1">
                                                     <div class="badge bg-lightest rounded-3">
-                                                        <img src="../../assets/admin//img/icons/misc/pdf.png" alt="img" width="20" class="me-2" />
+                                                        <img src="${adminAssetsPath}//img/icons/misc/pdf.png" alt="img" width="20" class="me-2" />
                                                         <span class="h6 mb-0 text-body">invoices.pdf</span>
                                                     </div>
                                                 </div>
@@ -505,7 +506,7 @@
                                                 <div class="d-flex justify-content-between flex-wrap gap-2">
                                                     <div class="d-flex flex-wrap align-items-center">
                                                         <div class="avatar avatar-sm me-2">
-                                                            <img src="../../assets/admin/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
+                                                            <img src="${adminAssetsPath}/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
                                                         </div>
                                                         <div>
                                                             <p class="mb-0 small fw-medium">Lester McCarthy (Client)</p>
@@ -534,7 +535,7 @@
                                                                         data-bs-placement="top"
                                                                         title="Vinnie Mostowy"
                                                                         class="avatar pull-up">
-                                                                    <img class="rounded-circle" src="../../assets/admin/img/avatars/5.png" alt="Avatar" />
+                                                                    <img class="rounded-circle" src="${adminAssetsPath}/img/avatars/5.png" alt="Avatar" />
                                                                 </li>
                                                                 <li
                                                                         data-bs-toggle="tooltip"
@@ -542,7 +543,7 @@
                                                                         data-bs-placement="top"
                                                                         title="Allen Rieske"
                                                                         class="avatar pull-up">
-                                                                    <img class="rounded-circle" src="../../assets/admin/img/avatars/12.png" alt="Avatar" />
+                                                                    <img class="rounded-circle" src="${adminAssetsPath}/img/avatars/12.png" alt="Avatar" />
                                                                 </li>
                                                                 <li
                                                                         data-bs-toggle="tooltip"
@@ -550,7 +551,7 @@
                                                                         data-bs-placement="top"
                                                                         title="Julee Rossignol"
                                                                         class="avatar pull-up">
-                                                                    <img class="rounded-circle" src="../../assets/admin/img/avatars/6.png" alt="Avatar" />
+                                                                    <img class="rounded-circle" src="${adminAssetsPath}/img/avatars/6.png" alt="Avatar" />
                                                                 </li>
                                                                 <li class="avatar">
                                       <span
@@ -610,7 +611,7 @@
                                                     aria-controls="navs-orders-id-1"
                                                     aria-selected="true">
                                                 <div>
-                                                    <img src="../../assets/admin/img/products/apple-iPhone-13.png" alt="Mobile" class="img-fluid" />
+                                                    <img src="${adminAssetsPath}/img/products/apple-iPhone-13.png" alt="Mobile" class="img-fluid" />
                                                 </div>
                                             </a>
                                         </li>
@@ -625,7 +626,7 @@
                                                     aria-selected="false">
                                                 <div>
                                                     <img
-                                                            src="../../assets/admin/img/products/apple-iMac-3k.png"
+                                                            src="${adminAssetsPath}/img/products/apple-iMac-3k.png"
                                                             alt="Apple iMac 3k"
                                                             class="img-fluid" />
                                                 </div>
@@ -642,7 +643,7 @@
                                                     aria-selected="false">
                                                 <div>
                                                     <img
-                                                            src="../../assets/admin/img/products/gaming-remote.png"
+                                                            src="${adminAssetsPath}/img/products/gaming-remote.png"
                                                             alt="Gaming Remote"
                                                             class="img-fluid" />
                                                 </div>
@@ -681,7 +682,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/samsung-s22.png"
+                                                                src="${adminAssetsPath}/img/products/samsung-s22.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -697,7 +698,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/apple-iPhone-13-pro.png"
+                                                                src="${adminAssetsPath}/img/products/apple-iPhone-13-pro.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -713,7 +714,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/oneplus-9-pro.png"
+                                                                src="${adminAssetsPath}/img/products/oneplus-9-pro.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -729,7 +730,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/google-pixel-6.png"
+                                                                src="${adminAssetsPath}/img/products/google-pixel-6.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -762,7 +763,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/apple-mac-mini.png"
+                                                                src="${adminAssetsPath}/img/products/apple-mac-mini.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -778,7 +779,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/hp-envy-x360.png"
+                                                                src="${adminAssetsPath}/img/products/hp-envy-x360.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -794,7 +795,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/dell-inspiron-3000.png"
+                                                                src="${adminAssetsPath}/img/products/dell-inspiron-3000.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -810,7 +811,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/apple-iMac-4k.png"
+                                                                src="${adminAssetsPath}/img/products/apple-iMac-4k.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -843,7 +844,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/sony-play-station-5.png"
+                                                                src="${adminAssetsPath}/img/products/sony-play-station-5.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -859,7 +860,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/xbox-series-x.png"
+                                                                src="${adminAssetsPath}/img/products/xbox-series-x.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -875,7 +876,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/nintendo-switch.png"
+                                                                src="${adminAssetsPath}/img/products/nintendo-switch.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -891,7 +892,7 @@
                                                 <tr>
                                                     <td>
                                                         <img
-                                                                src="../../assets/admin/img/products/sup-game-box-400.png"
+                                                                src="${adminAssetsPath}/img/products/sup-game-box-400.png"
                                                                 alt="Mobile"
                                                                 width="34"
                                                                 height="34"
@@ -923,7 +924,7 @@
                                                     class="chart-progress"
                                                     data-color="primary"
                                                     data-series="70"
-                                                    data-icon="../../assets/admin//img/icons/misc/card-icon-laptop.png"></div>
+                                                    data-icon="${adminAssetsPath}//img/icons/misc/card-icon-laptop.png"></div>
                                         </div>
                                         <div>
                                             <div class="card-info">
@@ -947,7 +948,7 @@
                                                     class="chart-progress"
                                                     data-color="warning"
                                                     data-series="40"
-                                                    data-icon="../../assets/admin//img/icons/misc/card-icon-bag.png"></div>
+                                                    data-icon="${adminAssetsPath}//img/icons/misc/card-icon-bag.png"></div>
                                         </div>
                                         <div>
                                             <div class="card-info">
@@ -984,7 +985,7 @@
                                         </div>
                                         <div class="d-flex align-items-center mt-5">
                                             <img
-                                                    src="../../assets/admin//img/products/card-marketing-expense-logo.png"
+                                                    src="${adminAssetsPath}//img/products/card-marketing-expense-logo.png"
                                                     alt="Marketing and sales"
                                                     width="84"
                                                     class="rounded-4" />
@@ -1038,7 +1039,7 @@
                                         </div>
                                         <div class="d-flex align-items-center mt-5">
                                             <img
-                                                    src="../../assets/admin//img/products/card-accounting-logo.png"
+                                                    src="${adminAssetsPath}//img/products/card-accounting-logo.png"
                                                     alt="Marketing and sales"
                                                     width="84"
                                                     class="rounded-4" />
@@ -1092,7 +1093,7 @@
                                         </div>
                                         <div class="d-flex align-items-center mt-5">
                                             <img
-                                                    src="../../assets/admin//img/products/card-sales-overview-logo.png"
+                                                    src="${adminAssetsPath}//img/products/card-sales-overview-logo.png"
                                                     alt="Marketing and sales"
                                                     width="84"
                                                     class="rounded-4" />
@@ -1179,7 +1180,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar avatar-sm me-4">
-                                                        <img src="../../assets/admin/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
                                                     </div>
                                                     <div>
                                                         <h6 class="mb-0 text-truncate">Jordan Stevenson</h6>
@@ -1200,7 +1201,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar avatar-sm me-4">
-                                                        <img src="../../assets/admin/img/avatars/3.png" alt="Avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/3.png" alt="Avatar" class="rounded-circle" />
                                                     </div>
                                                     <div>
                                                         <h6 class="mb-0 text-truncate">Benedetto Rossiter</h6>
@@ -1221,7 +1222,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar avatar-sm me-4">
-                                                        <img src="../../assets/admin/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
                                                     </div>
                                                     <div>
                                                         <h6 class="mb-0 text-truncate">Bentlee Emblin</h6>
@@ -1242,7 +1243,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar avatar-sm me-4">
-                                                        <img src="../../assets/admin/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
                                                     </div>
                                                     <div>
                                                         <h6 class="mb-0 text-truncate">Bertha Biner</h6>
@@ -1263,7 +1264,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar avatar-sm me-4">
-                                                        <img src="../../assets/admin/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
                                                     </div>
                                                     <div>
                                                         <h6 class="mb-0 text-truncate">Beverlie Krabbe</h6>
@@ -1284,7 +1285,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar avatar-sm me-4">
-                                                        <img src="../../assets/admin/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
                                                     </div>
                                                     <div>
                                                         <h6 class="mb-0 text-truncate">Bradan Rosebotham</h6>
@@ -1305,7 +1306,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar avatar-sm me-4">
-                                                        <img src="../../assets/admin/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                                                        <img src="${adminAssetsPath}/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
                                                     </div>
                                                     <div>
                                                         <h6 class="mb-0 text-truncate">Bree Kilday</h6>
@@ -1398,37 +1399,38 @@
 
 <!-- build:js assets/vendor/js/theme.js  -->
 
-<script src="../../assets/admin/vendor/libs/jquery/jquery.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/jquery/jquery.js"></script>
 
-<script src="../../assets/admin/vendor/libs/popper/popper.js"></script>
-<script src="../../assets/admin/vendor/js/bootstrap.js"></script>
-<script src="../../assets/admin/vendor/libs/node-waves/node-waves.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/popper/popper.js"></script>
+<script src="${adminAssetsPath}/vendor/js/bootstrap.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/node-waves/node-waves.js"></script>
 
-<script src="../../assets/admin/vendor/libs/@algolia/autocomplete-js.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/@algolia/autocomplete-js.js"></script>
 
-<script src="../../assets/admin/vendor/libs/pickr/pickr.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/pickr/pickr.js"></script>
 
-<script src="../../assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<script src="../../assets/admin/vendor/libs/hammer/hammer.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/hammer/hammer.js"></script>
 
-<script src="../../assets/admin/vendor/libs/i18n/i18n.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/i18n/i18n.js"></script>
 
-<script src="../../assets/admin/vendor/js/menu.js"></script>
+<script src="${adminAssetsPath}/vendor/js/menu.js"></script>
 
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="../../assets/admin/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
-<script src="../../assets/admin/vendor/libs/apex-charts/apexcharts.js"></script>
-<script src="../../assets/admin/vendor/libs/swiper/swiper.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/swiper/swiper.js"></script>
 
 <!-- Main JS -->
 
-<script src="../../assets/admin/js/main.js"></script>
+<script src="${adminAssetsPath}/js/main.js"></script>
 
 <!-- Page JS -->
-<script src="../../assets/admin/js/app-ecommerce-dashboard.js"></script>
+<script src="${adminAssetsPath}/js/app-ecommerce-dashboard.js"></script>
 </body>
 </html>
+
 

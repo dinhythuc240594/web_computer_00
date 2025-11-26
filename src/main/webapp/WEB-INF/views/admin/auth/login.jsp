@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../layout/init.jspf" %>
 <!doctype html>
 
 <html
@@ -7,7 +8,7 @@
         dir="ltr"
         data-skin="default"
         data-bs-theme="light"
-        data-assets-path="../../assets/admin/"
+        data-assets-path="${adminAssetsPath}/"
         data-template="vertical-menu-template-no-customizer">
 <head>
     <meta charset="utf-8" />
@@ -20,7 +21,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../assets/admin/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="${adminAssetsPath}/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,38 +30,38 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
             rel="stylesheet" />
 
-    <link rel="stylesheet" href="../../assets/admin/vendor/fonts/iconify-icons.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/fonts/iconify-icons.css" />
 
     <!-- Core CSS -->
     <!-- build:css assets/vendor/css/theme.css -->
 
-    <link rel="stylesheet" href="../../assets/admin/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/node-waves/node-waves.css" />
 
-    <script src="../../assets/admin/vendor/libs/@algolia/autocomplete-js.js"></script>
+    <script src="${adminAssetsPath}/vendor/libs/@algolia/autocomplete-js.js"></script>
 
-    <link rel="stylesheet" href="../../assets/admin/vendor/css/core.css" />
-    <link rel="stylesheet" href="../../assets/admin/css/demo.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/css/core.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/css/demo.css" />
 
     <!-- Vendors CSS -->
 
-    <link rel="stylesheet" href="../../assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <!-- endbuild -->
 
     <!-- Vendor -->
-    <link rel="stylesheet" href="../../assets/admin/vendor/libs/@form-validation/form-validation.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/@form-validation/form-validation.css" />
 
     <!-- Page CSS -->
     <!-- Page -->
-    <link rel="stylesheet" href="../../assets/admin/vendor/css/pages/page-auth.css" />
+    <link rel="stylesheet" href="${adminAssetsPath}/vendor/css/pages/page-auth.css" />
 
     <!-- Helpers -->
-    <script src="../../assets/admin/vendor/js/helpers.js"></script>
+    <script src="${adminAssetsPath}/vendor/js/helpers.js"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 
     <!--? Config: Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file. -->
 
-    <script src="../../assets/admin/js/config.js"></script>
+    <script src="${adminAssetsPath}/js/config.js"></script>
 </head>
 
 <body>
@@ -128,7 +129,7 @@
                 <!-- /Logo -->
 
                 <div class="card-body mt-1">
-                    <h4 class="mb-1">Welcome to Materialize! 👋</h4>
+                    <h4 class="mb-1">Welcome to Materialize! ðŸ‘‹</h4>
                     <p class="mb-5">Please sign-in to your account and start the adventure</p>
 
                     <form id="formAuthentication" class="mb-5" action="index.html" method="GET">
@@ -208,7 +209,7 @@
             <!-- /Login -->
             <img
                     alt="mask"
-                    src="../../assets/admin/img/illustrations/auth-basic-login-mask-light.png"
+                    src="${adminAssetsPath}/img/illustrations/auth-basic-login-mask-light.png"
                     class="authentication-image d-none d-lg-block"
                     data-app-light-img="illustrations/auth-basic-login-mask-light.png"
                     data-app-dark-img="illustrations/auth-basic-login-mask-dark.png" />
@@ -222,34 +223,35 @@
 
 <!-- build:js assets/vendor/js/theme.js  -->
 
-<script src="../../assets/admin/vendor/libs/jquery/jquery.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/jquery/jquery.js"></script>
 
-<script src="../../assets/admin/vendor/libs/popper/popper.js"></script>
-<script src="../../assets/admin/vendor/js/bootstrap.js"></script>
-<script src="../../assets/admin/vendor/libs/node-waves/node-waves.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/popper/popper.js"></script>
+<script src="${adminAssetsPath}/vendor/js/bootstrap.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/node-waves/node-waves.js"></script>
 
-<script src="../../assets/admin/vendor/libs/@algolia/autocomplete-js.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/@algolia/autocomplete-js.js"></script>
 
-<script src="../../assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<script src="../../assets/admin/vendor/libs/hammer/hammer.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/hammer/hammer.js"></script>
 
-<script src="../../assets/admin/vendor/libs/i18n/i18n.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/i18n/i18n.js"></script>
 
-<script src="../../assets/admin/vendor/js/menu.js"></script>
+<script src="${adminAssetsPath}/vendor/js/menu.js"></script>
 
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="../../assets/admin/vendor/libs/@form-validation/popular.js"></script>
-<script src="../../assets/admin/vendor/libs/@form-validation/bootstrap5.js"></script>
-<script src="../../assets/admin/vendor/libs/@form-validation/auto-focus.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/@form-validation/popular.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/@form-validation/bootstrap5.js"></script>
+<script src="${adminAssetsPath}/vendor/libs/@form-validation/auto-focus.js"></script>
 
 <!-- Main JS -->
 
-<script src="../../assets/admin/js/main.js"></script>
+<script src="${adminAssetsPath}/js/main.js"></script>
 
 <!-- Page JS -->
-<script src="../../assets/admin/js/pages-auth.js"></script>
+<script src="${adminAssetsPath}/js/pages-auth.js"></script>
 </body>
 </html>
+
