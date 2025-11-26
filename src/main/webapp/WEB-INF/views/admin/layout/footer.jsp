@@ -8,7 +8,7 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                , made with â¤ï¸ by
+                , làm bởi Nhóm 6
                 <a href="https://pixinvent.com" target="_blank" class="footer-link fw-medium">Pixinvent</a>
             </div>
             <div class="d-none d-lg-inline-block">

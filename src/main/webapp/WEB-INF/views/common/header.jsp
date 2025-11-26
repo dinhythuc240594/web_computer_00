@@ -9,7 +9,7 @@
                         <div class="category-inner">
                             <div class="select-box">
                                 <select class="wide">
-                                    <option data-display="Select Category">Danh Mục</option>
+                                    <option data-display="Danh Mục">Danh Mục</option>
                                     <option value="1">Phone and Tablets</option>
                                     <option value="2">Laptop & Desktop</option>
                                     <option value="3">Sound Equipment</option>
@@ -26,7 +26,7 @@
                         <div class="search-box">
                             <form method="post" action="shop.html">
                                 <div class="form-group">
-                                    <input type="search" name="search-field" placeholder="Search Products" required>
+                                    <input type="search" name="search-field" placeholder="Tìm kiếm sản phẩm..." required>
                                     <button type="submit"><i class="icon-2"></i></button>
                                 </div>
                             </form>
@@ -35,7 +35,7 @@
                     <div class="right-column">
                         <div class="support-box">
                             <div class="icon-box"><i class="icon-3"></i></div>
-                            <a href="tel:912345678">91 2345 678</a>
+                            <a href="tel:912345678">091 2345 678</a>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
             <div class="large-container">
                 <div class="outer-box">
                     <div class="category-box">
-                        <div class="text"><i class="fas fa-bars"></i><span>All Categories</span></div>
+                        <div class="text"><i class="fas fa-bars"></i><span>Danh Mục</span></div>
                         <ul class="category-list clearfix">
                             <li class="category-dropdown">
                                 <a href="#">Phone and Tablets</a>
@@ -324,19 +324,7 @@
                         </nav>
                     </div>
                     <div class="menu-right-content">
-                        <div class="currency-box mr_40">
-                            <div class="select-box">
-                                <select class="wide">
-                                    <option data-display="USD">USD</option>
-                                    <option value="1">UAD</option>
-                                    <option value="2">RM</option>
-                                    <option value="3">GBP</option>
-                                </select>
-                            </div>
-                        </div>
                         <ul class="info-list">
-                            <li><a href="index.html"><i class="icon-5"></i></a></li>
-                            <li><a href="index.html"><i class="icon-6"></i></a></li>
                             <li class="cart-box">
                                 <a class="shopping-cart shopping-cart-two" href="#" data-bs-toggle="offcanvas" data-bs-target="offcanvasRight"><i class="icon-7"></i><span>2</span></a>
                                 <div class="cart-menu cart-menu-two">
