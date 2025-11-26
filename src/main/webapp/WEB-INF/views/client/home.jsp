@@ -67,6 +67,7 @@
     <!-- Category Menu  -->
     <jsp:include page="../common/category-menu.jsp" />
     <!-- End Category Menu -->
+
     <jsp:include page="fragments/home/featured.jsp" />
 
     <jsp:include page="fragments/home/slider.jsp" />
@@ -90,8 +91,6 @@
     <jsp:include page="fragments/home/news.jsp" />
 
     <jsp:include page="../common/footer.jsp" />
-
-
 
 
     <!--Scroll to top-->

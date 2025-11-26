@@ -51,41 +51,7 @@
 <div class="boxed_wrapper ltr">
 
 
-    <!-- preloader -->
-    <div class="loader-wrap">
-        <div class="preloader">
-            <div class="preloader-close"><i class="icon-9"></i></div>
-            <div id="handle-preloader" class="handle-preloader">
-                <div class="animation-preloader">
-                    <div class="spinner"></div>
-                    <div class="txt-loading">
-                            <span data-text-preloader="n" class="letters-loading">
-                                n
-                            </span>
-                        <span data-text-preloader="e" class="letters-loading">
-                                e
-                            </span>
-                        <span data-text-preloader="x" class="letters-loading">
-                                x
-                            </span>
-                        <span data-text-preloader="m" class="letters-loading">
-                                m
-                            </span>
-                        <span data-text-preloader="a" class="letters-loading">
-                                a
-                            </span>
-                        <span data-text-preloader="r" class="letters-loading">
-                                r
-                            </span>
-                        <span data-text-preloader="t" class="letters-loading">
-                                t
-                            </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- preloader end -->
+    <jsp:include page="../common/preloader.jsp" />
 
 
     <!-- page-direction -->
@@ -101,121 +67,10 @@
     <!-- main-header end -->
 
 
-    <!-- Mobile Menu  -->
-    <div class="mobile-menu">
-        <div class="menu-backdrop"></div>
-        <div class="close-btn"><i class="fas fa-times"></i></div>
-        <nav class="menu-box">
-            <div class="nav-logo"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/logo.png" alt="" title=""></a></div>
-            <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
-            <div class="contact-info">
-                <h4>Contact Info</h4>
-                <ul>
-                    <li>Chicago 12, Melborne City, USA</li>
-                    <li><a href="tel:+8801682648101">+88 01682648101</a></li>
-                    <li><a href="mailto:info@example.com">info@example.com</a></li>
-                </ul>
-            </div>
-            <div class="social-links">
-                <ul class="clearfix">
-                    <li><a href="index.html"><span class="fab fa-twitter"></span></a></li>
-                    <li><a href="index.html"><span class="fab fa-facebook-square"></span></a></li>
-                    <li><a href="index.html"><span class="fab fa-pinterest-p"></span></a></li>
-                    <li><a href="index.html"><span class="fab fa-instagram"></span></a></li>
-                    <li><a href="index.html"><span class="fab fa-youtube"></span></a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-    <!-- End Mobile Menu -->
+    <jsp:include page="../common/mobile-menu.jsp" />
 
 
-    <!-- Category Menu  -->
-    <div class="category-menu">
-        <div class="menu-backdrop"></div>
-        <div class="outer-box">
-            <div class="upper-box">
-                <div class="nav-logo"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/logo-2.png" alt="" title=""></a></div>
-                <div class="close-btn"><i class="icon-9"></i></div>
-            </div>
-            <p>BROWSE CATEGORIES</p>
-            <div class="category-box">
-                <ul class="category-list clearfix">
-                    <li class="category-dropdown"><a href="#">Phone and Tablets</a>
-                        <ul>
-                            <li><a href="shop-details.html">Android</a></li>
-                            <li><a href="shop-details.html">IOS</a></li>
-                            <li><a href="shop-details.html">Microsoft</a></li>
-                            <li><a href="shop-details.html">Java</a></li>
-                            <li><a href="shop-details.html">Touch Screen</a></li>
-                        </ul>
-                    </li>
-                    <li class="category-dropdown"><a href="#">Laptop & Desktop</a>
-                        <ul>
-                            <li><a href="shop-details.html">Gaming</a></li>
-                            <li><a href="shop-details.html">MacBook</a></li>
-                            <li><a href="shop-details.html">Ultrabook</a></li>
-                            <li><a href="shop-details.html">iMac</a></li>
-                            <li><a href="shop-details.html">Touch Screen</a></li>
-                        </ul>
-                    </li>
-                    <li class="category-dropdown"><a href="#">Sound Equipment</a>
-                        <ul>
-                            <li><a href="shop-details.html">Airport sounds</a></li>
-                            <li><a href="shop-details.html">Amphibians and reptiles</a></li>
-                            <li><a href="shop-details.html">Animal sounds</a></li>
-                            <li><a href="shop-details.html">Bell sounds</a></li>
-                            <li><a href="shop-details.html">Birdsong</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="shop-details.html">Power & Accessories</a></li>
-                    <li><a href="shop-details.html">Fitness & Wearable</a></li>
-                    <li class="category-dropdown"><a href="#">Peripherals</a>
-                        <ul>
-                            <li><a href="shop-details.html">Mouse</a></li>
-                            <li><a href="shop-details.html">Keyboard</a></li>
-                            <li><a href="shop-details.html">Monitor</a></li>
-                            <li><a href="shop-details.html">RAM</a></li>
-                            <li><a href="shop-details.html">DVD</a></li>
-                        </ul>
-                    </li>
-                    <li class="category-dropdown"><a href="#">Cover & Glass</a>
-                        <ul>
-                            <li><a href="shop-details.html">Clear Tempered Glass</a></li>
-                            <li><a href="shop-details.html">Anti-Glare Tempered Glass</a></li>
-                            <li><a href="shop-details.html">Privacy Tempered Glass</a></li>
-                            <li><a href="shop-details.html">Full-coverage Tempered Glass</a></li>
-                            <li><a href="shop-details.html">Colored Tempered Glass</a></li>
-                        </ul>
-                    </li>
-                    <li class="category-dropdown"><a href="#">Smart Electronics</a>
-                        <ul>
-                            <li><a href="shop-details.html">smart lights</a></li>
-                            <li><a href="shop-details.html">security camera</a></li>
-                            <li><a href="shop-details.html">smart plug</a></li>
-                            <li><a href="shop-details.html">video doorbell</a></li>
-                            <li><a href="shop-details.html">smart display</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="shop-details.html">Home Appliance</a></li>
-                    <li><a href="shop-details.html">Drone & Camera</a></li>
-                </ul>
-                <ul class="category-list clearfix">
-                    <li><a href="index.html">New Products <span>New</span></a></li>
-                    <li><a href="index.html">Discounted Goods</a></li>
-                    <li><a href="index.html">Best Selling Products <span>For You</span></a></li>
-                </ul>
-            </div>
-            <p>BLONWE HELPS</p>
-            <ul class="category-list pb_30 clearfix">
-                <li><a href="index.html">Wishlist</a></li>
-                <li><a href="index.html">Compare</a></li>
-                <li><a href="account.html">My account</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </div>
-    </div>
-    <!-- End Category Menu -->
+    <jsp:include page="../common/category-menu.jsp" />
 
 
     <!-- page-title -->
