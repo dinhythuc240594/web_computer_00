@@ -2,8 +2,8 @@
     <section class="category-section pt_70 pb_75">
         <div class="large-container">
             <div class="sec-title">
-                <h2>Popular Categories</h2>
-                <a href="index.html">View All Category</a>
+                <h2>Danh Mục</h2>
+                <a href="index.html">Xem tất cả danh mục</a>
             </div>
             <div class="category-carousel owl-carousel owl-theme owl-dots-none owl-nav-none">
                 <div class="category-block-one">

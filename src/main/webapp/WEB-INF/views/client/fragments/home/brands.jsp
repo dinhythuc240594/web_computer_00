@@ -2,8 +2,8 @@
     <section class="clients-section pb_70">
         <div class="large-container">
             <div class="sec-title">
-                <h2>Shop by Brands</h2>
-                <a href="index.html">View All Brands</a>
+                <h2>Thương Hiệu</h2>
+                <a href="index.html">Xem tất cả thương hiệu</a>
             </div>
             <ul class="clients-list clearfix">
                 <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-1.png" alt=""></a></li>

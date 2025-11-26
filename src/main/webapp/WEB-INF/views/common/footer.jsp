@@ -30,11 +30,10 @@
                             </div>
                             <div class="widget-content">
                                 <ul class="links-list clearfix">
-                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="about.html">Về chúng tôi</a></li>
                                     <li><a href="shop.html">Cửa hàng</a></li>
-                                    <li><a href="cart.html">Cart</a></li>
-                                    <li><a href="index.html">Brands</a></li>
-                                    <li><a href="index.html">Mobile App</a></li>
+                                    <li><a href="cart.html">Giỏ hàng</a></li>
+                                    <li><a href="index.html">Thương hiệu</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -42,15 +41,14 @@
                     <div class="col-lg-2 col-md-6 col-sm-12 footer-column">
                         <div class="footer-widget links-widget">
                             <div class="widget-title">
-                                <h4>Support</h4>
+                                <h4>Hỗ trợ</h4>
                             </div>
                             <div class="widget-content">
                                 <ul class="links-list clearfix">
-                                    <li><a href="index.html">Reviews</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                    <li><a href="index.html">Return Policy</a></li>
-                                    <li><a href="index.html">Online Support</a></li>
-                                    <li><a href="index.html">Money Back</a></li>
+                                    <li><a href="index.html">Đánh giá</a></li>
+                                    <li><a href="contact.html">Liên hệ</a></li>
+                                    <li><a href="index.html">Chính sách đổi trả</a></li>
+                                    <li><a href="index.html">Hỗ trợ trực tuyến</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -58,15 +56,14 @@
                     <div class="col-lg-2 col-md-6 col-sm-12 footer-column">
                         <div class="footer-widget links-widget">
                             <div class="widget-title">
-                                <h4>Store Info</h4>
+                                <h4>Thông tin cửa hàng</h4>
                             </div>
                             <div class="widget-content">
                                 <ul class="links-list clearfix">
-                                    <li><a href="shop.html">Best Seller</a></li>
-                                    <li><a href="shop.html">Top Sold Items</a></li>
-                                    <li><a href="shop.html">New Arrivals</a></li>
-                                    <li><a href="shop.html">Flash Sale</a></li>
-                                    <li><a href="shop.html">Discount Products</a></li>
+                                    <li><a href="shop.html">Bán chạy nhất</a></li>
+                                    <li><a href="shop.html">Sản phẩm bán chạy</a></li>
+                                    <li><a href="shop.html">Hàng mới về</a></li>
+                                    <li><a href="shop.html">Flash sale</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -74,14 +71,14 @@
                     <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                         <div class="footer-widget subscribe-widget">
                             <div class="widget-title">
-                                <h4>Subscribe</h4>
+                                <h4>Đăng ký nhận tin</h4>
                             </div>
                             <div class="widget-content">
-                                <p>Stay inform about upcoming events, webinars, and exciting happenings.</p>
+                                <p>Nhận thông báo về sự kiện, sản phẩm và chương trình hấp dẫn sắp tới.</p>
                                 <div class="form-inner">
                                     <form method="post" action="contact.html">
                                         <div class="form-group">
-                                            <input type="email" name="email" placeholder="Email Address" required="">
+                                            <input type="email" name="email" placeholder="Địa chỉ email" required="">
                                             <button type="submit"><i class="icon-12"></i></button>
                                         </div>
                                     </form>
@@ -93,7 +90,7 @@
             </div>
             <div class="footer-bottom">
                 <div class="bottom-inner">
-                    <div class="copyright"><p>Copyright &copy; 2025 <a href="index.html">HCMUTE</a>, Inc. All Rights Reserved</p></div>
+                    <div class="copyright"><p>Bản quyền &copy; 2025 <a href="index.html">HCMUTE</a>, Inc. Đã đăng ký bản quyền</p></div>
                     <ul class="footer-card">
                         <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-1.png" alt=""></a></li>
                         <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-2.png" alt=""></a></li>

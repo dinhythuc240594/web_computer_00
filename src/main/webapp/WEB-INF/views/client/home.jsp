@@ -80,7 +80,7 @@
 
     <jsp:include page="fragments/home/shop-mixed.jsp" />
 
-    <jsp:include page="fragments/home/clients.jsp" />
+    <jsp:include page="fragments/home/brands.jsp" />
 
     <jsp:include page="fragments/home/shop-tabs.jsp" />
 
@@ -88,9 +88,9 @@
 
     <jsp:include page="fragments/home/shop-top-sold.jsp" />
 
-    <jsp:include page="fragments/home/news.jsp" />
-
+    <!-- main-footer -->
     <jsp:include page="../common/footer.jsp" />
+    <!-- main-footer end -->
 
 
     <!--Scroll to top-->
