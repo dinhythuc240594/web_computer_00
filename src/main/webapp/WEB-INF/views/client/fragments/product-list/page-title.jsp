@@ -3,7 +3,7 @@
         <div class="large-container">
             <ul class="bread-crumb clearfix">
                 <li><a href="index.html">Home</a></li>
-                <li>Shop</li>
+                <li>Cửa hàng</li>
             </ul>
         </div>
     </section>

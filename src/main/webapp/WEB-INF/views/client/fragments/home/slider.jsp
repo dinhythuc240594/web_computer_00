@@ -2,8 +2,8 @@
     <section class="banner-section p_relative">
         <div class="banner-carousel owl-theme owl-carousel owl-nav-none dots-style-one">
             <div class="slide-item p_relative">
-                <div class="pattern-layer" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-1.png);"></div>
-                <figure class="image-layer r_50 b_50"><img src="${pageContext.request.contextPath}/assets/images/banner/banner-img-1.png" alt=""></figure>
+                <div class="pattern-layer" style="background-image: url(${pageContext.request.contextPath}/assets/client/images/shape/shape-1.png);"></div>
+                <figure class="image-layer r_50 b_50"><img src="${pageContext.request.contextPath}/assets/client/images/banner/banner-img-1.png" alt=""></figure>
                 <div class="large-container">
                     <div class="content-box">
                         <span class="upper-text">New Release</span>
@@ -14,8 +14,8 @@
                 </div>
             </div>
             <div class="slide-item p_relative">
-                <div class="pattern-layer" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-2.png);"></div>
-                <figure class="image-layer r_95 b_0"><img src="${pageContext.request.contextPath}/assets/images/banner/banner-img-2.png" alt=""></figure>
+                <div class="pattern-layer" style="background-image: url(${pageContext.request.contextPath}/assets/client/images/shape/shape-2.png);"></div>
+                <figure class="image-layer r_95 b_0"><img src="${pageContext.request.contextPath}/assets/client/images/banner/banner-img-2.png" alt=""></figure>
                 <div class="large-container">
                     <div class="content-box">
                         <span class="upper-text">New Release</span>
@@ -26,8 +26,8 @@
                 </div>
             </div>
             <div class="slide-item p_relative">
-                <div class="pattern-layer" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-1.png);"></div>
-                <figure class="image-layer r_50 b_50"><img src="${pageContext.request.contextPath}/assets/images/banner/banner-img-1.png" alt=""></figure>
+                <div class="pattern-layer" style="background-image: url(${pageContext.request.contextPath}/assets/client/images/shape/shape-1.png);"></div>
+                <figure class="image-layer r_50 b_50"><img src="${pageContext.request.contextPath}/assets/client/images/banner/banner-img-1.png" alt=""></figure>
                 <div class="large-container">
                     <div class="content-box">
                         <span class="upper-text">New Release</span>
@@ -38,8 +38,8 @@
                 </div>
             </div>
             <div class="slide-item p_relative">
-                <div class="pattern-layer" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-2.png);"></div>
-                <figure class="image-layer r_95 b_0"><img src="${pageContext.request.contextPath}/assets/images/banner/banner-img-2.png" alt=""></figure>
+                <div class="pattern-layer" style="background-image: url(${pageContext.request.contextPath}/assets/client/images/shape/shape-2.png);"></div>
+                <figure class="image-layer r_95 b_0"><img src="${pageContext.request.contextPath}/assets/client/images/banner/banner-img-2.png" alt=""></figure>
                 <div class="large-container">
                     <div class="content-box">
                         <span class="upper-text">New Release</span>

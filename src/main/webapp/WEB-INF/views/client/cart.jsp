@@ -16,32 +16,32 @@
     <title>Shared on THEMELOCK.COM - Nexmart - HTML 5 Template Preview</title>
 
     <!-- Fav Icon -->
-    <link rel="icon" href="${pageContext.request.contextPath}/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${pageContext.request.contextPath}/assets/client/images/Logo%20HCMUTE_White%20background.png" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link href="${pageContext.request.contextPath}/assets/css/font-awesome-all.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/flaticon.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/owl.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/jquery.fancybox.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/animate.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/nice-select.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/elpath.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/jquery-ui.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/color.css" id="jssDefault" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/rtl.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/header.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/page-title.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/cart.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/shop-two.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/highlights.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/module-css/footer.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/css/responsive.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/font-awesome-all.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/flaticon.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/owl.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/bootstrap.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/jquery.fancybox.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/animate.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/nice-select.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/elpath.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/jquery-ui.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/color.css" id="jssDefault" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/rtl.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/header.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/page-title.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/cart.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/shop-two.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/highlights.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/footer.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/responsive.css" rel="stylesheet">
 
 </head>
 
@@ -52,41 +52,7 @@
 <div class="boxed_wrapper ltr">
 
 
-    <!-- preloader -->
-    <div class="loader-wrap">
-        <div class="preloader">
-            <div class="preloader-close"><i class="icon-9"></i></div>
-            <div id="handle-preloader" class="handle-preloader">
-                <div class="animation-preloader">
-                    <div class="spinner"></div>
-                    <div class="txt-loading">
-                            <span data-text-preloader="n" class="letters-loading">
-                                n
-                            </span>
-                        <span data-text-preloader="e" class="letters-loading">
-                                e
-                            </span>
-                        <span data-text-preloader="x" class="letters-loading">
-                                x
-                            </span>
-                        <span data-text-preloader="m" class="letters-loading">
-                                m
-                            </span>
-                        <span data-text-preloader="a" class="letters-loading">
-                                a
-                            </span>
-                        <span data-text-preloader="r" class="letters-loading">
-                                r
-                            </span>
-                        <span data-text-preloader="t" class="letters-loading">
-                                t
-                            </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- preloader end -->
+    <jsp:include page="../common/preloader.jsp" />
 
 
     <!-- page-direction -->
@@ -102,121 +68,10 @@
     <!-- main-header end -->
 
 
-    <!-- Mobile Menu  -->
-    <div class="mobile-menu">
-        <div class="menu-backdrop"></div>
-        <div class="close-btn"><i class="fas fa-times"></i></div>
-        <nav class="menu-box">
-            <div class="nav-logo"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" title=""></a></div>
-            <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
-            <div class="contact-info">
-                <h4>Contact Info</h4>
-                <ul>
-                    <li>Chicago 12, Melborne City, USA</li>
-                    <li><a href="tel:+8801682648101">+88 01682648101</a></li>
-                    <li><a href="mailto:info@example.com">info@example.com</a></li>
-                </ul>
-            </div>
-            <div class="social-links">
-                <ul class="clearfix">
-                    <li><a href="index.html"><span class="fab fa-twitter"></span></a></li>
-                    <li><a href="index.html"><span class="fab fa-facebook-square"></span></a></li>
-                    <li><a href="index.html"><span class="fab fa-pinterest-p"></span></a></li>
-                    <li><a href="index.html"><span class="fab fa-instagram"></span></a></li>
-                    <li><a href="index.html"><span class="fab fa-youtube"></span></a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-    <!-- End Mobile Menu -->
+    <jsp:include page="../common/mobile-menu.jsp" />
 
 
-    <!-- Category Menu  -->
-    <div class="category-menu">
-        <div class="menu-backdrop"></div>
-        <div class="outer-box">
-            <div class="upper-box">
-                <div class="nav-logo"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/images/logo-2.png" alt="" title=""></a></div>
-                <div class="close-btn"><i class="icon-9"></i></div>
-            </div>
-            <p>BROWSE CATEGORIES</p>
-            <div class="category-box">
-                <ul class="category-list clearfix">
-                    <li class="category-dropdown"><a href="#">Phone and Tablets</a>
-                        <ul>
-                            <li><a href="shop-details.html">Android</a></li>
-                            <li><a href="shop-details.html">IOS</a></li>
-                            <li><a href="shop-details.html">Microsoft</a></li>
-                            <li><a href="shop-details.html">Java</a></li>
-                            <li><a href="shop-details.html">Touch Screen</a></li>
-                        </ul>
-                    </li>
-                    <li class="category-dropdown"><a href="#">Laptop & Desktop</a>
-                        <ul>
-                            <li><a href="shop-details.html">Gaming</a></li>
-                            <li><a href="shop-details.html">MacBook</a></li>
-                            <li><a href="shop-details.html">Ultrabook</a></li>
-                            <li><a href="shop-details.html">iMac</a></li>
-                            <li><a href="shop-details.html">Touch Screen</a></li>
-                        </ul>
-                    </li>
-                    <li class="category-dropdown"><a href="#">Sound Equipment</a>
-                        <ul>
-                            <li><a href="shop-details.html">Airport sounds</a></li>
-                            <li><a href="shop-details.html">Amphibians and reptiles</a></li>
-                            <li><a href="shop-details.html">Animal sounds</a></li>
-                            <li><a href="shop-details.html">Bell sounds</a></li>
-                            <li><a href="shop-details.html">Birdsong</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="shop-details.html">Power & Accessories</a></li>
-                    <li><a href="shop-details.html">Fitness & Wearable</a></li>
-                    <li class="category-dropdown"><a href="#">Peripherals</a>
-                        <ul>
-                            <li><a href="shop-details.html">Mouse</a></li>
-                            <li><a href="shop-details.html">Keyboard</a></li>
-                            <li><a href="shop-details.html">Monitor</a></li>
-                            <li><a href="shop-details.html">RAM</a></li>
-                            <li><a href="shop-details.html">DVD</a></li>
-                        </ul>
-                    </li>
-                    <li class="category-dropdown"><a href="#">Cover & Glass</a>
-                        <ul>
-                            <li><a href="shop-details.html">Clear Tempered Glass</a></li>
-                            <li><a href="shop-details.html">Anti-Glare Tempered Glass</a></li>
-                            <li><a href="shop-details.html">Privacy Tempered Glass</a></li>
-                            <li><a href="shop-details.html">Full-coverage Tempered Glass</a></li>
-                            <li><a href="shop-details.html">Colored Tempered Glass</a></li>
-                        </ul>
-                    </li>
-                    <li class="category-dropdown"><a href="#">Smart Electronics</a>
-                        <ul>
-                            <li><a href="shop-details.html">smart lights</a></li>
-                            <li><a href="shop-details.html">security camera</a></li>
-                            <li><a href="shop-details.html">smart plug</a></li>
-                            <li><a href="shop-details.html">video doorbell</a></li>
-                            <li><a href="shop-details.html">smart display</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="shop-details.html">Home Appliance</a></li>
-                    <li><a href="shop-details.html">Drone & Camera</a></li>
-                </ul>
-                <ul class="category-list clearfix">
-                    <li><a href="index.html">New Products <span>New</span></a></li>
-                    <li><a href="index.html">Discounted Goods</a></li>
-                    <li><a href="index.html">Best Selling Products <span>For You</span></a></li>
-                </ul>
-            </div>
-            <p>BLONWE HELPS</p>
-            <ul class="category-list pb_30 clearfix">
-                <li><a href="index.html">Wishlist</a></li>
-                <li><a href="index.html">Compare</a></li>
-                <li><a href="account.html">My account</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </div>
-    </div>
-    <!-- End Category Menu -->
+    <jsp:include page="../common/category-menu.jsp" />
 
 
     <!-- page-title -->
@@ -260,7 +115,7 @@
                             <tr>
                                 <td class="product-column">
                                     <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/images/shop/cart-4.png" alt=""></figure>
+                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/cart-4.png" alt=""></figure>
                                         <h6><a href="shop-details.html">CANON EOS 750D 24.2 MP</a></h6>
                                     </div>
                                 </td>
@@ -276,7 +131,7 @@
                             <tr>
                                 <td class="product-column">
                                     <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/images/shop/cart-5.png" alt=""></figure>
+                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/cart-5.png" alt=""></figure>
                                         <h6><a href="shop-details.html">Box Shinecon 3D Glass with Remote</a></h6>
                                     </div>
                                 </td>
@@ -292,7 +147,7 @@
                             <tr>
                                 <td class="product-column">
                                     <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/images/shop/cart-6.png" alt=""></figure>
+                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/cart-6.png" alt=""></figure>
                                         <h6><a href="shop-details.html">8 KG Front Loading Washing</a></h6>
                                     </div>
                                 </td>
@@ -308,7 +163,7 @@
                             <tr>
                                 <td class="product-column">
                                     <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/images/shop/cart-7.png" alt=""></figure>
+                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/cart-7.png" alt=""></figure>
                                         <h6><a href="shop-details.html">Sony Bluetooth-compatible Speaker</a></h6>
                                     </div>
                                 </td>
@@ -418,11 +273,11 @@
                         <div class="image-box">
                             <span class="discount-product p_absolute l_0 t_7">-6%</span>
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-10.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-10.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-10.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-10.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Mobile</span>
@@ -436,7 +291,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(2)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -446,11 +301,11 @@
                         <div class="image-box">
                             <span class="hot-product p_absolute l_0 t_7">Hot</span>
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-11.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-11.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-11.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-11.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Gaming</span>
@@ -464,7 +319,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(4)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -473,11 +328,11 @@
                     <div class="inner-box">
                         <div class="image-box">
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-12.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-12.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-12.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-12.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Storage</span>
@@ -491,7 +346,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(5)</span></li>
                             </ul>
-                            <span class="product-stock-out"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-2.png" alt=""> Stock Out</span>
+                            <span class="product-stock-out"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-2.png" alt=""> Stock Out</span>
                             <div class="cart-btn"><button type="button" class="theme-btn not">Not Available<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -501,11 +356,11 @@
                         <div class="image-box">
                             <span class="hot-product p_absolute l_0 t_7">Hot</span>
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-13.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-13.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-13.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-13.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Music</span>
@@ -519,7 +374,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(2)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -528,11 +383,11 @@
                     <div class="inner-box">
                         <div class="image-box">
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-14.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-14.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-14.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-14.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Music</span>
@@ -546,7 +401,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(5)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -555,11 +410,11 @@
                     <div class="inner-box">
                         <div class="image-box">
                             <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-15.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-15.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                 <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                 <li><button type="button"><i class="icon-6"></i></button></li>
                             </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-15.png" alt=""></figure>
+                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-15.png" alt=""></figure>
                         </div>
                         <div class="lower-content">
                             <span class="text">Power</span>
@@ -573,7 +428,7 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(4)</span></li>
                             </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/images/icons/icon-1.png" alt=""> In Stock</span>
+                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
                             <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
                         </div>
                     </div>
@@ -588,7 +443,7 @@
     <section class="highlights-section inner-highlights">
         <div class="large-container">
             <div class="inner-container clearfix">
-                <div class="shape" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-5.png);"></div>
+                <div class="shape" style="background-image: url(${pageContext.request.contextPath}/assets/client/images/shape/shape-5.png);"></div>
                 <div class="highlights-block-one">
                     <div class="inner-box">
                         <div class="icon-box"><i class="icon-23"></i></div>
@@ -642,26 +497,26 @@
 
 
 <!-- jequery plugins -->
-<script src="${pageContext.request.contextPath}/assets/js/jquery.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/owl.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/wow.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/validation.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.fancybox.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/appear.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/isotope.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/parallax-scroll.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.nice-select.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/scrolltop.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/language.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/countdown.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery-ui.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/product-filter.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.bootstrap-touchspin.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/bxslider.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/owl.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/wow.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/validation.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/jquery.fancybox.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/appear.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/isotope.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/parallax-scroll.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/jquery.nice-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/scrolltop.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/language.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/countdown.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/product-filter.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/jquery.bootstrap-touchspin.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/bxslider.js"></script>
 
 <!-- main-js -->
-<script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
+<script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
 
 </body><!-- End of .page_wrapper -->
 </html>

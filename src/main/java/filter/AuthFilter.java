@@ -1,6 +1,6 @@
 package filter;
 
-import jakarta.servlet.annotation.WebFilter;
+import java.io.IOException;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -12,9 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.io.IOException;
-
-@WebFilter("/*")
 public class AuthFilter implements Filter {
 
     private static final String[] STATIC_RESOURCE_EXTENSIONS = {

@@ -24,11 +24,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Wireless Silent Mouse</a></h6>
@@ -49,11 +49,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">32 Inch TV 2GB Ram Voice</a></h6>
@@ -74,11 +74,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Samsung 20W Wireless Charger</a></h6>
@@ -99,11 +99,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Airpods bluetooth headphone</a></h6>
@@ -124,11 +124,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Voice Calling Smartwatch</a></h6>
@@ -149,11 +149,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">CANON EOS 750D 24.2 MP</a></h6>
@@ -174,11 +174,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Box Shinecon 3D Glass with</a></h6>
@@ -199,11 +199,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Fashionable jbl in-ear headphones </a></h6>
@@ -224,11 +224,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">8 KG Front Loading Washing</a></h6>
@@ -249,11 +249,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">1200Mbps Dual Band Router</a></h6>
@@ -278,11 +278,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Samsung 20W Wireless Charger</a></h6>
@@ -303,11 +303,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Airpods bluetooth headphone</a></h6>
@@ -328,11 +328,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Voice Calling Smartwatch</a></h6>
@@ -353,11 +353,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">CANON EOS 750D 24.2 MP</a></h6>
@@ -378,11 +378,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Wireless Silent Mouse</a></h6>
@@ -403,11 +403,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">32 Inch TV 2GB Ram Voice</a></h6>
@@ -428,11 +428,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Box Shinecon 3D Glass with</a></h6>
@@ -453,11 +453,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Fashionable jbl in-ear headphones </a></h6>
@@ -478,11 +478,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">8 KG Front Loading Washing</a></h6>
@@ -503,11 +503,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">1200Mbps Dual Band Router</a></h6>
@@ -532,11 +532,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Wireless Silent Mouse</a></h6>
@@ -557,11 +557,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Airpods bluetooth headphone</a></h6>
@@ -582,11 +582,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Voice Calling Smartwatch</a></h6>
@@ -607,11 +607,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">CANON EOS 750D 24.2 MP</a></h6>
@@ -632,11 +632,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">32 Inch TV 2GB Ram Voice</a></h6>
@@ -657,11 +657,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Samsung 20W Wireless Charger</a></h6>
@@ -682,11 +682,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Box Shinecon 3D Glass with</a></h6>
@@ -707,11 +707,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Fashionable jbl in-ear headphones </a></h6>
@@ -732,11 +732,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">8 KG Front Loading Washing</a></h6>
@@ -757,11 +757,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">1200Mbps Dual Band Router</a></h6>
@@ -786,11 +786,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Samsung 20W Wireless Charger</a></h6>
@@ -811,11 +811,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Airpods bluetooth headphone</a></h6>
@@ -836,11 +836,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Voice Calling Smartwatch</a></h6>
@@ -861,11 +861,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">CANON EOS 750D 24.2 MP</a></h6>
@@ -886,11 +886,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Box Shinecon 3D Glass with</a></h6>
@@ -911,11 +911,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Wireless Silent Mouse</a></h6>
@@ -936,11 +936,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">32 Inch TV 2GB Ram Voice</a></h6>
@@ -961,11 +961,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Fashionable jbl in-ear headphones </a></h6>
@@ -986,11 +986,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">8 KG Front Loading Washing</a></h6>
@@ -1011,11 +1011,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">1200Mbps Dual Band Router</a></h6>
@@ -1040,11 +1040,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Wireless Silent Mouse</a></h6>
@@ -1065,11 +1065,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">32 Inch TV 2GB Ram Voice</a></h6>
@@ -1090,11 +1090,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Samsung 20W Wireless Charger</a></h6>
@@ -1115,11 +1115,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Box Shinecon 3D Glass with</a></h6>
@@ -1140,11 +1140,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Fashionable jbl in-ear headphones </a></h6>
@@ -1165,11 +1165,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">8 KG Front Loading Washing</a></h6>
@@ -1190,11 +1190,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Airpods bluetooth headphone</a></h6>
@@ -1215,11 +1215,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Voice Calling Smartwatch</a></h6>
@@ -1240,11 +1240,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">CANON EOS 750D 24.2 MP</a></h6>
@@ -1265,11 +1265,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">1200Mbps Dual Band Router</a></h6>
@@ -1294,11 +1294,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Airpods bluetooth headphone</a></h6>
@@ -1319,11 +1319,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Voice Calling Smartwatch</a></h6>
@@ -1344,11 +1344,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">CANON EOS 750D 24.2 MP</a></h6>
@@ -1369,11 +1369,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Box Shinecon 3D Glass with</a></h6>
@@ -1394,11 +1394,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Fashionable jbl in-ear headphones </a></h6>
@@ -1419,11 +1419,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Wireless Silent Mouse</a></h6>
@@ -1444,11 +1444,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">32 Inch TV 2GB Ram Voice</a></h6>
@@ -1469,11 +1469,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Samsung 20W Wireless Charger</a></h6>
@@ -1494,11 +1494,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">8 KG Front Loading Washing</a></h6>
@@ -1519,11 +1519,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">1200Mbps Dual Band Router</a></h6>
@@ -1548,11 +1548,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Wireless Silent Mouse</a></h6>
@@ -1573,11 +1573,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">32 Inch TV 2GB Ram Voice</a></h6>
@@ -1598,11 +1598,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Samsung 20W Wireless Charger</a></h6>
@@ -1623,11 +1623,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Airpods bluetooth headphone</a></h6>
@@ -1648,11 +1648,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Fashionable jbl in-ear headphones </a></h6>
@@ -1673,11 +1673,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">8 KG Front Loading Washing</a></h6>
@@ -1698,11 +1698,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">1200Mbps Dual Band Router</a></h6>
@@ -1723,11 +1723,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Voice Calling Smartwatch</a></h6>
@@ -1748,11 +1748,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">CANON EOS 750D 24.2 MP</a></h6>
@@ -1773,11 +1773,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Box Shinecon 3D Glass with</a></h6>
@@ -1802,11 +1802,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-32.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-32.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Wireless Silent Mouse</a></h6>
@@ -1827,11 +1827,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-35.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-35.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Airpods bluetooth headphone</a></h6>
@@ -1852,11 +1852,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-36.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-36.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Voice Calling Smartwatch</a></h6>
@@ -1877,11 +1877,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-37.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-37.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">CANON EOS 750D 24.2 MP</a></h6>
@@ -1902,11 +1902,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-33.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-33.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">32 Inch TV 2GB Ram Voice</a></h6>
@@ -1927,11 +1927,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-34.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-34.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Samsung 20W Wireless Charger</a></h6>
@@ -1952,11 +1952,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-38.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-38.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Box Shinecon 3D Glass with</a></h6>
@@ -1977,11 +1977,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-39.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-39.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">Fashionable jbl in-ear headphones </a></h6>
@@ -2002,11 +2002,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-40.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-40.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">8 KG Front Loading Washing</a></h6>
@@ -2027,11 +2027,11 @@
                                 <div class="inner-box">
                                     <div class="image-box">
                                         <ul class="option-list">
-                                            <li><a href="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
                                             <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
                                             <li><button type="button"><i class="icon-6"></i></button></li>
                                         </ul>
-                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/images/shop/shop-41.png" alt=""></figure>
+                                        <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-41.png" alt=""></figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="shop-details.html">1200Mbps Dual Band Router</a></h6>
