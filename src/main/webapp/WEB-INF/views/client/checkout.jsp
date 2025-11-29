@@ -6,6 +6,57 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="model.CartItem" %>
+<%@ page import="model.ProductDAO" %>
+<%@ page import="model.UserDAO" %>
+<%@ page import="service.UserService" %>
+<%@ page import="serviceimpl.UserServiceImpl" %>
+<%@ page import="utilities.DataSourceUtil" %>
+<%
+    // Lấy giỏ hàng từ session
+    List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItems");
+    if (cartItems == null) {
+        cartItems = java.util.Collections.emptyList();
+    }
+
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+    double subtotal = 0.0;
+    for (CartItem item : cartItems) {
+        ProductDAO p = item.getProduct();
+        if (p != null && p.getPrice() != null) {
+            subtotal += p.getPrice() * item.getQuantity();
+        }
+    }
+
+    double freeShipThreshold = 500000; // 500.000đ để được miễn phí vận chuyển
+    double shippingFee = subtotal >= freeShipThreshold || subtotal == 0 ? 0 : 30000;
+    double total = subtotal + shippingFee;
+
+    // Lấy thông tin user từ database nếu đã đăng nhập
+    String sessionUsername = (String) session.getAttribute("username");
+    UserDAO currentUser = null;
+    if (sessionUsername != null && !sessionUsername.isBlank()) {
+        try {
+            javax.sql.DataSource ds = DataSourceUtil.getDataSource();
+            UserService userService = new UserServiceImpl(ds);
+            currentUser = userService.findByUsername(sessionUsername);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    String billingName = currentUser != null && currentUser.getFullname() != null
+            ? currentUser.getFullname() : "";
+    String billingEmail = currentUser != null && currentUser.getEmail() != null
+            ? currentUser.getEmail() : "";
+    String billingPhone = currentUser != null && currentUser.getPhone() != null
+            ? currentUser.getPhone() : "";
+    String billingAddress = currentUser != null && currentUser.getAddress() != null
+            ? currentUser.getAddress() : "";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +64,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Shared on THEMELOCK.COM - Nexmart - HTML 5 Template Preview</title>
+    <title>Thanh toán | HCMUTE Computer Store</title>
 
     <!-- Fav Icon -->
     <link rel="icon" href="${pageContext.request.contextPath}/assets/client/images/Logo%20HCMUTE_White%20background.png" type="image/x-icon">
@@ -77,8 +128,8 @@
     <section class="page-title pt_20 pb_18">
         <div class="large-container">
             <ul class="bread-crumb clearfix">
-                <li><a href="index.html">Home</a></li>
-                <li>Checkout</li>
+                <li><a href="<%= request.getContextPath() %>/home">Trang chủ</a></li>
+                <li>Thanh toán</li>
             </ul>
         </div>
     </section>
@@ -89,42 +140,42 @@
     <section class="checkout-section pb_80">
         <div class="large-container">
             <div class="sec-title centred pb_30">
-                <h2>Checkout</h2>
+                <h2>Thanh toán</h2>
             </div>
             <div class="row clearfix">
                 <div class="col-lg-8 col-md-12 col-sm-12 billing-column">
                     <div class="billing-content mr_30">
-                        <h3>Billing Details</h3>
+                        <h3>Thông tin thanh toán</h3>
                         <div class="form-inner">
-                            <form method="post" action="checkout.html">
+                            <form method="post" action="<%= request.getContextPath() %>/checkout">
                                 <div class="row clearfix">
                                     <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                         <div class="form-group">
-                                            <label>First Name<span>*</span></label>
-                                            <input type="text" name="fname">
+                                            <label>Họ và tên<span>*</span></label>
+                                            <input type="text" name="fullName" value="<%= billingName %>">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                         <div class="form-group">
-                                            <label>Last Name<span>*</span></label>
-                                            <input type="text" name="lname">
+                                            <label>Tên đăng nhập</label>
+                                            <input type="text" name="username" value="<%= sessionUsername != null ? sessionUsername : \"\" %>" readonly>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                         <div class="form-group">
-                                            <label>Email Address<span>*</span></label>
-                                            <input type="email" name="email">
+                                            <label>Email<span>*</span></label>
+                                            <input type="email" name="email" value="<%= billingEmail %>">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                         <div class="form-group">
-                                            <label>Phone Number<span>*</span></label>
-                                            <input type="text" name="phone">
+                                            <label>Số điện thoại<span>*</span></label>
+                                            <input type="text" name="phone" value="<%= billingPhone %>">
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 field-column">
                                         <div class="form-group">
-                                            <label>Country<span>*</span></label>
+                                            <label>Quốc gia<span>*</span></label>
                                             <div class="select-box">
                                                 <select class="wide">
                                                     <option data-display="Select Country">Select Country</option>
@@ -146,19 +197,19 @@
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 field-column">
                                         <div class="form-group">
-                                            <label>Address<span>*</span></label>
-                                            <input type="text" name="address">
+                                            <label>Địa chỉ<span>*</span></label>
+                                            <input type="text" name="address" value="<%= billingAddress %>">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                         <div class="form-group">
-                                            <label>Town / City<span>*</span></label>
+                                            <label>Thành phố / Tỉnh<span>*</span></label>
                                             <input type="text" name="city">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                         <div class="form-group">
-                                            <label>Postcode / ZIP<span>*</span></label>
+                                            <label>Mã bưu chính / ZIP<span>*</span></label>
                                             <input type="text" name="zip">
                                         </div>
                                     </div>
@@ -166,7 +217,7 @@
                                         <div class="form-group">
                                             <div class="check-box">
                                                 <input class="check" type="checkbox" id="checkbox1">
-                                                <label for="checkbox1">Create an account?</label>
+                                                <label for="checkbox1">Tạo tài khoản mới?</label>
                                             </div>
                                         </div>
                                     </div>
@@ -174,78 +225,104 @@
                             </form>
                         </div>
                         <div class="other-address">
-                            <h3>Shipping Address</h3>
+                            <h3>Địa chỉ giao hàng</h3>
                             <div class="check-box">
                                 <input class="check" type="checkbox" id="checkbox2">
-                                <label for="checkbox2">Ship to a different address</label>
+                                <label for="checkbox2">Giao hàng tới địa chỉ khác</label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12 order-column">
                     <div class="order-box">
-                        <h3>Order Summary</h3>
+                        <h3>Tóm tắt đơn hàng</h3>
                         <div class="order-info">
                             <div class="title-box">
-                                <span class="text">PROduct</span>
-                                <span class="text">total</span>
+                                <span class="text">Sản phẩm</span>
+                                <span class="text">Thành tiền</span>
                             </div>
                             <div class="order-product">
+                                <%
+                                    if (!cartItems.isEmpty()) {
+                                        for (CartItem item : cartItems) {
+                                            ProductDAO product = item.getProduct();
+                                            if (product == null) continue;
+                                            String productImage = product.getImage_url();
+                                            if (productImage == null || productImage.isBlank()) {
+                                                productImage = request.getContextPath() + "/assets/client/images/shop/checkout-1.png";
+                                            } else if (!productImage.startsWith("http")) {
+                                                if (!productImage.startsWith("/")) {
+                                                    productImage = "/" + productImage;
+                                                }
+                                                productImage = request.getContextPath() + productImage;
+                                            }
+                                            String productName = product.getName();
+                                            int quantity = item.getQuantity();
+                                            double price = product.getPrice() != null ? product.getPrice() : 0.0;
+                                            double lineTotal = price * quantity;
+                                %>
                                 <div class="single-item">
                                     <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/checkout-1.png" alt=""></figure>
-                                        <h6>CANON EOS 750D 24.2 MP In Best Price</h6>
+                                        <figure class="image-box">
+                                            <img src="<%= productImage %>" alt="<%= productName %>">
+                                        </figure>
+                                        <div>
+                                            <h6><%= productName %></h6>
+                                            <span>Số lượng: <%= quantity %></span>
+                                        </div>
                                     </div>
-                                    <h4>$999.99</h4>
+                                    <h4><%= currencyFormat.format(lineTotal) %></h4>
                                 </div>
+                                <%
+                                        }
+                                    } else {
+                                %>
                                 <div class="single-item">
-                                    <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/checkout-2.png" alt=""></figure>
-                                        <h6>Box Shinecon 3D Glass with Remote</h6>
-                                    </div>
-                                    <h4>$149.99</h4>
+                                    <p>Giỏ hàng của bạn đang trống.</p>
                                 </div>
-                                <div class="single-item">
-                                    <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/checkout-3.png" alt=""></figure>
-                                        <h6>8 KG Front Loading Washing </h6>
-                                    </div>
-                                    <h4>$999.99</h4>
-                                </div>
+                                <%
+                                    }
+                                %>
                             </div>
                             <ul class="cost-box">
-                                <li><h4><span>Subtotal</span></h4><h4>$2149.97</h4></li>
-                                <li><h4><span>Free Shipping</span></h4><h4><span>$0</span></h4></li>
+                                <li>
+                                    <h4><span>Tạm tính</span></h4>
+                                    <h4><%= currencyFormat.format(subtotal) %></h4>
+                                </li>
+                                <li>
+                                    <h4><span>Phí vận chuyển</span></h4>
+                                    <h4><span><%= currencyFormat.format(shippingFee) %></span></h4>
+                                </li>
                             </ul>
                             <div class="total-box">
-                                <h4><span>Total</span></h4>
-                                <h4>$2149.98</h4>
+                                <h4><span>Tổng cộng</span></h4>
+                                <h4><%= currencyFormat.format(total) %></h4>
                             </div>
                             <div class="payment-option">
                                 <div class="bank-payment">
                                     <div class="check-box mb_12">
-                                        <input class="check" type="radio" id="checkbox3" name="same" checked>
-                                        <label for="checkbox3">Direct Bank Transfer</label>
+                                        <input class="check" type="radio" id="checkbox3" name="payment" checked>
+                                        <label for="checkbox3">Chuyển khoản ngân hàng</label>
                                     </div>
-                                    <p>Make your payment directly into our bank account. Please use your Order ID as payment reference.</p>
+                                    <p>Vui lòng sử dụng mã đơn hàng làm nội dung chuyển khoản để chúng tôi xác nhận nhanh chóng.</p>
                                 </div>
                                 <ul class="other-payment">
                                     <li>
                                         <div class="check-box mb_12">
-                                            <input class="check" type="radio" id="checkbox4" name="same">
-                                            <label for="checkbox4">Cash on Delivery</label>
+                                            <input class="check" type="radio" id="checkbox4" name="payment">
+                                            <label for="checkbox4">Thanh toán khi nhận hàng (COD)</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="check-box mb_12">
-                                            <input class="check" type="radio" id="checkbox5" name="same">
-                                            <label for="checkbox5">Credit/Debit Cards or Paypal</label>
+                                            <input class="check" type="radio" id="checkbox5" name="payment">
+                                            <label for="checkbox5">Thẻ tín dụng/Ghi nợ hoặc Paypal</label>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                             <div class="btn-box pt_30">
-                                <button type="submit" class="theme-btn">Make Payment<span></span><span></span><span></span><span></span></button>
+                                <button type="submit" class="theme-btn">Thanh toán<span></span><span></span><span></span><span></span></button>
                             </div>
                         </div>
                     </div>

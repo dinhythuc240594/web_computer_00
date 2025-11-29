@@ -1176,153 +1176,59 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-sm me-4">
-                                                        <img src="${adminAssetsPath}/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 text-truncate">Jordan Stevenson</h6>
-                                                        <small class="text-truncate">@amiccoo</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-truncate">susanna.Lind57@gmail.com</td>
-                                            <td class="text-truncate">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icon-base ri ri-vip-crown-line icon-22px text-primary me-2"></i>
-                                                    <span>Admin</span>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-label-warning rounded-pill">Pending</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-sm me-4">
-                                                        <img src="${adminAssetsPath}/img/avatars/3.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 text-truncate">Benedetto Rossiter</h6>
-                                                        <small class="text-truncate">@brossiter15</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-truncate">estelle.Bailey10@gmail.com</td>
-                                            <td class="text-truncate">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icon-base ri ri-edit-box-line text-warning icon-22px me-2"></i>
-                                                    <span>Editor</span>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-label-success rounded-pill">Active</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-sm me-4">
-                                                        <img src="${adminAssetsPath}/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 text-truncate">Bentlee Emblin</h6>
-                                                        <small class="text-truncate">@bemblinf</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-truncate">milo86@hotmail.com</td>
-                                            <td class="text-truncate">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icon-base ri ri-computer-line text-danger icon-22px me-2"></i>
-                                                    <span>Author</span>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-label-success rounded-pill">Active</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-sm me-4">
-                                                        <img src="${adminAssetsPath}/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 text-truncate">Bertha Biner</h6>
-                                                        <small class="text-truncate">@bbinerh</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-truncate">lonnie35@hotmail.com</td>
-                                            <td class="text-truncate">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icon-base ri ri-edit-box-line text-warning icon-22px me-2"></i>
-                                                    <span>Editor</span>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-label-warning rounded-pill">Pending</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-sm me-4">
-                                                        <img src="${adminAssetsPath}/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 text-truncate">Beverlie Krabbe</h6>
-                                                        <small class="text-truncate">@bkrabbe1d</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-truncate">ahmad_Collins@yahoo.com</td>
-                                            <td class="text-truncate">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icon-base ri ri-pie-chart-2-line icon-22px text-info me-2"></i>
-                                                    <span>Maintainer</span>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-label-success rounded-pill">Active</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-sm me-4">
-                                                        <img src="${adminAssetsPath}/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 text-truncate">Bradan Rosebotham</h6>
-                                                        <small class="text-truncate">@brosebothamz</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-truncate">tillman.Gleason68@hotmail.com</td>
-                                            <td class="text-truncate">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icon-base ri ri-edit-box-line text-warning icon-22px me-2"></i>
-                                                    <span>Editor</span>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-label-warning rounded-pill">Pending</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-sm me-4">
-                                                        <img src="${adminAssetsPath}/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 text-truncate">Bree Kilday</h6>
-                                                        <small class="text-truncate">@bkildayr</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-truncate">otho21@gmail.com</td>
-                                            <td class="text-truncate">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icon-base ri ri-user-3-line icon-22px text-success me-2"></i>
-                                                    <span>Subscriber</span>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-label-success rounded-pill">Active</span></td>
-                                        </tr>
+                                        <c:if test="${not empty adminUsers}">
+                                            <c:forEach var="user" items="${adminUsers}">
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar avatar-sm me-4">
+                                                                <img src="${adminAssetsPath}/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
+                                                            </div>
+                                                            <div>
+                                                                <h6 class="mb-0 text-truncate">
+                                                                    ${empty user.fullname ? user.username : user.fullname}
+                                                                </h6>
+                                                                <small class="text-truncate">@${user.username}</small>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-truncate">${user.email}</td>
+                                                    <td class="text-truncate">
+                                                        <div class="d-flex align-items-center">
+                                                            <c:choose>
+                                                                <c:when test="${user.role == 'ADMIN'}">
+                                                                    <i class="icon-base ri ri-vip-crown-line icon-22px text-primary me-2"></i>
+                                                                    <span>Admin</span>
+                                                                </c:when>
+                                                                <c:when test="${user.role == 'STAFF'}">
+                                                                    <i class="icon-base ri ri-edit-box-line text-warning icon-22px me-2"></i>
+                                                                    <span>Staff</span>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <i class="icon-base ri ri-user-3-line icon-22px text-success me-2"></i>
+                                                                    <span>Customer</span>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${user.isActive}">
+                                                                <span class="badge bg-label-success rounded-pill">Active</span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <span class="badge bg-label-secondary rounded-pill">Inactive</span>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:if>
+                                        <c:if test="${empty adminUsers}">
+                                            <tr>
+                                                <td colspan="4" class="text-center">Chưa có người dùng nào.</td>
+                                            </tr>
+                                        </c:if>
                                         </tbody>
                                     </table>
                                 </div>

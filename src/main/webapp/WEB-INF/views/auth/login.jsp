@@ -73,12 +73,20 @@
         <div class="large-container">
             <div class="sec-title centred pb_30">
                 <h2>Đăng nhập tài khoản</h2>
+                <%
+                    String loginError = (String) request.getAttribute("loginError");
+                    if (loginError != null && !loginError.isBlank()) {
+                %>
+                <p style="color:#dc2626;margin-top:10px;"><%= loginError %></p>
+                <%
+                    }
+                %>
             </div>
             <div class="form-inner">
-                <form method="post" action="#">
+                <form method="post" action="${pageContext.request.contextPath}/login">
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" name="email" required>
+                        <label>Email hoặc tên đăng nhập</label>
+                        <input type="text" name="email" required>
                     </div>
                     <div class="form-group">
                         <label>Mật khẩu</label>

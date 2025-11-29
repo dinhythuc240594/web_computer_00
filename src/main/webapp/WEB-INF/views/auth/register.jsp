@@ -66,9 +66,22 @@
         <div class="large-container">
             <div class="sec-title centred pb_30">
                 <h2>Tạo tài khoản mới</h2>
+                <%
+                    String registerError = (String) request.getAttribute("registerError");
+                    String registerSuccess = (String) request.getAttribute("registerSuccess");
+                    if (registerError != null && !registerError.isBlank()) {
+                %>
+                <p style="color:#dc2626;margin-top:10px;"><%= registerError %></p>
+                <%
+                    } else if (registerSuccess != null && !registerSuccess.isBlank()) {
+                %>
+                <p style="color:#16a34a;margin-top:10px;"><%= registerSuccess %></p>
+                <%
+                    }
+                %>
             </div>
             <div class="form-inner">
-                <form method="post" action="#">
+                <form method="post" action="${pageContext.request.contextPath}/auth/register">
                     <div class="form-group">
                         <label>Họ và tên</label>
                         <input type="text" name="name" required>
@@ -100,12 +113,12 @@
                 </form>
                 <div class="other-option">
                     <div class="check-box">
-                        <input class="check" type="checkbox" id="agree-term">
+                        <input class="check" type="checkbox" id="agree-term" name="agree-term" value="true">
                         <label for="agree-term">Tôi đồng ý với điều khoản sử dụng</label>
                     </div>
                 </div>
                 <div class="lower-text centred">
-                    <p>Đã có tài khoản? <a href="${pageContext.request.contextPath}/auth/login">Đăng nhập</a></p>
+                    <p>Đã có tài khoản? <a href="${pageContext.request.contextPath}/login">Đăng nhập</a></p>
                 </div>
             </div>
         </div>
