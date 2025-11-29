@@ -1,7 +1,10 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="utilities.DataSourceUtil" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.DatabaseMetaData" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    Boolean dbStatusOk = (Boolean) request.getAttribute("dbStatusOk");
+    String dbStatusMessage = (String) request.getAttribute("dbStatusMessage");
+    String dbStatusDetails = (String) request.getAttribute("dbStatusDetails");
+    boolean isDbOk = Boolean.TRUE.equals(dbStatusOk);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,6 +91,8 @@
 
     <jsp:include page="fragments/home/shop-top-sold.jsp" />
 
+    <jsp:include page="fragments/home/news.jsp" />
+
     <!-- main-footer -->
     <jsp:include page="../common/footer.jsp" />
     <!-- main-footer end -->
@@ -104,23 +109,23 @@
 
 
 <!-- jequery plugins -->
-<script src="${pageContext.request.contextPath}/assets/client/js/jquery.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/owl.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/wow.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/validation.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/jquery.fancybox.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/appear.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/isotope.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/parallax-scroll.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/jquery.nice-select.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/scrolltop.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/language.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/countdown.js"></script>
-<script src="${pageContext.request.contextPath}/assets/client/js/jquery-ui.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/jquery.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/owl.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/wow.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/validation.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/jquery.fancybox.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/appear.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/isotope.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/parallax-scroll.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/jquery.nice-select.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/scrolltop.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/language.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/countdown.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/jquery-ui.js"></script>
 
 <!-- main-js -->
-<script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
 
 </body><!-- End of .page_wrapper -->
 </html>

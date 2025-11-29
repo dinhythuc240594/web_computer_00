@@ -262,12 +262,33 @@ public class ProductRepositoryImpl implements ProductRepository {
         item.setBrand_id(rs.getInt("brand_id"));
         item.setCategory_id(rs.getInt("category_id"));
         item.setName(rs.getString("name"));
-        item.setPrice(rs.getDouble("price"));
-        item.setStock_quantity(rs.getInt("stock_quantity"));
-        item.setIs_active(rs.getBoolean("is_active"));
-        item.setDescription(rs.getString("description"));
+        item.setSlug(getColumnIfExists(rs, "slug"));
+        if (hasColumn(rs, "price")) {
+            item.setPrice(rs.getDouble("price"));
+        }
+        if (hasColumn(rs, "stock_quantity")) {
+            item.setStock_quantity(rs.getInt("stock_quantity"));
+        }
+        if (hasColumn(rs, "is_active")) {
+            item.setIs_active(rs.getBoolean("is_active"));
+        }
+        item.setDescription(getColumnIfExists(rs, "description"));
+        item.setImage_url(getColumnIfExists(rs, "image_url"));
 
         return item;
+    }
+
+    private boolean hasColumn(ResultSet rs, String columnName) throws SQLException {
+        try {
+            rs.findColumn(columnName);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
+    private String getColumnIfExists(ResultSet rs, String columnName) throws SQLException {
+        return hasColumn(rs, columnName) ? rs.getString(columnName) : null;
     }
 
 }

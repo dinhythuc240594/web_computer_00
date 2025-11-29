@@ -6,6 +6,37 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="model.CartItem" %>
+<%@ page import="model.ProductDAO" %>
+<%
+    List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItems");
+    if (cartItems == null) {
+        cartItems = java.util.Collections.emptyList();
+    }
+
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+    double subtotal = 0.0;
+    for (CartItem item : cartItems) {
+        ProductDAO p = item.getProduct();
+        if (p != null && p.getPrice() != null) {
+            subtotal += p.getPrice() * item.getQuantity();
+        }
+    }
+
+    double freeShipThreshold = 500000; // 500.000đ để được miễn phí vận chuyển
+    double shippingFee = subtotal >= freeShipThreshold || subtotal == 0 ? 0 : 30000;
+    double total = subtotal + shippingFee;
+
+    double remainingForFreeShip = freeShipThreshold - subtotal;
+    if (remainingForFreeShip < 0) {
+        remainingForFreeShip = 0;
+    }
+
+    int progressPercent = subtotal <= 0 ? 0 : (int) Math.min(100, Math.round(subtotal / freeShipThreshold * 100));
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,8 +109,8 @@
     <section class="page-title pt_20 pb_18">
         <div class="large-container">
             <ul class="bread-crumb clearfix">
-                <li><a href="index.html">Home</a></li>
-                <li>Cart</li>
+                <li><a href="<%= request.getContextPath() %>/home">Trang chủ</a></li>
+                <li>Giỏ hàng</li>
             </ul>
         </div>
     </section>
@@ -90,92 +121,104 @@
     <section class="cart-section pb_80">
         <div class="large-container">
             <div class="sec-title centred pb_30">
-                <h2>Your Cart</h2>
+                <h2>Giỏ hàng của bạn</h2>
             </div>
             <div class="row clearfix">
                 <div class="col-lg-9 col-md-12 col-sm-12 content-side">
                     <div class="target-price mb_30">
-                        <p>Add <span>$89.99</span> to cart and get free shiping</p>
+                        <%
+                            if (subtotal > 0 && remainingForFreeShip > 0) {
+                        %>
+                        <p>Thêm <span><%= currencyFormat.format(remainingForFreeShip) %></span> để được miễn phí vận chuyển</p>
+                        <%
+                            } else if (subtotal >= freeShipThreshold) {
+                        %>
+                        <p>Bạn đã đủ điều kiện <span>miễn phí vận chuyển</span>.</p>
+                        <%
+                            } else {
+                        %>
+                        <p>Giỏ hàng đang trống. Thêm sản phẩm để bắt đầu.</p>
+                        <%
+                            }
+                        %>
                         <div class="progress-box">
-                            <div class="bar"><div class="bar-inner count-bar" data-percent="70%"></div></div>
+                            <div class="bar">
+                                <div class="bar-inner count-bar" data-percent="<%= progressPercent %>%"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="table-outer mb_30">
                         <table class="cart-table">
                             <thead class="cart-header">
                             <tr>
-                                <th>product</th>
-                                <th>price</th>
-                                <th>quantity</th>
-                                <th>total</th>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
                                 <th>&nbsp;</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <%
+                                if (!cartItems.isEmpty()) {
+                                    for (CartItem item : cartItems) {
+                                        ProductDAO product = item.getProduct();
+                                        if (product == null) {
+                                            continue;
+                                        }
+                                        String productImage = product.getImage_url();
+                                        if (productImage == null || productImage.isBlank()) {
+                                            productImage = request.getContextPath() + "/assets/client/images/shop/cart-4.png";
+                                        } else if (!productImage.startsWith("http")) {
+                                            if (!productImage.startsWith("/")) {
+                                                productImage = "/" + productImage;
+                                            }
+                                            productImage = request.getContextPath() + productImage;
+                                        }
+                                        String productLink = product.getSlug() != null && !product.getSlug().isBlank()
+                                                ? request.getContextPath() + "/product?slug=" + product.getSlug()
+                                                : request.getContextPath() + "/product?id=" + product.getId();
+
+                                        int quantity = item.getQuantity();
+                                        double price = product.getPrice() != null ? product.getPrice() : 0.0;
+                                        double lineTotal = price * quantity;
+                            %>
                             <tr>
                                 <td class="product-column">
                                     <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/cart-4.png" alt=""></figure>
-                                        <h6><a href="shop-details.html">CANON EOS 750D 24.2 MP</a></h6>
+                                        <figure class="image-box">
+                                            <img src="<%= productImage %>" alt="<%= product.getName() %>">
+                                        </figure>
+                                        <h6><a href="<%= productLink %>"><%= product.getName() %></a></h6>
                                     </div>
                                 </td>
-                                <td>$133</td>
+                                <td><%= currencyFormat.format(price) %></td>
                                 <td class="qty">
                                     <div class="item-quantity">
-                                        <input class="quantity-spinner" type="text" value="2" name="quantity">
+                                        <input class="quantity-spinner" type="text" value="<%= quantity %>" name="quantity">
                                     </div>
                                 </td>
-                                <td>$266</td>
-                                <td><button class="cancel-btn"><i class="icon-9"></i></button></td>
+                                <td><%= currencyFormat.format(lineTotal) %></td>
+                                <td>
+                                    <form action="<%= request.getContextPath() %>/cart" method="post">
+                                        <input type="hidden" name="action" value="remove">
+                                        <input type="hidden" name="productId" value="<%= product.getId() %>">
+                                        <button type="submit" class="cancel-btn"><i class="icon-9"></i></button>
+                                    </form>
+                                </td>
                             </tr>
+                            <%
+                                    }
+                                } else {
+                            %>
                             <tr>
-                                <td class="product-column">
-                                    <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/cart-5.png" alt=""></figure>
-                                        <h6><a href="shop-details.html">Box Shinecon 3D Glass with Remote</a></h6>
-                                    </div>
+                                <td colspan="5" class="text-center">
+                                    Hiện chưa có sản phẩm nào trong giỏ hàng.
                                 </td>
-                                <td>$167.98</td>
-                                <td class="qty">
-                                    <div class="item-quantity">
-                                        <input class="quantity-spinner" type="text" value="1" name="quantity">
-                                    </div>
-                                </td>
-                                <td>$167.98</td>
-                                <td><button class="cancel-btn"><i class="icon-9"></i></button></td>
                             </tr>
-                            <tr>
-                                <td class="product-column">
-                                    <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/cart-6.png" alt=""></figure>
-                                        <h6><a href="shop-details.html">8 KG Front Loading Washing</a></h6>
-                                    </div>
-                                </td>
-                                <td>$143</td>
-                                <td class="qty">
-                                    <div class="item-quantity">
-                                        <input class="quantity-spinner" type="text" value="1" name="quantity">
-                                    </div>
-                                </td>
-                                <td>$143</td>
-                                <td><button class="cancel-btn"><i class="icon-9"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td class="product-column">
-                                    <div class="product-box">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/assets/client/images/shop/cart-7.png" alt=""></figure>
-                                        <h6><a href="shop-details.html">Sony Bluetooth-compatible Speaker</a></h6>
-                                    </div>
-                                </td>
-                                <td>$150</td>
-                                <td class="qty">
-                                    <div class="item-quantity">
-                                        <input class="quantity-spinner" type="text" value="1" name="quantity">
-                                    </div>
-                                </td>
-                                <td>$150</td>
-                                <td><button class="cancel-btn"><i class="icon-9"></i></button></td>
-                            </tr>
+                            <%
+                                }
+                            %>
                             </tbody>
                         </table>
                     </div>
@@ -183,37 +226,37 @@
                 <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
                     <div class="total-cart mb_30">
                         <div class="title-box">
-                            <h4>Subtotal</h4>
-                            <h5>$726.98</h5>
+                            <h4>Tạm tính</h4>
+                            <h5><%= currencyFormat.format(subtotal) %></h5>
                         </div>
                         <div class="shipping-cost mb_40">
-                            <h4>Shipping</h4>
+                            <h4>Vận chuyển</h4>
                             <ul class="cost-list">
                                 <li>
                                     <div class="check-box">
                                         <input class="check" type="radio" id="checkbox1" name="same" checked>
-                                        <label for="checkbox1">Free Shipping</label>
+                                        <label for="checkbox1">Miễn phí vận chuyển</label>
                                     </div>
                                     <span class="price">+$00.00</span>
                                 </li>
                                 <li>
                                     <div class="check-box">
                                         <input class="check" type="radio" id="checkbox2" name="same">
-                                        <label for="checkbox2">Flat Rate</label>
+                                        <label for="checkbox2">Phí cố định</label>
                                     </div>
                                     <span class="price">+$10.00</span>
                                 </li>
                                 <li>
                                     <div class="check-box">
                                         <input class="check" type="radio" id="checkbox3" name="same">
-                                        <label for="checkbox3">Local Delivery</label>
+                                        <label for="checkbox3">Giao hàng nội thành</label>
                                     </div>
                                     <span class="price">+$20.00</span>
                                 </li>
                             </ul>
                         </div>
                         <div class="shipping-calculator">
-                            <h4>Calculate Shipping</h4>
+                            <h4>Tính phí vận chuyển</h4>
                             <div class="form-group">
                                 <div class="select-box">
                                     <select class="wide">
@@ -237,15 +280,15 @@
                                 <input type="text" name="zip" placeholder="Postcode / ZIP">
                             </div>
                             <div class="form-group">
-                                <button class="theme-btn cart-btn" type="button">Update Cart <span></span><span></span><span></span><span></span></button>
+                                <button class="theme-btn cart-btn" type="button">Cập nhật giỏ hàng <span></span><span></span><span></span><span></span></button>
                             </div>
                         </div>
                         <div class="total-box">
-                            <h4>Total</h4>
-                            <h5>$756.98</h5>
+                            <h4>Tổng cộng</h4>
+                            <h5><%= currencyFormat.format(total) %></h5>
                         </div>
                         <div class="btn-box">
-                            <button class="theme-btn" type="button">Proceed to Checkout<span></span><span></span><span></span><span></span></button>
+                            <button class="theme-btn" type="button">Thanh toán<span></span><span></span><span></span><span></span></button>
                         </div>
                     </div>
                 </div>

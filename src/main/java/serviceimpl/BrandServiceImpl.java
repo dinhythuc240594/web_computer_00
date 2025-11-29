@@ -22,31 +22,31 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public List<BrandDAO> getAll() {
-        return List.of();
+        return brandRepository.getAll();
     }
 
     @Override
     public BrandDAO findById(int id) {
-        return null;
+        return brandRepository.findById(id);
     }
 
     @Override
     public Boolean deleteById(int id) {
-        return null;
+        return brandRepository.deleteById(id);
     }
 
     @Override
     public int count(String keyword) {
-        return 0;
+        return brandRepository.count(keyword);
     }
 
     @Override
     public Boolean create(BrandDAO entity) {
-        return false;
+        return brandRepository.create(entity);
     }
 
     @Override
     public Boolean update(BrandDAO entity) {
-        return false;
+        return brandRepository.update(entity);
     }
 }

@@ -27,7 +27,7 @@ public class BrandRepositoryImpl implements BrandRepository {
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery(sql)) {
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 items.add(mapResultSetToBrandDAO(rs));
@@ -96,8 +96,8 @@ public class BrandRepositoryImpl implements BrandRepository {
 
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getCode());
-            ps.setString(3, entity.getLogo_url());
-            ps.setBoolean(4, entity.getIs_active());
+            ps.setBoolean(3, entity.getIs_active());
+            ps.setString(4, entity.getLogo_url());
 
             ps.executeUpdate();
 
@@ -120,8 +120,8 @@ public class BrandRepositoryImpl implements BrandRepository {
 
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getCode());
-            ps.setString(3, entity.getLogo_url());
-            ps.setBoolean(4, entity.getIs_active());
+            ps.setBoolean(3, entity.getIs_active());
+            ps.setString(4, entity.getLogo_url());
             ps.setInt(5, entity.getId());
             ps.executeUpdate();
 
@@ -141,6 +141,7 @@ public class BrandRepositoryImpl implements BrandRepository {
         item.setName(rs.getString("name"));
         item.setCode(rs.getString("code"));
         item.setIs_active(rs.getBoolean("is_active"));
+        item.setLogo_url(rs.getString("logo_url"));
 
         return item;
     }

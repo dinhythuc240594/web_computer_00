@@ -27,7 +27,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery(sql)) {
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 items.add(mapResultSetToCategoryDAO(rs));
@@ -144,6 +144,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         item.setName(rs.getString("name"));
         item.setDescription(rs.getString("description"));
         item.setIs_active(rs.getBoolean("is_active"));
+        item.setParent_id(rs.getInt("parent_id"));
 
         return item;
     }

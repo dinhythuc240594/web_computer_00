@@ -23,31 +23,31 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDAO findById(int id) {
-        return null;
+        return categoryRepository.findById(id);
     }
 
     @Override
     public Boolean deleteById(int id) {
-        return null;
+        return categoryRepository.deleteById(id);
     }
 
     @Override
     public int count(String keyword) {
-        return 0;
+        return categoryRepository.count(keyword);
     }
 
     @Override
     public Boolean create(CategoryDAO entity) {
-        return null;
+        return categoryRepository.create(entity);
     }
 
     @Override
     public Boolean update(CategoryDAO entity) {
-        return false;
+        return categoryRepository.update(entity);
     }
 
     @Override
     public List<CategoryDAO> getAll() {
-        return List.of();
+        return categoryRepository.getAll();
     }
 }

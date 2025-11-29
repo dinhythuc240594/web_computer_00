@@ -1,3 +1,10 @@
+<%@ page import="java.util.List" %>
+<%@ page import="model.BrandDAO" %>
+<%
+    List<BrandDAO> brands = (List<BrandDAO>) request.getAttribute("homeBrands");
+    String contextPath = request.getContextPath();
+    String fallbackLogo = contextPath + "/assets/client/images/clients/clients-1.png";
+%>
 <!-- clients-section -->
     <section class="clients-section pb_70">
         <div class="large-container">
@@ -6,18 +13,36 @@
                 <a href="index.html">Xem tất cả thương hiệu</a>
             </div>
             <ul class="clients-list clearfix">
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-1.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-2.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-3.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-4.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-5.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-6.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-7.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-8.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-9.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-10.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-11.png" alt=""></a></li>
-                <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/clients/clients-12.png" alt=""></a></li>
+                <%
+                    if (brands != null && !brands.isEmpty()) {
+                        for (BrandDAO brand : brands) {
+                            String logoUrl = brand.getLogo_url();
+                            if (logoUrl == null || logoUrl.isBlank()) {
+                                logoUrl = fallbackLogo;
+                            } else if (!logoUrl.startsWith("http")) {
+                                if (!logoUrl.startsWith("/")) {
+                                    logoUrl = "/" + logoUrl;
+                                }
+                                logoUrl = contextPath + logoUrl;
+                            }
+
+                            String brandLink = contextPath + "/products?brandId=" + brand.getId();
+                %>
+                <li>
+                    <a href="<%= brandLink %>" title="<%= brand.getName() %>">
+                        <img src="<%= logoUrl %>" alt="<%= brand.getName() %>">
+                    </a>
+                </li>
+                <%
+                        }
+                    } else {
+                %>
+                <li>
+                    <span>Chưa có thương hiệu để hiển thị.</span>
+                </li>
+                <%
+                    }
+                %>
             </ul>
         </div>
     </section>
