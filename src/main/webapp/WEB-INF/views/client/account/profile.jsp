@@ -1,4 +1,28 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="model.UserDAO" %>
+<%@ page import="service.UserService" %>
+<%@ page import="serviceimpl.UserServiceImpl" %>
+<%@ page import="utilities.DataSourceUtil" %>
+<%
+    String sessionUsername = (String) session.getAttribute("username");
+    UserDAO currentUser = null;
+    if (sessionUsername != null && !sessionUsername.isBlank()) {
+        try {
+            javax.sql.DataSource ds = DataSourceUtil.getDataSource();
+            UserService userService = new UserServiceImpl(ds);
+            currentUser = userService.findByUsername(sessionUsername);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    String displayName = currentUser != null && currentUser.getFullname() != null && !currentUser.getFullname().isBlank()
+            ? currentUser.getFullname()
+            : (sessionUsername != null ? sessionUsername : "Khách");
+    String displayEmail = currentUser != null && currentUser.getEmail() != null ? currentUser.getEmail() : "";
+    String displayPhone = currentUser != null && currentUser.getPhone() != null ? currentUser.getPhone() : "Chưa cập nhật";
+    String displayAddress = currentUser != null && currentUser.getAddress() != null ? currentUser.getAddress() : "Chưa cập nhật";
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -79,8 +103,18 @@
                             <figure class="image-box">
                                 <img src="${pageContext.request.contextPath}/assets/client/images/resource/account-1.png" alt="Ảnh đại diện">
                             </figure>
-                            <h4>Ridoy Rock</h4>
-                            <a href="mailto:rodiyrock11@gmail.com">rodiyrock11@gmail.com</a>
+                            <h4><%= displayName %></h4>
+                            <%
+                                if (displayEmail != null && !displayEmail.isBlank()) {
+                            %>
+                            <a href="mailto:<%= displayEmail %>"><%= displayEmail %></a>
+                            <%
+                                } else {
+                            %>
+                            <span>Chưa cập nhật email</span>
+                            <%
+                                }
+                            %>
                         </div>
                         <ul class="tab-btns tab-buttons clearfix">
                             <li class="tab-btn active-btn" data-tab="#tab-1">Thông tin cá nhân</li>
@@ -98,28 +132,38 @@
                                     <div class="col-lg-3 col-md-6 col-sm-12 single-column">
                                         <div class="single-item">
                                             <h6>Họ và tên</h6>
-                                            <span>Ridoy Rock</span>
+                                            <span><%= displayName %></span>
                                             <button type="button">Chỉnh sửa</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6 col-sm-12 single-column">
                                         <div class="single-item">
-                                            <h6>Ngày sinh</h6>
-                                            <span>02/07/2000</span>
+                                            <h6>Số điện thoại</h6>
+                                            <span><%= displayPhone %></span>
                                             <button type="button">Chỉnh sửa</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6 col-sm-12 single-column">
                                         <div class="single-item">
                                             <h6>Địa chỉ</h6>
-                                            <span>Thủ Đức, TP.HCM</span>
+                                            <span><%= displayAddress %></span>
                                             <button type="button">Chỉnh sửa</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-6 col-sm-12 single-column">
                                         <div class="single-item">
                                             <h6>Email</h6>
-                                            <span><a href="mailto:ridoyrock@gmail.com">ridoyrock@gmail.com</a></span>
+                                            <%
+                                                if (displayEmail != null && !displayEmail.isBlank()) {
+                                            %>
+                                            <span><a href="mailto:<%= displayEmail %>"><%= displayEmail %></a></span>
+                                            <%
+                                                } else {
+                                            %>
+                                            <span>Chưa cập nhật</span>
+                                            <%
+                                                }
+                                            %>
                                             <button type="button">Chỉnh sửa</button>
                                         </div>
                                     </div>

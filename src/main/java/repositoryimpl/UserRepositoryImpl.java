@@ -24,30 +24,28 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<UserDAO> getAll() {
         List<UserDAO> items = new ArrayList<>();
-        String sql = "SELECT id, username, email, password_hash, full_name, "
-                + "phone_number, address, is_active, role "
-                + "FROM reviews WHERE id = ?";
+        String sql = "SELECT id, username, email, password_hash, full_name, " +
+                "phone_number, address, is_active, role FROM users";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery(sql)) {
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 items.add(mapResultSetToUserDAO(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Lỗi khi tìm đơn hàng theo ID: ", e);
+            throw new RuntimeException("Lỗi khi lấy tất cả người dùng.", e);
         }
-        return null;
+        return items;
     }
 
     @Override
     public UserDAO findById(int id) {
 
-        String sql = "SELECT id, username, email, password_hash, full_name, "
-                + "phone_number, address, is_active, role "
-                + "FROM reviews WHERE id = ?";
+        String sql = "SELECT id, username, email, password_hash, full_name, " +
+                "phone_number, address, is_active, role FROM users WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -61,10 +59,33 @@ public class UserRepositoryImpl implements UserRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Lỗi khi tìm đơn hàng theo ID: " + id, e);
+            throw new RuntimeException("Lỗi khi tìm người dùng theo ID: " + id, e);
         }
         return null;
 
+    }
+
+    @Override
+    public UserDAO findByUsername(String username) {
+
+        String sql = "SELECT id, username, email, password_hash, full_name, " +
+                "phone_number, address, is_active, role FROM users WHERE username = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToUserDAO(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi tìm người dùng theo username: " + username, e);
+        }
+        return null;
     }
 
     @Override
@@ -95,9 +116,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Boolean create(UserDAO entity) {
 
-        String sql = "INSERT INTO users (username, email, password_hash, full_name, "
-                    +"phone_number, address, is_active, role)"
-                    +"VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (username, email, password_hash, full_name, " +
+                "phone_number, address, is_active, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -105,11 +125,11 @@ public class UserRepositoryImpl implements UserRepository {
             ps.setString(1, entity.getUsername());
             ps.setString(2, entity.getEmail());
             ps.setString(3, entity.getPassword());
-            ps.setString(4, entity.getRole());
-            ps.setString(5, entity.getAddress());
-            ps.setString(6, entity.getPhone());
-            ps.setString(7, entity.getFullname());
-            ps.setBoolean(8, entity.getIsActive());
+            ps.setString(4, entity.getFullname());
+            ps.setString(5, entity.getPhone());
+            ps.setString(6, entity.getAddress());
+            ps.setBoolean(7, entity.getIsActive());
+            ps.setString(8, entity.getRole());
 
             ps.executeUpdate();
 
@@ -124,9 +144,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Boolean update(UserDAO entity) {
 
-        String sql = "UPDATE users SET username = ?, email = ?, password_hash = ?, full_name = ?, "
-                + "phone_number = ?, address = ?, is_active = ?, role = ?"
-                + "WHERE id = ?";
+        String sql = "UPDATE users SET username = ?, email = ?, password_hash = ?, full_name = ?, " +
+                "phone_number = ?, address = ?, is_active = ?, role = ? WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -134,11 +153,11 @@ public class UserRepositoryImpl implements UserRepository {
             ps.setString(1, entity.getUsername());
             ps.setString(2, entity.getEmail());
             ps.setString(3, entity.getPassword());
-            ps.setString(4, entity.getRole());
-            ps.setString(5, entity.getAddress());
-            ps.setString(6, entity.getPhone());
-            ps.setString(7, entity.getFullname());
-            ps.setBoolean(8, entity.getIsActive());
+            ps.setString(4, entity.getFullname());
+            ps.setString(5, entity.getPhone());
+            ps.setString(6, entity.getAddress());
+            ps.setBoolean(7, entity.getIsActive());
+            ps.setString(8, entity.getRole());
             ps.setInt(9, entity.getId());
 
             ps.executeUpdate();
@@ -156,13 +175,13 @@ public class UserRepositoryImpl implements UserRepository {
 
         item.setId(rs.getInt("id"));
         item.setUsername(rs.getString("username"));
-        item.setPassword(rs.getString("password"));
+        item.setPassword(rs.getString("password_hash"));
         item.setEmail(rs.getString("email"));
-        item.setRole(rs.getString("role"));
+        item.setFullname(rs.getString("full_name"));
+        item.setPhone(rs.getString("phone_number"));
         item.setAddress(rs.getString("address"));
-        item.setPhone(rs.getString("phone"));
-        item.setFullname(rs.getString("fullname"));
-        item.setIsActive(rs.getBoolean("isActive"));
+        item.setIsActive(rs.getBoolean("is_active"));
+        item.setRole(rs.getString("role"));
 
         return item;
     }

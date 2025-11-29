@@ -22,36 +22,42 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDAO> getAll() {
-        return List.of();
+        return userRepository.getAll();
     }
 
     @Override
     public UserDAO findById(int id) {
-        return null;
+        return userRepository.findById(id);
     }
 
     @Override
     public Boolean deleteById(int id) {
-        return null;
+        return userRepository.deleteById(id);
     }
 
     @Override
     public int count(String keyword) {
-        return 0;
+        return userRepository.count(keyword);
     }
 
     @Override
     public Boolean create(UserDAO entity) {
-        return false;
+        return userRepository.create(entity);
     }
 
     @Override
     public Boolean update(UserDAO entity) {
-        return false;
+        return userRepository.update(entity);
     }
 
     @Override
     public Page<UserDAO> findAll(PageRequest pageRequest) {
+        // Chưa dùng phân trang cho user, có thể triển khai sau
         return null;
+    }
+
+    @Override
+    public UserDAO findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }
