@@ -88,7 +88,23 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<ProductDAO> getAll() {
-        return List.of();
+        List<ProductDAO> products = new ArrayList<>();
+        String sql = "SELECT id, name, slug, description, price, stock_quantity, " +
+                "image_url, category_id, brand_id, is_active " +
+                "FROM products";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                products.add(mapResultSetToProductDAO(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi lấy danh sách sản phẩm", e);
+        }
+        return products;
     }
 
     @Override
@@ -112,6 +128,29 @@ public class ProductRepositoryImpl implements ProductRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Lỗi khi tìm đơn hàng theo ID: " + id, e);
+        }
+        return null;
+    }
+
+    @Override
+    public ProductDAO findBySlug(String slug) {
+        String sql = "SELECT id, name, description, price, image_url, slug, " +
+                "category_id, stock_quantity, brand_id, is_active " +
+                "FROM products WHERE slug = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, slug);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToProductDAO(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi tìm sản phẩm theo slug: " + slug, e);
         }
         return null;
     }
@@ -181,7 +220,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         String sql = "INSERT INTO products (name, slug, description, price, "
                 + "stock_quantity, image_url, category_id, brand_id, "
-                + "is_active) VALUES (?, ?, ?, ?, ?, ?)";
+                + "is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -208,23 +247,23 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Boolean update(ProductDAO entity) {
 
-        String sql = "UPDATE products SET name = ?, description = ?, price = ?, slug = ?"
-                + "image_url = ?, category_id = ?, brand_id = ?, is_active = ? "
-                + "stock_quantity = ?, brand_id = ?, is_active = ? "
-                + " WHERE id = ?";
+        String sql = "UPDATE products SET name = ?, slug = ?, description = ?, price = ?, " +
+                "stock_quantity = ?, image_url = ?, category_id = ?, brand_id = ?, is_active = ? " +
+                "WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql);) {
 
             ps.setString(1, entity.getName());
-            ps.setString(2, entity.getDescription());
-            ps.setDouble(3, entity.getPrice());
-            ps.setString(4, entity.getSlug());
-            ps.setString(5, entity.getImage_url());
-            ps.setInt(6, entity.getCategory_id());
-            ps.setInt(7, entity.getBrand_id());
-            ps.setBoolean(8, entity.getIs_active());
-            ps.setInt(9, entity.getId());
+            ps.setString(2, entity.getSlug());
+            ps.setString(3, entity.getDescription());
+            ps.setDouble(4, entity.getPrice());
+            ps.setInt(5, entity.getStock_quantity());
+            ps.setString(6, entity.getImage_url());
+            ps.setInt(7, entity.getCategory_id());
+            ps.setInt(8, entity.getBrand_id());
+            ps.setBoolean(9, entity.getIs_active());
+            ps.setInt(10, entity.getId());
             ps.executeUpdate();
 
             return true;
