@@ -1,4 +1,6 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.UserDAO" %>
 <%@ include file="../layout/init.jspf" %>
 <!doctype html>
 
@@ -16,7 +18,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Demo: eCommerce Customer All - Apps | Materialize - Bootstrap Dashboard PRO</title>
+    <title>Quản lý tài khoản hệ thống</title>
 
     <meta name="description" content="" />
 
@@ -89,173 +91,98 @@
             <div class="content-wrapper">
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <!-- customers List Table -->
+                    <!-- User Management Table -->
                     <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title mb-1">Quản lý tài khoản</h5>
+                                <small class="text-muted">Danh sách tài khoản ADMIN / STAFF trong hệ thống</small>
+                            </div>
+                            <a href="${pageContext.request.contextPath}/admin/user/add" class="btn btn-primary">
+                                <i class="ri-add-line me-1"></i> Thêm tài khoản
+                            </a>
+                        </div>
+
                         <div class="card-datatable table-responsive">
-                            <table class="datatables-customers table">
-                                <thead>
+                            <table class="table table-striped table-hover align-middle">
+                                <thead class="table-light">
                                 <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th>Customer</th>
-                                    <th class="text-nowrap">Customer Id</th>
-                                    <th>Country</th>
-                                    <th>Order</th>
-                                    <th class="text-nowrap">Total Spent</th>
+                                    <th class="text-nowrap">ID</th>
+                                    <th class="text-nowrap">Username</th>
+                                    <th class="text-nowrap">Họ tên</th>
+                                    <th class="text-nowrap">Email</th>
+                                    <th class="text-nowrap">Số điện thoại</th>
+                                    <th class="text-nowrap">Vai trò</th>
+                                    <th class="text-nowrap text-center">Trạng thái</th>
+                                    <th class="text-nowrap text-center">Hành động</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+                                <%
+                                    List<UserDAO> adminUsers = (List<UserDAO>) request.getAttribute("adminUsers");
+                                    if (adminUsers != null && !adminUsers.isEmpty()) {
+                                        for (UserDAO u : adminUsers) {
+                                            String fullname = (u.getFullname() != null && !u.getFullname().isEmpty())
+                                                    ? u.getFullname() : "(Chưa có tên)";
+                                            String email = (u.getEmail() != null && !u.getEmail().isEmpty())
+                                                    ? u.getEmail() : "-";
+                                            String phone = (u.getPhone() != null && !u.getPhone().isEmpty())
+                                                    ? u.getPhone() : "-";
+                                            String role = (u.getRole() != null && !u.getRole().isEmpty())
+                                                    ? u.getRole() : "USER";
+                                            boolean isActive = Boolean.TRUE.equals(u.getIsActive());
+                                %>
+                                            <tr>
+                                                <td><%= u.getId() %></td>
+                                                <td><%= u.getUsername() %></td>
+                                                <td><%= fullname %></td>
+                                                <td><%= email %></td>
+                                                <td><%= phone %></td>
+                                                <td>
+                                                    <span class="badge bg-label-primary text-uppercase">
+                                                        <%= role %>
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <% if (isActive) { %>
+                                                        <span class="badge bg-label-success">Hoạt động</span>
+                                                    <% } else { %>
+                                                        <span class="badge bg-label-danger">Bị khóa</span>
+                                                    <% } %>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="btn-group" role="group">
+                                                        <a href="<%= request.getContextPath() %>/admin/user/edit?id=<%= u.getId() %>"
+                                                           class="btn btn-sm btn-outline-primary">
+                                                            <i class="ri-edit-2-line"></i> Sửa
+                                                        </a>
+                                                        <a href="<%= request.getContextPath() %>/admin/user/toggle-status?id=<%= u.getId() %>"
+                                                           class="btn btn-sm btn-outline-warning"
+                                                           onclick="return confirm('Bạn có chắc muốn thay đổi trạng thái tài khoản này?');">
+                                                            <% if (isActive) { %>Khóa<% } else { %>Mở khóa<% } %>
+                                                        </a>
+                                                        <a href="<%= request.getContextPath() %>/admin/user/delete?id=<%= u.getId() %>"
+                                                           class="btn btn-sm btn-outline-danger"
+                                                           onclick="return confirm('Bạn có chắc muốn xóa tài khoản này?');">
+                                                            <i class="ri-delete-bin-line"></i> Xóa
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                <%
+                                        }
+                                    } else {
+                                %>
+                                    <tr>
+                                        <td colspan="8" class="text-center text-muted py-4">
+                                            Không có tài khoản nào để hiển thị.
+                                        </td>
+                                    </tr>
+                                <%
+                                    }
+                                %>
+                                </tbody>
                             </table>
-                        </div>
-                        <!-- Offcanvas to add new customer -->
-                        <div
-                                class="offcanvas offcanvas-end"
-                                tabindex="-1"
-                                id="offcanvasEcommerceCustomerAdd"
-                                aria-labelledby="offcanvasEcommerceCustomerAddLabel">
-                            <div class="offcanvas-header border-bottom">
-                                <h5 id="offcanvasEcommerceCustomerAddLabel" class="offcanvas-title">Add Customer</h5>
-                                <button
-                                        type="button"
-                                        class="btn-close text-reset"
-                                        data-bs-dismiss="offcanvas"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="offcanvas-body mx-0 flex-grow-0">
-                                <form class="ecommerce-customer-add pt-0" id="eCommerceCustomerAddForm" onsubmit="return false">
-                                    <div class="ecommerce-customer-add-basic mb-5">
-                                        <h6 class="mb-5">Basic Information</h6>
-                                        <div class="form-floating form-floating-outline mb-5 form-control-validation">
-                                            <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    id="ecommerce-customer-add-name"
-                                                    placeholder="John Doe"
-                                                    name="customerName"
-                                                    aria-label="John Doe" />
-                                            <label for="ecommerce-customer-add-name">Name*</label>
-                                        </div>
-                                        <div class="form-floating form-floating-outline mb-5 form-control-validation">
-                                            <input
-                                                    type="text"
-                                                    id="ecommerce-customer-add-email"
-                                                    class="form-control"
-                                                    placeholder="john.doe@example.com"
-                                                    aria-label="john.doe@example.com"
-                                                    name="customerEmail" />
-                                            <label for="ecommerce-customer-add-email">Email*</label>
-                                        </div>
-                                        <div class="form-floating form-floating-outline">
-                                            <input
-                                                    type="text"
-                                                    id="ecommerce-customer-add-contact"
-                                                    class="form-control phone-mask"
-                                                    placeholder="+(123) 456-7890"
-                                                    aria-label="+(123) 456-7890"
-                                                    name="customerContact" />
-                                            <label for="ecommerce-customer-add-contact">Mobile</label>
-                                        </div>
-                                    </div>
-                                    <div class="ecommerce-customer-add-shiping mb-5">
-                                        <h6 class="mb-5">Shipping Information</h6>
-                                        <div class="form-floating form-floating-outline mb-5">
-                                            <input
-                                                    type="text"
-                                                    id="ecommerce-customer-add-address"
-                                                    class="form-control"
-                                                    placeholder="45 Roker Terrace"
-                                                    aria-label="45 Roker Terrace"
-                                                    name="customerAddress1" />
-                                            <label for="ecommerce-customer-add-address">Address Line 1</label>
-                                        </div>
-                                        <div class="form-floating form-floating-outline mb-5">
-                                            <input
-                                                    type="text"
-                                                    id="ecommerce-customer-add-address-2"
-                                                    class="form-control"
-                                                    placeholder="Address 2"
-                                                    aria-label="address2"
-                                                    name="customerAddress2" />
-                                            <label for="ecommerce-customer-add-address-2">Address Line 2</label>
-                                        </div>
-                                        <div class="form-floating form-floating-outline mb-5">
-                                            <input
-                                                    type="text"
-                                                    id="ecommerce-customer-add-town"
-                                                    class="form-control"
-                                                    placeholder="New York"
-                                                    aria-label="New York"
-                                                    name="customerTown" />
-                                            <label for="ecommerce-customer-add-town">Town</label>
-                                        </div>
-                                        <div class="form-floating form-floating-outline mb-5">
-                                            <input
-                                                    type="text"
-                                                    id="ecommerce-customer-add-state"
-                                                    class="form-control"
-                                                    placeholder="Southern tip"
-                                                    aria-label="Southern tip"
-                                                    name="customerState" />
-                                            <label for="ecommerce-customer-add-state">State / Province</label>
-                                        </div>
-                                        <div class="form-floating form-floating-outline mb-5">
-                                            <input
-                                                    type="text"
-                                                    id="ecommerce-customer-add-post-code"
-                                                    class="form-control"
-                                                    placeholder="734990"
-                                                    aria-label="734990"
-                                                    name="pin"
-                                                    pattern="[0-9]{8}"
-                                                    maxlength="8" />
-                                            <label for="ecommerce-customer-add-post-code">Post Code</label>
-                                        </div>
-                                        <div class="form-floating form-floating-outline">
-                                            <select id="ecommerce-customer-add-country" class="select2 form-select">
-                                                <option value="">Select</option>
-                                                <option value="Australia">Australia</option>
-                                                <option value="Bangladesh">Bangladesh</option>
-                                                <option value="Belarus">Belarus</option>
-                                                <option value="Brazil">Brazil</option>
-                                                <option value="Canada">Canada</option>
-                                                <option value="China">China</option>
-                                                <option value="France">France</option>
-                                                <option value="Germany">Germany</option>
-                                                <option value="India">India</option>
-                                                <option value="Indonesia">Indonesia</option>
-                                                <option value="Israel">Israel</option>
-                                                <option value="Italy">Italy</option>
-                                                <option value="Japan">Japan</option>
-                                                <option value="Korea">Korea, Republic of</option>
-                                                <option value="Mexico">Mexico</option>
-                                                <option value="Philippines">Philippines</option>
-                                                <option value="Russia">Russian Federation</option>
-                                                <option value="South Africa">South Africa</option>
-                                                <option value="Thailand">Thailand</option>
-                                                <option value="Turkey">Turkey</option>
-                                                <option value="Ukraine">Ukraine</option>
-                                                <option value="United Arab Emirates">United Arab Emirates</option>
-                                                <option value="United Kingdom">United Kingdom</option>
-                                                <option value="United States">United States</option>
-                                            </select>
-                                            <label for="ecommerce-customer-add-country">Country</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-sm-flex mb-5">
-                                        <div class="me-auto mb-2 mb-md-0">
-                                            <h6 class="mb-1">Use as a billing address?</h6>
-                                            <small>If you need more info, please check budget.</small>
-                                        </div>
-                                        <div class="form-check form-switch my-auto me-n2">
-                                            <input type="checkbox" class="form-check-input" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <button type="submit" class="btn btn-primary me-3 data-submit">Add</button>
-                                        <button type="reset" class="btn btn-outline-danger" data-bs-dismiss="offcanvas">Discard</button>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>

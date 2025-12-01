@@ -389,20 +389,21 @@
                                     <div class="rating-box mb_25">
                                         <p>Your Rating <span>*</span></p>
                                         <div class="rating-inner">
-                                            <ul class="rating-list">
-                                                <li><button><i class="icon-11"></i></button></li>
-                                                <li><button><i class="icon-11"></i><i class="icon-11"></i></button></li>
-                                                <li><button><i class="icon-11"></i><i class="icon-11"></i><i class="icon-11"></i></button></li>
-                                                <li><button><i class="icon-11"></i><i class="icon-11"></i><i class="icon-11"></i><i class="icon-11"></i></button></li>
-                                                <li><button><i class="icon-11"></i><i class="icon-11"></i><i class="icon-11"></i><i class="icon-11"></i><i class="icon-11"></i></button></li>
-                                            </ul>
+                                            <select name="rating" class="form-select" style="max-width: 200px;">
+                                                <option value="5" selected>5 - Excellent</option>
+                                                <option value="4">4 - Good</option>
+                                                <option value="3">3 - Average</option>
+                                                <option value="2">2 - Poor</option>
+                                                <option value="1">1 - Very bad</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-inner">
-                                        <form method="post" action="shop-details.html">
+                                        <form method="post" action="${pageContext.request.contextPath}/review">
+                                            <input type="hidden" name="productId" value="${product.id}"/>
                                             <div class="form-group">
                                                 <label>Write Your Review <span>*</span></label>
-                                                <textarea name="message"></textarea>
+                                                <textarea name="comment"></textarea>
                                             </div>
                                             <div class="form-group upload-field">
                                                 <label>Add Photos and Video</label>

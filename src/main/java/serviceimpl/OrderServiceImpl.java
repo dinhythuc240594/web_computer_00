@@ -1,10 +1,7 @@
 package serviceimpl;
 
 import model.OrderDAO;
-import model.PageRequest;
-import repository.OrderItemRepository;
 import repository.OrderRepository;
-import repositoryimpl.OrderItemRepositoryImpl;
 import repositoryimpl.OrderRepositoryImpl;
 import service.OrderService;
 
@@ -13,7 +10,7 @@ import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     public OrderServiceImpl(DataSource ds) {
         this.orderRepository = new OrderRepositoryImpl(ds);
@@ -21,31 +18,31 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDAO> getAll() {
-        return List.of();
+        return orderRepository.getAll();
     }
 
     @Override
     public OrderDAO findById(int id) {
-        return null;
+        return orderRepository.findById(id);
     }
 
     @Override
     public Boolean deleteById(int id) {
-        return null;
+        return orderRepository.deleteById(id);
     }
 
     @Override
     public int count(String keyword) {
-        return 0;
+        return orderRepository.count(keyword);
     }
 
     @Override
     public Boolean create(OrderDAO entity) {
-        return null;
+        return orderRepository.create(entity);
     }
 
     @Override
     public Boolean update(OrderDAO entity) {
-        return false;
+        return orderRepository.update(entity);
     }
 }

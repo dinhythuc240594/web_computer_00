@@ -1,10 +1,7 @@
 package serviceimpl;
 
-import model.PageRequest;
 import model.ReviewDAO;
-import repository.ProductSpecRepository;
 import repository.ReviewRepository;
-import repositoryimpl.ProductSpecRepositoryImpl;
 import repositoryimpl.ReviewRepositoryImpl;
 import service.ReviewService;
 
@@ -13,7 +10,7 @@ import java.util.List;
 
 public class ReviewServiceImpl implements ReviewService {
 
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     public ReviewServiceImpl(DataSource ds) {
         this.reviewRepository = new ReviewRepositoryImpl(ds);
@@ -21,31 +18,31 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<ReviewDAO> getAll() {
-        return List.of();
+        return reviewRepository.getAll();
     }
 
     @Override
     public ReviewDAO findById(int id) {
-        return null;
+        return reviewRepository.findById(id);
     }
 
     @Override
     public Boolean deleteById(int id) {
-        return null;
+        return reviewRepository.deleteById(id);
     }
 
     @Override
     public int count(String keyword) {
-        return 0;
+        return reviewRepository.count(keyword);
     }
 
     @Override
     public Boolean create(ReviewDAO entity) {
-        return false;
+        return reviewRepository.create(entity);
     }
 
     @Override
     public Boolean update(ReviewDAO entity) {
-        return false;
+        return reviewRepository.update(entity);
     }
 }

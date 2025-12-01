@@ -1,8 +1,6 @@
 package repositoryimpl;
 
 import model.OrderDAO;
-import model.OrderItemDAO;
-import model.PageRequest;
 import repository.OrderRepository;
 
 import javax.sql.DataSource;
@@ -26,20 +24,20 @@ public class OrderRepositoryImpl implements OrderRepository {
 
         List<OrderDAO> items = new ArrayList<>();
 
-        String sql = "SELECT id, user_id, order_date, status, total_amount "
-                    + "shipping_address, payment_method, note, is_active"
-                    + " FROM orders";
+        String sql = "SELECT id, user_id, order_date, status, total_amount, " +
+                "shipping_address, payment_method, note, is_active " +
+                "FROM orders";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery(sql)) {
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                items.add(mapResultSetToOrderOrderDAO(rs));
+                items.add(mapResultSetToOrderDAO(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Lỗi khi lấy tất cả chi tiết đơn hàng.", e);
+            throw new RuntimeException("Lỗi khi lấy tất cả đơn hàng.", e);
         }
         return items;
     }
@@ -47,9 +45,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public OrderDAO findById(int id) {
 
-        String sql = "SELECT id, user_id, order_date, status, total_amount, shipping_address, "
-                    + "payment_method, note, is_active "
-                    + "FROM orders WHERE id = ?";
+        String sql = "SELECT id, user_id, order_date, status, total_amount, shipping_address, " +
+                "payment_method, note, is_active " +
+                "FROM orders WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -58,7 +56,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToOrderOrderDAO(rs);
+                    return mapResultSetToOrderDAO(rs);
                 }
             }
         } catch (SQLException e) {
@@ -89,13 +87,39 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public int count(String keyword) {
+        // Đếm tổng số đơn hàng, có thể mở rộng để hỗ trợ tìm kiếm theo keyword sau này
+        String baseSql = "SELECT COUNT(1) FROM orders";
+        StringBuilder sql = new StringBuilder(baseSql);
+        boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
+
+        if (hasKeyword) {
+            sql.append(" WHERE CAST(id AS CHAR) LIKE ? OR CAST(user_id AS CHAR) LIKE ?");
+        }
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            if (hasKeyword) {
+                String like = "%" + keyword + "%";
+                ps.setString(1, like);
+                ps.setString(2, like);
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
     @Override
     public Boolean create(OrderDAO entity) {
 
-        String sql = "INSERT INTO categories (user_id, order_date, status, " +
+        String sql = "INSERT INTO orders (user_id, order_date, status, " +
                 "total_amount, shipping_address, " +
                 "payment_method, note, is_active) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -125,9 +149,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public Boolean update(OrderDAO entity) {
 
-        String sql = "UPDATE orders SET user_id = ?, order_date = ?, status = ?, total_amount = ?, "
-                    + "shipping_address = ?,  payment_method = ?, is_active = ? "
-                    + "WHERE id = ?";
+        String sql = "UPDATE orders SET user_id = ?, order_date = ?, status = ?, total_amount = ?, " +
+                "shipping_address = ?,  payment_method = ?, note = ?, is_active = ? " +
+                "WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -154,16 +178,18 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     }
 
-    private OrderDAO mapResultSetToOrderOrderDAO(ResultSet rs) throws SQLException {
+    private OrderDAO mapResultSetToOrderDAO(ResultSet rs) throws SQLException {
         OrderDAO item = new OrderDAO();
 
         item.setId(rs.getInt("id"));
-        item.setAddress(rs.getString("address"));
+        item.setUser_id(rs.getInt("user_id"));
         item.setOrderDate(rs.getDate("order_date"));
-        item.setNote(rs.getString("note"));
         item.setStatus(rs.getString("status"));
-        item.setPayment(rs.getString("payment"));
-        item.setTotalPrice(rs.getDouble("total_price"));
+        item.setTotalPrice(rs.getDouble("total_amount"));
+        item.setAddress(rs.getString("shipping_address"));
+        item.setPayment(rs.getString("payment_method"));
+        item.setNote(rs.getString("note"));
+        item.setIs_active(rs.getBoolean("is_active"));
 
         return item;
     }

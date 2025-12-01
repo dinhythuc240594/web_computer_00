@@ -28,7 +28,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery(sql)) {
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 items.add(mapResultSetToReviewDAO(rs));
@@ -84,14 +84,25 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     @Override
     public int count(String keyword) {
+        // Đơn giản: đếm tất cả review, chưa filter theo keyword
+        String sql = "SELECT COUNT(*) FROM reviews";
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
     @Override
     public Boolean create(ReviewDAO entity) {
 
-        String sql = "INSERT INTO reviews (user_id, product_id, rating, comment "
-                    +"VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO reviews (user_id, product_id, rating, comment) "
+                    + "VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -113,7 +124,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     @Override
     public Boolean update(ReviewDAO entity) {
 
-        String sql = "UPDATE orders SET user_id = ?, product_id = ?, rating = ?, comment = ?, "
+        String sql = "UPDATE reviews SET user_id = ?, product_id = ?, rating = ?, comment = ? "
                 + "WHERE id = ?";
 
         try (Connection conn = ds.getConnection();

@@ -1,4 +1,6 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.ReviewDAO" %>
 <%@ include file="../layout/init.jspf" %>
 <!doctype html>
 
@@ -16,7 +18,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Demo: eCommerce Manage reviews - App | Materialize - Bootstrap Dashboard PRO</title>
+    <title>Quản lý đánh giá sản phẩm</title>
 
     <meta name="description" content="" />
 
@@ -200,22 +202,90 @@
                         </div>
                     </div>
 
-                    <!-- review List Table -->
+                    <!-- Review List Table -->
                     <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title mb-1">Quản lý đánh giá</h5>
+                                <small class="text-muted">Danh sách đánh giá sản phẩm từ khách hàng</small>
+                            </div>
+                        </div>
                         <div class="card-datatable table-responsive">
-                            <table class="datatables-review table">
-                                <thead>
+                            <table class="table table-striped table-hover align-middle">
+                                <thead class="table-light">
                                 <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th>Product</th>
-                                    <th class="text-nowrap">Reviewer</th>
-                                    <th>Review</th>
-                                    <th>Date</th>
-                                    <th class="text-nowrap">Status</th>
-                                    <th>Actions</th>
+                                    <th class="text-nowrap">ID</th>
+                                    <th class="text-nowrap">Mã sản phẩm</th>
+                                    <th class="text-nowrap">Mã khách hàng</th>
+                                    <th class="text-nowrap">Số sao</th>
+                                    <th class="text-nowrap">Nội dung</th>
+                                    <th class="text-nowrap">Trạng thái</th>
+                                    <th class="text-nowrap text-center">Hành động</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+                                <%
+                                    List<ReviewDAO> reviews = (List<ReviewDAO>) request.getAttribute("reviews");
+                                    if (reviews != null && !reviews.isEmpty()) {
+                                        for (ReviewDAO r : reviews) {
+                                            String comment = (r.getComment() != null && !r.getComment().isEmpty())
+                                                    ? r.getComment()
+                                                    : "(Không có nội dung)";
+                                            String shortComment = comment.length() > 80 ? comment.substring(0, 77) + "..." : comment;
+                                            int rating = r.getRating();
+                                %>
+                                            <tr>
+                                                <td><%= r.getId() %></td>
+                                                <td>#<%= r.getProductId() %></td>
+                                                <td>#<%= r.getUserId() %></td>
+                                                <td>
+                                                    <span class="text-warning">
+                                                        <%
+                                                            for (int i = 0; i < rating; i++) {
+                                                        %>
+                                                                ★
+                                                        <%
+                                                            }
+                                                            for (int i = rating; i < 5; i++) {
+                                                        %>
+                                                                ☆
+                                                        <%
+                                                            }
+                                                        %>
+                                                    </span>
+                                                    (<%= rating %>/5)
+                                                </td>
+                                                <td title="<%= comment %>"><%= shortComment %></td>
+                                                <td>
+                                                    <span class="badge bg-label-success">Hiển thị</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="btn-group" role="group">
+                                                        <a href="<%= request.getContextPath() %>/admin/review/view?id=<%= r.getId() %>"
+                                                           class="btn btn-sm btn-outline-primary">
+                                                            <i class="ri-eye-line"></i> Xem
+                                                        </a>
+                                                        <a href="<%= request.getContextPath() %>/admin/review/delete?id=<%= r.getId() %>"
+                                                           class="btn btn-sm btn-outline-danger"
+                                                           onclick="return confirm('Bạn có chắc muốn xóa đánh giá này?');">
+                                                            <i class="ri-delete-bin-line"></i> Xóa
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                <%
+                                        }
+                                    } else {
+                                %>
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted py-4">
+                                            Không có đánh giá nào để hiển thị.
+                                        </td>
+                                    </tr>
+                                <%
+                                    }
+                                %>
+                                </tbody>
                             </table>
                         </div>
                     </div>
