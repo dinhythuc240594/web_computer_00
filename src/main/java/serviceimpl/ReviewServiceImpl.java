@@ -45,4 +45,9 @@ public class ReviewServiceImpl implements ReviewService {
     public Boolean update(ReviewDAO entity) {
         return reviewRepository.update(entity);
     }
+
+    @Override
+    public java.util.List<ReviewDAO> findByProductId(int productId) {
+        return reviewRepository.findByProductId(productId);
+    }
 }

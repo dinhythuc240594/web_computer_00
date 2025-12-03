@@ -146,6 +146,29 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     }
 
+    @Override
+    public java.util.List<ReviewDAO> findByProductId(int productId) {
+        java.util.List<ReviewDAO> items = new java.util.ArrayList<>();
+        String sql = "SELECT id, user_id, product_id, rating, comment, created_at, updated_at " +
+                "FROM reviews WHERE product_id = ? ORDER BY created_at DESC";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, productId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    items.add(mapResultSetToReviewDAO(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi lấy danh sách đánh giá theo sản phẩm: " + productId, e);
+        }
+        return items;
+    }
+
     private ReviewDAO mapResultSetToReviewDAO(ResultSet rs) throws SQLException {
         ReviewDAO item = new ReviewDAO();
 

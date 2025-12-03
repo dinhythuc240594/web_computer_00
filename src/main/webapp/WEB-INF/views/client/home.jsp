@@ -71,6 +71,8 @@
     <jsp:include page="../common/category-menu.jsp" />
     <!-- End Category Menu -->
 
+    <jsp:include page="fragments/home/search-products.jsp" />
+
     <jsp:include page="fragments/home/featured.jsp" />
 
     <jsp:include page="fragments/home/slider.jsp" />

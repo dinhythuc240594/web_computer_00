@@ -57,8 +57,25 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        // Dữ liệu dùng chung cho trang home
         request.setAttribute("homeCategories", fetchCategories());
         request.setAttribute("homeBrands", fetchBrands());
+
+        // Xử lý tham số tìm kiếm & lọc (keyword, categoryId, brandId)
+        String keyword = trimToNull(request.getParameter("keyword"));
+        int categoryId = parsePositiveInt(request.getParameter("categoryId"));
+        int brandId = parsePositiveInt(request.getParameter("brandId"));
+
+        // Đưa lại tham số ra view để giữ trạng thái form
+        request.setAttribute("searchKeyword", keyword);
+        request.setAttribute("selectedCategoryId", categoryId);
+        request.setAttribute("selectedBrandId", brandId);
+
+        // Nếu có bất kỳ tham số tìm kiếm / lọc nào thì load danh sách sản phẩm phù hợp
+        if ((keyword != null && !keyword.isBlank()) || categoryId > 0 || brandId > 0) {
+            request.setAttribute("searchResults", fetchFilteredProducts(keyword, categoryId, brandId));
+        }
+
         request.setAttribute("featuredProducts", fetchProducts("created_at", "DESC", FEATURED_PRODUCT_LIMIT));
         request.setAttribute("flashSaleProducts", fetchProducts("price", "ASC", FLASH_SALE_PRODUCT_LIMIT));
         request.setAttribute("popularProducts", fetchProducts("stock_quantity", "DESC", POPULAR_PRODUCT_LIMIT));
@@ -69,6 +86,27 @@ public class HomeServlet extends HttpServlet {
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/home.jsp");
         rd.forward(request, response);
+    }
+
+    private List<ProductDAO> fetchFilteredProducts(String keyword, int categoryId, int brandId) {
+        try {
+            // Giới hạn số kết quả hiển thị trên trang home
+            int pageSize = 20;
+            PageRequest pageRequest = new PageRequest(
+                    1,
+                    Math.max(pageSize, 1),
+                    "created_at",
+                    "DESC",
+                    keyword != null ? keyword : "",
+                    0,
+                    categoryId,
+                    brandId
+            );
+            return productRepository.findAll(pageRequest);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "Không thể tải danh sách sản phẩm theo điều kiện tìm kiếm", ex);
+            return Collections.emptyList();
+        }
     }
 
     private List<CategoryDAO> fetchCategories() {
@@ -140,6 +178,26 @@ public class HomeServlet extends HttpServlet {
             request.setAttribute("dbStatusOk", false);
             request.setAttribute("dbStatusMessage", "Không thể kết nối tới cơ sở dữ liệu.");
             request.setAttribute("dbStatusDetails", ex.getMessage());
+        }
+    }
+
+    private String trimToNull(String value) {
+        if (value == null) {
+            return null;
+        }
+        String trimmed = value.trim();
+        return trimmed.isEmpty() ? null : trimmed;
+    }
+
+    private int parsePositiveInt(String value) {
+        if (value == null || value.isBlank()) {
+            return 0;
+        }
+        try {
+            int parsed = Integer.parseInt(value);
+            return Math.max(parsed, 0);
+        } catch (NumberFormatException ex) {
+            return 0;
         }
     }
 

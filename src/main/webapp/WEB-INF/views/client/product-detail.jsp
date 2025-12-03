@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.ReviewDAO" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,6 +92,16 @@
     <!-- shop-details -->
     <section class="shop-details pb_70">
         <div class="large-container">
+            <%
+                model.ProductDAO product = (model.ProductDAO) request.getAttribute("product");
+                List<ReviewDAO> reviews = (List<ReviewDAO>) request.getAttribute("reviews");
+                Boolean isLogin = (Boolean) request.getAttribute("is_login");
+                if (isLogin == null) {
+                    isLogin = Boolean.FALSE;
+                }
+                String contextPath = request.getContextPath();
+                Integer totalReviews = (reviews != null) ? reviews.size() : 0;
+            %>
             <div class="product-details-content mb_70">
                 <div class="row clearfix">
                     <div class="col-lg-6 col-md-12 col-sm-12 image-column">
@@ -298,142 +310,95 @@
                     <div class="tabs-content">
                         <div class="tab active-tab" id="tab-1">
                             <div class="discription-content pt_35">
-                                <p>Our washing machine boasts a spacious drum capacity, allowing you to tackle large loads with ease. Say goodbye to stubborn stains with customizable temperature settings and specialized stain-fighting options, ensuring your clothes come out fresh and pristine.</p>
-                                <p>Equipped with a powerful yet energy-efficient motor, our machine ensures thorough cleaning while minimizing water and electricity consumption. Choose from a variety of wash cycles tailored to your specific needs, from delicate fabrics to heavy-duty loads, guaranteeing optimal results every time.Experience peace of mind with our built-in safety features, including child lock and overflow protection, keeping your household safe during operation. Plus, with its sleek and modern design, our washing machine seamlessly blends into any home decor.</p>
-                                <h5>Features :</h5>
-                                <ul class="list-style-one clearfix">
-                                    <li>It takes only 15-18 minutes to wash 1 to 1.5 kg of clothes</li>
-                                    <li>Adjustable spin speed for better water extraction</li>
-                                    <li>Water-saving features or certifications</li>
-                                    <li>Indicates the maximum weight of laundry the machine</li>
-                                    <li>Automatically adjusts water levels based</li>
-                                    <li>A fast cycle for lightly soiled clothes that need a quick refresh.</li>
-                                </ul>
+                                <p><%= (product != null && product.getDescription() != null && !product.getDescription().isBlank())
+                                        ? product.getDescription()
+                                        : "Mô tả sản phẩm đang được cập nhật." %></p>
                             </div>
                         </div>
                         <div class="tab" id="tab-2">
                             <div class="review-content pt_40">
+                                <h3>Customer Reviews (<%= totalReviews %>)</h3>
+                                <hr/>
+                                <%
+                                    if (reviews != null && !reviews.isEmpty()) {
+                                        for (ReviewDAO r : reviews) {
+                                %>
                                 <div class="single-review">
                                     <div class="upper-box">
                                         <div class="info-box">
-                                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-1.png" alt=""></figure>
+                                            <figure class="image">
+                                                <img src="<%= contextPath %>/assets/client/images/resource/review-1.png" alt="">
+                                            </figure>
                                             <div class="inner">
-                                                <h4>Dania Monjur</h4>
-                                                <span class="date">June 12, 2023</span>
+                                                <h4>Người dùng #<%= r.getUserId() %></h4>
                                             </div>
                                         </div>
-                                        <ul class="option-btn">
-                                            <li><button><i class="icon-46"></i></button>12</li>
-                                            <li><button><i class="icon-47"></i></button>0</li>
-                                        </ul>
                                     </div>
                                     <ul class="rating">
-                                        <li><i class="icon-11"></i></li>
-                                        <li><i class="icon-11"></i></li>
-                                        <li><i class="icon-11"></i></li>
-                                        <li><i class="icon-11"></i></li>
-                                        <li><i class="icon-11"></i></li>
+                                        <%
+                                            int stars = r.getRating();
+                                            for (int i = 0; i < 5; i++) {
+                                                boolean filled = i < stars;
+                                        %>
+                                        <li>
+                                            <i class="icon-11"<%= filled ? "" : " style=\"opacity:0.3;\"" %>></i>
+                                        </li>
+                                        <%
+                                            }
+                                        %>
                                     </ul>
-                                    <p>To provide a review of a specific washing machine, I would need to know the brand and model of the washing machine you're interested in reviewing. If you have a particular washing machine in mind, please provide its details, and I can help you create a comprehensive review. Alternatively, if you're looking for a general review of washing machines.</p>
-                                    <ul class="image-list">
-                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-1.jpg" alt=""></li>
-                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-2.jpg" alt=""></li>
-                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-3.jpg" alt=""></li>
-                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-4.jpg" alt=""></li>
-                                    </ul>
-                                    <div class="reply-review mt_30">
-                                        <div class="upper-box">
-                                            <div class="info-box">
-                                                <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-2.png" alt=""></figure>
-                                                <div class="inner">
-                                                    <h4>Seller</h4>
-                                                </div>
-                                            </div>
-                                            <ul class="option-btn">
-                                                <li><button><i class="icon-46"></i></button>12</li>
-                                                <li><button><i class="icon-47"></i></button>0</li>
-                                            </ul>
-                                        </div>
-                                        <p>Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                                    </div>
+                                    <p><%= (r.getComment() != null && !r.getComment().isBlank())
+                                            ? r.getComment()
+                                            : "Người dùng không để lại nội dung nhận xét." %></p>
                                 </div>
-                                <div class="single-review">
-                                    <div class="upper-box">
-                                        <div class="info-box">
-                                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-3.png" alt=""></figure>
-                                            <div class="inner">
-                                                <h4>Dania Monjur</h4>
-                                                <span class="date">June 08, 2023</span>
-                                            </div>
-                                        </div>
-                                        <ul class="option-btn">
-                                            <li><button><i class="icon-46"></i></button>12</li>
-                                            <li><button><i class="icon-47"></i></button>0</li>
-                                        </ul>
-                                    </div>
-                                    <ul class="rating">
-                                        <li><i class="icon-11"></i></li>
-                                        <li><i class="icon-11"></i></li>
-                                        <li><i class="icon-11"></i></li>
-                                        <li><i class="icon-11"></i></li>
-                                        <li><i class="icon-11"></i></li>
-                                    </ul>
-                                    <p>To provide a review of a specific washing machine, I would need to know the brand and model of the washing machine you're interested in reviewing. If you have a particular washing machine in mind, please provide its details, and I can help you create a comprehensive review. Alternatively, if you're looking for a general review of washing machines.</p>
-                                    <ul class="image-list">
-                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-5.jpg" alt=""></li>
-                                        <li><img src="${pageContext.request.contextPath}/assets/client/images/resource/review-img-6.jpg" alt=""></li>
-                                    </ul>
-                                </div>
-                                <div class="customer-review">
-                                    <h3>Write Your Rating</h3>
+                                <%
+                                        }
+                                    } else {
+                                %>
+                                <p>Chưa có đánh giá nào cho sản phẩm này. Hãy là người đầu tiên đánh giá!</p>
+                                <%
+                                    }
+                                %>
+
+                                <div class="customer-review mt_40">
+                                    <h3>Viết đánh giá của bạn</h3>
+                                    <%
+                                        if (!isLogin) {
+                                    %>
+                                    <p>Bạn cần <a href="<%= contextPath %>/login">đăng nhập</a> để gửi đánh giá.</p>
+                                    <%
+                                        } else {
+                                    %>
                                     <div class="rating-box mb_25">
                                         <p>Your Rating <span>*</span></p>
                                         <div class="rating-inner">
-                                            <select name="rating" class="form-select" style="max-width: 200px;">
-                                                <option value="5" selected>5 - Excellent</option>
-                                                <option value="4">4 - Good</option>
-                                                <option value="3">3 - Average</option>
-                                                <option value="2">2 - Poor</option>
-                                                <option value="1">1 - Very bad</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-inner">
-                                        <form method="post" action="${pageContext.request.contextPath}/review">
-                                            <input type="hidden" name="productId" value="${product.id}"/>
-                                            <div class="form-group">
-                                                <label>Write Your Review <span>*</span></label>
-                                                <textarea name="comment"></textarea>
-                                            </div>
-                                            <div class="form-group upload-field">
-                                                <label>Add Photos and Video</label>
-                                                <div class="upload-box">
-                                                    <input name="files[]" id="filer_input2" multiple="multiple" type="file">
-                                                    <div class="upload-content">
-                                                        <i class="icon-48"></i>
-                                                        <span>Upload Image</span>
+                                            <form method="post" action="<%= contextPath %>/review">
+                                                <input type="hidden" name="productId" value="<%= product != null ? product.getId() : 0 %>"/>
+                                                <input type="hidden" name="slug" value="<%= product != null ? product.getSlug() : "" %>"/>
+                                                <select name="rating" class="form-select" style="max-width: 200px;">
+                                                    <option value="5" selected>5 - Excellent</option>
+                                                    <option value="4">4 - Good</option>
+                                                    <option value="3">3 - Average</option>
+                                                    <option value="2">2 - Poor</option>
+                                                    <option value="1">1 - Very bad</option>
+                                                </select>
+                                                <div class="form-inner mt_20">
+                                                    <div class="form-group">
+                                                        <label>Write Your Review <span>*</span></label>
+                                                        <textarea name="comment" required></textarea>
+                                                    </div>
+                                                    <div class="message-btn">
+                                                        <button type="submit" class="theme-btn btn-one">
+                                                            Submit Review<span></span><span></span><span></span><span></span>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Your Name <span>*</span></label>
-                                                <input type="text" name="name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Email Address <span>*</span></label>
-                                                <input type="email" name="email">
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="check-box">
-                                                    <input class="check" type="checkbox" id="checkbox1">
-                                                    <label for="checkbox1">Save my name, email, and website in this browser for the next time I comment.</label>
-                                                </div>
-                                            </div>
-                                            <div class="message-btn">
-                                                <button type="submit" class="theme-btn btn-one">Submit Review<span></span><span></span><span></span><span></span></button>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
+                                    <%
+                                        }
+                                    %>
                                 </div>
                             </div>
                         </div>
