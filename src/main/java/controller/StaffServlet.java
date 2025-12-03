@@ -1,0 +1,463 @@
+package controller;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.OrderDAO;
+import model.ProductDAO;
+import model.CategoryDAO;
+import model.UserDAO;
+import service.OrderService;
+import service.ProductService;
+import service.CategoryService;
+import service.UserService;
+import serviceimpl.OrderServiceImpl;
+import serviceimpl.ProductServiceImpl;
+import serviceimpl.CategoryServiceImpl;
+import serviceimpl.UserServiceImpl;
+import utilities.DataSourceUtil;
+
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@WebServlet(name = "staff", urlPatterns = "/staff")
+public class StaffServlet extends HttpServlet {
+
+    private transient DataSource dataSource;
+    private transient UserService userService;
+    private transient OrderService orderService;
+    private transient ProductService productService;
+    private transient CategoryService categoryService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        this.dataSource = DataSourceUtil.getDataSource();
+        this.userService = new UserServiceImpl(dataSource);
+        this.orderService = new OrderServiceImpl(dataSource);
+        this.productService = new ProductServiceImpl(dataSource);
+        this.categoryService = new CategoryServiceImpl(dataSource);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("is_login") == null || !(Boolean) session.getAttribute("is_login")) {
+            // Lưu URL để redirect sau khi đăng nhập
+            session = request.getSession(true);
+            session.setAttribute("redirectAfterLogin", request.getRequestURI());
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        String username = (String) session.getAttribute("username");
+        if (username == null || username.isBlank()) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        UserDAO currentUser = userService.findByUsername(username);
+        if (currentUser == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        // Chỉ cho phép tài khoản STAFF hoặc ADMIN truy cập khu vực này
+        if (currentUser.getRole() == null ||
+                !(currentUser.getRole().equalsIgnoreCase("STAFF") ||
+                  currentUser.getRole().equalsIgnoreCase("ADMIN"))) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập trang nhân viên.");
+            return;
+        }
+
+        String action = request.getParameter("action");
+        if (action == null || action.isBlank()) {
+            action = "dashboard";
+        }
+
+        switch (action) {
+            case "products" -> showProductList(request, response, currentUser);
+            case "product-add" -> showProductAddForm(request, response, currentUser);
+            case "categories" -> showCategoryList(request, response, currentUser);
+            case "orders" -> showOrderManagement(request, response, currentUser);
+            case "order-details" -> showOrderDetails(request, response, currentUser);
+            default -> showStaffDashboard(request, response, currentUser);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("is_login") == null || !(Boolean) session.getAttribute("is_login")) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        String username = (String) session.getAttribute("username");
+        if (username == null || username.isBlank()) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        UserDAO currentUser = userService.findByUsername(username);
+        if (currentUser == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        // Chỉ cho phép tài khoản STAFF hoặc ADMIN
+        if (currentUser.getRole() == null ||
+                !(currentUser.getRole().equalsIgnoreCase("STAFF") ||
+                  currentUser.getRole().equalsIgnoreCase("ADMIN"))) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền thực hiện thao tác này.");
+            return;
+        }
+
+        String action = request.getParameter("action");
+        if (action == null || action.isBlank()) {
+            action = "";
+        }
+
+        switch (action) {
+            // Sản phẩm
+            case "product-create" -> handleCreateProduct(request, response, currentUser);
+            case "product-update" -> handleUpdateProduct(request, response, currentUser);
+            case "product-delete" -> handleDeleteProduct(request, response, currentUser);
+            case "product-update-stock" -> handleUpdateProductStock(request, response, currentUser);
+
+            // Danh mục
+            case "category-create" -> handleCreateCategory(request, response, currentUser);
+            case "category-update" -> handleUpdateCategory(request, response, currentUser);
+            case "category-delete" -> handleDeleteCategory(request, response, currentUser);
+
+            // Đơn hàng
+            case "order-update-status" -> handleUpdateOrderStatus(request, response, currentUser);
+
+            default -> response.sendRedirect(request.getContextPath() + "/staff");
+        }
+    }
+
+    // ====== KHU VỰC HIỂN THỊ TRANG QUẢN LÝ NHÂN VIÊN ======
+
+    private void showStaffDashboard(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        request.setAttribute("currentUser", currentUser);
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/dashboard/index.jsp");
+        rd.forward(request, response);
+    }
+
+    private void showProductList(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        request.setAttribute("currentUser", currentUser);
+        // Có thể set thêm danh sách sản phẩm nếu bạn muốn hiển thị server-side:
+        List<ProductDAO> products = productService.getAll();
+        request.setAttribute("products", products);
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/product/list.jsp");
+        rd.forward(request, response);
+    }
+
+    private void showProductAddForm(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        request.setAttribute("currentUser", currentUser);
+        // Có thể truyền thêm list category/brand nếu cần
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/product/add.jsp");
+        rd.forward(request, response);
+    }
+
+    private void showCategoryList(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        request.setAttribute("currentUser", currentUser);
+        List<CategoryDAO> categories = categoryService.getAll();
+        request.setAttribute("categories", categories);
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category/manage.jsp");
+        rd.forward(request, response);
+    }
+
+    private void showOrderManagement(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        request.setAttribute("currentUser", currentUser);
+        List<OrderDAO> orders = orderService.getAll();
+        request.setAttribute("orders", orders);
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/order/list.jsp");
+        rd.forward(request, response);
+    }
+
+    private void showOrderDetails(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        request.setAttribute("currentUser", currentUser);
+        String idParam = request.getParameter("id");
+        if (idParam != null) {
+            try {
+                int id = Integer.parseInt(idParam);
+                OrderDAO order = orderService.findById(id);
+                request.setAttribute("order", order);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/order/details.jsp");
+        rd.forward(request, response);
+    }
+
+    // ====== XỬ LÝ NGHIỆP VỤ SẢN PHẨM ======
+
+    private void handleCreateProduct(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String name = request.getParameter("name");
+        String slug = request.getParameter("slug");
+        String description = request.getParameter("description");
+        String imageUrl = request.getParameter("image_url");
+        String priceStr = request.getParameter("price");
+        String stockStr = request.getParameter("stock_quantity");
+        String categoryIdStr = request.getParameter("category_id");
+        String brandIdStr = request.getParameter("brand_id");
+
+        ProductDAO product = new ProductDAO();
+        product.setName(name);
+        product.setSlug(slug);
+        product.setDescription(description);
+        product.setImage_url(imageUrl);
+        try {
+            if (priceStr != null) {
+                product.setPrice(Double.parseDouble(priceStr));
+            }
+        } catch (NumberFormatException ignored) {
+        }
+        try {
+            if (stockStr != null) {
+                product.setStock_quantity(Integer.parseInt(stockStr));
+            }
+        } catch (NumberFormatException ignored) {
+        }
+        try {
+            if (categoryIdStr != null) {
+                product.setCategory_id(Integer.parseInt(categoryIdStr));
+            }
+        } catch (NumberFormatException ignored) {
+        }
+        try {
+            if (brandIdStr != null) {
+                product.setBrand_id(Integer.parseInt(brandIdStr));
+            }
+        } catch (NumberFormatException ignored) {
+        }
+        product.setIs_active(true);
+
+        productService.create(product);
+        response.sendRedirect(request.getContextPath() + "/staff?action=products");
+    }
+
+    private void handleUpdateProduct(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String idStr = request.getParameter("id");
+        if (idStr == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=products");
+            return;
+        }
+        int id;
+        try {
+            id = Integer.parseInt(idStr);
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=products");
+            return;
+        }
+
+        ProductDAO product = productService.findById(id);
+        if (product == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=products");
+            return;
+        }
+
+        String name = request.getParameter("name");
+        String slug = request.getParameter("slug");
+        String description = request.getParameter("description");
+        String imageUrl = request.getParameter("image_url");
+        String priceStr = request.getParameter("price");
+        String stockStr = request.getParameter("stock_quantity");
+        String categoryIdStr = request.getParameter("category_id");
+        String brandIdStr = request.getParameter("brand_id");
+        String activeStr = request.getParameter("is_active");
+
+        if (name != null) product.setName(name);
+        if (slug != null) product.setSlug(slug);
+        if (description != null) product.setDescription(description);
+        if (imageUrl != null) product.setImage_url(imageUrl);
+        try {
+            if (priceStr != null) {
+                product.setPrice(Double.parseDouble(priceStr));
+            }
+        } catch (NumberFormatException ignored) {
+        }
+        try {
+            if (stockStr != null) {
+                product.setStock_quantity(Integer.parseInt(stockStr));
+            }
+        } catch (NumberFormatException ignored) {
+        }
+        try {
+            if (categoryIdStr != null) {
+                product.setCategory_id(Integer.parseInt(categoryIdStr));
+            }
+        } catch (NumberFormatException ignored) {
+        }
+        try {
+            if (brandIdStr != null) {
+                product.setBrand_id(Integer.parseInt(brandIdStr));
+            }
+        } catch (NumberFormatException ignored) {
+        }
+        if (activeStr != null) {
+            product.setIs_active(Boolean.parseBoolean(activeStr));
+        }
+
+        productService.update(product);
+        response.sendRedirect(request.getContextPath() + "/staff?action=products");
+    }
+
+    private void handleDeleteProduct(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String idStr = request.getParameter("id");
+        if (idStr != null) {
+            try {
+                int id = Integer.parseInt(idStr);
+                productService.deleteById(id);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        response.sendRedirect(request.getContextPath() + "/staff?action=products");
+    }
+
+    /**
+     * Cập nhật nhanh tồn kho sản phẩm (chỉ nhân viên / admin).
+     * URL: POST /staff?action=product-update-stock&id=...&stock_quantity=...
+     */
+    private void handleUpdateProductStock(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String idStr = request.getParameter("id");
+        String stockStr = request.getParameter("stock_quantity");
+
+        if (idStr == null || stockStr == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=products");
+            return;
+        }
+
+        int id;
+        int stock;
+        try {
+            id = Integer.parseInt(idStr);
+            stock = Integer.parseInt(stockStr);
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=products");
+            return;
+        }
+
+        ProductDAO product = productService.findById(id);
+        if (product == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=products");
+            return;
+        }
+
+        product.setStock_quantity(Math.max(stock, 0));
+        // Nếu hết hàng thì có thể set is_active vẫn true để hiển thị nhưng không cho đặt hàng
+        productService.update(product);
+
+        response.sendRedirect(request.getContextPath() + "/staff?action=products");
+    }
+
+    // ====== XỬ LÝ NGHIỆP VỤ DANH MỤC ======
+
+    private void handleCreateCategory(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String name = request.getParameter("name");
+//        String slug = request.getParameter("slug");
+
+        CategoryDAO category = new CategoryDAO();
+        category.setName(name);
+//        category.setSlug(slug);
+        category.setIs_active(true);
+
+        categoryService.create(category);
+        response.sendRedirect(request.getContextPath() + "/staff?action=categories");
+    }
+
+    private void handleUpdateCategory(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String idStr = request.getParameter("id");
+        if (idStr == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=categories");
+            return;
+        }
+        int id;
+        try {
+            id = Integer.parseInt(idStr);
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=categories");
+            return;
+        }
+
+        CategoryDAO category = categoryService.findById(id);
+        if (category == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=categories");
+            return;
+        }
+
+        String name = request.getParameter("name");
+//        String slug = request.getParameter("slug");
+        String activeStr = request.getParameter("is_active");
+
+        if (name != null) category.setName(name);
+//        if (slug != null) category.setSlug(slug);
+        if (activeStr != null) {
+            category.setIs_active(Boolean.parseBoolean(activeStr));
+        }
+
+        categoryService.update(category);
+        response.sendRedirect(request.getContextPath() + "/staff?action=categories");
+    }
+
+    private void handleDeleteCategory(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String idStr = request.getParameter("id");
+        if (idStr != null) {
+            try {
+                int id = Integer.parseInt(idStr);
+                categoryService.deleteById(id);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        response.sendRedirect(request.getContextPath() + "/staff?action=categories");
+    }
+
+    // ====== XỬ LÝ NGHIỆP VỤ ĐƠN HÀNG ======
+
+    private void handleUpdateOrderStatus(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String idStr = request.getParameter("id");
+        String status = request.getParameter("status");
+        if (idStr == null || status == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=orders");
+            return;
+        }
+
+        int id;
+        try {
+            id = Integer.parseInt(idStr);
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=orders");
+            return;
+        }
+
+        OrderDAO order = orderService.findById(id);
+        if (order != null) {
+            order.setStatus(status);
+            orderService.update(order);
+        }
+
+        response.sendRedirect(request.getContextPath() + "/staff?action=orders");
+    }
+}

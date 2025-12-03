@@ -202,9 +202,15 @@
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 content-column">
                         <div class="content-box ml_30">
-                            <span class="upper-text">Washing Machine</span>
-                            <h2>Sharp Full Auto Front Loading Inverter Washing Machine ES-FW105D7PS | 10.5 KG</h2>
-                            <h3>$500.99</h3>
+                            <span class="upper-text">
+                                <%= (product != null && product.getCategory_id() > 0) ? "Product" : "" %>
+                            </span>
+                            <h2><%= product != null ? product.getName() : "Sản phẩm" %></h2>
+                            <h3>
+                                <%= (product != null && product.getPrice() != null)
+                                        ? String.format("$%.2f", product.getPrice())
+                                        : "$0.00" %>
+                            </h3>
                             <ul class="rating mb_25">
                                 <li><i class="icon-11"></i></li>
                                 <li><i class="icon-11"></i></li>
@@ -214,14 +220,34 @@
                                 <li><span>(05)</span></li>
                             </ul>
                             <div class="text-box mb_30">
-                                <p>This powerful front loading washing machine will gently clean your laundry so your favorite clothes can remain as good as new. Now, washing clothes is much easier and more fun with the help of this powerful washing machine.</p>
-                                <p>This would help you in the decision making process. Your purchase decision should depend upon what features and functions you require.</p>
+                                <p>
+                                    <%= (product != null && product.getDescription() != null && !product.getDescription().isBlank())
+                                            ? product.getDescription()
+                                            : "Mô tả sản phẩm đang được cập nhật." %>
+                                </p>
                             </div>
                             <ul class="discription-box mb_30 clearfix">
-                                <li><strong>Brand :</strong>Toshiba</li>
-                                <li><strong>Product SKU :</strong>#KKLW30</li>
-                                <li><strong>Category :</strong>front-load washing machines</li>
-                                <li><strong>Availability :</strong><span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span></li>
+                                <li><strong>Brand :</strong><%= product != null ? product.getBrand_id() : "" %></li>
+                                <li><strong>Product ID :</strong><%= product != null ? product.getId() : "" %></li>
+                                <li><strong>Category ID :</strong><%= product != null ? product.getCategory_id() : "" %></li>
+                                <%
+                                    int stockQty = (product != null) ? product.getStock_quantity() : 0;
+                                    boolean inStock = stockQty > 0;
+                                %>
+                                <li>
+                                    <strong>Availability :</strong>
+                                    <% if (inStock) { %>
+                                    <span class="product-stock">
+                                        <img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt="">
+                                        In Stock (<%= stockQty %>)
+                                    </span>
+                                    <% } else { %>
+                                    <span class="product-stock-out">
+                                        <img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-2.png" alt="">
+                                        Out of Stock
+                                    </span>
+                                    <% } %>
+                                </li>
                             </ul>
                             <div class="color-box mb_30">
                                 <h6>Color<span>*</span></h6>
@@ -283,10 +309,29 @@
                             </div>
                             <div class="addto-cart-box mb_40">
                                 <ul class="clearfix">
-                                    <li class="item-quantity"><input class="quantity-spinner" type="text" value="1" name="quantity"></li>
-                                    <li class="cart-btn"><button type="button" class="theme-btn btn-one">Add To Cart<span></span><span></span><span></span><span></span></button></li>
-                                    <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
-                                    <li class="like-btn"><button><i class="icon-6"></i></button></li>
+                                    <li class="item-quantity">
+                                        <input class="quantity-spinner" type="text" value="1" name="quantity"
+                                               <%= inStock ? "" : "disabled" %>>
+                                    </li>
+                                    <% if (inStock) { %>
+                                    <li class="cart-btn">
+                                        <form method="post" action="<%= contextPath %>/cart">
+                                            <input type="hidden" name="action" value="add"/>
+                                            <input type="hidden" name="productId" value="<%= product != null ? product.getId() : 0 %>"/>
+                                            <button type="submit" class="theme-btn btn-one">
+                                                Add To Cart<span></span><span></span><span></span><span></span>
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <% } else { %>
+                                    <li class="cart-btn">
+                                        <button type="button" class="theme-btn btn-one not" disabled>
+                                            Out of Stock<span></span><span></span><span></span><span></span>
+                                        </button>
+                                    </li>
+                                    <% } %>
+                                    <li><a href="javascript:void(0)"><i class="icon-5"></i></a></li>
+                                    <li class="like-btn"><button type="button"><i class="icon-6"></i></button></li>
                                 </ul>
                             </div>
                             <ul class="other-option clearfix">

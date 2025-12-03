@@ -94,11 +94,14 @@
                             class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 gap-6">
                         <div class="d-flex flex-column justify-content-center">
                             <div class="d-flex align-items-center mb-1">
-                                <h5 class="mb-0">Order #32543</h5>
-                                <span class="badge bg-label-success me-2 ms-2 rounded-pill">Paid</span>
-                                <span class="badge bg-label-info rounded-pill">Ready to Pickup</span>
+                                <h5 class="mb-0">Order #${order.id}</h5>
+                                <span class="badge bg-label-info me-2 ms-2 rounded-pill">
+                                    ${order.status}
+                                </span>
                             </div>
-                            <p class="mb-0">Aug 17, <span id="orderYear"></span>, 5:48 (ET)</p>
+                            <p class="mb-0">
+                                Ngày đặt: ${order.orderDate}
+                            </p>
                         </div>
                         <div class="d-flex align-content-center flex-wrap gap-2">
                             <button class="btn btn-outline-danger delete-order">Delete Order</button>
@@ -127,19 +130,19 @@
                                         <div class="order-calculations">
                                             <div class="d-flex justify-content-start gap-4">
                                                 <span class="w-px-100 text-heading">Subtotal:</span>
-                                                <h6 class="mb-0">$5000.25</h6>
+                                                <h6 class="mb-0">${order.totalPrice}</h6>
                                             </div>
                                             <div class="d-flex justify-content-start gap-4">
                                                 <span class="w-px-100 text-heading">Discount:</span>
-                                                <h6 class="mb-0">$00.00</h6>
+                                                <h6 class="mb-0">0</h6>
                                             </div>
                                             <div class="d-flex justify-content-start gap-4">
                                                 <span class="w-px-100 text-heading">Tax:</span>
-                                                <h6 class="mb-0">$100.00</h6>
+                                                <h6 class="mb-0">0</h6>
                                             </div>
                                             <div class="d-flex justify-content-start gap-4">
                                                 <h6 class="w-px-100 mb-0">Total:</h6>
-                                                <h6 class="mb-0">$5100.25</h6>
+                                                <h6 class="mb-0">${order.totalPrice}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -255,7 +258,9 @@
                                     </h6>
                                 </div>
                                 <div class="card-body">
-                                    <p class="mb-0">45 Roker Terrace <br />Latheronwheel <br />KW5 8NW,London <br />UK</p>
+                                    <p class="mb-0">
+                                        ${order.address}
+                                    </p>
                                 </div>
                             </div>
                             <div class="card mb-6">
@@ -266,16 +271,18 @@
                                     </h6>
                                 </div>
                                 <div class="card-body">
-                                    <p class="mb-6">45 Roker Terrace <br />Latheronwheel <br />KW5 8NW,London <br />UK</p>
-                                    <h5 class="mb-1">Mastercard</h5>
-                                    <p class="mb-0">Card Number: ******4291</p>
+                                    <p class="mb-6">
+                                        ${order.address}
+                                    </p>
+                                    <h5 class="mb-1">${order.payment}</h5>
+                                    <p class="mb-0">${order.note}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Edit User Modal -->
-                    <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
+                    <!-- <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-lg modal-simple modal-edit-user">
                             <div class="modal-content">
                                 <div class="modal-body p-0">
@@ -440,11 +447,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!--/ Edit User Modal -->
 
                     <!-- Add New Address Modal -->
-                    <div class="modal fade" id="addNewAddress" tabindex="-1" aria-hidden="true">
+                    <!-- <div class="modal fade" id="addNewAddress" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-lg modal-simple modal-add-new-address">
                             <div class="modal-content">
                                 <div class="modal-body p-0">
@@ -643,7 +650,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!--/ Add New Address Modal -->
                 </div>
                 <!-- / Content -->
