@@ -113,7 +113,7 @@
                     <button class="forgot-password">Quên mật khẩu?</button>
                 </div>
                 <div class="lower-text centred">
-                    <p>Chưa có tài khoản? <a href="${pageContext.request.contextPath}/auth/register">Đăng ký ngay</a></p>
+                    <p>Chưa có tài khoản? <a href="${pageContext.request.contextPath}/register">Đăng ký ngay</a></p>
                 </div>
             </div>
         </div>

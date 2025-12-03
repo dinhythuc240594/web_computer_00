@@ -81,7 +81,7 @@
                 %>
             </div>
             <div class="form-inner">
-                <form method="post" action="${pageContext.request.contextPath}/auth/register">
+                <form method="post" action="${pageContext.request.contextPath}/register">
                     <div class="form-group">
                         <label>Họ và tên</label>
                         <input type="text" name="name" required>

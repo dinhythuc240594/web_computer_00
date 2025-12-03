@@ -444,7 +444,7 @@ padding: 15px 20px;"></div>
                                 </div>
                             </li>
                             <li><a href="login">Đăng nhập</a></li>
-                            <li><a href="auth/register">Đăng ký</a></li>
+                            <li><a href="register">Đăng ký</a></li>
                         </ul>
                     </div>
                 </div>

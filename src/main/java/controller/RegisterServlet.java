@@ -14,7 +14,7 @@ import utilities.DataSourceUtil;
 import javax.sql.DataSource;
 import java.io.IOException;
 
-@WebServlet("/auth/register")
+@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
     private transient DataSource dataSource;
