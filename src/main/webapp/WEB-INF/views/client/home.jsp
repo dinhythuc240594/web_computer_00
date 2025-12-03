@@ -57,43 +57,43 @@
 <body>
 
 <div class="boxed_wrapper ltr">
-    <!-- preloader -->
-    <jsp:include page="../common/preloader.jsp" />
-    <!-- preloader end -->
+<%--    <!-- preloader -->--%>
+<%--    <jsp:include page="../common/preloader.jsp" />--%>
+<%--    <!-- preloader end -->--%>
 
     <jsp:include page="../common/header.jsp" />
 
-    <!-- Mobile Menu  -->
-    <jsp:include page="../common/mobile-menu.jsp" />
-    <!-- End Mobile Menu -->
+<%--    <!-- Mobile Menu  -->--%>
+<%--    <jsp:include page="../common/mobile-menu.jsp" />--%>
+<%--    <!-- End Mobile Menu -->--%>
 
     <!-- Category Menu  -->
     <jsp:include page="../common/category-menu.jsp" />
     <!-- End Category Menu -->
 
-    <jsp:include page="fragments/home/search-products.jsp" />
+<%--    <jsp:include page="fragments/home/search-products.jsp" />--%>
 
-    <jsp:include page="fragments/home/featured.jsp" />
+<%--    <jsp:include page="fragments/home/featured.jsp" />--%>
 
-    <jsp:include page="fragments/home/slider.jsp" />
+<%--    <jsp:include page="fragments/home/slider.jsp" />--%>
 
     <jsp:include page="fragments/home/categories.jsp" />
 
-    <jsp:include page="fragments/home/shop-flash.jsp" />
+<%--    <jsp:include page="fragments/home/shop-flash.jsp" />--%>
 
-    <jsp:include page="fragments/home/shop-popular.jsp" />
+<%--    <jsp:include page="fragments/home/shop-popular.jsp" />--%>
 
-    <jsp:include page="fragments/home/shop-mixed.jsp" />
+<%--    <jsp:include page="fragments/home/shop-mixed.jsp" />--%>
 
     <jsp:include page="fragments/home/brands.jsp" />
 
-    <jsp:include page="fragments/home/shop-tabs.jsp" />
+<%--    <jsp:include page="fragments/home/shop-tabs.jsp" />--%>
 
-    <jsp:include page="fragments/home/cta.jsp" />
+<%--    <jsp:include page="fragments/home/cta.jsp" />--%>
 
     <jsp:include page="fragments/home/shop-top-sold.jsp" />
 
-    <jsp:include page="fragments/home/news.jsp" />
+<%--    <jsp:include page="fragments/home/news.jsp" />--%>
 
     <!-- main-footer -->
     <jsp:include page="../common/footer.jsp" />

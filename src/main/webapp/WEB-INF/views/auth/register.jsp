@@ -41,7 +41,7 @@
 <body>
 <div class="boxed_wrapper ltr">
 
-    <jsp:include page="../common/preloader.jsp" />
+<%--    <jsp:include page="../common/preloader.jsp" />--%>
 
     <!-- main header -->
     <jsp:include page="../common/header.jsp" />
@@ -53,10 +53,10 @@
     <!-- page-title -->
     <section class="page-title pt_20 pb_18">
         <div class="large-container">
-            <ul class="bread-crumb clearfix">
-                <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                <li>Signup</li>
-            </ul>
+<%--            <ul class="bread-crumb clearfix">--%>
+<%--                <li><a href="${pageContext.request.contextPath}/">Home</a></li>--%>
+<%--                <li>Signup</li>--%>
+<%--            </ul>--%>
         </div>
     </section>
     <!-- page-title end -->
@@ -101,15 +101,15 @@
                     <div class="form-group message-btn">
                         <button type="submit" class="theme-btn">Đăng ký<span></span><span></span><span></span><span></span></button>
                     </div>
-                    <span class="text">hoặc</span>
-                    <ul class="social-links clearfix">
-                        <li>
-                            <a href="#"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-8.png" alt="">Tiếp tục với Google</a>
-                        </li>
-                        <li>
-                            <a href="#"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-9.png" alt="">Tiếp tục với Facebook</a>
-                        </li>
-                    </ul>
+<%--                    <span class="text">hoặc</span>--%>
+<%--                    <ul class="social-links clearfix">--%>
+<%--                        <li>--%>
+<%--                            <a href="#"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-8.png" alt="">Tiếp tục với Google</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-9.png" alt="">Tiếp tục với Facebook</a>--%>
+<%--                        </li>--%>
+<%--                    </ul>--%>
                 </form>
                 <div class="other-option">
                     <div class="check-box">

@@ -10,7 +10,7 @@
     <div class="menu-backdrop"></div>
     <div class="outer-box">
         <div class="upper-box">
-            <div class="nav-logo"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/logo-dark.png" alt="" title=""></a></div>
+<%--            <div class="nav-logo"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/logo-dark.png" alt="" title=""></a></div>--%>
             <div class="close-btn"><i class="icon-9"></i></div>
         </div>
         <p>DUYỆT THEO DANH MỤC</p>

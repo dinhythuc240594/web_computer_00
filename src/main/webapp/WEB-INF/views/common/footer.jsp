@@ -6,10 +6,10 @@
                     <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                         <div class="footer-widget contact-widget mt_10">
                             <div class="widget-content">
-                                <div class="support-box">
-                                    <div class="icon-box"><i class="icon-3"></i></div>
-                                    <a href="tel:912345678">091 2345 678</a>
-                                </div>
+<%--                                <div class="support-box">--%>
+<%--                                    <div class="icon-box"><i class="icon-3"></i></div>--%>
+<%--                                    <a href="tel:912345678">091 2345 678</a>--%>
+<%--                                </div>--%>
                                 <ul class="info mb_30 clearfix">
                                     <li>Số 1 Võ Văn Ngân, Phường Thủ Đức, TP.HCM</li>
                                     <li><a href="mailto:info@example.com">ptchc@hcmute.edu.vn</a></li>
@@ -92,12 +92,12 @@
                 <div class="bottom-inner">
                     <div class="copyright"><p>Bản quyền &copy; 2025 <a href="index.html">HCMUTE</a>, Inc. Đã đăng ký bản quyền</p></div>
                     <ul class="footer-card">
-                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-1.png" alt=""></a></li>
-                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-2.png" alt=""></a></li>
-                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-3.png" alt=""></a></li>
-                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-4.png" alt=""></a></li>
-                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-5.png" alt=""></a></li>
-                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-6.png" alt=""></a></li>
+<%--                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-1.png" alt=""></a></li>--%>
+<%--                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-2.png" alt=""></a></li>--%>
+<%--                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-3.png" alt=""></a></li>--%>
+<%--                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-4.png" alt=""></a></li>--%>
+<%--                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-5.png" alt=""></a></li>--%>
+<%--                        <li><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/footer-card-6.png" alt=""></a></li>--%>
                     </ul>
                 </div>
             </div>
