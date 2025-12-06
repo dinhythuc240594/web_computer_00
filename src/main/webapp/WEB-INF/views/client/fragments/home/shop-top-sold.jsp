@@ -88,7 +88,11 @@
                                                     data-product-image="<%= productImage %>"
                                                     data-product-slug="<%= product.getSlug() != null ? product.getSlug() : "" %>"
                                                     <%= stock <= 0 ? "disabled" : "" %>>
-                                                Thêm vào giỏ <i class="icon-12"></i>
+                                                    <% if (stock <= 0) { %>
+                                                        Hết hàng
+                                                    <% } else { %>
+                                                        Thêm vào giỏ <i class="icon-12"></i>
+                                                    <% } %>
                                             </button>
                                         </div>
                                     </div>

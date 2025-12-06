@@ -12,6 +12,8 @@ import model.ProductDAO;
 import model.CategoryDAO;
 import model.BrandDAO;
 import model.UserDAO;
+import model.Page;
+import model.PageRequest;
 import service.OrderService;
 import service.ProductService;
 import service.CategoryService;
@@ -89,8 +91,13 @@ public class StaffServlet extends HttpServlet {
         switch (action) {
             case "products" -> showProductList(request, response, currentUser);
             case "product-add" -> showProductAddForm(request, response, currentUser);
+            case "product-edit" -> showProductEditForm(request, response, currentUser);
             case "categories" -> showCategoryList(request, response, currentUser);
+            case "category-add" -> showCategoryAddForm(request, response, currentUser);
+            case "category-edit" -> showCategoryEditForm(request, response, currentUser);
             case "brands" -> showBrandList(request, response, currentUser);
+            case "brand-add" -> showBrandAddForm(request, response, currentUser);
+            case "brand-edit" -> showBrandEditForm(request, response, currentUser);
             case "orders" -> showOrderManagement(request, response, currentUser);
             case "order-details" -> showOrderDetails(request, response, currentUser);
             default -> showStaffDashboard(request, response, currentUser);
@@ -166,45 +173,228 @@ public class StaffServlet extends HttpServlet {
     private void showProductList(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
             throws ServletException, IOException {
         request.setAttribute("currentUser", currentUser);
-        // Có thể set thêm danh sách sản phẩm nếu bạn muốn hiển thị server-side:
-        List<ProductDAO> products = productService.getAll();
-        request.setAttribute("products", products);
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/product/list.jsp");
+        
+        // Lấy tham số pagination và search
+        String keyword = request.getParameter("keyword");
+        if (keyword == null) keyword = "";
+        int page = 1;
+        try {
+            String pageStr = request.getParameter("page");
+            if (pageStr != null && !pageStr.isBlank()) {
+                page = Integer.parseInt(pageStr);
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
+        
+        int pageSize = 10;
+        PageRequest pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword, 0, 0, 0);
+        Page<ProductDAO> productPage = productService.findAll(pageRequest);
+        
+        request.setAttribute("productPage", productPage);
+        request.setAttribute("products", productPage.getData());
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("currentPage", page);
+        
+        // Load categories and brands for filters
+        List<CategoryDAO> categories = categoryService.getAll();
+        List<BrandDAO> brands = brandService.getAll();
+        request.setAttribute("categories", categories);
+        request.setAttribute("brands", brands);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/products.jsp");
         rd.forward(request, response);
     }
 
     private void showProductAddForm(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
             throws ServletException, IOException {
         request.setAttribute("currentUser", currentUser);
-        // Có thể truyền thêm list category/brand nếu cần
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/product/add.jsp");
+        List<CategoryDAO> categories = categoryService.getAll();
+        List<BrandDAO> brands = brandService.getAll();
+        request.setAttribute("categories", categories);
+        request.setAttribute("brands", brands);
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/product-form.jsp");
         rd.forward(request, response);
+    }
+    
+    private void showProductEditForm(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        String idStr = request.getParameter("id");
+        if (idStr == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=products");
+            return;
+        }
+        try {
+            int id = Integer.parseInt(idStr);
+            ProductDAO product = productService.findById(id);
+            if (product == null) {
+                response.sendRedirect(request.getContextPath() + "/staff?action=products");
+                return;
+            }
+            request.setAttribute("currentUser", currentUser);
+            request.setAttribute("product", product);
+            List<CategoryDAO> categories = categoryService.getAll();
+            List<BrandDAO> brands = brandService.getAll();
+            request.setAttribute("categories", categories);
+            request.setAttribute("brands", brands);
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/product-form.jsp");
+            rd.forward(request, response);
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=products");
+        }
     }
 
     private void showCategoryList(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
             throws ServletException, IOException {
         request.setAttribute("currentUser", currentUser);
-        List<CategoryDAO> categories = categoryService.getAll();
-        request.setAttribute("categories", categories);
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category/manage.jsp");
+        
+        // Lấy tham số pagination và search
+        String keyword = request.getParameter("keyword");
+        if (keyword == null) keyword = "";
+        int page = 1;
+        try {
+            String pageStr = request.getParameter("page");
+            if (pageStr != null && !pageStr.isBlank()) {
+                page = Integer.parseInt(pageStr);
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
+        
+        int pageSize = 10;
+        PageRequest pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
+        Page<CategoryDAO> categoryPage = categoryService.findAll(pageRequest);
+        
+        request.setAttribute("categoryPage", categoryPage);
+        request.setAttribute("categories", categoryPage.getData());
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("currentPage", page);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/categories.jsp");
         rd.forward(request, response);
+    }
+    
+    private void showCategoryAddForm(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        request.setAttribute("currentUser", currentUser);
+        List<CategoryDAO> parentCategories = categoryService.getAll();
+        request.setAttribute("parentCategories", parentCategories);
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/category-form.jsp");
+        rd.forward(request, response);
+    }
+    
+    private void showCategoryEditForm(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        String idStr = request.getParameter("id");
+        if (idStr == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=categories");
+            return;
+        }
+        try {
+            int id = Integer.parseInt(idStr);
+            CategoryDAO category = categoryService.findById(id);
+            if (category == null) {
+                response.sendRedirect(request.getContextPath() + "/staff?action=categories");
+                return;
+            }
+            request.setAttribute("currentUser", currentUser);
+            request.setAttribute("category", category);
+            List<CategoryDAO> parentCategories = categoryService.getAll();
+            request.setAttribute("parentCategories", parentCategories);
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/category-form.jsp");
+            rd.forward(request, response);
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=categories");
+        }
     }
 
     private void showBrandList(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
             throws ServletException, IOException {
         request.setAttribute("currentUser", currentUser);
-        List<BrandDAO> brands = brandService.getAll();
-        request.setAttribute("brands", brands);
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/brand/manage.jsp");
+        
+        // Lấy tham số pagination và search
+        String keyword = request.getParameter("keyword");
+        if (keyword == null) keyword = "";
+        int page = 1;
+        try {
+            String pageStr = request.getParameter("page");
+            if (pageStr != null && !pageStr.isBlank()) {
+                page = Integer.parseInt(pageStr);
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
+        
+        int pageSize = 10;
+        PageRequest pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
+        Page<BrandDAO> brandPage = brandService.findAll(pageRequest);
+        
+        request.setAttribute("brandPage", brandPage);
+        request.setAttribute("brands", brandPage.getData());
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("currentPage", page);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/brands.jsp");
         rd.forward(request, response);
+    }
+    
+    private void showBrandAddForm(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        request.setAttribute("currentUser", currentUser);
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/brand-form.jsp");
+        rd.forward(request, response);
+    }
+    
+    private void showBrandEditForm(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        String idStr = request.getParameter("id");
+        if (idStr == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=brands");
+            return;
+        }
+        try {
+            int id = Integer.parseInt(idStr);
+            BrandDAO brand = brandService.findById(id);
+            if (brand == null) {
+                response.sendRedirect(request.getContextPath() + "/staff?action=brands");
+                return;
+            }
+            request.setAttribute("currentUser", currentUser);
+            request.setAttribute("brand", brand);
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/brand-form.jsp");
+            rd.forward(request, response);
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=brands");
+        }
     }
 
     private void showOrderManagement(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
             throws ServletException, IOException {
         request.setAttribute("currentUser", currentUser);
-        List<OrderDAO> orders = orderService.getAll();
-        request.setAttribute("orders", orders);
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/order/list.jsp");
+        
+        // Lấy tham số pagination và search
+        String keyword = request.getParameter("keyword");
+        if (keyword == null) keyword = "";
+        int page = 1;
+        try {
+            String pageStr = request.getParameter("page");
+            if (pageStr != null && !pageStr.isBlank()) {
+                page = Integer.parseInt(pageStr);
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
+        
+        int pageSize = 10;
+        PageRequest pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
+        Page<OrderDAO> orderPage = orderService.findAll(pageRequest);
+        
+        request.setAttribute("orderPage", orderPage);
+        request.setAttribute("orders", orderPage.getData());
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("currentPage", page);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/orders.jsp");
         rd.forward(request, response);
     }
 
@@ -394,11 +584,22 @@ public class StaffServlet extends HttpServlet {
     private void handleCreateCategory(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
             throws IOException {
         String name = request.getParameter("name");
-//        String slug = request.getParameter("slug");
+        String description = request.getParameter("description");
+        String parentIdStr = request.getParameter("parent_id");
 
         CategoryDAO category = new CategoryDAO();
         category.setName(name);
-//        category.setSlug(slug);
+        category.setDescription(description);
+        try {
+            if (parentIdStr != null && !parentIdStr.isBlank()) {
+                int parentId = Integer.parseInt(parentIdStr);
+                category.setParent_id(parentId > 0 ? parentId : 0);
+            } else {
+                category.setParent_id(0);
+            }
+        } catch (NumberFormatException e) {
+            category.setParent_id(0);
+        }
         category.setIs_active(true);
 
         categoryService.create(category);
@@ -427,11 +628,19 @@ public class StaffServlet extends HttpServlet {
         }
 
         String name = request.getParameter("name");
-//        String slug = request.getParameter("slug");
+        String description = request.getParameter("description");
+        String parentIdStr = request.getParameter("parent_id");
         String activeStr = request.getParameter("is_active");
 
         if (name != null) category.setName(name);
-//        if (slug != null) category.setSlug(slug);
+        if (description != null) category.setDescription(description);
+        try {
+            if (parentIdStr != null && !parentIdStr.isBlank()) {
+                int parentId = Integer.parseInt(parentIdStr);
+                category.setParent_id(parentId > 0 ? parentId : 0);
+            }
+        } catch (NumberFormatException ignored) {
+        }
         if (activeStr != null) {
             category.setIs_active(Boolean.parseBoolean(activeStr));
         }

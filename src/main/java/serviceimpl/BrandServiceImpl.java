@@ -49,4 +49,11 @@ public class BrandServiceImpl implements BrandService {
     public Boolean update(BrandDAO entity) {
         return brandRepository.update(entity);
     }
+
+    @Override
+    public Page<BrandDAO> findAll(PageRequest pageRequest) {
+        List<BrandDAO> data = this.brandRepository.findAll(pageRequest);
+        int totalCount = this.count(pageRequest.getKeyword());
+        return new Page<>(data, pageRequest.getPage(), totalCount, pageRequest.getPageSize());
+    }
 }

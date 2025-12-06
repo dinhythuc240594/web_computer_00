@@ -50,4 +50,11 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryDAO> getAll() {
         return categoryRepository.getAll();
     }
+
+    @Override
+    public Page<CategoryDAO> findAll(PageRequest pageRequest) {
+        List<CategoryDAO> data = this.categoryRepository.findAll(pageRequest);
+        int totalCount = this.count(pageRequest.getKeyword());
+        return new Page<>(data, pageRequest.getPage(), totalCount, pageRequest.getPageSize());
+    }
 }

@@ -1,6 +1,8 @@
 package serviceimpl;
 
 import model.OrderDAO;
+import model.Page;
+import model.PageRequest;
 import repository.OrderRepository;
 import repositoryimpl.OrderRepositoryImpl;
 import service.OrderService;
@@ -59,5 +61,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int countByUserId(int userId) {
         return orderRepository.countByUserId(userId);
+    }
+
+    @Override
+    public Page<OrderDAO> findAll(PageRequest pageRequest) {
+        List<OrderDAO> data = this.orderRepository.findAll(pageRequest);
+        int totalCount = this.count(pageRequest.getKeyword());
+        return new Page<>(data, pageRequest.getPage(), totalCount, pageRequest.getPageSize());
     }
 }

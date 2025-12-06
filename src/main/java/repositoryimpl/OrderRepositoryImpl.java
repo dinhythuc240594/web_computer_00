@@ -1,6 +1,7 @@
 package repositoryimpl;
 
 import model.OrderDAO;
+import model.PageRequest;
 import repository.OrderRepository;
 
 import javax.sql.DataSource;
@@ -86,6 +87,60 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
+    public List<OrderDAO> findAll(PageRequest pageRequest) {
+        List<OrderDAO> orders = new ArrayList<>();
+
+        int pageSize = pageRequest.getPageSize();
+        int offset = pageRequest.getOffset();
+        String keyword = pageRequest.getKeyword();
+        String sortField = pageRequest.getSortField();
+        String orderField = pageRequest.getOrderField();
+
+        String sql = "SELECT id, user_id, created_at, status, total_amount, " +
+                "shipping_address, payment_method, note, is_active FROM orders ";
+
+        List<String> conditions = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            conditions.add("(CAST(id AS CHAR) LIKE ? OR CAST(user_id AS CHAR) LIKE ? OR status LIKE ?)");
+            params.add("%" + keyword + "%");
+            params.add("%" + keyword + "%");
+            params.add("%" + keyword + "%");
+        }
+
+        if (!conditions.isEmpty()) {
+            sql += "WHERE " + String.join(" AND ", conditions) + " ";
+        }
+
+        sql += "ORDER BY " + sortField + " " + orderField + " LIMIT ? OFFSET ?";
+        params.add(pageSize);
+        params.add(offset);
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            for (int i = 0; i < params.size(); i++) {
+                Object param = params.get(i);
+                if (param instanceof String) {
+                    ps.setString(i + 1, (String) param);
+                } else if (param instanceof Integer) {
+                    ps.setInt(i + 1, (Integer) param);
+                }
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                orders.add(mapResultSetToOrderDAO(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi lấy danh sách đơn hàng", e);
+        }
+        return orders;
+    }
+
+    @Override
     public int count(String keyword) {
         // Đếm tổng số đơn hàng, có thể mở rộng để hỗ trợ tìm kiếm theo keyword sau này
         String baseSql = "SELECT COUNT(1) FROM orders";
@@ -93,7 +148,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
 
         if (hasKeyword) {
-            sql.append(" WHERE CAST(id AS CHAR) LIKE ? OR CAST(user_id AS CHAR) LIKE ?");
+            sql.append(" WHERE (CAST(id AS CHAR) LIKE ? OR CAST(user_id AS CHAR) LIKE ? OR status LIKE ?)");
         }
 
         try (Connection conn = ds.getConnection();
@@ -103,6 +158,7 @@ public class OrderRepositoryImpl implements OrderRepository {
                 String like = "%" + keyword + "%";
                 ps.setString(1, like);
                 ps.setString(2, like);
+                ps.setString(3, like);
             }
 
             try (ResultSet rs = ps.executeQuery()) {
