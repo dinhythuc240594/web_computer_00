@@ -217,6 +217,54 @@ public class OrderRepositoryImpl implements OrderRepository {
         return items;
     }
 
+    @Override
+    public List<OrderDAO> findByUserIdWithPagination(int userId, int offset, int limit) {
+        List<OrderDAO> items = new ArrayList<>();
+
+        String sql = "SELECT id, user_id, order_date, status, total_amount, " +
+                "shipping_address, payment_method, note, is_active " +
+                "FROM orders WHERE user_id = ? ORDER BY order_date DESC LIMIT ? OFFSET ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    items.add(mapResultSetToOrderDAO(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi lấy đơn hàng theo user_id với phân trang: " + userId, e);
+        }
+        return items;
+    }
+
+    @Override
+    public int countByUserId(int userId) {
+        String sql = "SELECT COUNT(1) FROM orders WHERE user_id = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi đếm đơn hàng theo user_id: " + userId, e);
+        }
+        return 0;
+    }
+
     private OrderDAO mapResultSetToOrderDAO(ResultSet rs) throws SQLException {
         OrderDAO item = new OrderDAO();
 

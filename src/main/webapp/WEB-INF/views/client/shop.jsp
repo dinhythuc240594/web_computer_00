@@ -103,24 +103,6 @@
     <jsp:include page="../common/category-menu.jsp" />
     <!-- End Category Menu -->
 
-    <!-- page-title -->
-    <section class="page-title pt_20 pb_18">
-        <div class="large-container">
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 content-column">
-                    <!-- <div class="content-box">
-                        <h1>Tìm kiếm sản phẩm</h1>
-                        <ul class="bread-crumb clearfix">
-                            <li><a href="<%= contextPath %>/home">Trang chủ</a></li>
-                            <li>Tìm kiếm</li>
-                        </ul>
-                    </div> -->
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- page-title end -->
-
     <!-- shop-page-section -->
     <section class="shop-three pt_40 pb_80">
         <div class="large-container">

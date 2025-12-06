@@ -25,6 +25,12 @@
     List<OrderDAO> userOrders = new ArrayList<>();
     List<WishlistDAO> userWishlist = new ArrayList<>();
     
+    // Pagination parameters
+    int ordersPage = 1;
+    int ordersPageSize = 10;
+    int ordersTotalPages = 1;
+    int ordersTotal = 0;
+    
     if (sessionUsername != null && !sessionUsername.isBlank()) {
         try {
             javax.sql.DataSource ds = DataSourceUtil.getDataSource();
@@ -36,7 +42,35 @@
             
             currentUser = userService.findByUsername(sessionUsername);
             if (currentUser != null) {
-                userOrders = orderService.findByUserId(currentUser.getId());
+                // Get pagination parameters from request or use defaults
+                try {
+                    String pageParam = request.getParameter("page");
+                    if (pageParam != null && !pageParam.isBlank()) {
+                        ordersPage = Integer.parseInt(pageParam);
+                        if (ordersPage < 1) ordersPage = 1;
+                    }
+                } catch (NumberFormatException e) {
+                    ordersPage = 1;
+                }
+                
+                // Get pagination info from servlet if available, otherwise calculate
+                Object ordersPageObj = request.getAttribute("ordersPage");
+                Object ordersTotalPagesObj = request.getAttribute("ordersTotalPages");
+                Object ordersTotalObj = request.getAttribute("ordersTotal");
+                Object ordersPageSizeObj = request.getAttribute("ordersPageSize");
+                
+                if (ordersPageObj != null) ordersPage = (Integer) ordersPageObj;
+                if (ordersTotalPagesObj != null) ordersTotalPages = (Integer) ordersTotalPagesObj;
+                if (ordersTotalObj != null) ordersTotal = (Integer) ordersTotalObj;
+                if (ordersPageSizeObj != null) ordersPageSize = (Integer) ordersPageSizeObj;
+                
+                // Load orders with pagination
+                int offset = (ordersPage - 1) * ordersPageSize;
+                if (ordersTotal == 0) {
+                    ordersTotal = orderService.countByUserId(currentUser.getId());
+                    ordersTotalPages = (int) Math.ceil((double) ordersTotal / ordersPageSize);
+                }
+                userOrders = orderService.findByUserIdWithPagination(currentUser.getId(), offset, ordersPageSize);
                 userWishlist = wishlistService.findByUserId(currentUser.getId());
             }
         } catch (Exception e) {
@@ -98,13 +132,6 @@
 
     <!-- <jsp:include page="../../common/preloader.jsp" /> -->
 
-    <!-- page-direction -->
-    <div class="page_direction">
-        <div class="demo-rtl direction_switch"><button class="rtl">RTL</button></div>
-        <div class="demo-ltr direction_switch"><button class="ltr">LTR</button></div>
-    </div>
-    <!-- page-direction end -->
-
     <!-- main header -->
     <jsp:include page="../../common/header.jsp" />
     <!-- main-header end -->
@@ -112,16 +139,6 @@
     <jsp:include page="../../common/mobile-menu.jsp" />
     <jsp:include page="../../common/category-menu.jsp" />
 
-    <!-- page-title -->
-    <section class="page-title pt_20 pb_18">
-        <div class="large-container">
-            <ul class="bread-crumb clearfix">
-                <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                <li>Tài khoản của tôi</li>
-            </ul>
-        </div>
-    </section>
-    <!-- page-title end -->
 
     <!-- account-section -->
     <section class="account-section pb_80">
@@ -286,6 +303,31 @@
                         </div> -->
                         <div class="tab <%= "orders".equals(tab) ? "active-tab" : "" %>" id="tab-3">
                             <h3>Lịch sử đơn hàng</h3>
+                            <%
+                                // Handle success/error messages for order cancellation
+                                String successMsg = request.getParameter("success");
+                                String errorMsg = request.getParameter("error");
+                                if (successMsg != null && "order_cancelled".equals(successMsg)) {
+                            %>
+                            <div class="alert alert-success" style="padding: 15px; margin-bottom: 20px; border: 1px solid #c3e6cb; border-radius: 4px; background-color: #d4edda; color: #155724;">
+                                <strong>Thành công!</strong> Đơn hàng đã được hủy thành công.
+                            </div>
+                            <%
+                                }
+                                if (errorMsg != null) {
+                                    String errorText = "";
+                                    if ("invalid_order".equals(errorMsg)) errorText = "Mã đơn hàng không hợp lệ.";
+                                    else if ("order_not_found".equals(errorMsg)) errorText = "Không tìm thấy đơn hàng.";
+                                    else if ("cannot_cancel".equals(errorMsg)) errorText = "Chỉ có thể hủy đơn hàng ở trạng thái 'Chờ xử lý'.";
+                                    else if ("cancel_failed".equals(errorMsg)) errorText = "Có lỗi xảy ra khi hủy đơn hàng. Vui lòng thử lại.";
+                                    else errorText = "Có lỗi xảy ra.";
+                            %>
+                            <div class="alert alert-danger" style="padding: 15px; margin-bottom: 20px; border: 1px solid #f5c6cb; border-radius: 4px; background-color: #f8d7da; color: #721c24;">
+                                <strong>Lỗi!</strong> <%= errorText %>
+                            </div>
+                            <%
+                                }
+                            %>
                             <div class="history-box">
                                 <%
                                     if (userOrders == null || userOrders.isEmpty()) {
@@ -359,6 +401,103 @@
                                     }
                                 %>
                             </div>
+                            <%
+                                // Pagination controls
+                                if (ordersTotal > 0 && ordersTotalPages > 1) {
+                            %>
+                            <div class="pagination-container" style="margin-top: 30px; text-align: center;">
+                                <nav aria-label="Phân trang đơn hàng">
+                                    <ul class="pagination justify-content-center" style="display: inline-flex; list-style: none; padding: 0;">
+                                        <%
+                                            // Previous button
+                                            if (ordersPage > 1) {
+                                        %>
+                                        <li class="page-item">
+                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= ordersPage - 1 %>" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #007bff; background-color: #fff;">Trước</a>
+                                        </li>
+                                        <%
+                                            } else {
+                                        %>
+                                        <li class="page-item disabled">
+                                            <span class="page-link" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; color: #6c757d; background-color: #e9ecef; cursor: not-allowed;">Trước</span>
+                                        </li>
+                                        <%
+                                            }
+                                            
+                                            // Page numbers
+                                            int startPage = Math.max(1, ordersPage - 2);
+                                            int endPage = Math.min(ordersTotalPages, ordersPage + 2);
+                                            
+                                            if (startPage > 1) {
+                                        %>
+                                        <li class="page-item">
+                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=1" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #007bff; background-color: #fff;">1</a>
+                                        </li>
+                                        <%
+                                            if (startPage > 2) {
+                                        %>
+                                        <li class="page-item disabled">
+                                            <span class="page-link" style="padding: 8px 15px; margin: 0 5px; border: none; color: #6c757d;">...</span>
+                                        </li>
+                                        <%
+                                            }
+                                            }
+                                            
+                                            for (int i = startPage; i <= endPage; i++) {
+                                                if (i == ordersPage) {
+                                        %>
+                                        <li class="page-item active">
+                                            <span class="page-link" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #007bff; border-radius: 4px; background-color: #007bff; color: #fff; font-weight: bold;"><%= i %></span>
+                                        </li>
+                                        <%
+                                                } else {
+                                        %>
+                                        <li class="page-item">
+                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= i %>" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #007bff; background-color: #fff;"><%= i %></a>
+                                        </li>
+                                        <%
+                                                }
+                                            }
+                                            
+                                            if (endPage < ordersTotalPages) {
+                                                if (endPage < ordersTotalPages - 1) {
+                                        %>
+                                        <li class="page-item disabled">
+                                            <span class="page-link" style="padding: 8px 15px; margin: 0 5px; border: none; color: #6c757d;">...</span>
+                                        </li>
+                                        <%
+                                                }
+                                        %>
+                                        <li class="page-item">
+                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= ordersTotalPages %>" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #007bff; background-color: #fff;"><%= ordersTotalPages %></a>
+                                        </li>
+                                        <%
+                                            }
+                                            
+                                            // Next button
+                                            if (ordersPage < ordersTotalPages) {
+                                        %>
+                                        <li class="page-item">
+                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= ordersPage + 1 %>" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #007bff; background-color: #fff;">Sau</a>
+                                        </li>
+                                        <%
+                                            } else {
+                                        %>
+                                        <li class="page-item disabled">
+                                            <span class="page-link" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; color: #6c757d; background-color: #e9ecef; cursor: not-allowed;">Sau</span>
+                                        </li>
+                                        <%
+                                            }
+                                        %>
+                                    </ul>
+                                </nav>
+                                <p style="margin-top: 10px; color: #6c757d; font-size: 14px;">
+                                    Hiển thị <%= (ordersPage - 1) * ordersPageSize + 1 %> - <%= Math.min(ordersPage * ordersPageSize, ordersTotal) %> trong tổng số <%= ordersTotal %> đơn hàng
+                                </p>
+                            </div>
+                            <%
+                                }
+                            %>
                         </div>
                         <div class="tab <%= "wishlist".equals(tab) ? "active-tab" : "" %>" id="tab-4">
                             <h3>Danh sách yêu thích</h3>

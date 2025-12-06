@@ -50,17 +50,6 @@
     <jsp:include page="../common/mobile-menu.jsp" />
     <jsp:include page="../common/category-menu.jsp" />
 
-    <!-- page-title -->
-    <section class="page-title pt_20 pb_18">
-        <div class="large-container">
-<%--            <ul class="bread-crumb clearfix">--%>
-<%--                <li><a href="${pageContext.request.contextPath}/">Home</a></li>--%>
-<%--                <li>Signup</li>--%>
-<%--            </ul>--%>
-        </div>
-    </section>
-    <!-- page-title end -->
-
     <!-- sign-section -->
     <section class="sign-section pb_80">
         <div class="large-container">

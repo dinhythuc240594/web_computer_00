@@ -69,15 +69,6 @@
 
     <!-- <jsp:include page="../common/preloader.jsp" /> -->
 
-
-    <!-- page-direction -->
-    <div class="page_direction">
-        <div class="demo-rtl direction_switch"><button class="rtl">RTL</button></div>
-        <div class="demo-ltr direction_switch"><button class="ltr">LTR</button></div>
-    </div>
-    <!-- page-direction end -->
-
-
     <!-- main header -->
     <jsp:include page="../common/header.jsp" />
     <!-- main-header end -->
@@ -87,19 +78,6 @@
 
 
     <jsp:include page="../common/category-menu.jsp" />
-
-
-    <!-- page-title -->
-    <section class="page-title pt_20 pb_18">
-        <div class="large-container">
-            <ul class="bread-crumb clearfix">
-                <li><a href="<%= request.getContextPath() %>/home">Trang chủ</a></li>
-                <li>Giỏ hàng</li>
-            </ul>
-        </div>
-    </section>
-    <!-- page-title end -->
-
 
     <!-- cart section -->
     <section class="cart-section pb_80">

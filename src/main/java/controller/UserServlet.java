@@ -111,7 +111,30 @@ public class UserServlet extends HttpServlet {
 
     private void showProfile(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
             throws ServletException, IOException {
+        // Pagination parameters for orders tab
+        int page = 1;
+        int pageSize = 10; // Số đơn hàng mỗi trang
+        
+        try {
+            String pageParam = request.getParameter("page");
+            if (pageParam != null && !pageParam.isBlank()) {
+                page = Integer.parseInt(pageParam);
+                if (page < 1) page = 1;
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
+
+        int offset = (page - 1) * pageSize;
+        int totalOrders = orderService.countByUserId(currentUser.getId());
+        int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
+
         request.setAttribute("currentUser", currentUser);
+        request.setAttribute("ordersPage", page);
+        request.setAttribute("ordersTotalPages", totalPages);
+        request.setAttribute("ordersTotal", totalOrders);
+        request.setAttribute("ordersPageSize", pageSize);
+        
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/account/profile.jsp");
         rd.forward(request, response);
     }
@@ -133,13 +156,32 @@ public class UserServlet extends HttpServlet {
     private void showOrderHistory(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
             throws ServletException, IOException {
 
-        List<OrderDAO> allOrders = orderService.getAll();
-        List<OrderDAO> userOrders = allOrders.stream()
-                .filter(o -> o.getUser_id() == currentUser.getId())
-                .collect(Collectors.toList());
+        // Pagination parameters
+        int page = 1;
+        int pageSize = 10; // Số đơn hàng mỗi trang
+        
+        try {
+            String pageParam = request.getParameter("page");
+            if (pageParam != null && !pageParam.isBlank()) {
+                page = Integer.parseInt(pageParam);
+                if (page < 1) page = 1;
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
+
+        int offset = (page - 1) * pageSize;
+        int totalOrders = orderService.countByUserId(currentUser.getId());
+        int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
+
+        List<OrderDAO> userOrders = orderService.findByUserIdWithPagination(currentUser.getId(), offset, pageSize);
 
         request.setAttribute("currentUser", currentUser);
         request.setAttribute("orders", userOrders);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("totalOrders", totalOrders);
+        request.setAttribute("pageSize", pageSize);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/account/order.jsp");
         rd.forward(request, response);
@@ -257,7 +299,7 @@ public class UserServlet extends HttpServlet {
 
         String orderIdParam = request.getParameter("orderId");
         if (orderIdParam == null || orderIdParam.isBlank()) {
-            response.sendRedirect(request.getContextPath() + "/user?action=orders&error=invalid_order");
+            response.sendRedirect(request.getContextPath() + "/user?tab=orders&error=invalid_order");
             return;
         }
 
@@ -266,7 +308,7 @@ public class UserServlet extends HttpServlet {
             OrderDAO order = orderService.findById(orderId);
 
             if (order == null) {
-                response.sendRedirect(request.getContextPath() + "/user?action=orders&error=order_not_found");
+                response.sendRedirect(request.getContextPath() + "/user?tab=orders&error=order_not_found");
                 return;
             }
 
@@ -278,7 +320,7 @@ public class UserServlet extends HttpServlet {
 
             // Chỉ cho phép hủy đơn hàng khi trạng thái là PENDING
             if (order.getStatus() == null || !order.getStatus().equalsIgnoreCase("PENDING")) {
-                response.sendRedirect(request.getContextPath() + "/user?action=orders&error=cannot_cancel");
+                response.sendRedirect(request.getContextPath() + "/user?tab=orders&error=cannot_cancel");
                 return;
             }
 
@@ -289,13 +331,13 @@ public class UserServlet extends HttpServlet {
             boolean success = Boolean.TRUE.equals(orderService.update(order));
 
             if (success) {
-                response.sendRedirect(request.getContextPath() + "/user?action=orders&success=order_cancelled");
+                response.sendRedirect(request.getContextPath() + "/user?tab=orders&success=order_cancelled");
             } else {
-                response.sendRedirect(request.getContextPath() + "/user?action=orders&error=cancel_failed");
+                response.sendRedirect(request.getContextPath() + "/user?tab=orders&error=cancel_failed");
             }
 
         } catch (NumberFormatException e) {
-            response.sendRedirect(request.getContextPath() + "/user?action=orders&error=invalid_order");
+            response.sendRedirect(request.getContextPath() + "/user?tab=orders&error=invalid_order");
         }
     }
 }

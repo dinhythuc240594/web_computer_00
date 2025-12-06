@@ -50,4 +50,14 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDAO> findByUserId(int userId) {
         return orderRepository.findByUserId(userId);
     }
+
+    @Override
+    public List<OrderDAO> findByUserIdWithPagination(int userId, int offset, int limit) {
+        return orderRepository.findByUserIdWithPagination(userId, offset, limit);
+    }
+
+    @Override
+    public int countByUserId(int userId) {
+        return orderRepository.countByUserId(userId);
+    }
 }
