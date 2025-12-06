@@ -10,7 +10,7 @@
         <div class="large-container">
             <div class="sec-title">
                 <h2>Thương Hiệu</h2>
-                <a href="index.html">Xem tất cả thương hiệu</a>
+                <a href="<%= contextPath %>/brand">Xem tất cả thương hiệu</a>
             </div>
             <ul class="clients-list clearfix">
                 <%
@@ -26,7 +26,7 @@
                                 logoUrl = contextPath + logoUrl;
                             }
 
-                            String brandLink = contextPath + "/products?brandId=" + brand.getId();
+                            String brandLink = contextPath + "/brand?brandId=" + brand.getId();
                 %>
                 <li>
                     <a href="<%= brandLink %>" title="<%= brand.getName() %>">

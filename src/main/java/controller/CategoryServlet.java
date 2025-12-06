@@ -6,15 +6,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.BrandDAO;
 import model.CategoryDAO;
 import model.Page;
 import model.PageRequest;
 import model.ProductDAO;
-import service.BrandService;
 import service.CategoryService;
 import service.ProductService;
-import serviceimpl.BrandServiceImpl;
 import serviceimpl.CategoryServiceImpl;
 import serviceimpl.ProductServiceImpl;
 import utilities.DataSourceUtil;
@@ -36,7 +33,6 @@ public class CategoryServlet extends HttpServlet {
     private transient DataSource dataSource;
     private transient ProductService productService;
     private transient CategoryService categoryService;
-    private transient BrandService brandService;
 
     @Override
     public void init() throws ServletException {
@@ -44,21 +40,17 @@ public class CategoryServlet extends HttpServlet {
         this.dataSource = DataSourceUtil.getDataSource();
         this.productService = new ProductServiceImpl(dataSource);
         this.categoryService = new CategoryServiceImpl(dataSource);
-        this.brandService = new BrandServiceImpl(dataSource);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Load categories và brands từ database
+        // Load categories từ database
         List<CategoryDAO> categories = fetchCategories();
-        List<BrandDAO> brands = fetchBrands();
         request.setAttribute("categories", categories);
-        request.setAttribute("brands", brands);
 
         // Lấy tham số từ request
         String keyword = trimToNull(request.getParameter("keyword"));
         int categoryId = parsePositiveInt(request.getParameter("categoryId"));
-        int brandId = parsePositiveInt(request.getParameter("brandId"));
         int page = parsePositiveInt(request.getParameter("page"));
         if (page <= 0) {
             page = 1;
@@ -67,7 +59,6 @@ public class CategoryServlet extends HttpServlet {
         // Đưa lại tham số ra view để giữ trạng thái form
         request.setAttribute("searchKeyword", keyword);
         request.setAttribute("selectedCategoryId", categoryId);
-        request.setAttribute("selectedBrandId", brandId);
         request.setAttribute("currentPage", page);
 
         // Tạo PageRequest với phân trang
@@ -80,7 +71,7 @@ public class CategoryServlet extends HttpServlet {
                 keyword != null ? keyword : "",
                 0,
                 categoryId > 0 ? categoryId : 0,  // Nếu categoryId = 0, không filter theo category
-                brandId > 0 ? brandId : 0  // Nếu brandId = 0, không filter theo brand
+                0  // Không filter theo brand trong CategoryServlet
         );
 
         // Lấy kết quả với phân trang
@@ -88,14 +79,10 @@ public class CategoryServlet extends HttpServlet {
         request.setAttribute("productPage", productPage);
         request.setAttribute("products", productPage.getData());
 
-        // Lấy thông tin category và brand nếu có
+        // Lấy thông tin category nếu có
         if (categoryId > 0) {
             CategoryDAO selectedCategory = categoryService.findById(categoryId);
             request.setAttribute("selectedCategory", selectedCategory);
-        }
-        if (brandId > 0) {
-            BrandDAO selectedBrand = brandService.findById(brandId);
-            request.setAttribute("selectedBrand", selectedBrand);
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/category.jsp");
@@ -113,15 +100,6 @@ public class CategoryServlet extends HttpServlet {
             return categoryService.getAll();
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "Không thể tải danh mục", ex);
-            return Collections.emptyList();
-        }
-    }
-
-    private List<BrandDAO> fetchBrands() {
-        try {
-            return brandService.getAll();
-        } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "Không thể tải thương hiệu", ex);
             return Collections.emptyList();
         }
     }

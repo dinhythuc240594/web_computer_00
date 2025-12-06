@@ -3,37 +3,37 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="model.ProductDAO" %>
-<%@ page import="model.CategoryDAO" %>
+<%@ page import="model.BrandDAO" %>
 <%@ page import="model.Page" %>
 <%
     String contextPath = request.getContextPath();
     
     String searchKeyword = (String) request.getAttribute("searchKeyword");
-    Integer selectedCategoryId = (Integer) request.getAttribute("selectedCategoryId");
+    Integer selectedBrandId = (Integer) request.getAttribute("selectedBrandId");
     Integer currentPage = (Integer) request.getAttribute("currentPage");
-    CategoryDAO selectedCategory = (CategoryDAO) request.getAttribute("selectedCategory");
+    BrandDAO selectedBrand = (BrandDAO) request.getAttribute("selectedBrand");
     
-    if (selectedCategoryId == null) selectedCategoryId = 0;
+    if (selectedBrandId == null) selectedBrandId = 0;
     if (currentPage == null) currentPage = 1;
     
-    List<CategoryDAO> categories = (List<CategoryDAO>) request.getAttribute("categories");
+    List<BrandDAO> brands = (List<BrandDAO>) request.getAttribute("brands");
     Page<ProductDAO> productPage = (Page<ProductDAO>) request.getAttribute("productPage");
     List<ProductDAO> products = (List<ProductDAO>) request.getAttribute("products");
     
     if (products == null) {
         products = java.util.Collections.emptyList();
     }
-    if (categories == null) {
-        categories = java.util.Collections.emptyList();
+    if (brands == null) {
+        brands = java.util.Collections.emptyList();
     }
     
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     
-    String pageTitle = "Tất cả sản phẩm";
-    if (selectedCategory != null) {
-        pageTitle = "Danh mục: " + selectedCategory.getName();
-    } else if (selectedCategoryId > 0) {
-        pageTitle = "Danh mục #" + selectedCategoryId;
+    String pageTitle = "Tất cả thương hiệu";
+    if (selectedBrand != null) {
+        pageTitle = "Thương hiệu: " + selectedBrand.getName();
+    } else if (selectedBrandId > 0) {
+        pageTitle = "Thương hiệu #" + selectedBrandId;
     }
 %>
 <!DOCTYPE html>
@@ -71,49 +71,6 @@
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/footer.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/responsive.css" rel="stylesheet">
     <style>
-        .category-filter-section {
-            background: #f8f9fa;
-            padding: 30px 0;
-            margin-bottom: 30px;
-        }
-        .filter-form {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            align-items: flex-end;
-        }
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-        .filter-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #333;
-        }
-        .filter-group select,
-        .filter-group input[type="text"] {
-            width: 100%;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .filter-group button {
-            padding: 10px 30px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-        .filter-group button:hover {
-            background: #0056b3;
-        }
         .pagination {
             display: flex;
             justify-content: center;
@@ -198,15 +155,15 @@
             color: #333;
             margin: 0;
         }
-        .category-list {
+        .brand-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        .category-list li {
+        .brand-list li {
             margin-bottom: 6px;
         }
-        .category-list li:last-child {
+        .brand-list li:last-child {
             margin-bottom: 0;
         }
     </style>
@@ -223,7 +180,7 @@
     <jsp:include page="../common/category-menu.jsp" />
     <!-- End Category Menu -->
 
-    <!-- category-page-section -->
+    <!-- brand-page-section -->
     <section class="shop-three pt_40 pb_80">
         <div class="large-container">
             <!-- Page Header -->
@@ -242,81 +199,46 @@
                 %>
             </div>
 
-            <!-- Filter Section -->
-            <!-- <div class="category-filter-section">
-                <div class="large-container">
-                    <form method="GET" action="<%= contextPath %>/category" class="filter-form">
-                        <div class="filter-group">
-                            <label for="categoryId">Danh mục:</label>
-                            <select name="categoryId" id="categoryId">
-                                <option value="0">Tất cả danh mục</option>
-                                <%
-                                    for (CategoryDAO category : categories) {
-                                        boolean isSelected = category.getId() == selectedCategoryId;
-                                %>
-                                <option value="<%= category.getId() %>" <%= isSelected ? "selected" : "" %>>
-                                    <%= category.getName() %>
-                                </option>
-                                <%
-                                    }
-                                %>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="keyword">Tìm kiếm:</label>
-                            <input type="text" 
-                                   name="keyword" 
-                                   id="keyword" 
-                                   placeholder="Nhập tên sản phẩm hoặc giá..."
-                                   value="<%= searchKeyword != null ? searchKeyword : "" %>">
-                        </div>
-                        <div class="filter-group">
-                            <button type="submit">Tìm kiếm</button>
-                        </div>
-                    </form>
-                </div>
-            </div> -->
-
             <div class="row clearfix">
                 <!-- Sidebar -->
                 <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
                     <div class="shop-sidebar">
-                        <!-- Categories Widget -->
-                        <div class="category-widget sidebar-widget">
+                        <!-- Brands Widget -->
+                        <div class="brand-widget sidebar-widget">
                             <div class="widget-title">
-                                <h4>Danh mục sản phẩm</h4>
+                                <h4>Thương hiệu</h4>
                             </div>
                             <div class="widget-content">
-                                <ul class="category-list">
+                                <ul class="brand-list">
                                     <li>
                                         <%
-                                            // Khi click "Tất cả", reset categoryId, chỉ giữ keyword nếu có
-                                            String allUrl = contextPath + "/category";
+                                            // Khi click "Tất cả", reset brandId, chỉ giữ keyword nếu có
+                                            String allUrl = contextPath + "/brand";
                                             if (searchKeyword != null && !searchKeyword.isBlank()) {
                                                 allUrl += "?keyword=" + java.net.URLEncoder.encode(searchKeyword, "UTF-8");
                                             }
-                                            // Chỉ active khi không có category nào được chọn
-                                            boolean isAllActive = selectedCategoryId == 0;
+                                            // Chỉ active khi không có brand nào được chọn
+                                            boolean isAllActive = selectedBrandId == 0;
                                         %>
                                         <a href="<%= allUrl %>" 
                                            class="sidebar-nav-link <%= isAllActive ? "active" : "" %>">
-                                            Tất cả
+                                            Tất cả thương hiệu
                                         </a>
                                     </li>
                                     <%
-                                        for (CategoryDAO category : categories) {
-                                            // Active category khi categoryId được chọn
-                                            boolean isActive = category.getId() == selectedCategoryId;
-                                            // Khi click vào category, filter theo categoryId
-                                            String categoryUrl = contextPath + "/category?categoryId=" + category.getId();
+                                        for (BrandDAO brand : brands) {
+                                            // Active brand khi brandId được chọn
+                                            boolean isActive = brand.getId() == selectedBrandId;
+                                            // Khi click vào brand, filter theo brandId
+                                            String brandUrl = contextPath + "/brand?brandId=" + brand.getId();
                                             if (searchKeyword != null && !searchKeyword.isBlank()) {
-                                                categoryUrl += "&keyword=" + java.net.URLEncoder.encode(searchKeyword, "UTF-8");
+                                                brandUrl += "&keyword=" + java.net.URLEncoder.encode(searchKeyword, "UTF-8");
                                             }
                                     %>
                                     <li>
-                                        <a href="<%= categoryUrl %>" 
+                                        <a href="<%= brandUrl %>" 
                                            class="sidebar-nav-link <%= isActive ? "active" : "" %>">
-                                            <%= category.getName() %>
+                                            <%= brand.getName() %>
                                         </a>
                                     </li>
                                     <%
@@ -366,7 +288,7 @@
                             </figure>
                         </div>
                         <div class="lower-content">
-                            <span class="text">Danh mục #<%= product.getCategory_id() %></span>
+                            <span class="text">Thương hiệu #<%= product.getBrand_id() %></span>
                             <h4>
                                 <a href="<%= productLink %>"><%= product.getName() %></a>
                             </h4>
@@ -403,12 +325,12 @@
                     int current = productPage.getCurrentPage();
                     
                     // Xây dựng URL base
-                    String baseUrl = contextPath + "/category?";
+                    String baseUrl = contextPath + "/brand?";
                     if (searchKeyword != null && !searchKeyword.isBlank()) {
                         baseUrl += "keyword=" + java.net.URLEncoder.encode(searchKeyword, "UTF-8") + "&";
                     }
-                    if (selectedCategoryId > 0) {
-                        baseUrl += "categoryId=" + selectedCategoryId + "&";
+                    if (selectedBrandId > 0) {
+                        baseUrl += "brandId=" + selectedBrandId + "&";
                     }
             %>
             <div class="pagination">
@@ -484,8 +406,8 @@
                 <div class="col-lg-12">
                     <div style="text-align: center; padding: 60px 20px;">
                         <h3>Không tìm thấy sản phẩm phù hợp</h3>
-                        <p>Vui lòng thử lại với từ khóa hoặc danh mục khác.</p>
-                        <a href="<%= contextPath %>/category" class="theme-btn btn-one">Xem tất cả sản phẩm</a>
+                        <p>Vui lòng thử lại với từ khóa hoặc thương hiệu khác.</p>
+                        <a href="<%= contextPath %>/brand" class="theme-btn btn-one">Xem tất cả thương hiệu</a>
                     </div>
                 </div>
             </div>
@@ -496,7 +418,7 @@
             </div>
         </div>
     </section>
-    <!-- category-page-section end -->
+    <!-- brand-page-section end -->
 
     <!-- main-footer -->
     <jsp:include page="../common/footer.jsp" />
@@ -532,4 +454,5 @@
 
 </body><!-- End of .page_wrapper -->
 </html>
+
 
