@@ -1,7 +1,7 @@
     <!-- main-footer -->
     <footer class="main-footer">
         <div class="large-container">
-            <div class="widget-section">
+            <!-- <div class="widget-section">
                 <div class="row clearfix">
                     <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                         <div class="footer-widget contact-widget mt_10">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="footer-bottom">
                 <div class="bottom-inner">
                     <div class="copyright"><p>Bản quyền &copy; 2025 <a href="index.html">HCMUTE</a>, Inc. Đã đăng ký bản quyền</p></div>

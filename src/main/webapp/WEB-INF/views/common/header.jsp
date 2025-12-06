@@ -156,7 +156,7 @@ padding: 15px 20px;"></div>
                                     </li>
                                     <li><a href="brand">Thương Hiệu</a>
                                     </li>
-                                    <li><a href="contact">Contact</a></li>
+                                    <!-- <li><a href="contact">Contact</a></li> -->
                                     <li></li>
                                     <li></li>
                                 </ul>
