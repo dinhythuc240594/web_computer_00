@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="${adminAssetsPath}/css/demo.css"/>
     <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"/>
     <script src="${adminAssetsPath}/vendor/js/helpers.js"></script>
-    <script src="${adminAssetsPath}/vendor/js/template-customizer.js"></script>
+    <!-- <script src="${adminAssetsPath}/vendor/js/template-customizer.js"></script> -->
     <script src="${adminAssetsPath}/js/config.js"></script>
 </head>
 <body>

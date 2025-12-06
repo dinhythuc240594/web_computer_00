@@ -100,12 +100,12 @@
                                         ><span class="align-middle">My Profile</span>
                                     </a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a class="dropdown-item" href="pages-account-settings-account.html">
                                         <i class="icon-base ri ri-settings-4-line icon-22px me-3"></i
                                         ><span class="align-middle">Settings</span>
                                     </a>
-                                </li>
+                                </li> -->
                                 <!-- <li>
                                     <a class="dropdown-item" href="pages-account-settings-billing.html">
                         <span class="d-flex align-items-center align-middle">

@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="${adminAssetsPath}/css/demo.css"/>
     <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"/>
     <script src="${adminAssetsPath}/vendor/js/helpers.js"></script>
-    <script src="${adminAssetsPath}/vendor/js/template-customizer.js"></script>
+    <!-- <script src="${adminAssetsPath}/vendor/js/template-customizer.js"></script> -->
     <script src="${adminAssetsPath}/js/config.js"></script>
 </head>
 <body>
@@ -169,7 +169,7 @@
                             if (orderPage != null && orderPage.getTotalPage() > 1) {
                                 int currentPage = orderPage.getCurrentPage();
                                 int totalPages = orderPage.getTotalPage();
-                                String baseUrl = contextPath + "/staff?action=orders";
+                                String baseUrl = request.getContextPath() + "/staff?action=orders";
                                 if (keyword != null && !keyword.isEmpty()) {
                                     baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                 }

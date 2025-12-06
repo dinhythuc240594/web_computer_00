@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="${adminAssetsPath}/css/demo.css"/>
     <link rel="stylesheet" href="${adminAssetsPath}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"/>
     <script src="${adminAssetsPath}/vendor/js/helpers.js"></script>
-    <script src="${adminAssetsPath}/vendor/js/template-customizer.js"></script>
+    <!-- <script src="${adminAssetsPath}/vendor/js/template-customizer.js"></script> -->
     <script src="${adminAssetsPath}/js/config.js"></script>
 </head>
 <body>
@@ -188,7 +188,7 @@
                             if (productPage != null && productPage.getTotalPage() > 1) {
                                 int currentPage = productPage.getCurrentPage();
                                 int totalPages = productPage.getTotalPage();
-                                String baseUrl = contextPath + "/staff?action=products";
+                                String baseUrl = request.getContextPath() + "/staff?action=products";
                                 if (keyword != null && !keyword.isEmpty()) {
                                     baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                 }

@@ -236,7 +236,7 @@
                                     if (orderPage != null && orderPage.getTotalPage() > 1) {
                                         int currentPageNum = orderPage.getCurrentPage();
                                         int totalPages = orderPage.getTotalPage();
-                                        String baseUrl = contextPath + "/staff?action=dashboard&tab=orders";
+                                        String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=orders";
                                         if (keyword != null && !keyword.isEmpty()) {
                                             baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                         }
@@ -426,7 +426,7 @@
                                     if (productPage != null && productPage.getTotalPage() > 1) {
                                         int currentPageNum = productPage.getCurrentPage();
                                         int totalPages = productPage.getTotalPage();
-                                        String baseUrl = contextPath + "/staff?action=dashboard&tab=products";
+                                        String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=products";
                                         if (keyword != null && !keyword.isEmpty()) {
                                             baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                         }
@@ -584,7 +584,7 @@
                                     if (brandPage != null && brandPage.getTotalPage() > 1) {
                                         int currentPageNum = brandPage.getCurrentPage();
                                         int totalPages = brandPage.getTotalPage();
-                                        String baseUrl = contextPath + "/staff?action=dashboard&tab=brands";
+                                        String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=brands";
                                         if (keyword != null && !keyword.isEmpty()) {
                                             baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                         }
@@ -748,7 +748,7 @@
                                     if (categoryPage != null && categoryPage.getTotalPage() > 1) {
                                         int currentPageNum = categoryPage.getCurrentPage();
                                         int totalPages = categoryPage.getTotalPage();
-                                        String baseUrl = contextPath + "/staff?action=dashboard&tab=categories";
+                                        String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=categories";
                                         if (keyword != null && !keyword.isEmpty()) {
                                             baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                         }

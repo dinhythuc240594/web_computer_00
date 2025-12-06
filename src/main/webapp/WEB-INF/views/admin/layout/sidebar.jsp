@@ -231,7 +231,7 @@
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item active">
-                            <a href="app-ecommerce-dashboard.html" class="menu-link">
+                            <a href="staff" class="menu-link">
                                 <div data-i18n="Dashboard">Dashboard</div>
                             </a>
                         </li>
