@@ -190,7 +190,6 @@ padding: 15px 20px;"></div>
                                     Boolean isLogin = (Boolean) request.getAttribute("is_login");
                                     String username = (String) request.getAttribute("username");
                                     String typeUser = (String) request.getAttribute("type_user");
-                                    String userAvatar = (String) request.getAttribute("userAvatar");
                                     
                                     // Lấy thông tin user đầy đủ từ database
                                     UserDAO currentUser = null;
@@ -289,15 +288,11 @@ padding: 15px 20px;"></div>
                             <%
                                 if (isLogin != null && isLogin && currentUser != null) {
                                     // Hiển thị avatar, tên và nút logout khi đã đăng nhập
-                                    String avatarUrl = userAvatar;
+                                    String avatarUrl = null;
                                     boolean hasAvatar = false;
-                                    if (avatarUrl != null && !avatarUrl.isBlank()) {
+                                    if (currentUser.getAvatar() != null && currentUser.getAvatar().length > 0) {
                                         hasAvatar = true;
-                                        if (!avatarUrl.startsWith("http") && !avatarUrl.startsWith("/")) {
-                                            avatarUrl = request.getContextPath() + "/" + avatarUrl;
-                                        } else if (!avatarUrl.startsWith("http") && avatarUrl.startsWith("/")) {
-                                            avatarUrl = request.getContextPath() + avatarUrl;
-                                        }
+                                        avatarUrl = request.getContextPath() + "/avatar?userId=" + currentUser.getId();
                                     }
                             %>
                             <li class="user-info" style="display: flex; align-items: center; gap: 10px; margin-right: 10px;">
