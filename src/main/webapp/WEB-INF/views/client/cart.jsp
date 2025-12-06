@@ -140,65 +140,19 @@
                 </div>
                 <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
                     <div class="total-cart mb_30">
-                        <div class="title-box">
-                            <h4>Tạm tính</h4>
-                            <h5 id="cart-subtotal"><%= currencyFormat.format(0) %></h5>
+                        <!-- <div class="form-group mb_20">
+                            <label for="customer-email">Email</label>
+                            <input type="email" id="customer-email" name="email" placeholder="Nhập email của bạn" class="form-control">
                         </div>
-                        <div class="shipping-cost mb_40">
-                            <h4>Vận chuyển</h4>
-                            <ul class="cost-list">
-                                <li>
-                                    <div class="check-box">
-                                        <input class="check" type="radio" id="checkbox1" name="same" checked>
-                                        <label for="checkbox1">Miễn phí vận chuyển</label>
-                                    </div>
-                                    <span class="price">+$00.00</span>
-                                </li>
-                                <li>
-                                    <div class="check-box">
-                                        <input class="check" type="radio" id="checkbox2" name="same">
-                                        <label for="checkbox2">Phí cố định</label>
-                                    </div>
-                                    <span class="price">+$10.00</span>
-                                </li>
-                                <li>
-                                    <div class="check-box">
-                                        <input class="check" type="radio" id="checkbox3" name="same">
-                                        <label for="checkbox3">Giao hàng nội thành</label>
-                                    </div>
-                                    <span class="price">+$20.00</span>
-                                </li>
-                            </ul>
+                        <div class="form-group mb_20">
+                            <label for="customer-address">Địa chỉ</label>
+                            <input type="text" id="customer-address" name="address" placeholder="Nhập địa chỉ của bạn" class="form-control">
                         </div>
-                        <div class="shipping-calculator">
-                            <h4>Tính phí vận chuyển</h4>
-                            <div class="form-group">
-                                <div class="select-box">
-                                    <select class="wide">
-                                        <option data-display="Select Country">Select Country</option>
-                                        <option value="1">Australia</option>
-                                        <option value="2">Belgium</option>
-                                        <option value="3">Canada</option>
-                                        <option value="4">China</option>
-                                        <option value="5">France</option>
-                                        <option value="6">Germany</option>
-                                        <option value="7">Malaysia</option>
-                                        <option value="8">Mexico</option>
-                                        <option value="9">Russia</option>
-                                        <option value="10">Switzerland</option>
-                                        <option value="11">Turkey</option>
-                                        <option value="12">United Kingdom</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="zip" placeholder="Postcode / ZIP">
-                            </div>
-                            <div class="form-group">
-                                <button class="theme-btn cart-btn" type="button">Cập nhật giỏ hàng <span></span><span></span><span></span><span></span></button>
-                            </div>
-                        </div>
-                        <div class="total-box">
+                        <div class="form-group mb_20">
+                            <label for="customer-phone">Số Điện Thoại</label>
+                            <input type="tel" id="customer-phone" name="phone" placeholder="Nhập số điện thoại của bạn" class="form-control">
+                        </div> -->
+                        <div class="total-box mb_20">
                             <h4>Tổng cộng</h4>
                             <h5 id="cart-total"><%= currencyFormat.format(0) %></h5>
                         </div>

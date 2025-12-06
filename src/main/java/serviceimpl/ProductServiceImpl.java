@@ -34,27 +34,27 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDAO findById(int id) {
-        return null;
+        return this.productRepository.findById(id);
     }
 
     @Override
     public Boolean deleteById(int id) {
-        return null;
+        return this.productRepository.deleteById(id);
     }
 
     @Override
     public int count(String keyword) {
-        return 0;
+        return this.productRepository.count(keyword);
     }
 
     @Override
     public Boolean create(ProductDAO entity) {
-        return false;
+        return this.productRepository.create(entity);
     }
 
     @Override
     public Boolean update(ProductDAO entity) {
-        return false;
+        return this.productRepository.update(entity);
     }
 
     @Override

@@ -98,6 +98,12 @@
                         <label>Mật khẩu</label>
                         <input type="password" name="password" required>
                     </div>
+                    <div class="other-option">
+                        <div class="check-box">
+                            <input class="check" type="checkbox" id="agree-term" name="agree-term" value="true">
+                            <label for="agree-term">Tôi đồng ý với điều khoản sử dụng</label>
+                        </div>
+                    </div>
                     <div class="form-group message-btn">
                         <button type="submit" class="theme-btn">Đăng ký<span></span><span></span><span></span><span></span></button>
                     </div>
@@ -111,12 +117,6 @@
 <%--                        </li>--%>
 <%--                    </ul>--%>
                 </form>
-                <div class="other-option">
-                    <div class="check-box">
-                        <input class="check" type="checkbox" id="agree-term" name="agree-term" value="true">
-                        <label for="agree-term">Tôi đồng ý với điều khoản sử dụng</label>
-                    </div>
-                </div>
                 <div class="lower-text centred">
                     <p>Đã có tài khoản? <a href="${pageContext.request.contextPath}/login">Đăng nhập</a></p>
                 </div>

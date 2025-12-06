@@ -48,4 +48,9 @@ public class OrderItemServiceImpl implements OrderItemService {
     public Boolean update(OrderItemDAO entity) {
         return false;
     }
+
+    @Override
+    public List<OrderItemDAO> findByOrderId(int orderId) {
+        return orderItemRepository.findByOrderId(orderId);
+    }
 }

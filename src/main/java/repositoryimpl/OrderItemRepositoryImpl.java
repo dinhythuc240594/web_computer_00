@@ -107,6 +107,26 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
 
     }
 
+    public List<OrderItemDAO> findByOrderId(int orderId) {
+        List<OrderItemDAO> items = new ArrayList<>();
+        String sql = "SELECT id, order_id, product_id, quantity, price_at_purchase FROM order_items WHERE order_id = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, orderId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    items.add(mapResultSetToOrderItemDAO(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi lấy chi tiết đơn hàng theo order_id.", e);
+        }
+        return items;
+    }
+
     private OrderItemDAO mapResultSetToOrderItemDAO(ResultSet rs) throws SQLException {
         OrderItemDAO item = new OrderItemDAO();
 

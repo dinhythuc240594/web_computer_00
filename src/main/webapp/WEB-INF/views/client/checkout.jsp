@@ -56,6 +56,7 @@
             ? currentUser.getPhone() : "";
     String billingAddress = currentUser != null && currentUser.getAddress() != null
             ? currentUser.getAddress() : "";
+    String empty = "";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -142,6 +143,24 @@
             <div class="sec-title centred pb_30">
                 <h2>Thanh toán</h2>
             </div>
+            
+            <% 
+                String errorMessage = (String) request.getAttribute("error");
+                String successMessage = (String) request.getAttribute("success");
+            %>
+            
+            <% if (errorMessage != null && !errorMessage.isBlank()) { %>
+            <div class="alert alert-danger" style="padding: 15px; margin-bottom: 20px; border: 1px solid #f5c6cb; border-radius: 4px; background-color: #f8d7da; color: #721c24;">
+                <strong>Lỗi!</strong> <%= errorMessage %>
+            </div>
+            <% } %>
+            
+            <% if (successMessage != null && !successMessage.isBlank()) { %>
+            <div class="alert alert-success" style="padding: 15px; margin-bottom: 20px; border: 1px solid #c3e6cb; border-radius: 4px; background-color: #d4edda; color: #155724;">
+                <strong>Thành công!</strong> <%= successMessage %>
+            </div>
+            <% } %>
+            
             <form method="post" action="<%= request.getContextPath() %>/checkout">
             <div class="row clearfix">
                 <div class="col-lg-8 col-md-12 col-sm-12 billing-column">
@@ -153,12 +172,6 @@
                                         <div class="form-group">
                                             <label>Họ và tên<span>*</span></label>
                                             <input type="text" name="fullName" value="<%= billingName %>">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12 field-column">
-                                        <div class="form-group">
-                                            <label>Tên đăng nhập</label>
-                                            <input type="text" name="username" value="<%= sessionUsername != null ? sessionUsername : \"\" %>" readonly>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 field-column">
@@ -175,60 +188,11 @@
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 field-column">
                                         <div class="form-group">
-                                            <label>Quốc gia<span>*</span></label>
-                                            <div class="select-box">
-                                                <select class="wide">
-                                                    <option data-display="Select Country">Select Country</option>
-                                                    <option value="1">Australia</option>
-                                                    <option value="2">Belgium</option>
-                                                    <option value="3">Canada</option>
-                                                    <option value="4">China</option>
-                                                    <option value="5">France</option>
-                                                    <option value="6">Germany</option>
-                                                    <option value="7">Malaysia</option>
-                                                    <option value="8">Mexico</option>
-                                                    <option value="9">Russia</option>
-                                                    <option value="10">Switzerland</option>
-                                                    <option value="11">Turkey</option>
-                                                    <option value="12">United Kingdom</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 field-column">
-                                        <div class="form-group">
                                             <label>Địa chỉ<span>*</span></label>
                                             <input type="text" name="address" value="<%= billingAddress %>">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12 field-column">
-                                        <div class="form-group">
-                                            <label>Thành phố / Tỉnh<span>*</span></label>
-                                            <input type="text" name="city">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12 field-column">
-                                        <div class="form-group">
-                                            <label>Mã bưu chính / ZIP<span>*</span></label>
-                                            <input type="text" name="zip">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 field-column">
-                                        <div class="form-group">
-                                            <div class="check-box">
-                                                <input class="check" type="checkbox" id="checkbox1">
-                                                <label for="checkbox1">Tạo tài khoản mới?</label>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                        </div>
-                        <div class="other-address">
-                            <h3>Địa chỉ giao hàng</h3>
-                            <div class="check-box">
-                                <input class="check" type="checkbox" id="checkbox2">
-                                <label for="checkbox2">Giao hàng tới địa chỉ khác</label>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -312,12 +276,12 @@
                                             <label for="checkbox4">Thanh toán khi nhận hàng (COD)</label>
                                         </div>
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <div class="check-box mb_12">
                                             <input class="check" type="radio" id="checkbox5" name="payment" value="card_paypal">
                                             <label for="checkbox5">Thẻ tín dụng/Ghi nợ hoặc Paypal</label>
                                         </div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                             <div class="btn-box pt_30">
