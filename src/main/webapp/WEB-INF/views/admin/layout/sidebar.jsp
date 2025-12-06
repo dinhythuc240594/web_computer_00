@@ -1,6 +1,6 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
         <aside id="layout-menu" class="layout-menu menu-vertical menu">
-            <div class="app-brand demo">
+            <!-- <div class="app-brand demo">
                 <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <span class="text-primary">
@@ -63,13 +63,13 @@
                                 fill-opacity="0.4" />
                     </svg>
                 </a>
-            </div>
+            </div> -->
 
             <div class="menu-inner-shadow"></div>
 
             <ul class="menu-inner py-1">
                 <!-- Dashboards -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-home-smile-line"></i>
                         <div data-i18n="Dashboards">Dashboards</div>
@@ -102,10 +102,10 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <!-- Layouts -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-layout-2-line"></i>
                         <div data-i18n="Layouts">Layouts</div>
@@ -158,10 +158,10 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <!-- Front Pages -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-file-copy-line"></i>
                         <div data-i18n="Front Pages">Front Pages</div>
@@ -193,19 +193,19 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <!-- Apps & Pages -->
-                <li class="menu-header small mt-5">
+                <!-- <li class="menu-header small mt-5">
                     <span class="menu-header-text" data-i18n="Apps & Pages">Apps &amp; Pages</span>
-                </li>
-                <li class="menu-item">
+                </li> -->
+                <!-- <li class="menu-item">
                     <a href="app-email.html" class="menu-link">
                         <i class="menu-icon icon-base ri ri-mail-open-line"></i>
                         <div data-i18n="Email">Email</div>
                     </a>
-                </li>
-                <li class="menu-item">
+                </li> -->
+                <!-- <li class="menu-item">
                     <a href="app-chat.html" class="menu-link">
                         <i class="menu-icon icon-base ri ri-wechat-line"></i>
                         <div data-i18n="Chat">Chat</div>
@@ -222,12 +222,12 @@
                         <i class="menu-icon icon-base ri ri-drag-drop-line"></i>
                         <div data-i18n="Kanban">Kanban</div>
                     </a>
-                </li>
+                </li> -->
                 <!-- e-commerce-app menu start -->
                 <li class="menu-item active open">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-shopping-bag-3-line"></i>
-                        <div data-i18n="eCommerce">eCommerce</div>
+                        <div data-i18n="Overview">Overview</div>
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item active">
@@ -235,7 +235,7 @@
                                 <div data-i18n="Dashboard">Dashboard</div>
                             </a>
                         </li>
-                        <li class="menu-item">
+                        <!-- <li class="menu-item">
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <div data-i18n="Products">Products</div>
                             </a>
@@ -256,8 +256,8 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="menu-item">
+                        </li> -->
+                        <!-- <li class="menu-item">
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <div data-i18n="Order">Order</div>
                             </a>
@@ -273,8 +273,8 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="menu-item">
+                        </li> -->
+                        <!-- <li class="menu-item">
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <div data-i18n="Customer">Customer</div>
                             </a>
@@ -312,18 +312,18 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="menu-item">
+                        </li> -->
+                        <!-- <li class="menu-item">
                             <a href="app-ecommerce-manage-reviews.html" class="menu-link">
                                 <div data-i18n="Manage Reviews">Manage Reviews</div>
                             </a>
-                        </li>
-                        <li class="menu-item">
+                        </li> -->
+                        <!-- <li class="menu-item">
                             <a href="app-ecommerce-referral.html" class="menu-link">
                                 <div data-i18n="Referrals">Referrals</div>
                             </a>
-                        </li>
-                        <li class="menu-item">
+                        </li> -->
+                        <!-- <li class="menu-item">
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <div data-i18n="Settings">Settings</div>
                             </a>
@@ -359,12 +359,12 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
                 <!-- e-commerce-app menu end -->
                 <!-- Academy menu start -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-graduation-cap-line"></i>
                         <div data-i18n="Academy">Academy</div>
@@ -386,9 +386,9 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <!-- Academy menu end -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-car-line"></i>
                         <div data-i18n="Logistics">Logistics</div>
@@ -750,14 +750,14 @@
                         <i class="menu-icon icon-base ri ri-tv-2-line"></i>
                         <div data-i18n="Modal Examples">Modal Examples</div>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Components -->
-                <li class="menu-header small mt-5">
+                <!-- <li class="menu-header small mt-5">
                     <span class="menu-header-text" data-i18n="Components">Components</span>
-                </li>
+                </li> -->
                 <!-- Cards -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-bank-card-2-line"></i>
                         <div data-i18n="Cards">Cards</div>
@@ -795,9 +795,9 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <!-- User interface -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0)" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-toggle-line"></i>
                         <div data-i18n="User interface">User interface</div>
@@ -899,10 +899,10 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <!-- Extended components -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0)" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-box-3-line"></i>
                         <div data-i18n="Extended UI">Extended UI</div>
@@ -981,22 +981,22 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <!-- Icons -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="icons-ri.html" class="menu-link">
                         <i class="menu-icon icon-base ri ri-remixicon-line"></i>
                         <div data-i18n="Icons">Icons</div>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Forms & Tables -->
-                <li class="menu-header small mt-5">
+                <!-- <li class="menu-header small mt-5">
                     <span class="menu-header-text" data-i18n="Forms & Tables">Forms &amp; Tables</span>
-                </li>
+                </li> -->
                 <!-- Forms -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-radio-button-line"></i>
                         <div data-i18n="Form Elements">Form Elements</div>
@@ -1053,8 +1053,8 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="menu-item">
+                </li> -->
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-box-3-line"></i>
                         <div data-i18n="Form Layouts">Form Layouts</div>
@@ -1076,8 +1076,8 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="menu-item">
+                </li> -->
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-git-commit-line"></i>
                         <div data-i18n="Form Wizard">Form Wizard</div>
@@ -1094,21 +1094,21 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="menu-item">
+                </li> -->
+                <!-- <li class="menu-item">
                     <a href="form-validation.html" class="menu-link">
                         <i class="menu-icon icon-base ri ri-checkbox-multiple-line"></i>
                         <div data-i18n="Form Validation">Form Validation</div>
                     </a>
-                </li>
+                </li> -->
                 <!-- Tables -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="tables-basic.html" class="menu-link">
                         <i class="menu-icon icon-base ri ri-table-alt-line"></i>
                         <div data-i18n="Tables">Tables</div>
                     </a>
-                </li>
-                <li class="menu-item">
+                </li> -->
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-grid-line"></i>
                         <div data-i18n="Datatables">Datatables</div>
@@ -1130,13 +1130,13 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <!-- Charts & Maps -->
-                <li class="menu-header small mt-5">
+                <!-- <li class="menu-header small mt-5">
                     <span class="menu-header-text" data-i18n="Charts & Maps">Charts &amp; Maps</span>
-                </li>
-                <li class="menu-item">
+                </li> -->
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-bar-chart-2-line"></i>
                         <div data-i18n="Charts">Charts</div>
@@ -1153,21 +1153,21 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="menu-item">
+                </li> -->
+                <!-- <li class="menu-item">
                     <a href="maps-leaflet.html" class="menu-link">
                         <i class="menu-icon icon-base ri ri-map-2-line"></i>
                         <div data-i18n="Leaflet Maps">Leaflet Maps</div>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Misc -->
-                <li class="menu-header small mt-5">
+                <!-- <li class="menu-header small mt-5">
                     <span class="menu-header-text" data-i18n="Misc">Misc</span>
-                </li>
+                </li> -->
 
                 <!-- Multi Level Menu -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="javascript:void(0)" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ri ri-drag-drop-line"></i>
                         <div data-i18n="Multi Level">Multi Level</div>
@@ -1186,14 +1186,14 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
-                <li class="menu-item">
+                </li> -->
+                <!-- <li class="menu-item">
                     <a href="https://pixinvent.ticksy.com/" target="_blank" class="menu-link">
                         <i class="menu-icon icon-base ri ri-lifebuoy-line"></i>
                         <div data-i18n="Support">Support</div>
                     </a>
-                </li>
-                <li class="menu-item">
+                </li> -->
+                <!-- <li class="menu-item">
                     <a
                             href="https://demos.pixinvent.com/materialize-html-admin-template/documentation/"
                             target="_blank"
@@ -1201,7 +1201,7 @@
                         <i class="menu-icon icon-base ri ri-article-line"></i>
                         <div data-i18n="Documentation">Documentation</div>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </aside>
 

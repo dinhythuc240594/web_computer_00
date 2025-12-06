@@ -89,6 +89,7 @@ public class StaffServlet extends HttpServlet {
         }
 
         switch (action) {
+            case "dashboard" -> showStaffDashboardWithTabs(request, response, currentUser);
             case "products" -> showProductList(request, response, currentUser);
             case "product-add" -> showProductAddForm(request, response, currentUser);
             case "product-edit" -> showProductEditForm(request, response, currentUser);
@@ -167,6 +168,79 @@ public class StaffServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setAttribute("currentUser", currentUser);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/dashboard/index.jsp");
+        rd.forward(request, response);
+    }
+
+    private void showStaffDashboardWithTabs(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        request.setAttribute("currentUser", currentUser);
+        
+        String tab = request.getParameter("tab");
+        if (tab == null || tab.isBlank()) {
+            tab = "orders";
+        }
+        
+        String keyword = request.getParameter("keyword");
+        if (keyword == null) keyword = "";
+        
+        int page = 1;
+        try {
+            String pageStr = request.getParameter("page");
+            if (pageStr != null && !pageStr.isBlank()) {
+                page = Integer.parseInt(pageStr);
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
+        
+        int pageSize = 10;
+        PageRequest pageRequest;
+        
+        // Load data based on selected tab
+        switch (tab) {
+            case "brands" -> {
+                pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
+                Page<BrandDAO> brandPage = brandService.findAll(pageRequest);
+                request.setAttribute("brandPage", brandPage);
+                request.setAttribute("brands", brandPage.getData());
+            }
+            case "categories" -> {
+                pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
+                Page<CategoryDAO> categoryPage = categoryService.findAll(pageRequest);
+                request.setAttribute("categoryPage", categoryPage);
+                request.setAttribute("categories", categoryPage.getData());
+            }
+            case "products" -> {
+                pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword, 0, 0, 0);
+                Page<ProductDAO> productPage = productService.findAll(pageRequest);
+                request.setAttribute("productPage", productPage);
+                request.setAttribute("products", productPage.getData());
+                // Load categories and brands for product display
+                List<CategoryDAO> allCategories = categoryService.getAll();
+                List<BrandDAO> allBrands = brandService.getAll();
+                request.setAttribute("allCategories", allCategories);
+                request.setAttribute("allBrands", allBrands);
+            }
+            case "orders" -> {
+                pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
+                Page<OrderDAO> orderPage = orderService.findAll(pageRequest);
+                request.setAttribute("orderPage", orderPage);
+                request.setAttribute("orders", orderPage.getData());
+            }
+            default -> {
+                // Default to orders
+                pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
+                Page<OrderDAO> orderPage = orderService.findAll(pageRequest);
+                request.setAttribute("orderPage", orderPage);
+                request.setAttribute("orders", orderPage.getData());
+            }
+        }
+        
+        request.setAttribute("tab", tab);
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("currentPage", page);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/staff.jsp");
         rd.forward(request, response);
     }
 
