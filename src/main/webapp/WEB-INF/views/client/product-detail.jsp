@@ -55,7 +55,7 @@
 <div class="boxed_wrapper ltr">
 
 
-    <jsp:include page="../common/preloader.jsp" />
+    <!-- <jsp:include page="../common/preloader.jsp" /> -->
 
 
     <!-- page-direction -->

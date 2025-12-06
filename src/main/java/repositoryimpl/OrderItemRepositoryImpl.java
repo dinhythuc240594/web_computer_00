@@ -61,7 +61,7 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     public Boolean create(OrderItemDAO entity) {
 
         String sql = "INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase) " +
-                "VALUES (?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -75,7 +75,7 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
 
             return true;
         } catch (Exception e) {
-            System.err.println("Lỗi update: " + e.getMessage());
+            System.err.println("Lỗi create order item: " + e.getMessage());
             e.printStackTrace();
         }
         return false;
@@ -114,7 +114,7 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
         item.setOrderId(rs.getInt("order_id"));
         item.setProductId(rs.getInt("product_id"));
         item.setQuantity(rs.getInt("quantity"));
-        item.setPrice(rs.getDouble("price"));
+        item.setPrice(rs.getDouble("price_at_purchase"));
 
         return item;
     }

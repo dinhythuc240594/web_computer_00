@@ -1,3 +1,8 @@
+<%@ page import="java.util.List" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="model.CartItem" %>
+<%@ page import="model.ProductDAO" %>
     <style>
         .cart-menu-two .cart-action {
             display: flex;
@@ -410,36 +415,91 @@ padding: 15px 20px;"></div>
                     <div class="menu-right-content" style="padding: 15px 20px;">
                         <ul class="info-list">
                             <li class="cart-box">
-                                <a class="shopping-cart shopping-cart-two" href="#" data-bs-toggle="offcanvas" data-bs-target="offcanvasRight"><i class="icon-7"></i><span>2</span></a>
+                                <%
+                                    // Lấy giỏ hàng từ session
+                                    List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItems");
+                                    if (cartItems == null) {
+                                        cartItems = java.util.Collections.emptyList();
+                                    }
+                                    
+                                    // Tính tổng số lượng sản phẩm
+                                    int totalQuantity = 0;
+                                    double subtotal = 0.0;
+                                    for (CartItem item : cartItems) {
+                                        ProductDAO p = item.getProduct();
+                                        if (p != null) {
+                                            totalQuantity += item.getQuantity();
+                                            if (p.getPrice() != null) {
+                                                subtotal += p.getPrice() * item.getQuantity();
+                                            }
+                                        }
+                                    }
+                                    
+                                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                                %>
+                                <a class="shopping-cart shopping-cart-two" href="#" data-bs-toggle="offcanvas" data-bs-target="offcanvasRight"><i class="icon-7"></i><span><%= totalQuantity %></span></a>
                                 <div class="cart-menu cart-menu-two">
                                     <div class="close-icon close-icon-two"><a href="javascript:void(0);"><i class="icon-9"></i></a></div>
                                     <div class="cart-products">
+                                        <%
+                                            if (!cartItems.isEmpty()) {
+                                                for (CartItem item : cartItems) {
+                                                    ProductDAO product = item.getProduct();
+                                                    if (product == null) continue;
+                                                    
+                                                    String productImage = product.getImage_url();
+                                                    if (productImage == null || productImage.isBlank()) {
+                                                        productImage = request.getContextPath() + "/assets/client/images/shop/cart-4.png";
+                                                    } else if (!productImage.startsWith("http")) {
+                                                        if (!productImage.startsWith("/")) {
+                                                            productImage = "/" + productImage;
+                                                        }
+                                                        productImage = request.getContextPath() + productImage;
+                                                    }
+                                                    
+                                                    String productLink = product.getSlug() != null && !product.getSlug().isBlank()
+                                                            ? request.getContextPath() + "/product?slug=" + product.getSlug()
+                                                            : request.getContextPath() + "/product?id=" + product.getId();
+                                                    
+                                                    int quantity = item.getQuantity();
+                                                    double price = product.getPrice() != null ? product.getPrice() : 0.0;
+                                        %>
                                         <div class="product">
-                                            <figure class="image-box"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/cart-1.png" alt=""></a></figure>
-                                            <h5><a href="shop-details.html">Sony Bluetooth Speaker Extra</a></h5>
-                                            <span>$66.99 <span class="quentity">x 1</span></span>
-                                            <button type="button" class="remove-btn"><i class="icon-9"></i></button>
+                                            <figure class="image-box"><a href="<%= productLink %>"><img src="<%= productImage %>" alt="<%= product.getName() %>"></a></figure>
+                                            <h5><a href="<%= productLink %>"><%= product.getName() %></a></h5>
+                                            <span><%= currencyFormat.format(price) %> <span class="quentity">x <%= quantity %></span></span>
+                                            <button type="button" class="remove-btn" data-product-id="<%= product.getId() %>">
+                                                <i class="icon-9"></i>
+                                            </button>
                                         </div>
+                                        <%
+                                                }
+                                            } else {
+                                        %>
                                         <div class="product">
-                                            <figure class="image-box"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/cart-2.png" alt=""></a></figure>
-                                            <h5><a href="shop-details.html">Iphone 12 Red Color Veriant</a></h5>
-                                            <span>$999.99 <span class="quentity">x 1</span></span>
-                                            <button type="button" class="remove-btn"><i class="icon-9"></i></button>
+                                            <p style="text-align: center; padding: 20px;">Giỏ hàng của bạn đang trống.</p>
                                         </div>
-                                        <div class="product">
-                                            <figure class="image-box"><a href="blog-details.html"><img src="${pageContext.request.contextPath}/assets/client/images/resource/cart-3.png" alt=""></a></figure>
-                                            <h5><a href="shop-details.html">Video Game Stick Lite 4K Console</a></h5>
-                                            <span>$36.99 <span class="quentity">x 1</span></span>
-                                            <button type="button" class="remove-btn"><i class="icon-9"></i></button>
-                                        </div>
+                                        <%
+                                            }
+                                        %>
                                     </div>
                                     <div class="cart-total">
                                         <span>Tạm tính</span>
-                                        <span class="cart-total-price">$1103.97</span>
+                                        <span class="cart-total-price"><%= currencyFormat.format(subtotal) %></span>
                                     </div>
                                     <div class="cart-action">
-                                        <a href="cart.html" class="theme-btn btn-two">Xem giỏ hàng <span></span><span></span><span></span><span></span></a>
-                                        <a href="checkout.html" class="theme-btn btn-one">Thanh toán <span></span><span></span><span></span><span></span></a>
+                                        <a href="<%= request.getContextPath() %>/cart" class="theme-btn btn-two">Xem giỏ hàng <span></span><span></span><span></span><span></span></a>
+                                        <%
+                                            if (!cartItems.isEmpty()) {
+                                        %>
+                                        <a href="<%= request.getContextPath() %>/checkout" class="theme-btn btn-one">Thanh toán <span></span><span></span><span></span><span></span></a>
+                                        <%
+                                            } else {
+                                        %>
+                                        <a href="<%= request.getContextPath() %>/cart" class="theme-btn btn-one" style="opacity: 0.5; cursor: not-allowed;">Thanh toán <span></span><span></span><span></span><span></span></a>
+                                        <%
+                                            }
+                                        %>
                                     </div>
                                 </div>
                             </li>
@@ -452,4 +512,39 @@ padding: 15px 20px;"></div>
         </div>
     </header>
     <!-- main-header end -->
+    
+    <!-- Set context path for JavaScript -->
+    <script>
+        window.APP_CONTEXT_PATH = '<%= request.getContextPath() %>';
+    </script>
+    
+    <!-- Cart Management Script -->
+    <script src="${pageContext.request.contextPath}/assets/client/js/cart.js"></script>
+    <script>
+        // Handle remove button clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners for remove buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.remove-btn')) {
+                    const btn = e.target.closest('.remove-btn');
+                    const productId = btn.getAttribute('data-product-id');
+                    if (productId && typeof CartManager !== 'undefined') {
+                        CartManager.removeFromCart(parseInt(productId));
+                    }
+                }
+            });
+            
+            // Override cart display with localStorage data when page loads
+            if (typeof CartManager !== 'undefined') {
+                CartManager.updateCartDisplay();
+            } else {
+                // Retry if cart.js hasn't loaded yet
+                setTimeout(function() {
+                    if (typeof CartManager !== 'undefined') {
+                        CartManager.updateCartDisplay();
+                    }
+                }, 100);
+            }
+        });
+    </script>
 

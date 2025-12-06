@@ -102,7 +102,7 @@
 <div class="boxed_wrapper ltr">
 
 
-    <jsp:include page="../common/preloader.jsp" />
+    <!-- <jsp:include page="../common/preloader.jsp" /> -->
 
 
     <!-- page-direction -->
@@ -142,12 +142,12 @@
             <div class="sec-title centred pb_30">
                 <h2>Thanh toán</h2>
             </div>
+            <form method="post" action="<%= request.getContextPath() %>/checkout">
             <div class="row clearfix">
                 <div class="col-lg-8 col-md-12 col-sm-12 billing-column">
                     <div class="billing-content mr_30">
                         <h3>Thông tin thanh toán</h3>
                         <div class="form-inner">
-                            <form method="post" action="<%= request.getContextPath() %>/checkout">
                                 <div class="row clearfix">
                                     <div class="col-lg-6 col-md-6 col-sm-12 field-column">
                                         <div class="form-group">
@@ -222,7 +222,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
                         </div>
                         <div class="other-address">
                             <h3>Địa chỉ giao hàng</h3>
@@ -241,7 +240,7 @@
                                 <span class="text">Sản phẩm</span>
                                 <span class="text">Thành tiền</span>
                             </div>
-                            <div class="order-product">
+                            <div class="order-product" id="checkout-order-products">
                                 <%
                                     if (!cartItems.isEmpty()) {
                                         for (CartItem item : cartItems) {
@@ -287,21 +286,21 @@
                             <ul class="cost-box">
                                 <li>
                                     <h4><span>Tạm tính</span></h4>
-                                    <h4><%= currencyFormat.format(subtotal) %></h4>
+                                    <h4 id="checkout-subtotal"><%= currencyFormat.format(subtotal) %></h4>
                                 </li>
                                 <li>
                                     <h4><span>Phí vận chuyển</span></h4>
-                                    <h4><span><%= currencyFormat.format(shippingFee) %></span></h4>
+                                    <h4><span id="checkout-shipping"><%= currencyFormat.format(shippingFee) %></span></h4>
                                 </li>
                             </ul>
                             <div class="total-box">
                                 <h4><span>Tổng cộng</span></h4>
-                                <h4><%= currencyFormat.format(total) %></h4>
+                                <h4 id="checkout-total"><%= currencyFormat.format(total) %></h4>
                             </div>
                             <div class="payment-option">
                                 <div class="bank-payment">
                                     <div class="check-box mb_12">
-                                        <input class="check" type="radio" id="checkbox3" name="payment" checked>
+                                        <input class="check" type="radio" id="checkbox3" name="payment" value="bank_transfer" checked>
                                         <label for="checkbox3">Chuyển khoản ngân hàng</label>
                                     </div>
                                     <p>Vui lòng sử dụng mã đơn hàng làm nội dung chuyển khoản để chúng tôi xác nhận nhanh chóng.</p>
@@ -309,13 +308,13 @@
                                 <ul class="other-payment">
                                     <li>
                                         <div class="check-box mb_12">
-                                            <input class="check" type="radio" id="checkbox4" name="payment">
+                                            <input class="check" type="radio" id="checkbox4" name="payment" value="cod">
                                             <label for="checkbox4">Thanh toán khi nhận hàng (COD)</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="check-box mb_12">
-                                            <input class="check" type="radio" id="checkbox5" name="payment">
+                                            <input class="check" type="radio" id="checkbox5" name="payment" value="card_paypal">
                                             <label for="checkbox5">Thẻ tín dụng/Ghi nợ hoặc Paypal</label>
                                         </div>
                                     </li>
@@ -328,6 +327,7 @@
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </section>
     <!-- checkout-section end -->
@@ -411,6 +411,167 @@
 
 <!-- main-js -->
 <script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
+
+<!-- Cart Management Script -->
+<script src="${pageContext.request.contextPath}/assets/client/js/cart.js"></script>
+<script>
+(function() {
+    const contextPath = '<%= request.getContextPath() %>';
+    const freeShipThreshold = 500000;
+    const shippingFee = 30000;
+    
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(amount);
+    }
+    
+    function updateCheckoutFromLocalStorage() {
+        if (typeof CartManager === 'undefined') {
+            console.error('CartManager is not defined');
+            return;
+        }
+        
+        const cartItems = CartManager.getCartItems();
+        const subtotal = CartManager.getSubtotal();
+        const shipping = subtotal >= freeShipThreshold || subtotal === 0 ? 0 : shippingFee;
+        const total = subtotal + shipping;
+        
+        // Update order products
+        const orderProducts = document.getElementById('checkout-order-products');
+        if (orderProducts) {
+            if (cartItems.length === 0) {
+                orderProducts.innerHTML = '<div class="single-item"><p>Giỏ hàng của bạn đang trống.</p></div>';
+            } else {
+                let html = '';
+                cartItems.forEach(item => {
+                    let productImage = item.image_url || '';
+                    if (!productImage || productImage === '') {
+                        productImage = contextPath + '/assets/client/images/shop/checkout-1.png';
+                    } else if (!productImage.startsWith('http')) {
+                        if (!productImage.startsWith('/')) {
+                            productImage = '/' + productImage;
+                        }
+                        productImage = contextPath + productImage;
+                    }
+                    
+                    const price = item.price || 0;
+                    const quantity = item.quantity || 1;
+                    const lineTotal = price * quantity;
+                    
+                    html += '';
+                    html += '<div class="single-item">';
+                    html += '<div class="product-box">';
+                    html += '<figure class="image-box">';
+                    html += '<img src="' + productImage + '" alt="'+ item.name +'">';
+                    html += '</figure>';
+                    html += '<div>';
+                    html += '<h6>'+ item.name +'</h6>';
+                    html += '<span>Số lượng: '+ quantity +'</span>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<h4>'+ formatCurrency(lineTotal) +'</h4>';
+                    html += '</div>';
+                });
+                orderProducts.innerHTML = html;
+            }
+        }
+        
+        // Update subtotal
+        const checkoutSubtotal = document.getElementById('checkout-subtotal');
+        if (checkoutSubtotal) {
+            checkoutSubtotal.textContent = formatCurrency(subtotal);
+        }
+        
+        // Update shipping
+        const checkoutShipping = document.getElementById('checkout-shipping');
+        if (checkoutShipping) {
+            checkoutShipping.textContent = formatCurrency(shipping);
+        }
+        
+        // Update total
+        const checkoutTotal = document.getElementById('checkout-total');
+        if (checkoutTotal) {
+            checkoutTotal.textContent = formatCurrency(total);
+        }
+        
+        // Disable form submission if cart is empty
+        const checkoutForm = document.querySelector('form[action*="checkout"]');
+        if (checkoutForm) {
+            const submitBtn = checkoutForm.querySelector('button[type="submit"]');
+            if (cartItems.length === 0) {
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.style.opacity = '0.5';
+                    submitBtn.style.cursor = 'not-allowed';
+                }
+            } else {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.style.cursor = 'pointer';
+                }
+            }
+        }
+    }
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update checkout display first from localStorage
+        updateCheckoutFromLocalStorage();
+        
+        // Sync localStorage to server session in background (non-blocking)
+        if (typeof CartManager !== 'undefined') {
+            setTimeout(function() {
+                CartManager.syncToServer(function(success) {
+                    if (success) {
+                        // Optionally refresh display after sync
+                        // updateCheckoutFromLocalStorage();
+                    }
+                });
+            }, 100);
+        }
+        
+        // Sync before form submission
+        const checkoutForm = document.querySelector('form[action*="checkout"]');
+        if (checkoutForm) {
+            checkoutForm.addEventListener('submit', function(e) {
+                if (typeof CartManager !== 'undefined') {
+                    const cartItems = CartManager.getCartItems();
+                    if (cartItems.length === 0) {
+                        e.preventDefault();
+                        alert('Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm trước khi thanh toán.');
+                        return false;
+                    }
+                    
+                    // Prevent default first
+                    e.preventDefault();
+                    
+                    // Sync before submit (synchronous for form submission)
+                    CartManager.syncToServer(function(success) {
+                        if (success) {
+                            // Submit form after successful sync
+                            checkoutForm.submit();
+                        } else {
+                            alert('Có lỗi xảy ra khi đồng bộ giỏ hàng. Vui lòng thử lại.');
+                        }
+                    });
+                    
+                    return false;
+                }
+            });
+        }
+    });
+    
+    // Listen for storage events to sync across tabs
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'shopping_cart') {
+            updateCheckoutFromLocalStorage();
+        }
+    });
+})();
+</script>
 
 </body><!-- End of .page_wrapper -->
 </html>

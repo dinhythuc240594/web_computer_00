@@ -12,30 +12,14 @@
 <%@ page import="model.CartItem" %>
 <%@ page import="model.ProductDAO" %>
 <%
-    List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItems");
-    if (cartItems == null) {
-        cartItems = java.util.Collections.emptyList();
-    }
-
+    // Không load từ session nữa, sẽ load từ localStorage bằng JavaScript
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     double subtotal = 0.0;
-    for (CartItem item : cartItems) {
-        ProductDAO p = item.getProduct();
-        if (p != null && p.getPrice() != null) {
-            subtotal += p.getPrice() * item.getQuantity();
-        }
-    }
-
     double freeShipThreshold = 500000; // 500.000đ để được miễn phí vận chuyển
-    double shippingFee = subtotal >= freeShipThreshold || subtotal == 0 ? 0 : 30000;
-    double total = subtotal + shippingFee;
-
-    double remainingForFreeShip = freeShipThreshold - subtotal;
-    if (remainingForFreeShip < 0) {
-        remainingForFreeShip = 0;
-    }
-
-    int progressPercent = subtotal <= 0 ? 0 : (int) Math.min(100, Math.round(subtotal / freeShipThreshold * 100));
+    double shippingFee = 0;
+    double total = 0.0;
+    double remainingForFreeShip = freeShipThreshold;
+    int progressPercent = 0;
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,7 +67,7 @@
 <div class="boxed_wrapper ltr">
 
 
-    <jsp:include page="../common/preloader.jsp" />
+    <!-- <jsp:include page="../common/preloader.jsp" /> -->
 
 
     <!-- page-direction -->
@@ -125,25 +109,11 @@
             </div>
             <div class="row clearfix">
                 <div class="col-lg-9 col-md-12 col-sm-12 content-side">
-                    <div class="target-price mb_30">
-                        <%
-                            if (subtotal > 0 && remainingForFreeShip > 0) {
-                        %>
-                        <p>Thêm <span><%= currencyFormat.format(remainingForFreeShip) %></span> để được miễn phí vận chuyển</p>
-                        <%
-                            } else if (subtotal >= freeShipThreshold) {
-                        %>
-                        <p>Bạn đã đủ điều kiện <span>miễn phí vận chuyển</span>.</p>
-                        <%
-                            } else {
-                        %>
+                    <div class="target-price mb_30" id="target-price-section">
                         <p>Giỏ hàng đang trống. Thêm sản phẩm để bắt đầu.</p>
-                        <%
-                            }
-                        %>
                         <div class="progress-box">
                             <div class="bar">
-                                <div class="bar-inner count-bar" data-percent="<%= progressPercent %>%"></div>
+                                <div class="bar-inner count-bar" id="progress-bar" data-percent="0%"></div>
                             </div>
                         </div>
                     </div>
@@ -158,67 +128,12 @@
                                 <th>&nbsp;</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <%
-                                if (!cartItems.isEmpty()) {
-                                    for (CartItem item : cartItems) {
-                                        ProductDAO product = item.getProduct();
-                                        if (product == null) {
-                                            continue;
-                                        }
-                                        String productImage = product.getImage_url();
-                                        if (productImage == null || productImage.isBlank()) {
-                                            productImage = request.getContextPath() + "/assets/client/images/shop/cart-4.png";
-                                        } else if (!productImage.startsWith("http")) {
-                                            if (!productImage.startsWith("/")) {
-                                                productImage = "/" + productImage;
-                                            }
-                                            productImage = request.getContextPath() + productImage;
-                                        }
-                                        String productLink = product.getSlug() != null && !product.getSlug().isBlank()
-                                                ? request.getContextPath() + "/product?slug=" + product.getSlug()
-                                                : request.getContextPath() + "/product?id=" + product.getId();
-
-                                        int quantity = item.getQuantity();
-                                        double price = product.getPrice() != null ? product.getPrice() : 0.0;
-                                        double lineTotal = price * quantity;
-                            %>
-                            <tr>
-                                <td class="product-column">
-                                    <div class="product-box">
-                                        <figure class="image-box">
-                                            <img src="<%= productImage %>" alt="<%= product.getName() %>">
-                                        </figure>
-                                        <h6><a href="<%= productLink %>"><%= product.getName() %></a></h6>
-                                    </div>
-                                </td>
-                                <td><%= currencyFormat.format(price) %></td>
-                                <td class="qty">
-                                    <div class="item-quantity">
-                                        <input class="quantity-spinner" type="text" value="<%= quantity %>" name="quantity">
-                                    </div>
-                                </td>
-                                <td><%= currencyFormat.format(lineTotal) %></td>
-                                <td>
-                                    <form action="<%= request.getContextPath() %>/cart" method="post">
-                                        <input type="hidden" name="action" value="remove">
-                                        <input type="hidden" name="productId" value="<%= product.getId() %>">
-                                        <button type="submit" class="cancel-btn"><i class="icon-9"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <%
-                                    }
-                                } else {
-                            %>
+                            <tbody id="cart-table-body">
                             <tr>
                                 <td colspan="5" class="text-center">
                                     Hiện chưa có sản phẩm nào trong giỏ hàng.
                                 </td>
                             </tr>
-                            <%
-                                }
-                            %>
                             </tbody>
                         </table>
                     </div>
@@ -227,7 +142,7 @@
                     <div class="total-cart mb_30">
                         <div class="title-box">
                             <h4>Tạm tính</h4>
-                            <h5><%= currencyFormat.format(subtotal) %></h5>
+                            <h5 id="cart-subtotal"><%= currencyFormat.format(0) %></h5>
                         </div>
                         <div class="shipping-cost mb_40">
                             <h4>Vận chuyển</h4>
@@ -285,20 +200,20 @@
                         </div>
                         <div class="total-box">
                             <h4>Tổng cộng</h4>
-                            <h5><%= currencyFormat.format(total) %></h5>
+                            <h5 id="cart-total"><%= currencyFormat.format(0) %></h5>
                         </div>
                         <div class="btn-box">
-                            <button class="theme-btn" type="button">Thanh toán<span></span><span></span><span></span><span></span></button>
+                            <a href="<%= request.getContextPath() %>/checkout" class="theme-btn" id="checkout-btn">Thanh toán<span></span><span></span><span></span><span></span></a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="coupon-box">
+            <!-- <div class="coupon-box">
                 <div class="form-group">
                     <input type="text" name="coupon" placeholder="Apply Coupon">
                     <button type="button"><i class="icon-22"></i></button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
     <!-- cart section end -->
@@ -560,6 +475,242 @@
 
 <!-- main-js -->
 <script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
+
+<!-- Cart Management Script -->
+<script src="${pageContext.request.contextPath}/assets/client/js/cart.js"></script>
+<script>
+(function() {
+    const contextPath = '<%= request.getContextPath() %>';
+    const freeShipThreshold = 500000;
+    const shippingFee = 30000;
+    
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(amount);
+    }
+    
+    function updateCartFromLocalStorage() {
+        if (typeof CartManager === 'undefined') {
+            console.error('CartManager is not defined');
+            // Show empty cart if CartManager not available
+            const tbody = document.getElementById('cart-table-body');
+            if (tbody) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center">Hiện chưa có sản phẩm nào trong giỏ hàng.</td></tr>';
+            }
+            return;
+        }
+        
+        const cartItems = CartManager.getCartItems();
+        const subtotal = CartManager.getSubtotal();
+        const shipping = subtotal >= freeShipThreshold || subtotal === 0 ? 0 : shippingFee;
+        const total = subtotal + shipping;
+        const remainingForFreeShip = Math.max(0, freeShipThreshold - subtotal);
+        const progressPercent = subtotal <= 0 ? 0 : Math.min(100, Math.round(subtotal / freeShipThreshold * 100));
+        
+        // Update cart table
+        const tbody = document.getElementById('cart-table-body');
+        if (tbody) {
+            if (cartItems.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center">Hiện chưa có sản phẩm nào trong giỏ hàng.</td></tr>';
+            } else {
+                let html = '';
+                cartItems.forEach(item => {
+                    let productImage = item.image_url || '';
+                    if (!productImage || productImage === '') {
+                        productImage = contextPath + '/assets/client/images/shop/cart-4.png';
+                    } else if (!productImage.startsWith('http')) {
+                        if (!productImage.startsWith('/')) {
+                            productImage = '/' + productImage;
+                        }
+                        productImage = contextPath + productImage;
+                    }
+                    
+                    const productLink = item.slug 
+                        ? contextPath + '/product?slug=' + item.slug
+                        : contextPath + '/product?id=' + item.id;
+                    
+                    const price = item.price || 0;
+                    const quantity = item.quantity || 1;
+                    const lineTotal = price * quantity;
+                    
+                    // Escape HTML to prevent XSS
+                    const escapeHtml = (text) => {
+                        const map = {
+                            '&': '&amp;',
+                            '<': '&lt;',
+                            '>': '&gt;',
+                            '"': '&quot;',
+                            "'": '&#039;'
+                        };
+                        return text ? text.replace(/[&<>"']/g, m => map[m]) : '';
+                    };
+                    
+                    html += '';
+                    html += '<tr>';
+                    html += '<td class="product-column">';
+                    html += '<div class="product-box">';
+                    html += '<figure class="image-box">';
+                    html += '<img src="' + escapeHtml(productImage) + '" alt="'+ escapeHtml(item.name || '') +'">';
+                    html += '</figure>';
+                    html += '<h6><a href="' + escapeHtml(productLink) + '">'+ escapeHtml(item.name || '') +'</a></h6>';
+                    html += '</div>';
+                    html += '</td>';
+                    html += '<td>'+ formatCurrency(price) +'</td>';
+                    html += '<td class="qty">';
+                    html += '<div class="item-quantity">';
+                    html += '<input class="quantity-spinner" type="text" value="'+ quantity +'" name="quantity" data-product-id="'+ item.id +'">';
+                    html += '</div>';
+                    html += '</td>';
+                    html += '<td>'+ formatCurrency(lineTotal) +'</td>';
+                    html += '<td>';
+                    html += '<button type="button" class="cancel-btn remove-cart-item" data-product-id="'+ item.id +'"><i class="icon-9"></i></button>';
+                    html += '</td>';
+                    html += '</tr>';
+                });
+                tbody.innerHTML = html;
+                
+                // Reinitialize quantity spinners
+                if (typeof $ !== 'undefined' && $.fn.TouchSpin) {
+                    $('.quantity-spinner').each(function() {
+                        const $this = $(this);
+                        if (!$this.data('bootstrap-touchspin')) {
+                            $this.TouchSpin({
+                                min: 1,
+                                max: 1000,
+                                step: 1
+                            }).on('change', function() {
+                                const productId = parseInt($this.data('product-id'));
+                                const newQuantity = parseInt($this.val()) || 1;
+                                CartManager.updateQuantity(productId, newQuantity);
+                                updateCartFromLocalStorage();
+                            });
+                        }
+                    });
+                }
+            }
+        }
+        
+        // Update target price section
+        const targetPriceSection = document.getElementById('target-price-section');
+        if (targetPriceSection) {
+            let message = '';
+            if (subtotal > 0 && remainingForFreeShip > 0) {
+                message = '<p>Thêm <span id="remaining-amount">'+ formatCurrency(remainingForFreeShip) +'</span> để được miễn phí vận chuyển</p>';
+            } else if (subtotal >= freeShipThreshold) {
+                message = '<p>Bạn đã đủ điều kiện <span>miễn phí vận chuyển</span>.</p>';
+            } else {
+                message = '<p>Giỏ hàng đang trống. Thêm sản phẩm để bắt đầu.</p>';
+            }
+            targetPriceSection.innerHTML = message + '<div class="progress-box"><div class="bar"><div class="bar-inner count-bar" id="progress-bar" data-percent="'+ progressPercent +'%"></div></div></div>';
+        }
+        
+        // Update subtotal
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        if (cartSubtotal) {
+            cartSubtotal.textContent = formatCurrency(subtotal);
+        }
+        
+        // Update total
+        const cartTotal = document.getElementById('cart-total');
+        if (cartTotal) {
+            cartTotal.textContent = formatCurrency(total);
+        }
+        
+        // Update checkout button
+        const checkoutBtn = document.getElementById('checkout-btn');
+        if (checkoutBtn) {
+            if (cartItems.length === 0) {
+                checkoutBtn.style.opacity = '0.5';
+                checkoutBtn.style.cursor = 'not-allowed';
+                checkoutBtn.href = contextPath + '/cart';
+                checkoutBtn.onclick = function(e) {
+                    e.preventDefault();
+                    return false;
+                };
+            } else {
+                checkoutBtn.style.opacity = '1';
+                checkoutBtn.style.cursor = 'pointer';
+                checkoutBtn.href = contextPath + '/checkout';
+                checkoutBtn.onclick = null;
+            }
+        }
+    }
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update cart display first from localStorage
+        // Wait a bit to ensure CartManager is loaded
+        if (typeof CartManager === 'undefined') {
+            // If CartManager not loaded yet, wait and retry
+            setTimeout(function() {
+                if (typeof CartManager !== 'undefined') {
+                    updateCartFromLocalStorage();
+                } else {
+                    // If still not loaded, show empty cart
+                    console.warn('CartManager not found, showing empty cart');
+                }
+            }, 100);
+        } else {
+            updateCartFromLocalStorage();
+        }
+        
+        // Sync localStorage to server session in background (non-blocking)
+        if (typeof CartManager !== 'undefined') {
+            // Delay sync a bit to avoid conflicts
+            setTimeout(function() {
+                CartManager.syncToServer(function(success) {
+                    if (success) {
+                        // Optionally refresh display after sync
+                        // updateCartFromLocalStorage();
+                    }
+                });
+            }, 100);
+        }
+        
+        // Handle remove button clicks (using event delegation)
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-cart-item')) {
+                const btn = e.target.closest('.remove-cart-item');
+                const productId = parseInt(btn.getAttribute('data-product-id'));
+                if (productId && typeof CartManager !== 'undefined') {
+                    CartManager.removeFromCart(productId);
+                    updateCartFromLocalStorage();
+                    // Sync after remove (non-blocking)
+                    setTimeout(function() {
+                        CartManager.syncToServer();
+                    }, 50);
+                }
+            }
+        });
+        
+        // Handle quantity updates (using event delegation)
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('quantity-spinner')) {
+                const input = e.target;
+                const productId = parseInt(input.getAttribute('data-product-id'));
+                const newQuantity = parseInt(input.value) || 1;
+                if (productId && typeof CartManager !== 'undefined') {
+                    CartManager.updateQuantity(productId, newQuantity);
+                    updateCartFromLocalStorage();
+                    // Sync after update (non-blocking)
+                    setTimeout(function() {
+                        CartManager.syncToServer();
+                    }, 50);
+                }
+            }
+        });
+    });
+    
+    // Listen for storage events to sync across tabs
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'shopping_cart') {
+            updateCartFromLocalStorage();
+        }
+    });
+})();
+</script>
 
 </body><!-- End of .page_wrapper -->
 </html>

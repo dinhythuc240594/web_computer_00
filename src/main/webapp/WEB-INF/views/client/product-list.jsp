@@ -56,7 +56,7 @@
 
 
     <!-- preloader -->
-    <jsp:include page="../common/preloader.jsp" />
+    <!-- <jsp:include page="../common/preloader.jsp" /> -->
     <!-- preloader end -->
 
 

@@ -125,7 +125,7 @@ public class OrderRepositoryImpl implements OrderRepository {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             ps.setInt(1, entity.getUser_id());
             ps.setDate(2, entity.getOrderDate());
@@ -138,12 +138,26 @@ public class OrderRepositoryImpl implements OrderRepository {
 
             ps.executeUpdate();
 
+            // Lấy ID vừa tạo
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setId(generatedKeys.getInt(1));
+                }
+            }
+
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
 
+    }
+    
+    public int createAndGetId(OrderDAO entity) {
+        if (create(entity)) {
+            return entity.getId();
+        }
+        return 0;
     }
 
     @Override

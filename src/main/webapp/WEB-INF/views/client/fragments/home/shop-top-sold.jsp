@@ -84,7 +84,14 @@
                                             <small>Còn lại: <%= stock > 0 ? stock : 0 %> sản phẩm</small>
                                         </div>
                                         <div class="cart-btn">
-                                            <button type="button">
+                                            <button type="button" 
+                                                    class="add-to-cart-btn" 
+                                                    data-product-id="<%= product.getId() %>"
+                                                    data-product-name="<%= product.getName() %>"
+                                                    data-product-price="<%= product.getPrice() != null ? product.getPrice() : 0 %>"
+                                                    data-product-image="<%= productImage %>"
+                                                    data-product-slug="<%= product.getSlug() != null ? product.getSlug() : "" %>"
+                                                    <%= stock <= 0 ? "disabled" : "" %>>
                                                 Thêm vào giỏ <i class="icon-12"></i>
                                             </button>
                                         </div>
@@ -108,4 +115,37 @@
         </div>
     </section>
     <!-- shop-four end -->
+    
+    <script>
+        // Handle add to cart button clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.add-to-cart-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    if (this.disabled) {
+                        return;
+                    }
+                    
+                    const product = {
+                        id: parseInt(this.getAttribute('data-product-id')),
+                        name: this.getAttribute('data-product-name'),
+                        price: parseFloat(this.getAttribute('data-product-price')),
+                        image_url: this.getAttribute('data-product-image'),
+                        slug: this.getAttribute('data-product-slug')
+                    };
+                    
+                    if (CartManager.addToCart(product, 1)) {
+                        // Show success message (optional)
+                        const originalText = this.innerHTML;
+                        this.innerHTML = 'Đã thêm! <i class="icon-12"></i>';
+                        this.style.backgroundColor = '#28a745';
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.style.backgroundColor = '';
+                        }, 1000);
+                    }
+                });
+            });
+        });
+    </script>
 
