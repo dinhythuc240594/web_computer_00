@@ -80,12 +80,12 @@ public class AuthFilter implements Filter {
             } else {
                 isProtectedPath = false;
             }
-        } else if (path.startsWith("/foods")) {
+        } else if (path.startsWith("/product")) {
             String action = req.getParameter("action");
-            if (action == null || action.equals("list") || action.equals("detail")) {
-                isProtectedPath = false;
+            if (action != null && action.equals("list")) {
+                isProtectedPath = false;  // action=list không cần đăng nhập
             } else {
-                isProtectedPath = true;
+                isProtectedPath = true;   // Các action khác hoặc không có action cần đăng nhập
             }
         } else {
             for (String protectedPathItem : protectedPaths) {
