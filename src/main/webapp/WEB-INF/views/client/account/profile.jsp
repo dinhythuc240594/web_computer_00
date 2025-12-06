@@ -19,6 +19,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%
     String sessionUsername = (String) session.getAttribute("username");
     UserDAO currentUser = null;
@@ -86,6 +87,8 @@
     String displayAddress = currentUser != null && currentUser.getAddress() != null ? currentUser.getAddress() : "Chưa cập nhật";
     
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+    dateFormat.setTimeZone(java.util.TimeZone.getTimeZone("GMT+7"));
     
     String tab = request.getParameter("tab");
     String message = request.getParameter("message");
@@ -374,6 +377,11 @@
                                         <div class="product-info">
                                             <h6><%= productName %><% if (orderItems.size() > 1) { %> và <%= orderItems.size() - 1 %> sản phẩm khác<% } %></h6>
                                             <span>#<%= order.getId() %></span>
+                                            <% if (order.getOrderDate() != null) { %>
+                                            <span style="display: block; color: #6c757d; font-size: 14px; margin-top: 5px;">
+                                                <i class="fas fa-calendar-alt"></i> Ngày đặt: <%= dateFormat.format(order.getOrderDate()) %>
+                                            </span>
+                                            <% } %>
                                             <h4><%= currencyFormat.format(order.getTotalPrice()) %></h4>
                                         </div>
                                     </div>

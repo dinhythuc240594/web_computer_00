@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="model.OrderDAO" %>
 <%@ page import="model.OrderItemDAO" %>
@@ -21,6 +22,8 @@
     String errorMessage = (String) request.getAttribute("error");
     
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+    dateFormat.setTimeZone(java.util.TimeZone.getTimeZone("GMT+7"));
     
     // Tính toán lại tổng tiền từ order items
     double subtotal = 0.0;
@@ -224,7 +227,7 @@
                             <strong>Mã đơn hàng:</strong> #<%= order.getId() %>
                         </div>
                         <div class="order-info-item">
-                            <strong>Ngày đặt:</strong> <%= order.getOrderDate() != null ? order.getOrderDate() : "N/A" %>
+                            <strong>Ngày đặt:</strong> <%= order.getOrderDate() != null ? dateFormat.format(order.getOrderDate()) : "N/A" %>
                         </div>
                         <div class="order-info-item">
                             <strong>Trạng thái:</strong> 

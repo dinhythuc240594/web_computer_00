@@ -31,6 +31,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -164,7 +165,7 @@ public class CheckoutServlet extends HttpServlet {
         // Tạo đơn hàng với đầy đủ thông tin
         OrderDAO order = new OrderDAO();
         order.setUser_id(userId);
-        order.setOrderDate(new Date(System.currentTimeMillis()));
+        // created_at sẽ tự động được set bởi database
         order.setStatus("PENDING"); // Trạng thái chờ xử lý (theo ENUM trong database)
         order.setTotalPrice(total);
         order.setAddress(fullAddress);
@@ -241,12 +242,18 @@ public class CheckoutServlet extends HttpServlet {
             return;
         }
         
+        // Lấy lại order từ database để có created_at
+        OrderDAO savedOrder = orderService.findById(orderId);
+        if (savedOrder == null) {
+            savedOrder = order; // Fallback nếu không lấy được
+        }
+        
         // Gửi email xác nhận đơn hàng
         boolean emailSent = false;
         String emailError = null;
         try {
             EmailService emailService = new SmtpEmailService();
-            EmailRequest emailRequest = createOrderConfirmationEmail(order, cartItems, fullName, email, total, subtotal, shippingFee);
+            EmailRequest emailRequest = createOrderConfirmationEmail(savedOrder, cartItems, fullName, email, total, subtotal, shippingFee);
             emailService.send(getServletContext(), emailRequest, null);
             emailSent = true;
         } catch (Exception e) {
@@ -287,6 +294,8 @@ public class CheckoutServlet extends HttpServlet {
         
         // Tạo nội dung HTML cho email
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        dateFormat.setTimeZone(java.util.TimeZone.getTimeZone("GMT+7"));
         StringBuilder htmlBody = new StringBuilder();
         htmlBody.append("<!DOCTYPE html>");
         htmlBody.append("<html lang='vi'>");
@@ -308,7 +317,8 @@ public class CheckoutServlet extends HttpServlet {
         htmlBody.append("<div style='background-color: white; padding: 15px; margin: 15px 0; border-radius: 5px;'>");
         htmlBody.append("<h3 style='margin-top: 0; color: #4CAF50;'>Thông tin đơn hàng</h3>");
         htmlBody.append("<p><strong>Mã đơn hàng:</strong> #").append(order.getId()).append("</p>");
-        htmlBody.append("<p><strong>Ngày đặt:</strong> ").append(order.getOrderDate()).append("</p>");
+        String orderDateStr = order.getOrderDate() != null ? dateFormat.format(order.getOrderDate()) : "N/A";
+        htmlBody.append("<p><strong>Ngày đặt:</strong> ").append(orderDateStr).append("</p>");
         htmlBody.append("<p><strong>Trạng thái:</strong> ").append(order.getStatus()).append("</p>");
         htmlBody.append("<p><strong>Phương thức thanh toán:</strong> ");
         if ("cod".equalsIgnoreCase(order.getPayment())) {
@@ -380,7 +390,7 @@ public class CheckoutServlet extends HttpServlet {
         StringBuilder textBody = new StringBuilder();
         textBody.append("Cảm ơn bạn đã đặt hàng!\n\n");
         textBody.append("Mã đơn hàng: #").append(order.getId()).append("\n");
-        textBody.append("Ngày đặt: ").append(order.getOrderDate()).append("\n");
+        textBody.append("Ngày đặt: ").append(orderDateStr).append("\n");
         textBody.append("Tổng tiền: ").append(currencyFormat.format(total)).append("\n\n");
         textBody.append("Chúng tôi sẽ xử lý đơn hàng của bạn trong thời gian sớm nhất.");
         emailRequest.setTextBody(textBody.toString());

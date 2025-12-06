@@ -24,7 +24,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
         List<OrderDAO> items = new ArrayList<>();
 
-        String sql = "SELECT id, user_id, order_date, status, total_amount, " +
+        String sql = "SELECT id, user_id, created_at, status, total_amount, " +
                 "shipping_address, payment_method, note, is_active " +
                 "FROM orders";
 
@@ -45,7 +45,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public OrderDAO findById(int id) {
 
-        String sql = "SELECT id, user_id, order_date, status, total_amount, shipping_address, " +
+        String sql = "SELECT id, user_id, created_at, status, total_amount, shipping_address, " +
                 "payment_method, note, is_active " +
                 "FROM orders WHERE id = ?";
 
@@ -119,22 +119,21 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public Boolean create(OrderDAO entity) {
 
-        String sql = "INSERT INTO orders (user_id, order_date, status, " +
+        String sql = "INSERT INTO orders (user_id, status, " +
                 "total_amount, shipping_address, " +
                 "payment_method, note, is_active) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             ps.setInt(1, entity.getUser_id());
-            ps.setDate(2, entity.getOrderDate());
-            ps.setString(3, entity.getStatus());
-            ps.setDouble(4, entity.getTotalPrice());
-            ps.setString(5, entity.getAddress());
-            ps.setString(6, entity.getPayment());
-            ps.setString(7, entity.getNote());
-            ps.setBoolean(8, entity.getIs_active());
+            ps.setString(2, entity.getStatus());
+            ps.setDouble(3, entity.getTotalPrice());
+            ps.setString(4, entity.getAddress());
+            ps.setString(5, entity.getPayment());
+            ps.setString(6, entity.getNote());
+            ps.setBoolean(7, entity.getIs_active());
 
             ps.executeUpdate();
 
@@ -163,7 +162,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public Boolean update(OrderDAO entity) {
 
-        String sql = "UPDATE orders SET user_id = ?, order_date = ?, status = ?, total_amount = ?, " +
+        String sql = "UPDATE orders SET user_id = ?, status = ?, total_amount = ?, " +
                 "shipping_address = ?,  payment_method = ?, note = ?, is_active = ? " +
                 "WHERE id = ?";
 
@@ -171,14 +170,13 @@ public class OrderRepositoryImpl implements OrderRepository {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, entity.getUser_id());
-            ps.setDate(2, entity.getOrderDate());
-            ps.setString(3, entity.getStatus());
-            ps.setDouble(4, entity.getTotalPrice());
-            ps.setString(5, entity.getAddress());
-            ps.setString(6, entity.getPayment());
-            ps.setString(7, entity.getNote());
-            ps.setBoolean(8, entity.getIs_active());
-            ps.setInt(9, entity.getId());
+            ps.setString(2, entity.getStatus());
+            ps.setDouble(3, entity.getTotalPrice());
+            ps.setString(4, entity.getAddress());
+            ps.setString(5, entity.getPayment());
+            ps.setString(6, entity.getNote());
+            ps.setBoolean(7, entity.getIs_active());
+            ps.setInt(8, entity.getId());
 
             ps.executeUpdate();
 
@@ -196,9 +194,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     public List<OrderDAO> findByUserId(int userId) {
         List<OrderDAO> items = new ArrayList<>();
 
-        String sql = "SELECT id, user_id, order_date, status, total_amount, " +
+        String sql = "SELECT id, user_id, created_at, status, total_amount, " +
                 "shipping_address, payment_method, note, is_active " +
-                "FROM orders WHERE user_id = ? ORDER BY order_date DESC";
+                "FROM orders WHERE user_id = ? ORDER BY created_at DESC";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -221,9 +219,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     public List<OrderDAO> findByUserIdWithPagination(int userId, int offset, int limit) {
         List<OrderDAO> items = new ArrayList<>();
 
-        String sql = "SELECT id, user_id, order_date, status, total_amount, " +
+        String sql = "SELECT id, user_id, created_at, status, total_amount, " +
                 "shipping_address, payment_method, note, is_active " +
-                "FROM orders WHERE user_id = ? ORDER BY order_date DESC LIMIT ? OFFSET ?";
+                "FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -270,7 +268,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
         item.setId(rs.getInt("id"));
         item.setUser_id(rs.getInt("user_id"));
-        item.setOrderDate(rs.getDate("order_date"));
+        item.setOrderDate(rs.getTimestamp("created_at"));
         item.setStatus(rs.getString("status"));
         item.setTotalPrice(rs.getDouble("total_amount"));
         item.setAddress(rs.getString("shipping_address"));

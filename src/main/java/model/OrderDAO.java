@@ -1,12 +1,12 @@
 package model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class OrderDAO {
 
     private int id;
     private int user_id;
-    private Date orderDate;
+    private Timestamp orderDate;
     private double totalPrice;
     private String status;
     private String address;
@@ -16,7 +16,7 @@ public class OrderDAO {
 
     public OrderDAO(){}
 
-    public OrderDAO(int id, int user_id, Date orderDate,
+    public OrderDAO(int id, int user_id, Timestamp orderDate,
                     double totalPrice, String status,
                     String address, String payment,
                     String note, Boolean is_active) {
@@ -39,11 +39,11 @@ public class OrderDAO {
         this.id = id;
     }
 
-    public Date getOrderDate() {
+    public Timestamp getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(Timestamp orderDate) {
         this.orderDate = orderDate;
     }
 

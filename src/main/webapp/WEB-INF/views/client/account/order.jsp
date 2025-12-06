@@ -7,8 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="model.OrderDAO" %>
 <%
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+    dateFormat.setTimeZone(java.util.TimeZone.getTimeZone("GMT+7"));
     List<OrderDAO> orders = (List<OrderDAO>) request.getAttribute("orders");
     Integer currentPage = (Integer) request.getAttribute("currentPage");
     Integer totalPages = (Integer) request.getAttribute("totalPages");
@@ -177,7 +180,7 @@
             %>
             <tr class="<%= isCancelled ? "table-danger" : "" %>">
                 <td>#<%= o.getId() %></td>
-                <td><%= o.getOrderDate() != null ? o.getOrderDate() : "" %></td>
+                <td><%= o.getOrderDate() != null ? dateFormat.format(o.getOrderDate()) : "" %></td>
                 <td><%= String.format("%,.0f", o.getTotalPrice()) %> đ</td>
                 <td><%= statusDisplay %></td>
                 <td><%= o.getNote() != null ? o.getNote() : "" %></td>
