@@ -220,7 +220,7 @@
 
 
     <!-- shop-two -->
-    <section class="shop-two pb_50">
+    <!-- <section class="shop-two pb_50">
         <div class="large-container">
             <div class="sec-title">
                 <h2 class="title-animation">You may also like these</h2>
@@ -393,7 +393,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- shop-two end -->
 
 
