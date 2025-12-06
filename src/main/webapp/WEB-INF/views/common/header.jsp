@@ -213,10 +213,13 @@ padding: 15px 20px;"></div>
                                                 ? currentUser.getFullname() : currentUser.getUsername();
                                         // Xác định link profile dựa trên role
                                         if (currentUser.getRole() != null && 
-                                            (currentUser.getRole().equalsIgnoreCase("STAFF") || 
-                                             currentUser.getRole().equalsIgnoreCase("ADMIN"))) {
+                                            (currentUser.getRole().equalsIgnoreCase("STAFF"))) {
                                             profileLink = request.getContextPath() + "/staff";
-                                        } else {
+                                        } else if (currentUser.getRole() != null && 
+                                            (currentUser.getRole().equalsIgnoreCase("ADMIN"))) {
+                                            profileLink = request.getContextPath() + "/admin";
+                                        }
+                                        else {
                                             profileLink = request.getContextPath() + "/user";
                                         }
                                     }
