@@ -192,6 +192,31 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     }
 
+    @Override
+    public List<OrderDAO> findByUserId(int userId) {
+        List<OrderDAO> items = new ArrayList<>();
+
+        String sql = "SELECT id, user_id, order_date, status, total_amount, " +
+                "shipping_address, payment_method, note, is_active " +
+                "FROM orders WHERE user_id = ? ORDER BY order_date DESC";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    items.add(mapResultSetToOrderDAO(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi lấy đơn hàng theo user_id: " + userId, e);
+        }
+        return items;
+    }
+
     private OrderDAO mapResultSetToOrderDAO(ResultSet rs) throws SQLException {
         OrderDAO item = new OrderDAO();
 

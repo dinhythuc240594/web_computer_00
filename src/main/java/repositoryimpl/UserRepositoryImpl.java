@@ -25,7 +25,7 @@ public class UserRepositoryImpl implements UserRepository {
     public List<UserDAO> getAll() {
         List<UserDAO> items = new ArrayList<>();
         String sql = "SELECT id, username, email, password_hash, full_name, " +
-                "phone_number, address, is_active, role FROM users";
+                "phone_number, address, avatar_blob, is_active, role FROM users";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -45,7 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
     public UserDAO findById(int id) {
 
         String sql = "SELECT id, username, email, password_hash, full_name, " +
-                "phone_number, address, is_active, role FROM users WHERE id = ?";
+                "phone_number, address, avatar_blob, is_active, role FROM users WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -69,7 +69,7 @@ public class UserRepositoryImpl implements UserRepository {
     public UserDAO findByUsername(String username) {
 
         String sql = "SELECT id, username, email, password_hash, full_name, " +
-                "phone_number, address, is_active, role FROM users WHERE username = ?";
+                "phone_number, address, avatar_blob, is_active, role FROM users WHERE username = ?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -117,7 +117,7 @@ public class UserRepositoryImpl implements UserRepository {
     public Boolean create(UserDAO entity) {
 
         String sql = "INSERT INTO users (username, email, password_hash, full_name, " +
-                "phone_number, address, is_active, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                "phone_number, address, avatar_blob, is_active, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -128,8 +128,13 @@ public class UserRepositoryImpl implements UserRepository {
             ps.setString(4, entity.getFullname());
             ps.setString(5, entity.getPhone());
             ps.setString(6, entity.getAddress());
-            ps.setBoolean(7, entity.getIsActive());
-            ps.setString(8, entity.getRole());
+            if (entity.getAvatar() != null) {
+                ps.setBytes(7, entity.getAvatar());
+            } else {
+                ps.setNull(7, java.sql.Types.BLOB);
+            }
+            ps.setBoolean(8, entity.getIsActive());
+            ps.setString(9, entity.getRole());
 
             ps.executeUpdate();
 
@@ -143,9 +148,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Boolean update(UserDAO entity) {
-
+        // Always update avatar if provided (entity already has existing avatar if not updating)
         String sql = "UPDATE users SET username = ?, email = ?, password_hash = ?, full_name = ?, " +
-                "phone_number = ?, address = ?, is_active = ?, role = ? WHERE id = ?";
+                "phone_number = ?, address = ?, avatar_blob = ?, is_active = ?, role = ? WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -156,9 +161,16 @@ public class UserRepositoryImpl implements UserRepository {
             ps.setString(4, entity.getFullname());
             ps.setString(5, entity.getPhone());
             ps.setString(6, entity.getAddress());
-            ps.setBoolean(7, entity.getIsActive());
-            ps.setString(8, entity.getRole());
-            ps.setInt(9, entity.getId());
+            
+            if (entity.getAvatar() != null && entity.getAvatar().length > 0) {
+                ps.setBytes(7, entity.getAvatar());
+            } else {
+                ps.setNull(7, java.sql.Types.BLOB);
+            }
+            
+            ps.setBoolean(8, entity.getIsActive());
+            ps.setString(9, entity.getRole());
+            ps.setInt(10, entity.getId());
 
             ps.executeUpdate();
 
@@ -180,6 +192,12 @@ public class UserRepositoryImpl implements UserRepository {
         item.setFullname(rs.getString("full_name"));
         item.setPhone(rs.getString("phone_number"));
         item.setAddress(rs.getString("address"));
+        java.sql.Blob avatarBlob = rs.getBlob("avatar_blob");
+        if (avatarBlob != null) {
+            item.setAvatar(avatarBlob.getBytes(1, (int) avatarBlob.length()));
+        } else {
+            item.setAvatar(null);
+        }
         item.setIsActive(rs.getBoolean("is_active"));
         item.setRole(rs.getString("role"));
 

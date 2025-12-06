@@ -80,6 +80,12 @@
                 <p style="color:#dc2626;margin-top:10px;"><%= loginError %></p>
                 <%
                     }
+                    String message = request.getParameter("message");
+                    if ("password_changed".equals(message)) {
+                %>
+                <p style="color:#28a745;margin-top:10px;">Đổi mật khẩu thành công! Vui lòng đăng nhập lại với mật khẩu mới.</p>
+                <%
+                    }
                 %>
             </div>
             <div class="form-inner">

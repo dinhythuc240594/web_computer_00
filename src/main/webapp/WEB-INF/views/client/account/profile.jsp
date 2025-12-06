@@ -1,16 +1,44 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="model.UserDAO" %>
+<%@ page import="model.OrderDAO" %>
+<%@ page import="model.OrderItemDAO" %>
+<%@ page import="model.WishlistDAO" %>
+<%@ page import="model.ProductDAO" %>
 <%@ page import="service.UserService" %>
+<%@ page import="service.OrderService" %>
+<%@ page import="service.OrderItemService" %>
+<%@ page import="service.WishlistService" %>
+<%@ page import="service.ProductService" %>
 <%@ page import="serviceimpl.UserServiceImpl" %>
+<%@ page import="serviceimpl.OrderServiceImpl" %>
+<%@ page import="serviceimpl.OrderItemServiceImpl" %>
+<%@ page import="serviceimpl.WishlistServiceImpl" %>
+<%@ page import="serviceimpl.ProductServiceImpl" %>
 <%@ page import="utilities.DataSourceUtil" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%
     String sessionUsername = (String) session.getAttribute("username");
     UserDAO currentUser = null;
+    List<OrderDAO> userOrders = new ArrayList<>();
+    List<WishlistDAO> userWishlist = new ArrayList<>();
+    
     if (sessionUsername != null && !sessionUsername.isBlank()) {
         try {
             javax.sql.DataSource ds = DataSourceUtil.getDataSource();
             UserService userService = new UserServiceImpl(ds);
+            OrderService orderService = new OrderServiceImpl(ds);
+            WishlistService wishlistService = new WishlistServiceImpl(ds);
+            OrderItemService orderItemService = new OrderItemServiceImpl(ds);
+            ProductService productService = new ProductServiceImpl(ds);
+            
             currentUser = userService.findByUsername(sessionUsername);
+            if (currentUser != null) {
+                userOrders = orderService.findByUserId(currentUser.getId());
+                userWishlist = wishlistService.findByUserId(currentUser.getId());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -22,6 +50,11 @@
     String displayEmail = currentUser != null && currentUser.getEmail() != null ? currentUser.getEmail() : "";
     String displayPhone = currentUser != null && currentUser.getPhone() != null ? currentUser.getPhone() : "Chưa cập nhật";
     String displayAddress = currentUser != null && currentUser.getAddress() != null ? currentUser.getAddress() : "Chưa cập nhật";
+    
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+    
+    String tab = request.getParameter("tab");
+    String message = request.getParameter("message");
 %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -95,13 +128,50 @@
         <div class="large-container">
             <div class="sec-title centred pb_20">
                 <h2>Tài khoản của tôi</h2>
+                <%
+                    String success = request.getParameter("success");
+                    if ("updated".equals(success)) {
+                %>
+                <p style="color: #28a745; margin-top: 10px;">Cập nhật thông tin cá nhân thành công!</p>
+                <%
+                    } else if ("password_changed".equals(success)) {
+                %>
+                <p style="color: #28a745; margin-top: 10px;">Đổi mật khẩu thành công!</p>
+                <%
+                    }
+                    if (message != null) {
+                        if ("added".equals(message)) {
+                %>
+                <p style="color: #28a745; margin-top: 10px;">Đã thêm vào danh sách yêu thích!</p>
+                <%
+                        } else if ("removed".equals(message)) {
+                %>
+                <p style="color: #28a745; margin-top: 10px;">Đã xóa khỏi danh sách yêu thích!</p>
+                <%
+                        } else if ("already_exists".equals(message)) {
+                %>
+                <p style="color: #ffc107; margin-top: 10px;">Sản phẩm đã có trong danh sách yêu thích!</p>
+                <%
+                        } else if ("error".equals(message)) {
+                %>
+                <p style="color: #dc2626; margin-top: 10px;">Có lỗi xảy ra. Vui lòng thử lại!</p>
+                <%
+                        }
+                    }
+                %>
             </div>
             <div class="inner-container">
                 <div class="tabs-box">
                     <div class="account-info">
                         <div class="upper-box centred mb_40">
                             <figure class="image-box">
-                                <img src="${pageContext.request.contextPath}/assets/client/images/resource/account-1.png" alt="Ảnh đại diện">
+                                <%
+                                    String avatarUrl = "${pageContext.request.contextPath}/assets/client/images/default-avatar.svg";
+                                    if (currentUser != null && currentUser.getAvatar() != null && currentUser.getAvatar().length > 0) {
+                                        avatarUrl = request.getContextPath() + "/avatar?userId=" + currentUser.getId();
+                                    }
+                                %>
+                                <img src="<%= avatarUrl %>" alt="Ảnh đại diện" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;">
                             </figure>
                             <h4><%= displayName %></h4>
                             <%
@@ -117,60 +187,78 @@
                             %>
                         </div>
                         <ul class="tab-btns tab-buttons clearfix">
-                            <li class="tab-btn active-btn" data-tab="#tab-1">Thông tin cá nhân</li>
-                            <li class="tab-btn" data-tab="#tab-2">Thanh toán & hoá đơn</li>
-                            <li class="tab-btn" data-tab="#tab-3">Lịch sử đơn hàng</li>
-                            <li class="tab-btn" data-tab="#tab-4">Danh sách yêu thích</li>
+                            <li class="tab-btn <%= (tab == null || tab.equals("info")) ? "active-btn" : "" %>" data-tab="#tab-1">Thông tin cá nhân</li>
+                            <!-- <li class="tab-btn <%= "payment".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-2">Thanh toán & hoá đơn</li> -->
+                            <li class="tab-btn <%= "orders".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-3">Lịch sử đơn hàng</li>
+                            <li class="tab-btn <%= "wishlist".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-4">Danh sách yêu thích</li>
                         </ul>
                     </div>
                     <div class="tabs-content">
-                        <div class="tab active-tab" id="tab-1">
+                        <div class="tab <%= (tab == null || tab.equals("info")) ? "active-tab" : "" %>" id="tab-1">
                             <div class="personal-info">
                                 <h3>Thông tin cá nhân</h3>
                                 <p>Quản lý thông tin cơ bản, số điện thoại và email liên hệ của bạn.</p>
-                                <div class="row clearfix">
-                                    <div class="col-lg-3 col-md-6 col-sm-12 single-column">
-                                        <div class="single-item">
-                                            <h6>Họ và tên</h6>
-                                            <span><%= displayName %></span>
-                                            <button type="button">Chỉnh sửa</button>
+                                
+                                <div class="container mt-4">
+                                    <div class="row">
+                                        <div class="col-md-8 offset-md-2">
+                                            <div class="card shadow-sm">
+                                                <div class="card-body p-4">
+                                                    <form>
+                                                        <div class="row mb-3">
+                                                            <label for="fullname" class="col-sm-3 col-form-label fw-bold">Họ và tên:</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" class="form-control" id="fullname" value="<%= displayName %>" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="phone" class="col-sm-3 col-form-label fw-bold">Số điện thoại:</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" class="form-control" id="phone" value="<%= displayPhone %>" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="email" class="col-sm-3 col-form-label fw-bold">Email:</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="email" class="form-control" id="email" value="<%= displayEmail != null && !displayEmail.isBlank() ? displayEmail : "Chưa cập nhật" %>" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="address" class="col-sm-3 col-form-label fw-bold">Địa chỉ:</label>
+                                                            <div class="col-sm-9">
+                                                                <textarea class="form-control" id="address" rows="3" readonly><%= displayAddress %></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-9 offset-sm-3">
+                                                                <a href="${pageContext.request.contextPath}/user?action=edit-profile" class="btn btn-primary">
+                                                                    <i class="fas fa-edit"></i> Chỉnh sửa thông tin
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-12 single-column">
-                                        <div class="single-item">
-                                            <h6>Số điện thoại</h6>
-                                            <span><%= displayPhone %></span>
-                                            <button type="button">Chỉnh sửa</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-12 single-column">
-                                        <div class="single-item">
-                                            <h6>Địa chỉ</h6>
-                                            <span><%= displayAddress %></span>
-                                            <button type="button">Chỉnh sửa</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-12 single-column">
-                                        <div class="single-item">
-                                            <h6>Email</h6>
-                                            <%
-                                                if (displayEmail != null && !displayEmail.isBlank()) {
-                                            %>
-                                            <span><a href="mailto:<%= displayEmail %>"><%= displayEmail %></a></span>
-                                            <%
-                                                } else {
-                                            %>
-                                            <span>Chưa cập nhật</span>
-                                            <%
-                                                }
-                                            %>
-                                            <button type="button">Chỉnh sửa</button>
+                                    
+                                    <div class="row mt-4">
+                                        <div class="col-md-8 offset-md-2">
+                                            <div class="card shadow-sm">
+                                                <div class="card-body p-4">
+                                                    <h5 class="card-title mb-3">Đổi mật khẩu</h5>
+                                                    <p class="text-muted mb-3">Thay đổi mật khẩu của bạn để bảo mật tài khoản. Sau khi đổi mật khẩu, bạn sẽ cần đăng nhập lại.</p>
+                                                    <a href="${pageContext.request.contextPath}/user?action=change-password" class="btn btn-warning">
+                                                        <i class="fas fa-key"></i> Đổi mật khẩu
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab" id="tab-2">
+                        <!-- <div class="tab <%= "payment".equals(tab) ? "active-tab" : "" %>" id="tab-2">
                             <h3>Thanh toán & hoá đơn</h3>
                             <div class="payment-option">
                                 <div class="bank-payment">
@@ -195,54 +283,120 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="tab" id="tab-3">
+                        </div> -->
+                        <div class="tab <%= "orders".equals(tab) ? "active-tab" : "" %>" id="tab-3">
                             <h3>Lịch sử đơn hàng</h3>
                             <div class="history-box">
+                                <%
+                                    if (userOrders == null || userOrders.isEmpty()) {
+                                %>
+                                <p>Bạn chưa có đơn hàng nào.</p>
+                                <%
+                                    } else {
+                                        try {
+                                            javax.sql.DataSource ds = DataSourceUtil.getDataSource();
+                                            OrderItemService orderItemService = new OrderItemServiceImpl(ds);
+                                            ProductService productService = new ProductServiceImpl(ds);
+                                            
+                                            for (OrderDAO order : userOrders) {
+                                                List<OrderItemDAO> orderItems = orderItemService.findByOrderId(order.getId());
+                                                if (orderItems != null && !orderItems.isEmpty()) {
+                                                    OrderItemDAO firstItem = orderItems.get(0);
+                                                    ProductDAO product = productService.findById(firstItem.getProductId());
+                                                    String productName = product != null ? product.getName() : "Sản phẩm #" + firstItem.getProductId();
+                                                    String productImage = product != null && product.getImage_url() != null 
+                                                            ? product.getImage_url() 
+                                                            : "${pageContext.request.contextPath}/assets/client/images/resource/history-1.png";
+                                                    String statusText = "";
+                                                    if ("PENDING".equals(order.getStatus())) statusText = "Chờ xử lý";
+                                                    else if ("PROCESSING".equals(order.getStatus())) statusText = "Đang xử lý";
+                                                    else if ("SHIPPED".equals(order.getStatus())) statusText = "Đang giao";
+                                                    else if ("DELIVERED".equals(order.getStatus())) statusText = "Đã giao";
+                                                    else if ("CANCELLED".equals(order.getStatus())) statusText = "Đã hủy";
+                                %>
                                 <div class="single-history">
                                     <div class="product-box">
                                         <figure class="image-box">
-                                            <img src="${pageContext.request.contextPath}/assets/client/images/resource/history-1.png" alt="Máy ảnh Canon">
+                                            <img src="<%= productImage %>" alt="<%= productName %>">
                                         </figure>
                                         <div class="product-info">
-                                            <h6>CANON EOS 750D 24.2 MP</h6>
-                                            <span>#X469626</span>
-                                            <h4>$999.99</h4>
+                                            <h6><%= productName %><% if (orderItems.size() > 1) { %> và <%= orderItems.size() - 1 %> sản phẩm khác<% } %></h6>
+                                            <span>#<%= order.getId() %></span>
+                                            <h4><%= currencyFormat.format(order.getTotalPrice()) %></h4>
                                         </div>
                                     </div>
-                                    <span class="text">Đã giao</span>
-                                </div>
-                                <div class="single-history">
-                                    <div class="product-box">
-                                        <figure class="image-box">
-                                            <img src="${pageContext.request.contextPath}/assets/client/images/resource/history-2.png" alt="VR Box">
-                                        </figure>
-                                        <div class="product-info">
-                                            <h6>Box Shinecon 3D Glass with Remote</h6>
-                                            <span>#X469625</span>
-                                            <h4>$149.99</h4>
-                                        </div>
+                                    <span class="text"><%= statusText %></span>
+                                    <div style="margin-left: 10px; display: inline-block;">
+                                        <a href="${pageContext.request.contextPath}/order?id=<%= order.getId() %>" style="color: #007bff; text-decoration: none; margin-right: 10px;">Xem chi tiết</a>
+                                        <% if ("PENDING".equals(order.getStatus())) { %>
+                                        <form method="post" action="${pageContext.request.contextPath}/user" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');">
+                                            <input type="hidden" name="action" value="cancelOrder">
+                                            <input type="hidden" name="orderId" value="<%= order.getId() %>">
+                                            <button type="submit" style="background-color: #dc3545; color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-size: 14px;">Hủy đơn</button>
+                                        </form>
+                                        <% } %>
                                     </div>
-                                    <span class="text">Đã giao</span>
                                 </div>
-                                <div class="single-history">
-                                    <div class="product-box">
-                                        <figure class="image-box">
-                                            <img src="${pageContext.request.contextPath}/assets/client/images/resource/history-3.png" alt="Máy giặt">
-                                        </figure>
-                                        <div class="product-info">
-                                            <h6>Máy giặt 8KG Front Loading</h6>
-                                            <span>#X469629</span>
-                                            <h4>$999.99</h4>
-                                        </div>
-                                    </div>
-                                    <span class="text">Đã giao</span>
-                                </div>
+                                <%
+                                                }
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                %>
+                                <p>Có lỗi xảy ra khi tải đơn hàng.</p>
+                                <%
+                                        }
+                                    }
+                                %>
                             </div>
                         </div>
-                        <div class="tab" id="tab-4">
+                        <div class="tab <%= "wishlist".equals(tab) ? "active-tab" : "" %>" id="tab-4">
                             <h3>Danh sách yêu thích</h3>
+                            <%
+                                if (userWishlist == null || userWishlist.isEmpty()) {
+                            %>
                             <p>Chưa có sản phẩm nào trong danh sách yêu thích.</p>
+                            <%
+                                } else {
+                                    try {
+                                        javax.sql.DataSource ds = DataSourceUtil.getDataSource();
+                                        ProductService productService = new ProductServiceImpl(ds);
+                            %>
+                            <div class="row clearfix" style="margin-top: 20px;">
+                                <%
+                                    for (WishlistDAO wishlistItem : userWishlist) {
+                                        ProductDAO product = productService.findById(wishlistItem.getProductId());
+                                        if (product != null) {
+                                            String productImage = product.getImage_url() != null && !product.getImage_url().isBlank()
+                                                    ? product.getImage_url()
+                                                    : "${pageContext.request.contextPath}/assets/client/images/resource/history-1.png";
+                                %>
+                                <div class="col-lg-3 col-md-4 col-sm-6 single-column" style="margin-bottom: 20px;">
+                                    <div class="single-item" style="border: 1px solid #e5e5e5; padding: 15px; border-radius: 10px;">
+                                        <figure class="image-box" style="margin-bottom: 10px;">
+                                            <img src="<%= productImage %>" alt="<%= product.getName() %>" style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px;">
+                                        </figure>
+                                        <div class="product-info">
+                                            <h6 style="margin-bottom: 5px;"><a href="${pageContext.request.contextPath}/product?slug=<%= product.getSlug() != null ? product.getSlug() : "" %>" style="color: #333; text-decoration: none;"><%= product.getName() %></a></h6>
+                                            <h4 style="color: #e52929; margin-bottom: 10px;"><%= currencyFormat.format(product.getPrice()) %></h4>
+                                            <a href="${pageContext.request.contextPath}/wishlist?action=remove&productId=<%= product.getId() %>" class="theme-btn" style="text-decoration: none; display: inline-block; padding: 8px 15px; font-size: 14px; background: #dc2626;">Xóa</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%
+                                        }
+                                    }
+                                %>
+                            </div>
+                            <%
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                            %>
+                            <p>Có lỗi xảy ra khi tải danh sách yêu thích.</p>
+                            <%
+                                    }
+                                }
+                            %>
                         </div>
                     </div>
                 </div>
@@ -321,6 +475,28 @@
 
 <!-- main-js -->
 <script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
+<script>
+    // Handle tab switching from URL parameter
+    $(document).ready(function() {
+        var tabParam = '<%= tab != null ? tab : "" %>';
+        if (tabParam) {
+            $('.tab-btn').removeClass('active-btn');
+            $('.tab').removeClass('active-tab');
+            
+            if (tabParam === 'orders') {
+                $('.tab-btn[data-tab="#tab-3"]').addClass('active-btn');
+                $('#tab-3').addClass('active-tab');
+            } else if (tabParam === 'wishlist') {
+                $('.tab-btn[data-tab="#tab-4"]').addClass('active-btn');
+                $('#tab-4').addClass('active-tab');
+            } else if (tabParam === 'payment') {
+                $('.tab-btn[data-tab="#tab-2"]').addClass('active-btn');
+                $('#tab-2').addClass('active-tab');
+            }
+        }
+    });
+</script>
 </body>
 </html>
+
 

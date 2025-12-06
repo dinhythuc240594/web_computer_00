@@ -247,8 +247,24 @@
                         <div class="order-info-item">
                             <strong>Trạng thái:</strong> 
                             <span class="status-badge status-<%= order.getStatus() != null ? order.getStatus().toLowerCase() : "pending" %>">
-                                <%= order.getStatus() != null ? order.getStatus() : "PENDING" %>
+                                <% 
+                                    String statusDisplay = "";
+                                    if ("PENDING".equals(order.getStatus())) statusDisplay = "Chờ xử lý";
+                                    else if ("PROCESSING".equals(order.getStatus())) statusDisplay = "Đang xử lý";
+                                    else if ("SHIPPED".equals(order.getStatus())) statusDisplay = "Đang giao";
+                                    else if ("DELIVERED".equals(order.getStatus())) statusDisplay = "Đã giao";
+                                    else if ("CANCELLED".equals(order.getStatus())) statusDisplay = "Đã hủy";
+                                    else statusDisplay = order.getStatus() != null ? order.getStatus() : "PENDING";
+                                %>
+                                <%= statusDisplay %>
                             </span>
+                            <% if ("PENDING".equals(order.getStatus())) { %>
+                            <form method="post" action="<%= request.getContextPath() %>/user" style="display: inline-block; margin-left: 15px;" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');">
+                                <input type="hidden" name="action" value="cancelOrder">
+                                <input type="hidden" name="orderId" value="<%= order.getId() %>">
+                                <button type="submit" style="background-color: #dc3545; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-size: 14px;">Hủy đơn</button>
+                            </form>
+                            <% } %>
                         </div>
                         <div class="order-info-item">
                             <strong>Phương thức thanh toán:</strong> 
@@ -401,6 +417,22 @@
 
 <!-- main-js -->
 <script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
+
+<!-- cart-js -->
+<script src="${pageContext.request.contextPath}/assets/client/js/cart.js"></script>
+
+<!-- Clear cart after successful payment -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        <% if (successMessage != null && !successMessage.isBlank()) { %>
+        // Clear cart from localStorage after successful payment
+        if (typeof CartManager !== 'undefined') {
+            CartManager.clearCart();
+            console.log('Giỏ hàng đã được làm trống sau khi thanh toán thành công.');
+        }
+        <% } %>
+    });
+</script>
 
 </body><!-- End of .page_wrapper -->
 </html>

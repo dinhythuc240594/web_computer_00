@@ -11,6 +11,7 @@ public class UserDAO {
     private String email;
     private String phone;
     private String address;
+    private byte[] avatar;
     private Boolean isActive;
     private String role;
     private Date created_at;
@@ -103,5 +104,13 @@ public class UserDAO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 }

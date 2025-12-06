@@ -34,6 +34,7 @@ CREATE TABLE users (
                        full_name VARCHAR(100),
                        phone_number VARCHAR(20),
                        address TEXT,
+                       avatar_blob MEDIUMBLOB,
                        is_active BOOLEAN DEFAULT TRUE,
                        role ENUM('ADMIN', 'CUSTOMER', 'STAFF') DEFAULT 'CUSTOMER',
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -109,6 +110,17 @@ CREATE TABLE reviews (
                          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
                          FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
+-- 9. Bảng Wishlist (Danh sách yêu thích)
+CREATE TABLE wishlist (
+                          id INT AUTO_INCREMENT PRIMARY KEY,
+                          user_id INT NOT NULL,
+                          product_id INT NOT NULL,
+                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          UNIQUE KEY unique_user_product (user_id, product_id),
+                          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                          FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
 -- Sử dụng database (Thay tên database của bạn nếu khác)
@@ -194,3 +206,7 @@ INSERT INTO reviews (user_id, product_id, rating, comment) VALUES
 (3, 2, 5, 'Máy rất đẹp, pin trâu dùng cả ngày không hết. Rất đáng tiền!'),
 -- Hương đánh giá Chuột (Giả sử đã nhận được hàng trước đó)
 (4, 4, 4, 'Chuột cầm đầm tay, nhưng click hơi ồn.');
+
+-- ALTER TABLE để thay đổi kiểu dữ liệu avatar_blob từ BLOB sang MEDIUMBLOB (nếu bảng đã tồn tại)
+-- Chạy câu lệnh này nếu bạn đã tạo bảng trước đó và gặp lỗi "Data too long for column"
+-- ALTER TABLE users MODIFY COLUMN avatar_blob MEDIUMBLOB;

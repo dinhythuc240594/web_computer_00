@@ -45,4 +45,9 @@ public class OrderServiceImpl implements OrderService {
     public Boolean update(OrderDAO entity) {
         return orderRepository.update(entity);
     }
+
+    @Override
+    public List<OrderDAO> findByUserId(int userId) {
+        return orderRepository.findByUserId(userId);
+    }
 }
