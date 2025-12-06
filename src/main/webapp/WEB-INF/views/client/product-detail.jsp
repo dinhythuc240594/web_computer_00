@@ -233,23 +233,26 @@
                             <div class="addto-cart-box mb_40">
                                 <ul class="clearfix">
                                     <li class="item-quantity">
-                                        <input class="quantity-spinner" type="text" value="1" name="quantity"
+                                        <input id="product-quantity" class="quantity-spinner" type="number" 
+                                               min="1" max="<%= stockQty %>" value="1" 
+                                               data-max-stock="<%= stockQty %>"
                                                <%= inStock ? "" : "disabled" %>>
                                     </li>
                                     <% if (inStock) { %>
                                     <li class="cart-btn">
-                                        <form method="post" action="<%= contextPath %>/cart">
-                                            <input type="hidden" name="action" value="add"/>
-                                            <input type="hidden" name="productId" value="<%= product != null ? product.getId() : 0 %>"/>
-                                            <button type="submit" class="theme-btn btn-one">
-                                                Add To Cart<span></span><span></span><span></span><span></span>
-                                            </button>
-                                        </form>
+                                        <button type="button" id="add-to-cart-btn" class="theme-btn btn-one" 
+                                                data-product-id="<%= product != null ? product.getId() : 0 %>"
+                                                data-product-name="<%= product != null && product.getName() != null ? product.getName().replace("\"", "&quot;") : "" %>"
+                                                data-product-price="<%= product != null && product.getPrice() != null ? product.getPrice() : 0 %>"
+                                                data-product-image="<%= product != null && product.getImage_url() != null ? product.getImage_url() : "" %>"
+                                                data-product-slug="<%= product != null && product.getSlug() != null ? product.getSlug() : "" %>">
+                                            Thêm vào giỏ hàng<span></span><span></span><span></span><span></span>
+                                        </button>
                                     </li>
                                     <% } else { %>
                                     <li class="cart-btn">
                                         <button type="button" class="theme-btn btn-one not" disabled>
-                                            Out of Stock<span></span><span></span><span></span><span></span>
+                                            Hết hàng<span></span><span></span><span></span><span></span>
                                         </button>
                                     </li>
                                     <% } %>
@@ -697,6 +700,107 @@
 
 <!-- main-js -->
 <script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
+<!-- Cart Management Script -->
+<script src="${pageContext.request.contextPath}/assets/client/js/cart.js"></script>
+
+<script>
+    // Set context path for JavaScript
+    window.APP_CONTEXT_PATH = '<%= contextPath %>';
+    
+    // Cập nhật quantity và xử lý thêm vào giỏ hàng
+    document.addEventListener('DOMContentLoaded', function() {
+        var quantityInput = document.getElementById('product-quantity');
+        var addToCartBtn = document.getElementById('add-to-cart-btn');
+        
+        if (quantityInput) {
+            var maxStockQty = parseInt(quantityInput.getAttribute('data-max-stock')) || parseInt(quantityInput.getAttribute('max')) || 1;
+            
+            // Validate quantity khi người dùng thay đổi
+            quantityInput.addEventListener('change', function() {
+                var qty = parseInt(this.value) || 1;
+                var maxQty = parseInt(this.getAttribute('max')) || maxStockQty;
+                
+                // Đảm bảo quantity không vượt quá stock
+                if (qty > maxQty) {
+                    qty = maxQty;
+                    this.value = qty;
+                }
+                if (qty < 1) {
+                    qty = 1;
+                    this.value = qty;
+                }
+            });
+        }
+        
+        // Xử lý click button "Thêm vào giỏ hàng"
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', function() {
+                // Kiểm tra CartManager đã load chưa
+                if (typeof CartManager === 'undefined') {
+                    alert('Hệ thống đang tải, vui lòng thử lại sau.');
+                    return;
+                }
+                
+                // Lấy thông tin sản phẩm từ data attributes
+                var productId = parseInt(this.getAttribute('data-product-id')) || 0;
+                var productName = this.getAttribute('data-product-name') || '';
+                var productPrice = parseFloat(this.getAttribute('data-product-price')) || 0;
+                var productImage = this.getAttribute('data-product-image') || '';
+                var productSlug = this.getAttribute('data-product-slug') || '';
+                
+                // Lấy số lượng
+                var quantity = 1;
+                if (quantityInput) {
+                    quantity = parseInt(quantityInput.value) || 1;
+                    var maxQty = parseInt(quantityInput.getAttribute('max')) || 999;
+                    
+                    // Validate quantity
+                    if (quantity > maxQty) {
+                        alert('Số lượng không được vượt quá số lượng tồn kho (' + maxQty + ')');
+                        quantityInput.value = maxQty;
+                        quantity = maxQty;
+                        return;
+                    }
+                    
+                    if (quantity < 1) {
+                        alert('Số lượng phải lớn hơn 0');
+                        quantityInput.value = 1;
+                        quantity = 1;
+                        return;
+                    }
+                }
+                
+                // Tạo object product
+                var product = {
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    image_url: productImage,
+                    slug: productSlug
+                };
+                
+                // Thêm vào giỏ hàng
+                var success = CartManager.addToCart(product, quantity);
+                
+                if (success) {
+                    // Hiển thị thông báo thành công
+                    var btnText = this.innerHTML;
+                    this.innerHTML = 'Đã thêm!<span></span><span></span><span></span><span></span>';
+                    this.style.backgroundColor = '#28a745';
+                    
+                    // Khôi phục button sau 2 giây
+                    var self = this;
+                    setTimeout(function() {
+                        self.innerHTML = btnText;
+                        self.style.backgroundColor = '';
+                    }, 2000);
+                } else {
+                    alert('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.');
+                }
+            });
+        }
+    });
+</script>
 
 </body><!-- End of .page_wrapper -->
 </html>
