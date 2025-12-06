@@ -13,7 +13,7 @@
             <div class="tabs-box">
                 <div class="title-content">
                     <div class="sec-title">
-                        <h2>Sản phẩm bán chạy</h2>
+                        <h2>Sản phẩm đang bán</h2>
                     </div>
                     <ul class="tab-btns tab-buttons shop-tab-btn clearfix">
                         <li class="tab-btn active-btn" data-tab="#tab-top-sold">Tất cả</li>
