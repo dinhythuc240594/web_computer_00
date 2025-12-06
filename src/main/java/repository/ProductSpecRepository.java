@@ -10,5 +10,6 @@ public interface ProductSpecRepository extends Repository<ProductSpecDAO>{
 
     Boolean deleteByProductId(int id, int productId);
     ProductSpecDAO findByProductId(int id, int productId);
+    List<ProductSpecDAO> findAllByProductId(int productId);
 
 }

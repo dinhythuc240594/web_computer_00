@@ -6,18 +6,24 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.BrandDAO;
 import model.CategoryDAO;
 import model.Page;
 import model.PageRequest;
 import model.ProductDAO;
+import model.ProductSpecDAO;
 import model.ReviewDAO;
 import repository.ProductRepository;
 import repositoryimpl.ProductRepositoryImpl;
+import service.BrandService;
 import service.CategoryService;
 import service.ProductService;
+import service.ProductSpecService;
 import service.ReviewService;
+import serviceimpl.BrandServiceImpl;
 import serviceimpl.CategoryServiceImpl;
 import serviceimpl.ProductServiceImpl;
+import serviceimpl.ProductSpecServiceImpl;
 import serviceimpl.ReviewServiceImpl;
 import utilities.DataSourceUtil;
 
@@ -39,6 +45,8 @@ public class ProductServlet extends HttpServlet {
     private transient ProductRepository productRepository;
     private transient ProductService productService;
     private transient CategoryService categoryService;
+    private transient BrandService brandService;
+    private transient ProductSpecService productSpecService;
     private transient ReviewService reviewService;
 
     @Override
@@ -48,6 +56,8 @@ public class ProductServlet extends HttpServlet {
         this.productRepository = new ProductRepositoryImpl(dataSource);
         this.productService = new ProductServiceImpl(dataSource);
         this.categoryService = new CategoryServiceImpl(dataSource);
+        this.brandService = new BrandServiceImpl(dataSource);
+        this.productSpecService = new ProductSpecServiceImpl(dataSource);
         this.reviewService = new ReviewServiceImpl(dataSource);
     }
 
@@ -97,8 +107,39 @@ public class ProductServlet extends HttpServlet {
             reviews = Collections.emptyList();
         }
 
+        // Lấy category name
+        CategoryDAO category = null;
+        if (product.getCategory_id() > 0) {
+            try {
+                category = categoryService.findById(product.getCategory_id());
+            } catch (Exception ex) {
+                LOGGER.log(Level.WARNING, "Không thể lấy thông tin category", ex);
+            }
+        }
+
+        // Lấy brand name
+        BrandDAO brand = null;
+        if (product.getBrand_id() > 0) {
+            try {
+                brand = brandService.findById(product.getBrand_id());
+            } catch (Exception ex) {
+                LOGGER.log(Level.WARNING, "Không thể lấy thông tin brand", ex);
+            }
+        }
+
+        // Lấy product specs
+        List<ProductSpecDAO> productSpecs = Collections.emptyList();
+        try {
+            productSpecs = productSpecService.findAllByProductId(productId);
+        } catch (Exception ex) {
+            LOGGER.log(Level.WARNING, "Không thể lấy thông số kỹ thuật sản phẩm", ex);
+        }
+
         request.setAttribute("product", product);
         request.setAttribute("reviews", reviews);
+        request.setAttribute("category", category);
+        request.setAttribute("brand", brand);
+        request.setAttribute("productSpecs", productSpecs);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/product-detail.jsp");
         rd.forward(request, response);
     }

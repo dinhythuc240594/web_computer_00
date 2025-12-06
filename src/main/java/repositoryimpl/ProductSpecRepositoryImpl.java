@@ -55,7 +55,7 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
-            ps.setInt(1, productId);
+            ps.setInt(2, productId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -67,6 +67,28 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
             throw new RuntimeException("Lỗi khi tìm đơn hàng theo ID: " + id, e);
         }
         return null;
+    }
+
+    @Override
+    public List<ProductSpecDAO> findAllByProductId(int productId) {
+        List<ProductSpecDAO> items = new ArrayList<>();
+        String sql = "SELECT id, product_id, spec_name, spec_value FROM product_specs WHERE product_id = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, productId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    items.add(mapResultSetToProductSpecDAO(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi lấy thông số kỹ thuật sản phẩm: " + productId, e);
+        }
+        return items;
     }
 
     public Boolean deleteById(int id){
@@ -147,9 +169,9 @@ public class ProductSpecRepositoryImpl implements ProductSpecRepository {
         ProductSpecDAO item = new ProductSpecDAO();
 
         item.setId(rs.getInt("id"));
-        item.setName(rs.getString("name"));
-        item.setDescription(rs.getString("description"));
-        item.setvalueSpec(rs.getString("value"));
+        item.setName(rs.getString("spec_name"));
+        item.setDescription(rs.getString("spec_name")); // Using spec_name as description if needed
+        item.setvalueSpec(rs.getString("spec_value"));
         item.setProductId(rs.getInt("product_id"));
 
         return item;

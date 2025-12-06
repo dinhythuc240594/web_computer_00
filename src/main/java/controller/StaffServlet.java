@@ -10,14 +10,17 @@ import jakarta.servlet.http.HttpSession;
 import model.OrderDAO;
 import model.ProductDAO;
 import model.CategoryDAO;
+import model.BrandDAO;
 import model.UserDAO;
 import service.OrderService;
 import service.ProductService;
 import service.CategoryService;
+import service.BrandService;
 import service.UserService;
 import serviceimpl.OrderServiceImpl;
 import serviceimpl.ProductServiceImpl;
 import serviceimpl.CategoryServiceImpl;
+import serviceimpl.BrandServiceImpl;
 import serviceimpl.UserServiceImpl;
 import utilities.DataSourceUtil;
 
@@ -34,6 +37,7 @@ public class StaffServlet extends HttpServlet {
     private transient OrderService orderService;
     private transient ProductService productService;
     private transient CategoryService categoryService;
+    private transient BrandService brandService;
 
     @Override
     public void init() throws ServletException {
@@ -43,6 +47,7 @@ public class StaffServlet extends HttpServlet {
         this.orderService = new OrderServiceImpl(dataSource);
         this.productService = new ProductServiceImpl(dataSource);
         this.categoryService = new CategoryServiceImpl(dataSource);
+        this.brandService = new BrandServiceImpl(dataSource);
     }
 
     @Override
@@ -85,6 +90,7 @@ public class StaffServlet extends HttpServlet {
             case "products" -> showProductList(request, response, currentUser);
             case "product-add" -> showProductAddForm(request, response, currentUser);
             case "categories" -> showCategoryList(request, response, currentUser);
+            case "brands" -> showBrandList(request, response, currentUser);
             case "orders" -> showOrderManagement(request, response, currentUser);
             case "order-details" -> showOrderDetails(request, response, currentUser);
             default -> showStaffDashboard(request, response, currentUser);
@@ -136,6 +142,11 @@ public class StaffServlet extends HttpServlet {
             case "category-update" -> handleUpdateCategory(request, response, currentUser);
             case "category-delete" -> handleDeleteCategory(request, response, currentUser);
 
+            // Thương hiệu
+            case "brand-create" -> handleCreateBrand(request, response, currentUser);
+            case "brand-update" -> handleUpdateBrand(request, response, currentUser);
+            case "brand-delete" -> handleDeleteBrand(request, response, currentUser);
+
             // Đơn hàng
             case "order-update-status" -> handleUpdateOrderStatus(request, response, currentUser);
 
@@ -176,6 +187,15 @@ public class StaffServlet extends HttpServlet {
         List<CategoryDAO> categories = categoryService.getAll();
         request.setAttribute("categories", categories);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/category/manage.jsp");
+        rd.forward(request, response);
+    }
+
+    private void showBrandList(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        request.setAttribute("currentUser", currentUser);
+        List<BrandDAO> brands = brandService.getAll();
+        request.setAttribute("brands", brands);
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/brand/manage.jsp");
         rd.forward(request, response);
     }
 
@@ -431,6 +451,74 @@ public class StaffServlet extends HttpServlet {
             }
         }
         response.sendRedirect(request.getContextPath() + "/staff?action=categories");
+    }
+
+    // ====== XỬ LÝ NGHIỆP VỤ THƯƠNG HIỆU ======
+
+    private void handleCreateBrand(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String name = request.getParameter("name");
+        String code = request.getParameter("code");
+        String logoUrl = request.getParameter("logo_url");
+
+        BrandDAO brand = new BrandDAO();
+        brand.setName(name);
+        brand.setCode(code);
+        brand.setLogo_url(logoUrl);
+        brand.setIs_active(true);
+
+        brandService.create(brand);
+        response.sendRedirect(request.getContextPath() + "/staff?action=brands");
+    }
+
+    private void handleUpdateBrand(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String idStr = request.getParameter("id");
+        if (idStr == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=brands");
+            return;
+        }
+        int id;
+        try {
+            id = Integer.parseInt(idStr);
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=brands");
+            return;
+        }
+
+        BrandDAO brand = brandService.findById(id);
+        if (brand == null) {
+            response.sendRedirect(request.getContextPath() + "/staff?action=brands");
+            return;
+        }
+
+        String name = request.getParameter("name");
+        String code = request.getParameter("code");
+        String logoUrl = request.getParameter("logo_url");
+        String activeStr = request.getParameter("is_active");
+
+        if (name != null) brand.setName(name);
+        if (code != null) brand.setCode(code);
+        if (logoUrl != null) brand.setLogo_url(logoUrl);
+        if (activeStr != null) {
+            brand.setIs_active(Boolean.parseBoolean(activeStr));
+        }
+
+        brandService.update(brand);
+        response.sendRedirect(request.getContextPath() + "/staff?action=brands");
+    }
+
+    private void handleDeleteBrand(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws IOException {
+        String idStr = request.getParameter("id");
+        if (idStr != null) {
+            try {
+                int id = Integer.parseInt(idStr);
+                brandService.deleteById(id);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        response.sendRedirect(request.getContextPath() + "/staff?action=brands");
     }
 
     // ====== XỬ LÝ NGHIỆP VỤ ĐƠN HÀNG ======

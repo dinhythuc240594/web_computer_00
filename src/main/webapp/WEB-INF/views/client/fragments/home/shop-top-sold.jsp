@@ -44,7 +44,7 @@
                             <div class="shop-block-five">
                                 <div class="inner-box">
                                     <div class="image-box">
-                                        <ul class="option-list">
+                                        <!-- <ul class="option-list">
                                             <li>
                                                 <a href="<%= productImage %>" class="lightbox-image" data-fancybox="top-sold">
                                                     <i class="far fa-eye"></i>
@@ -60,21 +60,21 @@
                                                     <i class="icon-6"></i>
                                                 </button>
                                             </li>
-                                        </ul>
+                                        </ul> -->
                                         <figure class="image">
                                             <img src="<%= productImage %>" alt="<%= product.getName() %>">
                                         </figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="<%= productLink %>"><%= product.getName() %></a></h6>
-                                        <ul class="rating">
+                                        <!-- <ul class="rating">
                                             <li><i class="icon-11"></i></li>
                                             <li><i class="icon-11"></i></li>
                                             <li><i class="icon-11"></i></li>
                                             <li><i class="icon-11"></i></li>
                                             <li><i class="icon-11"></i></li>
                                             <li><span>(0)</span></li>
-                                        </ul>
+                                        </ul> -->
                                         <h5><%= priceDisplay %></h5>
                                         <div class="product-stock mt_5">
                                             <small>Còn lại: <%= stock > 0 ? stock : 0 %> sản phẩm</small>

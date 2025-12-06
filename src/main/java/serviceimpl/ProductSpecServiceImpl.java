@@ -48,4 +48,9 @@ public class ProductSpecServiceImpl implements ProductSpecService {
     public Boolean update(ProductSpecDAO entity) {
         return false;
     }
+
+    @Override
+    public List<ProductSpecDAO> findAllByProductId(int productId) {
+        return productSpecRepository.findAllByProductId(productId);
+    }
 }

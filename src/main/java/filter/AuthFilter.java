@@ -69,7 +69,7 @@ public class AuthFilter implements Filter {
             }
         }
 
-        String[] protectedPaths = {"/order", "/profile", "/admin", "/product"};
+        String[] protectedPaths = {"/order", "/profile", "/admin", "/staff"};
         boolean isProtectedPath = false;
 
         // check path before redriect page
@@ -80,13 +80,9 @@ public class AuthFilter implements Filter {
             } else {
                 isProtectedPath = false;
             }
-        } else if (path.startsWith("/product")) {
-            String action = req.getParameter("action");
-            if (action != null && action.equals("list")) {
-                isProtectedPath = false;  // action=list không cần đăng nhập
-            } else {
-                isProtectedPath = true;   // Các action khác hoặc không có action cần đăng nhập
-            }
+        } else if (path.startsWith("/product") || path.startsWith("/category") || path.startsWith("/brand")) {
+            // Xem sản phẩm, danh mục, thương hiệu không cần đăng nhập
+            isProtectedPath = false;
         } else {
             for (String protectedPathItem : protectedPaths) {
                 if (path.startsWith(protectedPathItem)) {

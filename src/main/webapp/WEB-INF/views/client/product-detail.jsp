@@ -8,6 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="model.ReviewDAO" %>
+<%@ page import="model.CategoryDAO" %>
+<%@ page import="model.BrandDAO" %>
+<%@ page import="model.ProductSpecDAO" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,6 +76,9 @@
             <%
                 model.ProductDAO product = (model.ProductDAO) request.getAttribute("product");
                 List<ReviewDAO> reviews = (List<ReviewDAO>) request.getAttribute("reviews");
+                CategoryDAO category = (CategoryDAO) request.getAttribute("category");
+                BrandDAO brand = (BrandDAO) request.getAttribute("brand");
+                List<ProductSpecDAO> productSpecs = (List<ProductSpecDAO>) request.getAttribute("productSpecs");
                 Boolean isLogin = (Boolean) request.getAttribute("is_login");
                 if (isLogin == null) {
                     isLogin = Boolean.FALSE;
@@ -87,92 +93,17 @@
                             <div class="slider-content">
                                 <div class="image-inner">
                                     <div class="image-box">
-                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-1.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-1.png" alt=""></a></figure>
-                                    </div>
-                                    <div class="slider-pager">
-                                        <ul class="thumb-box">
-                                            <li>
-                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-5.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-6.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-7.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-8.png" alt=""></figure></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="slider-content">
-                                <div class="image-inner">
-                                    <div class="image-box">
-                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-2.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-2.png" alt=""></a></figure>
-                                    </div>
-                                    <div class="slider-pager">
-                                        <ul class="thumb-box">
-                                            <li>
-                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-5.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-6.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-7.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-8.png" alt=""></figure></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="slider-content">
-                                <div class="image-inner">
-                                    <div class="image-box">
-                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-3.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-3.png" alt=""></a></figure>
-                                    </div>
-                                    <div class="slider-pager">
-                                        <ul class="thumb-box">
-                                            <li>
-                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-5.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-6.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-7.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-8.png" alt=""></figure></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="slider-content">
-                                <div class="image-inner">
-                                    <div class="image-box">
-                                        <figure class="image"><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-4.png" class="lightbox-image" data-fancybox="gallery"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-details-4.png" alt=""></a></figure>
-                                    </div>
-                                    <div class="slider-pager">
-                                        <ul class="thumb-box">
-                                            <li>
-                                                <a class="active" data-slide-index="0" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-5.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="1" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-6.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="2" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-7.png" alt=""></figure></a>
-                                            </li>
-                                            <li>
-                                                <a data-slide-index="3" href="#"><figure><img src="${pageContext.request.contextPath}/assets/client/images/shop/thumb-8.png" alt=""></figure></a>
-                                            </li>
-                                        </ul>
+                                        <%
+                                            String imageUrl = (product != null && product.getImage_url() != null && !product.getImage_url().isBlank())
+                                                    ? product.getImage_url()
+                                                    : contextPath + "/assets/client/images/shop/shop-details-1.png";
+                                            if (!imageUrl.startsWith("http") && !imageUrl.startsWith("/")) {
+                                                imageUrl = contextPath + "/" + imageUrl;
+                                            } else if (!imageUrl.startsWith("http") && imageUrl.startsWith("/") && !imageUrl.startsWith(contextPath)) {
+                                                imageUrl = contextPath + imageUrl;
+                                            }
+                                        %>
+                                        <figure class="image"><a href="<%= imageUrl %>" class="lightbox-image" data-fancybox="gallery"><img src="<%= imageUrl %>" alt="<%= product != null ? product.getName() : "" %>"></a></figure>
                                     </div>
                                 </div>
                             </div>
@@ -181,22 +112,29 @@
                     <div class="col-lg-6 col-md-12 col-sm-12 content-column">
                         <div class="content-box ml_30">
                             <span class="upper-text">
-                                <%= (product != null && product.getCategory_id() > 0) ? "Product" : "" %>
+                                <%= (category != null && category.getName() != null) ? category.getName() : "Product" %>
                             </span>
                             <h2><%= product != null ? product.getName() : "Sản phẩm" %></h2>
                             <h3>
-                                <%= (product != null && product.getPrice() != null)
-                                        ? String.format("$%.2f", product.getPrice())
-                                        : "$0.00" %>
+                                <%
+                                    if (product != null && product.getPrice() != null) {
+                                        double price = product.getPrice();
+                                        // Format với dấu chấm phân cách hàng nghìn và đuôi VNĐ
+                                        java.text.DecimalFormat df = new java.text.DecimalFormat("#,###");
+                                        out.print(df.format(price) + " VNĐ");
+                                    } else {
+                                        out.print("0 VNĐ");
+                                    }
+                                %>
                             </h3>
-                            <ul class="rating mb_25">
+                            <!-- <ul class="rating mb_25">
                                 <li><i class="icon-11"></i></li>
                                 <li><i class="icon-11"></i></li>
                                 <li><i class="icon-11"></i></li>
                                 <li><i class="icon-11"></i></li>
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(05)</span></li>
-                            </ul>
+                            </ul> -->
                             <div class="text-box mb_30">
                                 <p>
                                     <%= (product != null && product.getDescription() != null && !product.getDescription().isBlank())
@@ -205,13 +143,17 @@
                                 </p>
                             </div>
                             <ul class="discription-box mb_30 clearfix">
-                                <li><strong>Brand :</strong><%= product != null ? product.getBrand_id() : "" %></li>
-                                <li><strong>Product ID :</strong><%= product != null ? product.getId() : "" %></li>
-                                <li><strong>Category ID :</strong><%= product != null ? product.getCategory_id() : "" %></li>
                                 <%
                                     int stockQty = (product != null) ? product.getStock_quantity() : 0;
                                     boolean inStock = stockQty > 0;
+                                    Boolean isActive = (product != null) ? product.getIs_active() : null;
                                 %>
+                                <% if (brand != null && brand.getName() != null) { %>
+                                <li><strong>Brand :</strong><%= brand.getName() %></li>
+                                <% } %>
+                                <% if (category != null && category.getName() != null) { %>
+                                <li><strong>Category :</strong><%= category.getName() %></li>
+                                <% } %>
                                 <li>
                                     <strong>Availability :</strong>
                                     <% if (inStock) { %>
@@ -226,8 +168,11 @@
                                     </span>
                                     <% } %>
                                 </li>
+                                <% if (isActive != null && isActive) { %>
+                                <li><strong>Status :</strong><span style="color: green;">Active</span></li>
+                                <% } %>
                             </ul>
-                            <div class="color-box mb_30">
+                            <!-- <div class="color-box mb_30">
                                 <h6>Color<span>*</span></h6>
                                 <ul class="color-list">
                                     <li>
@@ -255,8 +200,8 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </div>
-                            <div class="size-box mb_40">
+                            </div> -->
+                            <!-- <div class="size-box mb_40">
                                 <h6>Size<span>*</span></h6>
                                 <ul class="size-list">
                                     <li>
@@ -284,7 +229,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
                             <div class="addto-cart-box mb_40">
                                 <ul class="clearfix">
                                     <li class="item-quantity">
@@ -308,15 +253,15 @@
                                         </button>
                                     </li>
                                     <% } %>
-                                    <li><a href="javascript:void(0)"><i class="icon-5"></i></a></li>
-                                    <li class="like-btn"><button type="button"><i class="icon-6"></i></button></li>
+                                    <!-- <li><a href="javascript:void(0)"><i class="icon-5"></i></a></li>
+                                    <li class="like-btn"><button type="button"><i class="icon-6"></i></button></li> -->
                                 </ul>
                             </div>
-                            <ul class="other-option clearfix">
+                            <!-- <ul class="other-option clearfix">
                                 <li><strong>Seller :</strong>Daniel Macron</li>
                                 <li><strong>Tag :</strong><span>Best sellers</span>, New Arrivals, On Sale</li>
                                 <li class="social-links"><strong>Share :</strong><a href="shop-details.html"><i class="icon-13"></i></a><a href="shop-details.html"><i class="icon-14"></i></a><a href="shop-details.html"><i class="icon-15"></i></a></li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </div>
                 </div>
@@ -326,13 +271,14 @@
                     <div class="tab-btn-box">
                         <ul class="tab-btns tab-buttons clearfix">
                             <li class="tab-btn active-btn" data-tab="#tab-1">Description</li>
-                            <li class="tab-btn" data-tab="#tab-2">Reviews (08)</li>
+                            <li class="tab-btn" data-tab="#tab-2">Reviews</li>
                             <li class="tab-btn" data-tab="#tab-3">Specification</li>
                         </ul>
                     </div>
                     <div class="tabs-content">
                         <div class="tab active-tab" id="tab-1">
                             <div class="discription-content pt_35">
+                                <h3><%= product != null ? product.getName() : "Sản phẩm" %></h3>
                                 <p><%= (product != null && product.getDescription() != null && !product.getDescription().isBlank())
                                         ? product.getDescription()
                                         : "Mô tả sản phẩm đang được cập nhật." %></p>
@@ -346,7 +292,7 @@
                                     if (reviews != null && !reviews.isEmpty()) {
                                         for (ReviewDAO r : reviews) {
                                 %>
-                                <div class="single-review">
+                                <div class="single-review" style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0;">
                                     <div class="upper-box">
                                         <div class="info-box">
                                             <figure class="image">
@@ -357,7 +303,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <ul class="rating">
+                                    <ul class="rating" style="margin: 10px 0;">
                                         <%
                                             int stars = r.getRating();
                                             for (int i = 0; i < 5; i++) {
@@ -370,7 +316,7 @@
                                             }
                                         %>
                                     </ul>
-                                    <p><%= (r.getComment() != null && !r.getComment().isBlank())
+                                    <p style="margin-top: 10px; line-height: 1.6;"><%= (r.getComment() != null && !r.getComment().isBlank())
                                             ? r.getComment()
                                             : "Người dùng không để lại nội dung nhận xét." %></p>
                                 </div>
@@ -427,16 +373,25 @@
                         </div>
                         <div class="tab" id="tab-3">
                             <div class="specification-content pt_40">
+                                <%
+                                    if (productSpecs != null && !productSpecs.isEmpty()) {
+                                %>
                                 <ul class="specification-list clean">
-                                    <li><strong>Model Name</strong>Sharp Full Auto Front-10.5 KG</li>
-                                    <li><strong>Display</strong>LCD</li>
-                                    <li><strong>Brand</strong>Toshiba</li>
-                                    <li><strong>Condition</strong>Brand New</li>
-                                    <li><strong>Voltage</strong>120V or 220-240V</li>
-                                    <li><strong>Made in</strong>Japan</li>
-                                    <li><strong>Warranty</strong>01 Year</li>
-                                    <li><strong>Frequency</strong>50Hz or 60Hz</li>
+                                    <%
+                                        for (ProductSpecDAO spec : productSpecs) {
+                                    %>
+                                    <li><strong><%= spec.getName() != null ? spec.getName() : "N/A" %></strong><%= spec.getvalueSpec() != null ? spec.getvalueSpec() : "N/A" %></li>
+                                    <%
+                                        }
+                                    %>
                                 </ul>
+                                <%
+                                    } else {
+                                %>
+                                <p>Chưa có thông số kỹ thuật cho sản phẩm này.</p>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                     </div>
@@ -448,7 +403,7 @@
 
 
     <!-- shop-one -->
-    <section class="shop-one pb_30">
+    <!-- <section class="shop-one pb_30">
         <div class="large-container">
             <div class="row clearfix">
                 <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
@@ -486,11 +441,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- shop-one end -->
 
     <!-- shop-two -->
-    <section class="shop-two pb_50">
+    <!-- <section class="shop-two pb_50">
         <div class="large-container">
             <div class="sec-title">
                 <h2>You may also like these</h2>
@@ -663,7 +618,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- shop-two end -->
 
 
