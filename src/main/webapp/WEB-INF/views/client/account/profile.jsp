@@ -308,11 +308,21 @@
                                                             ? product.getImage_url() 
                                                             : "${pageContext.request.contextPath}/assets/client/images/resource/history-1.png";
                                                     String statusText = "";
-                                                    if ("PENDING".equals(order.getStatus())) statusText = "Chờ xử lý";
-                                                    else if ("PROCESSING".equals(order.getStatus())) statusText = "Đang xử lý";
-                                                    else if ("SHIPPED".equals(order.getStatus())) statusText = "Đang giao";
-                                                    else if ("DELIVERED".equals(order.getStatus())) statusText = "Đã giao";
-                                                    else if ("CANCELLED".equals(order.getStatus())) statusText = "Đã hủy";
+                                                    boolean isCancelled = "CANCELLED".equals(order.getStatus()) || 
+                                                                        (order.getIs_active() != null && !order.getIs_active());
+                                                    if (isCancelled) {
+                                                        statusText = "Đã hủy";
+                                                    } else if ("PENDING".equals(order.getStatus())) {
+                                                        statusText = "Chờ xử lý";
+                                                    } else if ("PROCESSING".equals(order.getStatus())) {
+                                                        statusText = "Đang xử lý";
+                                                    } else if ("SHIPPED".equals(order.getStatus())) {
+                                                        statusText = "Đang giao";
+                                                    } else if ("DELIVERED".equals(order.getStatus())) {
+                                                        statusText = "Đã giao";
+                                                    } else {
+                                                        statusText = order.getStatus() != null ? order.getStatus() : "Chưa xác định";
+                                                    }
                                 %>
                                 <div class="single-history">
                                     <div class="product-box">
@@ -328,7 +338,7 @@
                                     <span class="text"><%= statusText %></span>
                                     <div style="margin-left: 10px; display: inline-block;">
                                         <a href="${pageContext.request.contextPath}/order?id=<%= order.getId() %>" style="color: #007bff; text-decoration: none; margin-right: 10px;">Xem chi tiết</a>
-                                        <% if ("PENDING".equals(order.getStatus())) { %>
+                                        <% if ("PENDING".equals(order.getStatus()) && !isCancelled) { %>
                                         <form method="post" action="${pageContext.request.contextPath}/user" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');">
                                             <input type="hidden" name="action" value="cancelOrder">
                                             <input type="hidden" name="orderId" value="<%= order.getId() %>">

@@ -248,17 +248,26 @@
                             <strong>Trạng thái:</strong> 
                             <span class="status-badge status-<%= order.getStatus() != null ? order.getStatus().toLowerCase() : "pending" %>">
                                 <% 
+                                    boolean isCancelled = "CANCELLED".equals(order.getStatus()) || 
+                                                         (order.getIs_active() != null && !order.getIs_active());
                                     String statusDisplay = "";
-                                    if ("PENDING".equals(order.getStatus())) statusDisplay = "Chờ xử lý";
-                                    else if ("PROCESSING".equals(order.getStatus())) statusDisplay = "Đang xử lý";
-                                    else if ("SHIPPED".equals(order.getStatus())) statusDisplay = "Đang giao";
-                                    else if ("DELIVERED".equals(order.getStatus())) statusDisplay = "Đã giao";
-                                    else if ("CANCELLED".equals(order.getStatus())) statusDisplay = "Đã hủy";
-                                    else statusDisplay = order.getStatus() != null ? order.getStatus() : "PENDING";
+                                    if (isCancelled) {
+                                        statusDisplay = "Đã hủy";
+                                    } else if ("PENDING".equals(order.getStatus())) {
+                                        statusDisplay = "Chờ xử lý";
+                                    } else if ("PROCESSING".equals(order.getStatus())) {
+                                        statusDisplay = "Đang xử lý";
+                                    } else if ("SHIPPED".equals(order.getStatus())) {
+                                        statusDisplay = "Đang giao";
+                                    } else if ("DELIVERED".equals(order.getStatus())) {
+                                        statusDisplay = "Đã giao";
+                                    } else {
+                                        statusDisplay = order.getStatus() != null ? order.getStatus() : "Chưa xác định";
+                                    }
                                 %>
                                 <%= statusDisplay %>
                             </span>
-                            <% if ("PENDING".equals(order.getStatus())) { %>
+                            <% if ("PENDING".equals(order.getStatus()) && !isCancelled) { %>
                             <form method="post" action="<%= request.getContextPath() %>/user" style="display: inline-block; margin-left: 15px;" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');">
                                 <input type="hidden" name="action" value="cancelOrder">
                                 <input type="hidden" name="orderId" value="<%= order.getId() %>">

@@ -93,14 +93,22 @@
             <%
                 for (OrderDAO o : orders) {
                     String status = o.getStatus() != null ? o.getStatus() : "";
-                    boolean isCancelled = status.toUpperCase().contains("CANCEL") || status.toUpperCase().contains("FAIL");
+                    boolean isCancelled = "CANCELLED".equals(status) || 
+                                          (o.getIs_active() != null && !o.getIs_active());
                     String statusDisplay = "";
-                    if ("PENDING".equals(status)) statusDisplay = "Chờ xử lý";
-                    else if ("PROCESSING".equals(status)) statusDisplay = "Đang xử lý";
-                    else if ("SHIPPED".equals(status)) statusDisplay = "Đang giao";
-                    else if ("DELIVERED".equals(status)) statusDisplay = "Đã giao";
-                    else if ("CANCELLED".equals(status)) statusDisplay = "Đã hủy";
-                    else statusDisplay = status;
+                    if (isCancelled) {
+                        statusDisplay = "Đã hủy";
+                    } else if ("PENDING".equals(status)) {
+                        statusDisplay = "Chờ xử lý";
+                    } else if ("PROCESSING".equals(status)) {
+                        statusDisplay = "Đang xử lý";
+                    } else if ("SHIPPED".equals(status)) {
+                        statusDisplay = "Đang giao";
+                    } else if ("DELIVERED".equals(status)) {
+                        statusDisplay = "Đã giao";
+                    } else {
+                        statusDisplay = status;
+                    }
             %>
             <tr class="<%= isCancelled ? "table-danger" : "" %>">
                 <td>#<%= o.getId() %></td>
@@ -110,7 +118,7 @@
                 <td><%= o.getNote() != null ? o.getNote() : "" %></td>
                 <td>
                     <a href="${pageContext.request.contextPath}/order?id=<%= o.getId() %>" style="color: #007bff; text-decoration: none; margin-right: 10px;">Xem chi tiết</a>
-                    <% if ("PENDING".equals(status)) { %>
+                    <% if ("PENDING".equals(status) && !isCancelled) { %>
                     <form method="post" action="${pageContext.request.contextPath}/user" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');">
                         <input type="hidden" name="action" value="cancelOrder">
                         <input type="hidden" name="orderId" value="<%= o.getId() %>">

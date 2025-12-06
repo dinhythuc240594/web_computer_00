@@ -282,6 +282,7 @@ public class UserServlet extends HttpServlet {
                 return;
             }
 
+            // Hủy đơn hàng ngay lập tức - không cần duyệt từ nhân viên
             // Cập nhật trạng thái đơn hàng thành CANCELLED và is_active = false
             order.setStatus("CANCELLED");
             order.setIs_active(false);
