@@ -4,6 +4,7 @@
 <%@ page import="model.ProductDAO" %>
 <%@ page import="model.CategoryDAO" %>
 <%@ page import="model.BrandDAO" %>
+<%@ page import="java.util.Base64" %>
 <%
     ProductDAO product = (ProductDAO) request.getAttribute("product");
     List<CategoryDAO> categories = (List<CategoryDAO>) request.getAttribute("categories");
@@ -49,8 +50,8 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" action="${contextPath}/staff">
-                                <input type="hidden" name="action" value="<%= product != null ? "product-update" : "product-create" %>"/>
+                            <form method="post" action="${contextPath}/product" enctype="multipart/form-data">
+                                <input type="hidden" name="action" value="<%= product != null ? "update" : "create" %>"/>
                                 <%
                                     if (product != null) {
                                 %>
@@ -130,15 +131,39 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">URL Hình ảnh</label>
-                                    <div id="imagePreview" class="mb-3 w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50">
-                                        <% if(product.getImage_url() == null) { %>
-                                        <img src="${pageContext.request.contextPath}/assets/client/images/resource/category-4.png" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
-                                        <% } else { %>
-                                        <img src="<%= product.getImage_url()  %>" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
-                                        <% } %>
+                                    <label class="form-label">Hình ảnh sản phẩm</label>
+                                    <input type="file" class="form-control" id="image" name="image" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"/>
+                                    <small class="form-text text-muted">Chỉ chấp nhận file ảnh (JPG, PNG, GIF, WebP). Kích thước tối đa: 5MB.</small>
+                                    <div id="imagePreview" class="mb-3 mt-3 w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50">
+                                        <%
+                                            // Ưu tiên hiển thị image_blob, sau đó mới đến image_url
+                                            if (product != null && product.getImage_blob() != null && product.getImage_blob().length > 0) {
+                                        %>
+                                            <img src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(product.getImage_blob()) %>" 
+                                                 alt="Ảnh sản phẩm hiện tại" id="previewImg" 
+                                                 class="max-w-full max-h-full object-contain"/>
+                                        <%
+                                            } else if (product != null && product.getImage_url() != null && !product.getImage_url().isBlank()) {
+                                        %>
+                                            <img src="<%= product.getImage_url() %>" alt="Ảnh sản phẩm hiện tại" id="previewImg" 
+                                                 class="max-w-full max-h-full object-contain"/>
+                                        <%
+                                            } else {
+                                        %>
+                                            <img src="${pageContext.request.contextPath}/assets/client/images/resource/category-4.png" 
+                                                 alt="Xem trước ảnh" id="previewImg" 
+                                                 class="max-w-full max-h-full object-contain"/>
+                                        <%
+                                            }
+                                        %>
                                     </div>
-                                    <input type="file" class="form-control" id="image" name="image" accept="image/*"/>
+                                    <div class="mb-2">
+                                        <label class="form-label">Hoặc nhập URL hình ảnh</label>
+                                        <input type="text" class="form-control" name="image_url" 
+                                               value="<%= product != null && product.getImage_url() != null ? product.getImage_url() : "" %>" 
+                                               placeholder="https://example.com/image.jpg"/>
+                                        <small class="form-text text-muted">Nếu không upload file, có thể nhập URL hình ảnh</small>
+                                    </div>
                                 </div>
 
                                 <%
@@ -182,5 +207,36 @@
 <script src="${adminAssetsPath}/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 <script src="${adminAssetsPath}/vendor/js/menu.js"></script>
 <script src="${adminAssetsPath}/js/main.js"></script>
+<script>
+    // Preview image when file is selected
+    $(document).ready(function() {
+        $('#image').on('change', function() {
+            if (this.files && this.files[0]) {
+                var file = this.files[0];
+                
+                // Validate file size (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Kích thước file vượt quá 5MB. Vui lòng chọn file nhỏ hơn.');
+                    this.value = '';
+                    return;
+                }
+                
+                // Validate file type
+                var validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Chỉ chấp nhận file ảnh (JPG, PNG, GIF, WebP).');
+                    this.value = '';
+                    return;
+                }
+                
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#previewImg').attr('src', e.target.result).show();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>
 </body>
 </html>
