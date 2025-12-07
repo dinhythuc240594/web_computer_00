@@ -28,6 +28,10 @@ public class AuthFilter implements Filter {
         HttpServletRequest req  = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
+        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        resp.setHeader("Pragma", "no-cache");
+        resp.setDateHeader("Expires", 0);
+
         String path = req.getRequestURI().substring(req.getContextPath().length());
         if(path.equals("/")) {
             resp.sendRedirect(req.getContextPath() + "/home");
@@ -47,10 +51,6 @@ public class AuthFilter implements Filter {
             chain.doFilter(request, response);
             return;
         }
-
-        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        resp.setHeader("Pragma", "no-cache");
-        resp.setDateHeader("Expires", 0);
 
         HttpSession ses = req.getSession(false);
 

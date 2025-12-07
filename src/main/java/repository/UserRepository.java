@@ -11,4 +11,6 @@ public interface UserRepository extends Repository<UserDAO>{
 
     UserDAO findByUsername(String username);
 
+    UserDAO findByEmail(String email);
+
 }

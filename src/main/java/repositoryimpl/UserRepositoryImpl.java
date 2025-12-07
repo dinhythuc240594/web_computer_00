@@ -89,6 +89,29 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public UserDAO findByEmail(String email) {
+
+        String sql = "SELECT id, username, email, password_hash, full_name, " +
+                "phone_number, address, avatar_blob, is_active, role FROM users WHERE email = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToUserDAO(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi tìm người dùng theo email: " + email, e);
+        }
+        return null;
+    }
+
+    @Override
     public Boolean deleteById(int id) {
 
         String sql = "UPDATE users SET is_active = ? WHERE id = ?";

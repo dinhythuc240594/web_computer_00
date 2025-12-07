@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Đăng nhập | Cửa hàng máy tính HCMUTE</title>
+    <title>Đặt lại mật khẩu | Cửa hàng máy tính HCMUTE</title>
 
     <!-- Fav Icon -->
     <link rel="icon" href="${pageContext.request.contextPath}/assets/client/images/Logo%20HCMUTE_White%20background.png" type="image/x-icon">
@@ -41,8 +41,6 @@
 <body>
 <div class="boxed_wrapper ltr">
 
-<%--    <jsp:include page="../common/preloader.jsp" />--%>
-
     <!-- main header -->
     <jsp:include page="../common/header.jsp" />
     <!-- main-header end -->
@@ -54,54 +52,50 @@
     <section class="sign-section pb_80">
         <div class="large-container">
             <div class="sec-title centred pb_30">
-                <h2>Đăng nhập tài khoản</h2>
+                <h2>Đặt lại mật khẩu</h2>
                 <%
-                    String loginError = (String) request.getAttribute("loginError");
-                    if (loginError != null && !loginError.isBlank()) {
+                    String error = (String) request.getAttribute("error");
+                    if (error != null && !error.isBlank()) {
                 %>
-                <p style="color:#dc2626;margin-top:10px;"><%= loginError %></p>
+                <p style="color:#dc2626;margin-top:10px;"><%= error %></p>
                 <%
                     }
-                    String message = request.getParameter("message");
-                    if ("password_changed".equals(message)) {
-                %>
-                <p style="color:#28a745;margin-top:10px;">Đổi mật khẩu thành công! Vui lòng đăng nhập lại với mật khẩu mới.</p>
-                <%
+                    String token = (String) request.getAttribute("token");
+                    if (token == null || token.isBlank()) {
+                        token = request.getParameter("token");
                     }
                 %>
             </div>
             <div class="form-inner">
-                <form method="post" action="${pageContext.request.contextPath}/login">
+                <%
+                    if (token != null && !token.isBlank()) {
+                %>
+                <form method="post" action="${pageContext.request.contextPath}/reset-password" id="resetPasswordForm">
+                    <input type="hidden" name="token" value="<%= token %>">
                     <div class="form-group">
-                        <label>Email hoặc tên đăng nhập</label>
-                        <input type="text" name="email" required>
+                        <label>Mật khẩu mới <span class="text-danger">*</span></label>
+                        <input type="password" name="newPassword" id="newPassword" required minlength="6">
+                        <small class="form-text text-muted">Mật khẩu phải có ít nhất 6 ký tự</small>
                     </div>
                     <div class="form-group">
-                        <label>Mật khẩu</label>
-                        <input type="password" name="password" required>
+                        <label>Xác nhận mật khẩu <span class="text-danger">*</span></label>
+                        <input type="password" name="confirmPassword" id="confirmPassword" required minlength="6">
                     </div>
                     <div class="form-group message-btn">
-                        <button type="submit" class="theme-btn">Đăng nhập<span></span><span></span><span></span><span></span></button>
+                        <button type="submit" class="theme-btn">Đặt lại mật khẩu<span></span><span></span><span></span><span></span></button>
                     </div>
-<%--                    <span class="text">hoặc</span>--%>
-<%--                    <ul class="social-links clearfix">--%>
-<%--                        <li>--%>
-<%--                            <a href="#"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-8.png" alt="">Tiếp tục với Google</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-9.png" alt="">Tiếp tục với Facebook</a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
                 </form>
-                <div class="other-option">
-<%--                    <div class="check-box">--%>
-<%--                        <input class="check" type="checkbox" id="remember-me">--%>
-<%--                        <label for="remember-me">Ghi nhớ đăng nhập</label>--%>
-<%--                    </div>--%>
-                    <a href="${pageContext.request.contextPath}/forgot-password" class="forgot-password">Quên mật khẩu?</a>
+                <%
+                    } else {
+                %>
+                <div class="alert alert-danger">
+                    <p>Token không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu đặt lại mật khẩu mới.</p>
                 </div>
+                <%
+                    }
+                %>
                 <div class="lower-text centred">
-                    <p>Chưa có tài khoản? <a href="${pageContext.request.contextPath}/register">Đăng ký ngay</a></p>
+                    <p><a href="${pageContext.request.contextPath}/login">Quay lại đăng nhập</a></p>
                 </div>
             </div>
         </div>
@@ -177,6 +171,25 @@
 
 <!-- main-js -->
 <script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
+<script>
+    // Validate password match
+    document.getElementById('resetPasswordForm')?.addEventListener('submit', function(e) {
+        var newPassword = document.getElementById('newPassword').value;
+        var confirmPassword = document.getElementById('confirmPassword').value;
+        
+        if (newPassword !== confirmPassword) {
+            e.preventDefault();
+            alert('Mật khẩu mới và xác nhận mật khẩu không khớp.');
+            return false;
+        }
+        
+        if (newPassword.length < 6) {
+            e.preventDefault();
+            alert('Mật khẩu phải có ít nhất 6 ký tự.');
+            return false;
+        }
+    });
+</script>
 </body>
 </html>
 

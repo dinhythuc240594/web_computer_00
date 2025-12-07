@@ -10,4 +10,6 @@ public interface UserService extends Service<UserDAO>{
 
     UserDAO findByUsername(String username);
 
+    UserDAO findByEmail(String email);
+
 }

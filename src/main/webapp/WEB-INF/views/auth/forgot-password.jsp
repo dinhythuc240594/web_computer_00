@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Đăng nhập | Cửa hàng máy tính HCMUTE</title>
+    <title>Quên mật khẩu | Cửa hàng máy tính HCMUTE</title>
 
     <!-- Fav Icon -->
     <link rel="icon" href="${pageContext.request.contextPath}/assets/client/images/Logo%20HCMUTE_White%20background.png" type="image/x-icon">
@@ -41,8 +41,6 @@
 <body>
 <div class="boxed_wrapper ltr">
 
-<%--    <jsp:include page="../common/preloader.jsp" />--%>
-
     <!-- main header -->
     <jsp:include page="../common/header.jsp" />
     <!-- main-header end -->
@@ -54,54 +52,38 @@
     <section class="sign-section pb_80">
         <div class="large-container">
             <div class="sec-title centred pb_30">
-                <h2>Đăng nhập tài khoản</h2>
+                <h2>Quên mật khẩu</h2>
                 <%
-                    String loginError = (String) request.getAttribute("loginError");
-                    if (loginError != null && !loginError.isBlank()) {
+                    String error = (String) request.getAttribute("error");
+                    if (error != null && !error.isBlank()) {
                 %>
-                <p style="color:#dc2626;margin-top:10px;"><%= loginError %></p>
+                <p style="color:#dc2626;margin-top:10px;"><%= error %></p>
                 <%
                     }
-                    String message = request.getParameter("message");
-                    if ("password_changed".equals(message)) {
+                    String success = (String) request.getAttribute("success");
+                    if (success != null && !success.isBlank()) {
                 %>
-                <p style="color:#28a745;margin-top:10px;">Đổi mật khẩu thành công! Vui lòng đăng nhập lại với mật khẩu mới.</p>
+                <p style="color:#28a745;margin-top:10px;"><%= success %></p>
                 <%
                     }
                 %>
             </div>
             <div class="form-inner">
-                <form method="post" action="${pageContext.request.contextPath}/login">
+                <form method="post" action="${pageContext.request.contextPath}/forgot-password">
                     <div class="form-group">
-                        <label>Email hoặc tên đăng nhập</label>
-                        <input type="text" name="email" required>
+                        <label>Tên đăng nhập <span class="text-danger">*</span></label>
+                        <input type="text" name="username" required>
                     </div>
                     <div class="form-group">
-                        <label>Mật khẩu</label>
-                        <input type="password" name="password" required>
+                        <label>Email <span class="text-danger">*</span></label>
+                        <input type="email" name="email" required>
                     </div>
                     <div class="form-group message-btn">
-                        <button type="submit" class="theme-btn">Đăng nhập<span></span><span></span><span></span><span></span></button>
+                        <button type="submit" class="theme-btn">Gửi link đặt lại mật khẩu<span></span><span></span><span></span><span></span></button>
                     </div>
-<%--                    <span class="text">hoặc</span>--%>
-<%--                    <ul class="social-links clearfix">--%>
-<%--                        <li>--%>
-<%--                            <a href="#"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-8.png" alt="">Tiếp tục với Google</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-9.png" alt="">Tiếp tục với Facebook</a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
                 </form>
-                <div class="other-option">
-<%--                    <div class="check-box">--%>
-<%--                        <input class="check" type="checkbox" id="remember-me">--%>
-<%--                        <label for="remember-me">Ghi nhớ đăng nhập</label>--%>
-<%--                    </div>--%>
-                    <a href="${pageContext.request.contextPath}/forgot-password" class="forgot-password">Quên mật khẩu?</a>
-                </div>
                 <div class="lower-text centred">
-                    <p>Chưa có tài khoản? <a href="${pageContext.request.contextPath}/register">Đăng ký ngay</a></p>
+                    <p>Nhớ mật khẩu? <a href="${pageContext.request.contextPath}/login">Đăng nhập ngay</a></p>
                 </div>
             </div>
         </div>
