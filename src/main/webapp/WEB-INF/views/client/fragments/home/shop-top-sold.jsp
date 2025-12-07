@@ -21,16 +21,7 @@
                             <%
                                 if (topSoldProducts != null && !topSoldProducts.isEmpty()) {
                                     for (ProductDAO product : topSoldProducts) {
-                                        String productImage = product.getImage();
-                                        if (productImage == null || productImage.isBlank()) {
-                                            productImage = contextPath + "/assets/client/images/shop/shop-32.png";
-                                        } else if (!productImage.startsWith("http")) {
-                                            if (!productImage.startsWith("/")) {
-                                                productImage = "/" + productImage;
-                                            }
-                                            productImage = contextPath + productImage;
-                                        }
-
+                                        String productImage = product.getImage() || contextPath + "/assets/client/images/shop/shop-32.png;
                                         String productLink = product.getSlug() != null && !product.getSlug().isBlank()
                                                 ? contextPath + "/product?slug=" + product.getSlug()
                                                 : contextPath + "/product?id=" + product.getId();

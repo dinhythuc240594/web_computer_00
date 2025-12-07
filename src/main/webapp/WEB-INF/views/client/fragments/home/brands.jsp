@@ -16,16 +16,7 @@
                 <%
                     if (brands != null && !brands.isEmpty()) {
                         for (BrandDAO brand : brands) {
-                            String logoUrl = brand.getImage();
-                            if (logoUrl == null || logoUrl.isBlank()) {
-                                logoUrl = fallbackLogo;
-                            } else if (!logoUrl.startsWith("http")) {
-                                if (!logoUrl.startsWith("/")) {
-                                    logoUrl = "/" + logoUrl;
-                                }
-                                logoUrl = contextPath + logoUrl;
-                            }
-
+                            String logoUrl = brand.getImage() getImage() || contextPath + fallbackImages[index % fallbackImages.length];
                             String brandLink = contextPath + "/brand?brandId=" + brand.getId();
                 %>
                 <li>

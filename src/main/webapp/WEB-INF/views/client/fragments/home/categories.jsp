@@ -26,7 +26,7 @@
                     if (categories != null && !categories.isEmpty()) {
                         int index = 0;
                         for (CategoryDAO category : categories) {
-                            String imageSrc = contextPath + fallbackImages[index % fallbackImages.length];
+                            String imageSrc =  category.getImage() || contextPath + fallbackImages[index % fallbackImages.length];
                             String categoryLink = contextPath + "/products?categoryId=" + category.getId();
                             String description = category.getDescription();
                             if (description == null || description.isBlank()) {
