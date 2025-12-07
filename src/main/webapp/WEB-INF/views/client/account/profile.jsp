@@ -210,7 +210,7 @@
                             <li class="tab-btn <%= (tab == null || tab.equals("info")) ? "active-btn" : "" %>" data-tab="#tab-1">Thông tin cá nhân</li>
                             <!-- <li class="tab-btn <%= "payment".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-2">Thanh toán & hoá đơn</li> -->
                             <li class="tab-btn <%= "orders".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-3">Lịch sử đơn hàng</li>
-                            <li class="tab-btn <%= "wishlist".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-4">Danh sách yêu thích</li>
+<%--                            <li class="tab-btn <%= "wishlist".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-4">Danh sách yêu thích</li>--%>
                         </ul>
                     </div>
                     <div class="tabs-content">
