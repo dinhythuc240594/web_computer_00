@@ -48,8 +48,8 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" action="${contextPath}/category" enctype="multipart/form-data">
-                                <input type="hidden" name="action" value="<%= category != null ? "update" : "create" %>"/>
+                            <form method="post" id="updateCategoryForm" enctype="multipart/form-data">
+                                <input type="hidden" name="action" value="<%= category != null ? "category-update" : "category-create" %>"/>
                                 <%
                                     if (category != null) {
                                 %>
@@ -73,7 +73,7 @@
                                     <label class="form-label">Hình ảnh danh mục</label>
                                     <div id="imagePreview" class="mb-3 w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50">
                                         <% if(previewImg == "") { %>
-                                        <img src="${pageContext.request.contextPath}/static/img/food-thumbnail.png" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
+                                        <img src="${pageContext.request.contextPath}/assets/client/images/resource/category-2.png" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
                                         <% } else { %>
                                         <img src="<%= previewImg  %>" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
                                         <% } %>
@@ -188,8 +188,8 @@
             }
         });
 
-        $('#updateProductForm').on('submit', function(e) {
-            e.preventDefault();
+        $('#updateCategoryForm').on('submit', function(e) {
+            // e.preventDefault();
 
             for (instance in CKEDITOR.instances) {
                 CKEDITOR.instances[instance].updateElement();
@@ -205,30 +205,30 @@
             }
 
             $.ajax({
-                url: 'foods?action=update',
+                url: 'staff',
                 type: 'POST',
                 data: formData,
                 processData: false,
                 contentType: false,
                 dataType: 'json',
 
-                beforeSend: function() {
-                    $('#responseMessage').html('<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">Đang cập nhật món ăn...</div>');
-                },
-                success: function(response) {
-                    if (response.success) {
-                        $('#responseMessage').html('<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">' + response.message + '</div>');
-                        setTimeout(function() {
-                            window.location.href = 'foods?action=list';
-                        }, 1500);
-                    } else {
-                        $('#responseMessage').html('<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">Lỗi: ' + response.message + '</div>');
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR.responseText);
-                    $('#responseMessage').html('<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">Đã xảy ra lỗi khi gửi dữ liệu. Vui lòng thử lại.</div>');
-                }
+                // beforeSend: function() {
+                //     $('#responseMessage').html('<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">Đang cập nhật món ăn...</div>');
+                // },
+                // success: function(response) {
+                //     if (response.success) {
+                //         $('#responseMessage').html('<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">' + response.message + '</div>');
+                //         setTimeout(function() {
+                //             window.location.href = 'foods?action=list';
+                //         }, 1500);
+                //     } else {
+                //         $('#responseMessage').html('<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">Lỗi: ' + response.message + '</div>');
+                //     }
+                // },
+                // error: function(jqXHR, textStatus, errorThrown) {
+                //     console.log(jqXHR.responseText);
+                //     $('#responseMessage').html('<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">Đã xảy ra lỗi khi gửi dữ liệu. Vui lòng thử lại.</div>');
+                // }
             });
         });
     });
