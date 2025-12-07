@@ -8,6 +8,7 @@ USE computer_store;
 ALTER TABLE users MODIFY COLUMN avatar_blob MEDIUMBLOB;
 ALTER TABLE brands ADD COLUMN logo_blob MEDIUMBLOB NULL;
 ALTER TABLE categories ADD COLUMN logo_blob MEDIUMBLOB NULL;
+ALTER TABLE products ADD COLUMN logo_blob MEDIUMBLOB NULL;
 -- Kiểm tra kết quả
 -- DESCRIBE users;
 

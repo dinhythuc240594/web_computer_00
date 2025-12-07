@@ -9,6 +9,7 @@ public class ProductDAO {
     private String description;
     private Double price;
     private String image_url;
+    private byte[] image_blob;
     private String slug;
     private int category_id;
     private int stock_quantity;
@@ -130,5 +131,12 @@ public class ProductDAO {
         this.updated_at = updated_at;
     }
 
+    public byte[] getImage_blob() {
+        return image_blob;
+    }
+
+    public void setImage_blob(byte[] image_blob) {
+        this.image_blob = image_blob;
+    }
 
 }

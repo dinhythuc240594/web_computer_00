@@ -24,7 +24,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public List<CategoryDAO> getAll() {
 
         List<CategoryDAO> items = new ArrayList<>();
-        String sql = "SELECT id, name, description, is_active, parent_id FROM categories";
+        String sql = "SELECT id, name, description, is_active, parent_id, logo_blob FROM categories";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -44,7 +44,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public CategoryDAO findById(int id) {
 
-        String sql = "SELECT id, name, description, is_active, parent_id " +
+        String sql = "SELECT id, name, description, is_active, parent_id, logo_blob " +
                     "FROM categories WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
@@ -94,7 +94,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         String sortField = pageRequest.getSortField();
         String orderField = pageRequest.getOrderField();
 
-        String sql = "SELECT id, name, description, is_active, parent_id FROM categories ";
+        String sql = "SELECT id, name, description, is_active, parent_id, logo_blob FROM categories ";
 
         List<String> conditions = new ArrayList<>();
         List<Object> params = new ArrayList<>();
@@ -169,8 +169,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public Boolean create(CategoryDAO entity) {
 
-        String sql = "INSERT INTO categories (name, description, is_active, parent_id) " +
-                "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO categories (name, description, is_active, parent_id, logo_blob) " +
+                "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -179,6 +179,11 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             ps.setString(2, entity.getDescription());
             ps.setBoolean(3, entity.getIs_active());
             ps.setInt(4, entity.getParent_id());
+            if (entity.getLogo_blob() != null && entity.getLogo_blob().length > 0) {
+                ps.setBytes(5, entity.getLogo_blob());
+            } else {
+                ps.setBytes(5, null);
+            }
 
             ps.executeUpdate();
 
@@ -193,7 +198,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public Boolean update(CategoryDAO entity) {
 
-        String sql = "UPDATE categories SET name = ?, description = ?, is_active = ?, parent_id = ?"
+        String sql = "UPDATE categories SET name = ?, description = ?, is_active = ?, parent_id = ?, logo_blob = ?"
                 + " WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
@@ -203,7 +208,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             ps.setString(2, entity.getDescription());
             ps.setBoolean(3, entity.getIs_active());
             ps.setInt(4, entity.getParent_id());
-            ps.setInt(5, entity.getId());
+            if (entity.getLogo_blob() != null && entity.getLogo_blob().length > 0) {
+                ps.setBytes(5, entity.getLogo_blob());
+            } else {
+                ps.setBytes(5, null);
+            }
+            ps.setInt(6, entity.getId());
             ps.executeUpdate();
 
             return true;
@@ -223,6 +233,15 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         item.setDescription(rs.getString("description"));
         item.setIs_active(rs.getBoolean("is_active"));
         item.setParent_id(rs.getInt("parent_id"));
+        
+        // Đọc logo_blob từ database
+        try {
+            byte[] logoBlob = rs.getBytes("logo_blob");
+            item.setLogo_blob(logoBlob);
+        } catch (SQLException e) {
+            // Nếu cột không tồn tại hoặc null, set null
+            item.setLogo_blob(null);
+        }
 
         return item;
     }

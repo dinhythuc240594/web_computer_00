@@ -33,7 +33,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         int categoryId = pageRequest.getCategoryId();
 
         String sql = "SELECT id, name, slug, description, "
-                    + "price, stock_quantity, image_url, category_id, brand_id, is_active, "
+                    + "price, stock_quantity, image_url, image_blob, category_id, brand_id, is_active, "
                     + "created_at, updated_at FROM products ";
 
         List<String> conditions = new ArrayList<>();
@@ -90,7 +90,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public List<ProductDAO> getAll() {
         List<ProductDAO> products = new ArrayList<>();
         String sql = "SELECT id, name, slug, description, price, stock_quantity, " +
-                "image_url, category_id, brand_id, is_active " +
+                "image_url, image_blob, category_id, brand_id, is_active " +
                 "FROM products";
 
         try (Connection conn = ds.getConnection();
@@ -111,7 +111,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public ProductDAO findById(int id) {
 
         String sql = "SELECT id, name, description, price,"
-                    + " image_url, slug, category_id, stock_quantity, "
+                    + " image_url, image_blob, slug, category_id, stock_quantity, "
                     + " brand_id, is_active "
                     + "FROM products WHERE id = ?";
 
@@ -134,7 +134,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public ProductDAO findBySlug(String slug) {
-        String sql = "SELECT id, name, description, price, image_url, slug, " +
+        String sql = "SELECT id, name, description, price, image_url, image_blob, slug, " +
                 "category_id, stock_quantity, brand_id, is_active " +
                 "FROM products WHERE slug = ?";
 
@@ -219,8 +219,8 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Boolean create(ProductDAO entity) {
 
         String sql = "INSERT INTO products (name, slug, description, price, "
-                + "stock_quantity, image_url, category_id, brand_id, "
-                + "is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "stock_quantity, image_url, image_blob, category_id, brand_id, "
+                + "is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -231,9 +231,14 @@ public class ProductRepositoryImpl implements ProductRepository {
             ps.setDouble(4, entity.getPrice());
             ps.setInt(5, entity.getStock_quantity());
             ps.setString(6, entity.getImage_url());
-            ps.setInt(7, entity.getCategory_id());
-            ps.setInt(8, entity.getBrand_id());
-            ps.setBoolean(9, entity.getIs_active());
+            if (entity.getImage_blob() != null && entity.getImage_blob().length > 0) {
+                ps.setBytes(7, entity.getImage_blob());
+            } else {
+                ps.setBytes(7, null);
+            }
+            ps.setInt(8, entity.getCategory_id());
+            ps.setInt(9, entity.getBrand_id());
+            ps.setBoolean(10, entity.getIs_active());
 
             ps.executeUpdate();
 
@@ -248,7 +253,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Boolean update(ProductDAO entity) {
 
         String sql = "UPDATE products SET name = ?, slug = ?, description = ?, price = ?, " +
-                "stock_quantity = ?, image_url = ?, category_id = ?, brand_id = ?, is_active = ? " +
+                "stock_quantity = ?, image_url = ?, image_blob = ?, category_id = ?, brand_id = ?, is_active = ? " +
                 "WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
@@ -260,10 +265,15 @@ public class ProductRepositoryImpl implements ProductRepository {
             ps.setDouble(4, entity.getPrice());
             ps.setInt(5, entity.getStock_quantity());
             ps.setString(6, entity.getImage_url());
-            ps.setInt(7, entity.getCategory_id());
-            ps.setInt(8, entity.getBrand_id());
-            ps.setBoolean(9, entity.getIs_active());
-            ps.setInt(10, entity.getId());
+            if (entity.getImage_blob() != null && entity.getImage_blob().length > 0) {
+                ps.setBytes(7, entity.getImage_blob());
+            } else {
+                ps.setBytes(7, null);
+            }
+            ps.setInt(8, entity.getCategory_id());
+            ps.setInt(9, entity.getBrand_id());
+            ps.setBoolean(10, entity.getIs_active());
+            ps.setInt(11, entity.getId());
             ps.executeUpdate();
 
             return true;
@@ -313,6 +323,15 @@ public class ProductRepositoryImpl implements ProductRepository {
         }
         item.setDescription(getColumnIfExists(rs, "description"));
         item.setImage_url(getColumnIfExists(rs, "image_url"));
+        
+        // Đọc image_blob từ database
+        try {
+            byte[] imageBlob = rs.getBytes("image_blob");
+            item.setImage_blob(imageBlob);
+        } catch (SQLException e) {
+            // Nếu cột không tồn tại hoặc null, set null
+            item.setImage_blob(null);
+        }
 
         return item;
     }

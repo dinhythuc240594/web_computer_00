@@ -2,6 +2,7 @@
 <%@ include file="../admin/layout/init.jspf" %>
 <%@ page import="java.util.List" %>
 <%@ page import="model.CategoryDAO" %>
+<%@ page import="java.util.Base64" %>
 <%
     CategoryDAO category = (CategoryDAO) request.getAttribute("category");
     List<CategoryDAO> parentCategories = (List<CategoryDAO>) request.getAttribute("parentCategories");
@@ -46,8 +47,8 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" action="${contextPath}/staff">
-                                <input type="hidden" name="action" value="<%= category != null ? "category-update" : "category-create" %>"/>
+                            <form method="post" action="${contextPath}/category" enctype="multipart/form-data">
+                                <input type="hidden" name="action" value="<%= category != null ? "update" : "create" %>"/>
                                 <%
                                     if (category != null) {
                                 %>
@@ -65,6 +66,24 @@
                                 <div class="mb-3">
                                     <label class="form-label">Mô tả</label>
                                     <textarea class="form-control" id="description" name="description" rows="4"><%= category != null && category.getDescription() != null ? category.getDescription() : "" %></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Logo danh mục</label>
+                                    <input type="file" class="form-control" name="logo" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"/>
+                                    <small class="form-text text-muted">Chỉ chấp nhận file ảnh (JPG, PNG, GIF, WebP). Kích thước tối đa: 5MB.</small>
+                                    <%
+                                        if (category != null && category.getLogo_blob() != null && category.getLogo_blob().length > 0) {
+                                    %>
+                                        <div class="mt-2">
+                                            <small class="text-muted">Logo hiện tại:</small><br/>
+                                            <img src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(category.getLogo_blob()) %>" 
+                                                 alt="Logo hiện tại" style="max-width: 200px; max-height: 200px; margin-top: 10px; border: 1px solid #ddd; padding: 5px;"/>
+                                            <br/><small class="text-muted">Upload logo mới để thay thế</small>
+                                        </div>
+                                    <%
+                                        }
+                                    %>
                                 </div>
 
                                 <div class="mb-3">
