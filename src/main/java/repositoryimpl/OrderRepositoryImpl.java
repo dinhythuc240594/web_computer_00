@@ -96,14 +96,16 @@ public class OrderRepositoryImpl implements OrderRepository {
         String sortField = pageRequest.getSortField();
         String orderField = pageRequest.getOrderField();
 
-        String sql = "SELECT id, user_id, created_at, status, total_amount, " +
-                "shipping_address, payment_method, note, is_active FROM orders ";
+        String sql = "SELECT o.id, o.user_id, o.created_at, o.status, o.total_amount, " +
+                "o.shipping_address, o.payment_method, o.note, o.is_active FROM orders o " +
+                "LEFT JOIN users u ON o.user_id = u.id ";
 
         List<String> conditions = new ArrayList<>();
         List<Object> params = new ArrayList<>();
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            conditions.add("(CAST(id AS CHAR) LIKE ? OR CAST(user_id AS CHAR) LIKE ? OR status LIKE ?)");
+            conditions.add("(CAST(o.id AS CHAR) LIKE ? OR CAST(o.user_id AS CHAR) LIKE ? OR o.status LIKE ? OR u.full_name LIKE ?)");
+            params.add("%" + keyword + "%");
             params.add("%" + keyword + "%");
             params.add("%" + keyword + "%");
             params.add("%" + keyword + "%");
@@ -113,7 +115,7 @@ public class OrderRepositoryImpl implements OrderRepository {
             sql += "WHERE " + String.join(" AND ", conditions) + " ";
         }
 
-        sql += "ORDER BY " + sortField + " " + orderField + " LIMIT ? OFFSET ?";
+        sql += "ORDER BY o." + sortField + " " + orderField + " LIMIT ? OFFSET ?";
         params.add(pageSize);
         params.add(offset);
 
@@ -143,12 +145,12 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public int count(String keyword) {
         // Đếm tổng số đơn hàng, có thể mở rộng để hỗ trợ tìm kiếm theo keyword sau này
-        String baseSql = "SELECT COUNT(1) FROM orders";
+        String baseSql = "SELECT COUNT(1) FROM orders o LEFT JOIN users u ON o.user_id = u.id";
         StringBuilder sql = new StringBuilder(baseSql);
         boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
 
         if (hasKeyword) {
-            sql.append(" WHERE (CAST(id AS CHAR) LIKE ? OR CAST(user_id AS CHAR) LIKE ? OR status LIKE ?)");
+            sql.append(" WHERE (CAST(o.id AS CHAR) LIKE ? OR CAST(o.user_id AS CHAR) LIKE ? OR o.status LIKE ? OR u.full_name LIKE ?)");
         }
 
         try (Connection conn = ds.getConnection();
@@ -159,6 +161,7 @@ public class OrderRepositoryImpl implements OrderRepository {
                 ps.setString(1, like);
                 ps.setString(2, like);
                 ps.setString(3, like);
+                ps.setString(4, like);
             }
 
             try (ResultSet rs = ps.executeQuery()) {

@@ -122,7 +122,7 @@
                                         <div class="row g-3">
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" name="keyword" 
-                                                       placeholder="Tìm kiếm theo ID đơn hàng, ID khách hàng hoặc trạng thái..." 
+                                                       placeholder="Tìm kiếm..."
                                                        value="<%= keyword %>"/>
                                             </div>
                                             <div class="col-md-4">
