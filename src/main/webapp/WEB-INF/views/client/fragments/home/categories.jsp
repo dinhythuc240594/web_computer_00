@@ -26,15 +26,16 @@
                     if (categories != null && !categories.isEmpty()) {
                         int index = 0;
                         for (CategoryDAO category : categories) {
-                            String imageSrc =  category.getImage();
-                            if (imageSrc == null || imageSrc.isBlank()) {
-                                imageSrc = contextPath + fallbackImages[index % fallbackImages.length];
-                            }
-                            String categoryLink = contextPath + "/products?categoryId=" + category.getId();
-                            String description = category.getDescription();
-                            if (description == null || description.isBlank()) {
-                                description = "Đang cập nhật";
-                            }
+                            if(category.getIs_active() == true) {
+                                String imageSrc =  category.getImage();
+                                if (imageSrc == null || imageSrc.isBlank()) {
+                                    imageSrc = contextPath + fallbackImages[index % fallbackImages.length];
+                                }
+                                String categoryLink = contextPath + "/products?categoryId=" + category.getId();
+                                String description = category.getDescription();
+                                if (description == null || description.isBlank()) {
+                                    description = "Đang cập nhật";
+                                }
                 %>
                 <div class="category-block-one">
                     <div class="inner-box">
@@ -49,7 +50,8 @@
                     </div>
                 </div>
                 <%
-                            index++;
+                                index++;
+                            }
                         }
                     } else {
                 %>
