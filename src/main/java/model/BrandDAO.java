@@ -7,6 +7,7 @@ public class BrandDAO {
     private String code;
     private Boolean is_active;
     private String logo_url;
+    private byte[] logo_blob;
 
     public BrandDAO(){};
 
@@ -56,5 +57,13 @@ public class BrandDAO {
 
     public void setLogo_url(String logo_url) {
         this.logo_url = logo_url;
+    }
+
+    public byte[] getLogo_blob() {
+        return logo_blob;
+    }
+
+    public void setLogo_blob(byte[] logo_blob) {
+        this.logo_blob = logo_blob;
     }
 }

@@ -69,9 +69,14 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">URL Logo</label>
-                                    <input type="text" class="form-control" name="logo_url" 
-                                           value="<%= brand != null && brand.getLogo_url() != null ? brand.getLogo_url() : "" %>" 
-                                           placeholder="https://example.com/logo.png"/>
+                                    <div id="imagePreview" class="mb-3 w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50">
+                                        <% if(brand.getLogo_url() == null) { %>
+                                        <img src="${pageContext.request.contextPath}/assets/client/images/resource/category-4.png" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
+                                        <% } else { %>
+                                        <img src="<%= brand.getLogo_url()  %>" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
+                                        <% } %>
+                                    </div>
+                                    <input type="file" class="form-control" id="image" name="image" accept="image/*"/>
                                 </div>
 
                                 <%

@@ -74,7 +74,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Mô tả</label>
-                                    <textarea class="form-control" name="description" rows="4"><%= product != null && product.getDescription() != null ? product.getDescription() : "" %></textarea>
+                                    <textarea class="form-control" id="description" name="description" rows="4"><%= product != null && product.getDescription() != null ? product.getDescription() : "" %></textarea>
                                 </div>
 
                                 <div class="row">
@@ -131,9 +131,14 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">URL Hình ảnh</label>
-                                    <input type="text" class="form-control" name="image_url" 
-                                           value="<%= product != null && product.getImage_url() != null ? product.getImage_url() : "" %>" 
-                                           placeholder="https://example.com/image.jpg"/>
+                                    <div id="imagePreview" class="mb-3 w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50">
+                                        <% if(product.getImage_url() == null) { %>
+                                        <img src="${pageContext.request.contextPath}/assets/client/images/resource/category-4.png" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
+                                        <% } else { %>
+                                        <img src="<%= product.getImage_url()  %>" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
+                                        <% } %>
+                                    </div>
+                                    <input type="file" class="form-control" id="image" name="image" accept="image/*"/>
                                 </div>
 
                                 <%

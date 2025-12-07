@@ -6,6 +6,7 @@ public class CategoryDAO {
     private String name;
     private String description;
     private Boolean is_active;
+    private byte[] logo_blob;
     private int parent_id;
 
     public CategoryDAO(){}
@@ -62,4 +63,13 @@ public class CategoryDAO {
     public void setParent_id(int parent_id) {
         this.parent_id = parent_id;
     }
+
+    public byte[] getLogo_blob() {
+        return logo_blob;
+    }
+
+    public void setLogo_blob(byte[] logo_blob) {
+        this.logo_blob = logo_blob;
+    }
+
 }

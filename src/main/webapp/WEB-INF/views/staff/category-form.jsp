@@ -64,7 +64,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Mô tả</label>
-                                    <textarea class="form-control" name="description" rows="4"><%= category != null && category.getDescription() != null ? category.getDescription() : "" %></textarea>
+                                    <textarea class="form-control" id="description" name="description" rows="4"><%= category != null && category.getDescription() != null ? category.getDescription() : "" %></textarea>
                                 </div>
 
                                 <div class="mb-3">
