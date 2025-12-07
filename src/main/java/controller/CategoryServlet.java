@@ -197,7 +197,7 @@ public class CategoryServlet extends HttpServlet {
             category.setParent_id(parentId);
             if (activeStr != null) {
                 category.setIs_active(Boolean.parseBoolean(activeStr));
-            }else{
+            } else{
                 category.setIs_active(false);
             }
             
