@@ -293,6 +293,7 @@
                                                             if (customerNames != null && customerNames.containsKey(order.getUser_id())) {
                                                                 customerName = customerNames.get(order.getUser_id());
                                                             }
+                                                            out.print(customerName);
                                                         %>
                                                     </td>
                                                     <td>

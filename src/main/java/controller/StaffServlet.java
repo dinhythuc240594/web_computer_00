@@ -237,14 +237,53 @@ public class StaffServlet extends HttpServlet {
             case "orders" -> {
                 pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
                 Page<OrderDAO> orderPage = orderService.findAll(pageRequest);
+                
+                // Tạo map để lưu tên khách hàng theo user_id
+                Map<Integer, String> customerNames = new HashMap<>();
+                if (orderPage.getData() != null) {
+                    for (OrderDAO order : orderPage.getData()) {
+                        if (!customerNames.containsKey(order.getUser_id())) {
+                            UserDAO customer = userService.findById(order.getUser_id());
+                            if (customer != null) {
+                                customerNames.put(order.getUser_id(), 
+                                    customer.getFullname() != null && !customer.getFullname().isBlank() 
+                                        ? customer.getFullname() 
+                                        : "Khách hàng #" + order.getUser_id());
+                            } else {
+                                customerNames.put(order.getUser_id(), "Khách hàng #" + order.getUser_id());
+                            }
+                        }
+                    }
+                }
+                
                 request.setAttribute("orderPage", orderPage);
+                request.setAttribute("customerNames", customerNames);
                 request.setAttribute("orders", orderPage.getData());
             }
             default -> {
                 // Default to orders
                 pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
                 Page<OrderDAO> orderPage = orderService.findAll(pageRequest);
+
+                // Tạo map để lưu tên khách hàng theo user_id
+                Map<Integer, String> customerNames = new HashMap<>();
+                if (orderPage.getData() != null) {
+                    for (OrderDAO order : orderPage.getData()) {
+                        if (!customerNames.containsKey(order.getUser_id())) {
+                            UserDAO customer = userService.findById(order.getUser_id());
+                            if (customer != null) {
+                                customerNames.put(order.getUser_id(), 
+                                    customer.getFullname() != null && !customer.getFullname().isBlank() 
+                                        ? customer.getFullname() 
+                                        : "Khách hàng #" + order.getUser_id());
+                            } else {
+                                customerNames.put(order.getUser_id(), "Khách hàng #" + order.getUser_id());
+                            }
+                        }
+                    }
+                }
                 request.setAttribute("orderPage", orderPage);
+                request.setAttribute("customerNames", customerNames);
                 request.setAttribute("orders", orderPage.getData());
             }
         }

@@ -9,6 +9,7 @@
 <%@ page import="model.CategoryDAO" %>
 <%@ page import="model.BrandDAO" %>
 <%@ page import="model.Page" %>
+<%@ page import="java.util.Map" %>
 <%
     String tab = (String) request.getAttribute("tab");
     if (tab == null || tab.isBlank()) {
@@ -30,7 +31,7 @@
     // Get data for each tab
     List<OrderDAO> orders = (List<OrderDAO>) request.getAttribute("orders");
     Page<OrderDAO> orderPage = (Page<OrderDAO>) request.getAttribute("orderPage");
-    
+    Map<Integer, String> customerNames = (Map<Integer, String>) request.getAttribute("customerNames");
     List<ProductDAO> products = (List<ProductDAO>) request.getAttribute("products");
     Page<ProductDAO> productPage = (Page<ProductDAO>) request.getAttribute("productPage");
     List<CategoryDAO> allCategories = (List<CategoryDAO>) request.getAttribute("allCategories");
@@ -141,7 +142,7 @@
                                         <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>ID Khách hàng</th>
+                                            <th>Tên Khách hàng</th>
                                             <th>Ngày đặt</th>
                                             <th>Tổng tiền</th>
                                             <th>Trạng thái</th>
@@ -157,7 +158,15 @@
                                         %>
                                             <tr>
                                                 <td><%= order.getId() %></td>
-                                                <td><%= order.getUser_id() %></td>
+                                                <td>
+                                                    <%
+                                                        String customerName = "Khách hàng #" + order.getUser_id();
+                                                        if (customerNames != null && customerNames.containsKey(order.getUser_id())) {
+                                                            customerName = customerNames.get(order.getUser_id());
+                                                        }
+                                                        out.print(customerName);
+                                                    %>
+                                                </td>
                                                 <td>
                                                     <%
                                                         if (order.getOrderDate() != null) {

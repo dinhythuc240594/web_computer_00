@@ -143,79 +143,79 @@
 
                     <!-- Order Details Table -->
 
-<%--                    <div class="row">--%>
-<%--                        <div class="col-12 col-lg-8">--%>
-<%--                            <div class="card mb-6">--%>
-<%--                                <div class="card-header">--%>
-<%--                                    <h5 class="card-title m-0">Chi tiết sản phẩm</h5>--%>
-<%--                                </div>--%>
-<%--                                <div class="card-body">--%>
-<%--                                    <div class="table-responsive">--%>
-<%--                                        <table class="table table-hover mb-0">--%>
-<%--                                            <thead>--%>
-<%--                                            <tr>--%>
-<%--                                                <th style="width: 60px;"></th>--%>
-<%--                                                <th class="w-50">Sản phẩm</th>--%>
-<%--                                                <th>Đơn giá</th>--%>
-<%--                                                <th>Số lượng</th>--%>
-<%--                                                <th>Thành tiền</th>--%>
-<%--                                            </tr>--%>
-<%--                                            </thead>--%>
-<%--                                            <tbody>--%>
-<%--                                            <%--%>
-<%--                                                if (orderItems != null && !orderItems.isEmpty()) {--%>
-<%--                                                    for (OrderItemDAO item : orderItems) {--%>
-<%--                                                        ProductDAO product = productMap != null ? productMap.get(item.getProductId()) : null;--%>
-<%--                                                        String productName = product != null ? product.getName() : "Sản phẩm #" + item.getProductId();--%>
-<%--                                                        String productImage = product != null && product.getImage() != null ? product.getImage() : "";--%>
-<%--                                                        double itemTotal = item.getPrice() * item.getQuantity();--%>
-<%--                                            %>--%>
-<%--                                            <tr>--%>
-<%--                                                <td>--%>
-<%--                                                    <% if (productImage != null && !productImage.isEmpty()) { %>--%>
-<%--                                                    <img src="<%= productImage %>"--%>
-<%--                                                         alt="<%= productName %>" --%>
-<%--                                                         class="rounded" --%>
-<%--                                                         style="width: 50px; height: 50px; object-fit: cover;" />--%>
-<%--                                                    <% } else { %>--%>
-<%--                                                    <div class="bg-label-secondary rounded d-flex align-items-center justify-content-center" --%>
-<%--                                                         style="width: 50px; height: 50px;">--%>
-<%--                                                        <i class="icon-base ri ri-image-line"></i>--%>
-<%--                                                    </div>--%>
-<%--                                                    <% } %>--%>
-<%--                                                </td>--%>
-<%--                                                <td>--%>
-<%--                                                    <h6 class="mb-0"><%= productName %></h6>--%>
-<%--                                                </td>--%>
-<%--                                                <td><%= currencyFormat.format(item.getPrice()) %></td>--%>
-<%--                                                <td><%= item.getQuantity() %></td>--%>
-<%--                                                <td><strong><%= currencyFormat.format(itemTotal) %></strong></td>--%>
-<%--                                            </tr>--%>
-<%--                                            <%--%>
-<%--                                                    }--%>
-<%--                                                } else {--%>
-<%--                                            %>--%>
-<%--                                            <tr>--%>
-<%--                                                <td colspan="5" class="text-center">Không có sản phẩm nào trong đơn hàng này.</td>--%>
-<%--                                            </tr>--%>
-<%--                                            <%--%>
-<%--                                                }--%>
-<%--                                            %>--%>
-<%--                                            </tbody>--%>
-<%--                                        </table>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="d-flex justify-content-end align-items-center m-4 p-1 mb-0 pb-0">--%>
-<%--                                        <div class="order-calculations">--%>
-<%--                                            <%--%>
-<%--                                                double subtotal = order != null ? order.getTotalPrice() : 0;--%>
-<%--                                                double discount = 0;--%>
-<%--                                                double tax = 0;--%>
-<%--                                                double total = subtotal - discount + tax;--%>
-<%--                                            %>--%>
-<%--                                            <div class="d-flex justify-content-start gap-4 mb-2">--%>
-<%--                                                <span class="w-px-100 text-heading">Tạm tính:</span>--%>
-<%--                                                <h6 class="mb-0"><%= currencyFormat.format(subtotal) %></h6>--%>
-<%--                                            </div>--%>
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <div class="card mb-6">
+                                <div class="card-header">
+                                    <h5 class="card-title m-0">Chi tiết sản phẩm</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 60px;"></th>
+                                                <th class="w-50">Sản phẩm</th>
+                                                <th>Đơn giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Thành tiền</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <%
+                                                if (orderItems != null && !orderItems.isEmpty()) {
+                                                    for (OrderItemDAO item : orderItems) {
+                                                        ProductDAO product = productMap != null ? productMap.get(item.getProductId()) : null;
+                                                        String productName = product != null ? product.getName() : "Sản phẩm #" + item.getProductId();
+                                                        String productImage = product != null && product.getImage() != null ? product.getImage() : "";
+                                                        double itemTotal = item.getPrice() * item.getQuantity();
+                                            %>
+                                            <tr>
+                                                <td>
+                                                    <% if (productImage != null && !productImage.isEmpty()) { %>
+                                                    <img src="<%= productImage %>"
+                                                         alt="<%= productName %>"
+                                                         class="rounded"
+                                                         style="width: 50px; height: 50px; object-fit: cover;" />
+                                                    <% } else { %>
+                                                    <div class="bg-label-secondary rounded d-flex align-items-center justify-content-center"
+                                                         style="width: 50px; height: 50px;">
+                                                        <i class="icon-base ri ri-image-line"></i>
+                                                    </div>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0"><%= productName %></h6>
+                                                </td>
+                                                <td><%= currencyFormat.format(item.getPrice()) %></td>
+                                                <td><%= item.getQuantity() %></td>
+                                                <td><strong><%= currencyFormat.format(itemTotal) %></strong></td>
+                                            </tr>
+                                            <%
+                                                    }
+                                                } else {
+                                            %>
+                                            <tr>
+                                                <td colspan="5" class="text-center">Không có sản phẩm nào trong đơn hàng này.</td>
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-flex justify-content-end align-items-center m-4 p-1 mb-0 pb-0">
+                                        <div class="order-calculations">
+                                            <%
+                                                double subtotal = order != null ? order.getTotalPrice() : 0;
+                                                double discount = 0;
+                                                double tax = 0;
+                                                double total = subtotal - discount + tax;
+                                            %>
+                                            <div class="d-flex justify-content-start gap-4 mb-2">
+                                                <span class="w-px-100 text-heading">Tạm tính:</span>
+                                                <h6 class="mb-0"><%= currencyFormat.format(subtotal) %></h6>
+                                            </div>
 <%--                                            <div class="d-flex justify-content-start gap-4 mb-2">--%>
 <%--                                                <span class="w-px-100 text-heading">Giảm giá:</span>--%>
 <%--                                                <h6 class="mb-0"><%= currencyFormat.format(discount) %></h6>--%>
@@ -224,14 +224,14 @@
 <%--                                                <span class="w-px-100 text-heading">Thuế:</span>--%>
 <%--                                                <h6 class="mb-0"><%= currencyFormat.format(tax) %></h6>--%>
 <%--                                            </div>--%>
-<%--                                            <div class="d-flex justify-content-start gap-4 pt-2 border-top">--%>
-<%--                                                <h6 class="w-px-100 mb-0">Tổng cộng:</h6>--%>
-<%--                                                <h6 class="mb-0 text-primary"><%= currencyFormat.format(total) %></h6>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
+                                            <div class="d-flex justify-content-start gap-4 pt-2 border-top">
+                                                <h6 class="w-px-100 mb-0">Tổng cộng:</h6>
+                                                <h6 class="mb-0 text-primary"><%= currencyFormat.format(total) %></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 <%--                            <div class="card mb-6">--%>
 <%--                                <div class="card-header">--%>
 <%--                                    <h5 class="card-title m-0">Lịch sử đơn hàng</h5>--%>
@@ -258,7 +258,7 @@
 <%--                                                <p class="mt-1 mb-2">Đơn hàng của bạn đã được đặt thành công</p>--%>
 <%--                                            </div>--%>
 <%--                                        </li>--%>
-<%--                                        --%>
+
 <%--                                        <!-- Processing -->--%>
 <%--                                        <% if (isProcessing || isShipped || isDelivered) { %>--%>
 <%--                                        <li class="timeline-item timeline-item-transparent border-primary">--%>
@@ -272,7 +272,7 @@
 <%--                                            </div>--%>
 <%--                                        </li>--%>
 <%--                                        <% } %>--%>
-<%--                                        --%>
+
 <%--                                        <!-- Shipped -->--%>
 <%--                                        <% if (isShipped || isDelivered) { %>--%>
 <%--                                        <li class="timeline-item timeline-item-transparent border-primary">--%>
@@ -286,7 +286,7 @@
 <%--                                            </div>--%>
 <%--                                        </li>--%>
 <%--                                        <% } %>--%>
-<%--                                        --%>
+
 <%--                                        <!-- Delivered -->--%>
 <%--                                        <% if (isDelivered) { %>--%>
 <%--                                        <li class="timeline-item timeline-item-transparent border-primary">--%>
@@ -300,7 +300,7 @@
 <%--                                            </div>--%>
 <%--                                        </li>--%>
 <%--                                        <% } %>--%>
-<%--                                        --%>
+
 <%--                                        <!-- Cancelled -->--%>
 <%--                                        <% if (isCancelled) { %>--%>
 <%--                                        <li class="timeline-item timeline-item-transparent border-transparent pb-0">--%>
@@ -314,7 +314,7 @@
 <%--                                            </div>--%>
 <%--                                        </li>--%>
 <%--                                        <% } %>--%>
-<%--                                        --%>
+
 <%--                                        <!-- Pending - Show next step -->--%>
 <%--                                        <% if (isPending) { %>--%>
 <%--                                        <li class="timeline-item timeline-item-transparent border-dashed">--%>
@@ -333,84 +333,85 @@
 <%--                                    </ul>--%>
 <%--                                </div>--%>
 <%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="col-12 col-lg-4">--%>
-<%--                            <div class="card mb-6">--%>
-<%--                                <div class="card-body">--%>
-<%--                                    <h5 class="card-title mb-6">Thông tin khách hàng</h5>--%>
-<%--                                    <%--%>
-<%--                                        if (customer != null) {--%>
-<%--                                            String customerName = customer.getFullname() != null && !customer.getFullname().isBlank() --%>
-<%--                                                ? customer.getFullname() --%>
-<%--                                                : "Khách hàng #" + customer.getId();--%>
-<%--                                            String customerEmail = customer.getEmail() != null ? customer.getEmail() : "";--%>
-<%--                                            String customerPhone = customer.getPhone() != null ? customer.getPhone() : "";--%>
-<%--                                            String avatarPath = customer.getAvatar() != null? (request.getContextPath() + "/avatar?userId=" + customer.getId()): "/assets/admin/img/avatars/1.png";--%>
-<%--                                    %>--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center mb-6">--%>
-<%--                                        <div class="avatar me-3">--%>
-<%--                                            <img src="<%= avatarPath %>" alt="Avatar" class="rounded-circle" />--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column">--%>
-<%--                                            <h6 class="mb-0"><%= customerName %></h6>--%>
-<%--                                            <span>Customer ID: #<%= customer.getId() %></span>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center mb-6">--%>
-<%--                                        <span class="avatar rounded-circle bg-label-success me-3 d-flex align-items-center justify-content-center">--%>
-<%--                                            <i class="icon-base ri ri-shopping-cart-line icon-24px"></i>--%>
-<%--                                        </span>--%>
-<%--                                        <h6 class="text-nowrap mb-0"><%= customerOrderCount != null ? customerOrderCount : 0 %> Đơn hàng</h6>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="d-flex justify-content-between">--%>
-<%--                                        <h6 class="mb-1">Thông tin liên hệ</h6>--%>
-<%--                                    </div>--%>
-<%--                                    <p class="mb-1">Email: <%= customerEmail.isEmpty() ? "-" : customerEmail %></p>--%>
-<%--                                    <p class="mb-0">Số điện thoại: <%= customerPhone.isEmpty() ? "-" : customerPhone %></p>--%>
-<%--                                    <%--%>
-<%--                                        } else {--%>
-<%--                                    %>--%>
-<%--                                    <p class="text-muted">Không tìm thấy thông tin khách hàng.</p>--%>
-<%--                                    <%--%>
-<%--                                        }--%>
-<%--                                    %>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
+                        </div>
+                        <!-- Thông tin khách hàng -->
+                        <div class="col-12 col-lg-4">
+                            <div class="card mb-6">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-6">Thông tin khách hàng</h5>
+                                    <%
+                                        if (customer != null) {
+                                            String customerName = customer.getFullname() != null && !customer.getFullname().isBlank()
+                                                ? customer.getFullname()
+                                                : "Khách hàng #" + customer.getId();
+                                            String customerEmail = customer.getEmail() != null ? customer.getEmail() : "";
+                                            String customerPhone = customer.getPhone() != null ? customer.getPhone() : "";
+                                            String avatarPath = customer.getAvatar() != null? (request.getContextPath() + "/avatar?userId=" + customer.getId()): "/assets/admin/img/avatars/1.png";
+                                    %>
+                                    <div class="d-flex justify-content-start align-items-center mb-6">
+                                        <div class="avatar me-3">
+                                            <img src="<%= avatarPath %>" alt="Avatar" class="rounded-circle" />
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <h6 class="mb-0"><%= customerName %></h6>
+                                            <span>Customer ID: #<%= customer.getId() %></span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start align-items-center mb-6">
+                                        <span class="avatar rounded-circle bg-label-success me-3 d-flex align-items-center justify-content-center">
+                                            <i class="icon-base ri ri-shopping-cart-line icon-24px"></i>
+                                        </span>
+                                        <h6 class="text-nowrap mb-0"><%= customerOrderCount != null ? customerOrderCount : 0 %> Đơn hàng</h6>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <h6 class="mb-1">Thông tin liên hệ</h6>
+                                    </div>
+                                    <p class="mb-1">Email: <%= customerEmail.isEmpty() ? "-" : customerEmail %></p>
+                                    <p class="mb-0">Số điện thoại: <%= customerPhone.isEmpty() ? "-" : customerPhone %></p>
+                                    <%
+                                        } else {
+                                    %>
+                                    <p class="text-muted">Không tìm thấy thông tin khách hàng.</p>
+                                    <%
+                                        }
+                                    %>
+                                </div>
+                            </div>
 
-<%--                            <div class="card mb-6">--%>
-<%--                                <div class="card-header d-flex justify-content-between">--%>
-<%--                                    <h5 class="card-title mb-1">Địa chỉ giao hàng</h5>--%>
-<%--                                </div>--%>
-<%--                                <div class="card-body">--%>
-<%--                                    <p class="mb-0">--%>
-<%--                                        <%= order != null && order.getAddress() != null ? order.getAddress() : "-" %>--%>
-<%--                                    </p>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="card mb-6">--%>
-<%--                                <div class="card-header d-flex justify-content-between pb-0">--%>
-<%--                                    <h5 class="card-title mb-1">Địa chỉ thanh toán</h5>--%>
-<%--                                </div>--%>
-<%--                                <div class="card-body">--%>
-<%--                                    <p class="mb-4">--%>
-<%--                                        <%= order != null && order.getAddress() != null ? order.getAddress() : "-" %>--%>
-<%--                                    </p>--%>
-<%--                                    <div class="mb-2">--%>
-<%--                                        <strong>Phương thức thanh toán:</strong>--%>
-<%--                                        <p class="mb-0">--%>
-<%--                                            <%= order != null && order.getPayment() != null ? order.getPayment() : "-" %>--%>
-<%--                                        </p>--%>
-<%--                                    </div>--%>
-<%--                                    <% if (order != null && order.getNote() != null && !order.getNote().isEmpty()) { %>--%>
-<%--                                    <div>--%>
-<%--                                        <strong>Ghi chú:</strong>--%>
-<%--                                        <p class="mb-0"><%= order.getNote() %></p>--%>
-<%--                                    </div>--%>
-<%--                                    <% } %>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
+                            <div class="card mb-6">
+                                <div class="card-header d-flex justify-content-between">
+                                    <h5 class="card-title mb-1">Địa chỉ giao hàng</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p class="mb-0">
+                                        <%= order != null && order.getAddress() != null ? order.getAddress() : "-" %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card mb-6">
+                                <div class="card-header d-flex justify-content-between pb-0">
+                                    <h5 class="card-title mb-1">Địa chỉ thanh toán</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p class="mb-4">
+                                        <%= order != null && order.getAddress() != null ? order.getAddress() : "-" %>
+                                    </p>
+                                    <div class="mb-2">
+                                        <strong>Phương thức thanh toán:</strong>
+                                        <p class="mb-0">
+                                            <%= order != null && order.getPayment() != null ? order.getPayment() : "-" %>
+                                        </p>
+                                    </div>
+                                    <% if (order != null && order.getNote() != null && !order.getNote().isEmpty()) { %>
+                                    <div>
+                                        <strong>Ghi chú:</strong>
+                                        <p class="mb-0"><%= order.getNote() %></p>
+                                    </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <!-- / Content -->
