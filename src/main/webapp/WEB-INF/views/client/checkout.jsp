@@ -191,11 +191,6 @@
                                             String productImage = product.getImage();
                                             if (productImage == null || productImage.isBlank()) {
                                                 productImage = request.getContextPath() + "/assets/client/images/shop/checkout-1.png";
-                                            } else if (!productImage.startsWith("http")) {
-                                                if (!productImage.startsWith("/")) {
-                                                    productImage = "/" + productImage;
-                                                }
-                                                productImage = request.getContextPath() + productImage;
                                             }
                                             String productName = product.getName();
                                             int quantity = item.getQuantity();

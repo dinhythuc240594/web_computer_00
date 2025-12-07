@@ -261,11 +261,6 @@
                         String productImage = product.getImage();
                         if (productImage == null || productImage.isBlank()) {
                             productImage = contextPath + "/assets/client/images/shop/shop-10.png";
-                        } else if (!productImage.startsWith("http")) {
-                            if (!productImage.startsWith("/")) {
-                                productImage = "/" + productImage;
-                            }
-                            productImage = contextPath + productImage;
                         }
 
                         String productLink = product.getSlug() != null && !product.getSlug().isBlank()
