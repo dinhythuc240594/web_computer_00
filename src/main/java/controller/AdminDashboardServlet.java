@@ -218,7 +218,24 @@ public class AdminDashboardServlet extends HttpServlet {
         } catch (Exception ex) {
             latestOrders = java.util.Collections.emptyList();
         }
+
+        Map<Integer, String> customerNames = new HashMap<>();
+        for (OrderDAO order : latestOrders) {
+            if (!customerNames.containsKey(order.getUser_id())) {
+                UserDAO customer = userService.findById(order.getUser_id());
+                if (customer != null) {
+                        customerNames.put(order.getUser_id(),
+                                customer.getFullname() != null && !customer.getFullname().isBlank()
+                                        ? customer.getFullname()
+                                        : "Khách hàng #" + order.getUser_id());
+                } else {
+                        customerNames.put(order.getUser_id(), "Khách hàng #" + order.getUser_id());
+                }
+            }
+        }
+
         request.setAttribute("latestOrders", latestOrders);
+        request.setAttribute("customerNames", customerNames);
         request.setAttribute("tab", tab);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/dashboard/index.jsp");

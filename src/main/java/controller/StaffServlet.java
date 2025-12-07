@@ -31,7 +31,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -468,8 +470,27 @@ public class StaffServlet extends HttpServlet {
         PageRequest pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
         Page<OrderDAO> orderPage = orderService.findAll(pageRequest);
         
+        // Tạo map để lưu tên khách hàng theo user_id
+        Map<Integer, String> customerNames = new HashMap<>();
+        if (orderPage.getData() != null) {
+            for (OrderDAO order : orderPage.getData()) {
+                if (!customerNames.containsKey(order.getUser_id())) {
+                    UserDAO customer = userService.findById(order.getUser_id());
+                    if (customer != null) {
+                        customerNames.put(order.getUser_id(), 
+                            customer.getFullname() != null && !customer.getFullname().isBlank() 
+                                ? customer.getFullname() 
+                                : "Khách hàng #" + order.getUser_id());
+                    } else {
+                        customerNames.put(order.getUser_id(), "Khách hàng #" + order.getUser_id());
+                    }
+                }
+            }
+        }
+        
         request.setAttribute("orderPage", orderPage);
         request.setAttribute("orders", orderPage.getData());
+        request.setAttribute("customerNames", customerNames);
         request.setAttribute("keyword", keyword);
         request.setAttribute("currentPage", page);
         
@@ -489,7 +510,7 @@ public class StaffServlet extends HttpServlet {
             } catch (NumberFormatException ignored) {
             }
         }
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/order/details.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/order-details.jsp");
         rd.forward(request, response);
     }
 

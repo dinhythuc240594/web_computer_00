@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../admin/layout/init.jspf" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Locale" %>
@@ -9,6 +10,7 @@
 <%
     List<OrderDAO> orders = (List<OrderDAO>) request.getAttribute("orders");
     Page<OrderDAO> orderPage = (Page<OrderDAO>) request.getAttribute("orderPage");
+    Map<Integer, String> customerNames = (Map<Integer, String>) request.getAttribute("customerNames");
     String keyword = (String) request.getAttribute("keyword");
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -54,7 +56,7 @@
                                 <div class="row g-3">
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" name="keyword" 
-                                               placeholder="Tìm kiếm theo ID đơn hàng, ID khách hàng hoặc trạng thái..." 
+                                               placeholder="Tìm kiếm theo ID đơn hàng, tên khách hàng hoặc trạng thái..." 
                                                value="<%= keyword != null ? keyword : "" %>"/>
                                     </div>
                                     <div class="col-md-4">
@@ -74,7 +76,7 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>ID Khách hàng</th>
+                                    <th>Tên Khách hàng</th>
                                     <th>Ngày đặt</th>
                                     <th>Tổng tiền</th>
                                     <th>Trạng thái</th>
@@ -90,7 +92,15 @@
                                 %>
                                     <tr>
                                         <td><%= order.getId() %></td>
-                                        <td><%= order.getUser_id() %></td>
+                                        <td>
+                                            <%
+                                                String customerName = "Khách hàng #" + order.getUser_id();
+                                                if (customerNames != null && customerNames.containsKey(order.getUser_id())) {
+                                                    customerName = customerNames.get(order.getUser_id());
+                                                }
+                                                out.print(customerName);
+                                            %>
+                                        </td>
                                         <td>
                                             <%
                                                 if (order.getOrderDate() != null) {
