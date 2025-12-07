@@ -39,7 +39,7 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h4 class="fw-bold py-3 mb-4"><%= brand != null ? "Chỉnh sửa" : "Thêm" %> Thương hiệu</h4>
-                        <a href="${contextPath}/staff?action=brands" class="btn btn-outline-secondary">
+                        <a href="${contextPath}/staff?action=dashboard&tab=brands" class="btn btn-outline-secondary">
                             <i class="icon-base ri ri-arrow-left-line me-2"></i>Quay lại
                         </a>
                     </div>
@@ -101,7 +101,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         <i class="icon-base ri ri-save-line me-2"></i>Lưu
                                     </button>
-                                    <a href="${contextPath}/staff?action=brands" class="btn btn-outline-secondary">
+                                    <a href="${contextPath}/staff?action=dashboard&tab=brands" class="btn btn-outline-secondary">
                                         Hủy
                                     </a>
                                 </div>

@@ -149,7 +149,7 @@
                             if (brandPage != null && brandPage.getTotalPage() > 1) {
                                 int currentPage = brandPage.getCurrentPage();
                                 int totalPages = brandPage.getTotalPage();
-                                String baseUrl = request.getContextPath() + "/staff?action=brands";
+                                String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=brands";
                                 if (keyword != null && !keyword.isEmpty()) {
                                     baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                 }

@@ -155,7 +155,7 @@
                             if (categoryPage != null && categoryPage.getTotalPage() > 1) {
                                 int currentPage = categoryPage.getCurrentPage();
                                 int totalPages = categoryPage.getTotalPage();
-                                String baseUrl = request.getContextPath() + "/staff?action=categories";
+                                String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=categories";
                                 if (keyword != null && !keyword.isEmpty()) {
                                     baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                 }
