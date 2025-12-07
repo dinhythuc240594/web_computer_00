@@ -283,7 +283,13 @@
                             </figure>
                         </div>
                         <div class="lower-content">
-                            <span class="text">Thương hiệu #<%= product.getBrand_id() %></span>
+                            <% for (BrandDAO brand : brands) {
+                                    if(product.getBrand_id() == brand.getId()){ %>
+                                        <span class="text">Thương hiệu <%= brand.getName() %></span>
+                            <%      }
+                                }
+                            %>
+
                             <h4>
                                 <a href="<%= productLink %>"><%= product.getName() %></a>
                             </h4>
