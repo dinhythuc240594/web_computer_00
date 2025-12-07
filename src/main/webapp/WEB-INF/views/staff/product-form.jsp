@@ -5,6 +5,8 @@
 <%@ page import="model.CategoryDAO" %>
 <%@ page import="model.BrandDAO" %>
 <%@ page import="java.util.Base64" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.text.DecimalFormatSymbols" %>
 <%
     ProductDAO product = (ProductDAO) request.getAttribute("product");
     List<CategoryDAO> categories = (List<CategoryDAO>) request.getAttribute("categories");
@@ -81,9 +83,19 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Giá <span class="text-danger">*</span></label>
-                                        <input type="number" step="0.01" class="form-control" name="price" 
-                                               value="<%= product != null && product.getPrice() != null ? product.getPrice() : "" %>" required/>
+                                        <label class="form-label">Giá (VNĐ) <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="price" id="priceInput"
+                                               value="<%
+                                                   if (product != null && product.getPrice() != null) {
+                                                       DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                                                       symbols.setGroupingSeparator('.');
+                                                       DecimalFormat df = new DecimalFormat("#,##0", symbols);
+                                                       df.setMaximumFractionDigits(0);
+                                                       df.setGroupingUsed(true);
+                                                       long priceValue = (long) Math.round(product.getPrice());
+                                                       out.print(df.format(priceValue));
+                                                   }
+                                               %>" required/>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Số lượng tồn kho <span class="text-danger">*</span></label>
@@ -214,6 +226,22 @@
     });
 
     $(document).ready(function() {
+
+        // Format price input with thousand separators
+        $('#priceInput').on('input', function() {
+            var value = $(this).val().replace(/[^\d]/g, ''); // Remove all non-digits
+            if (value) {
+                // Format with dots as thousand separators
+                var formatted = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                $(this).val(formatted);
+            }
+        });
+
+        // Remove formatting before form submission
+        $('#updateProductForm').on('submit', function() {
+            var priceValue = $('#priceInput').val().replace(/\./g, ''); // Remove dots
+            $('#priceInput').val(priceValue);
+        });
 
         $('#image').on('change', function() {
             if (this.files && this.files[0]) {
