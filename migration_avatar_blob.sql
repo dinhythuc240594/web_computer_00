@@ -6,9 +6,9 @@ USE computer_store;
 -- Thay đổi kiểu dữ liệu cột avatar_blob từ BLOB sang MEDIUMBLOB
 -- MEDIUMBLOB có thể lưu tối đa 16MB, đủ cho ảnh avatar (giới hạn upload 5MB)
 ALTER TABLE users MODIFY COLUMN avatar_blob MEDIUMBLOB;
-ALTER TABLE brands ADD COLUMN logo_blob MEDIUMBLOB NULL;
-ALTER TABLE categories ADD COLUMN logo_blob MEDIUMBLOB NULL;
-ALTER TABLE products ADD COLUMN logo_blob MEDIUMBLOB NULL;
+ALTER TABLE brands ADD COLUMN image BLOB NULL;
+ALTER TABLE categories ADD COLUMN image BLOB NULL;
+ALTER TABLE products ADD COLUMN image BLOB NULL;
 -- Kiểm tra kết quả
 -- DESCRIBE users;
 

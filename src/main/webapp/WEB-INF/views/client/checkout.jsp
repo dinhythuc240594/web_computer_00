@@ -188,7 +188,7 @@
                                         for (CartItem item : cartItems) {
                                             ProductDAO product = item.getProduct();
                                             if (product == null) continue;
-                                            String productImage = product.getImage_url();
+                                            String productImage = product.getImage();
                                             if (productImage == null || productImage.isBlank()) {
                                                 productImage = request.getContextPath() + "/assets/client/images/shop/checkout-1.png";
                                             } else if (!productImage.startsWith("http")) {

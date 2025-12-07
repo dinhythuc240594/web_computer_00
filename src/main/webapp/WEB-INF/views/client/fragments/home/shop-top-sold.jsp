@@ -21,7 +21,7 @@
                             <%
                                 if (topSoldProducts != null && !topSoldProducts.isEmpty()) {
                                     for (ProductDAO product : topSoldProducts) {
-                                        String productImage = product.getImage_url();
+                                        String productImage = product.getImage();
                                         if (productImage == null || productImage.isBlank()) {
                                             productImage = contextPath + "/assets/client/images/shop/shop-32.png";
                                         } else if (!productImage.startsWith("http")) {

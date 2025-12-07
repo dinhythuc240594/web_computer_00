@@ -90,9 +90,9 @@
                                         <td><%= brand.getId() %></td>
                                         <td>
                                             <%
-                                                if (brand.getLogo_url() != null && !brand.getLogo_url().isEmpty()) {
+                                                if (brand.getImage() != null && !brand.getImage().isEmpty()) {
                                             %>
-                                                <img src="<%= brand.getLogo_url() %>" alt="<%= brand.getName() %>" 
+                                                <img src="<%= brand.getImage() %>" alt="<%= brand.getName() %>" 
                                                      style="width: 50px; height: 50px; object-fit: cover;"/>
                                             <%
                                                 }

@@ -94,8 +94,8 @@
                                 <div class="image-inner">
                                     <div class="image-box">
                                         <%
-                                            String imageUrl = (product != null && product.getImage_url() != null && !product.getImage_url().isBlank())
-                                                    ? product.getImage_url()
+                                            String imageUrl = (product != null && product.getImage() != null && !product.getImage().isBlank())
+                                                    ? product.getImage()
                                                     : contextPath + "/assets/client/images/shop/shop-details-1.png";
                                             if (!imageUrl.startsWith("http") && !imageUrl.startsWith("/")) {
                                                 imageUrl = contextPath + "/" + imageUrl;
@@ -244,7 +244,7 @@
                                                 data-product-id="<%= product != null ? product.getId() : 0 %>"
                                                 data-product-name="<%= product != null && product.getName() != null ? product.getName().replace("\"", "&quot;") : "" %>"
                                                 data-product-price="<%= product != null && product.getPrice() != null ? product.getPrice() : 0 %>"
-                                                data-product-image="<%= product != null && product.getImage_url() != null ? product.getImage_url() : "" %>"
+                                                data-product-image="<%= product != null && product.getImage() != null ? product.getImage() : "" %>"
                                                 data-product-slug="<%= product != null && product.getSlug() != null ? product.getSlug() : "" %>">
                                             Thêm vào giỏ hàng<span></span><span></span><span></span><span></span>
                                         </button>

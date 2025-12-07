@@ -24,7 +24,7 @@ public class BrandRepositoryImpl implements BrandRepository {
     public List<BrandDAO> getAll() {
 
         List<BrandDAO> items = new ArrayList<>();
-        String sql = "SELECT id, name, code, is_active, logo_url, logo_blob FROM brands";
+        String sql = "SELECT id, name, code, is_active, image FROM brands";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -43,7 +43,7 @@ public class BrandRepositoryImpl implements BrandRepository {
     @Override
     public BrandDAO findById(int id) {
 
-        String sql = "SELECT id, name, code, is_active, logo_url, logo_blob "
+        String sql = "SELECT id, name, code, is_active, image "
                 + "FROM brands WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
@@ -92,7 +92,7 @@ public class BrandRepositoryImpl implements BrandRepository {
         String sortField = pageRequest.getSortField();
         String orderField = pageRequest.getOrderField();
 
-        String sql = "SELECT id, name, code, is_active, logo_url, logo_blob FROM brands ";
+        String sql = "SELECT id, name, code, is_active, image FROM brands ";
 
         List<String> conditions = new ArrayList<>();
         List<Object> params = new ArrayList<>();
@@ -167,7 +167,7 @@ public class BrandRepositoryImpl implements BrandRepository {
     @Override
     public Boolean create(BrandDAO entity) {
 
-        String sql = "INSERT INTO brands (name, code, is_active, logo_url, logo_blob) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO brands (name, code, is_active, image) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -175,12 +175,7 @@ public class BrandRepositoryImpl implements BrandRepository {
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getCode());
             ps.setBoolean(3, entity.getIs_active());
-            ps.setString(4, entity.getLogo_url());
-            if (entity.getLogo_blob() != null && entity.getLogo_blob().length > 0) {
-                ps.setBytes(5, entity.getLogo_blob());
-            } else {
-                ps.setBytes(5, null);
-            }
+            ps.setString(4, entity.getImage());
 
             ps.executeUpdate();
 
@@ -195,7 +190,7 @@ public class BrandRepositoryImpl implements BrandRepository {
     @Override
     public Boolean update(BrandDAO entity) {
 
-        String sql = "UPDATE brands SET name = ?, code = ?, is_active = ?, logo_url = ?, logo_blob = ?"
+        String sql = "UPDATE brands SET name = ?, code = ?, is_active = ?, image = ?"
                     + " WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
@@ -204,12 +199,8 @@ public class BrandRepositoryImpl implements BrandRepository {
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getCode());
             ps.setBoolean(3, entity.getIs_active());
-            ps.setString(4, entity.getLogo_url());
-            if (entity.getLogo_blob() != null && entity.getLogo_blob().length > 0) {
-                ps.setBytes(5, entity.getLogo_blob());
-            } else {
-                ps.setBytes(5, null);
-            }
+            ps.setString(4, entity.getImage());
+
             ps.setInt(6, entity.getId());
             ps.executeUpdate();
 
@@ -229,15 +220,13 @@ public class BrandRepositoryImpl implements BrandRepository {
         item.setName(rs.getString("name"));
         item.setCode(rs.getString("code"));
         item.setIs_active(rs.getBoolean("is_active"));
-        item.setLogo_url(rs.getString("logo_url"));
-        
-        // Đọc logo_blob từ database
+
         try {
-            byte[] logoBlob = rs.getBytes("logo_blob");
-            item.setLogo_blob(logoBlob);
+            String image = rs.getString("image");
+            item.setImage(image);
         } catch (SQLException e) {
             // Nếu cột không tồn tại hoặc null, set null
-            item.setLogo_blob(null);
+            item.setImage(null);
         }
 
         return item;

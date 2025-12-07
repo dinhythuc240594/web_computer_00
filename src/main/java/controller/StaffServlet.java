@@ -3,10 +3,7 @@ package controller;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import model.OrderDAO;
 import model.ProductDAO;
 import model.CategoryDAO;
@@ -28,12 +25,21 @@ import utilities.DataSourceUtil;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet(name = "staff", urlPatterns = "/staff")
 public class StaffServlet extends HttpServlet {
 
+    private static final Logger LOGGER = Logger.getLogger(StaffServlet.class.getName());
     private transient DataSource dataSource;
     private transient UserService userService;
     private transient OrderService orderService;
@@ -495,7 +501,6 @@ public class StaffServlet extends HttpServlet {
         String name = request.getParameter("name");
         String slug = request.getParameter("slug");
         String description = request.getParameter("description");
-        String imageUrl = request.getParameter("image_url");
         String priceStr = request.getParameter("price");
         String stockStr = request.getParameter("stock_quantity");
         String categoryIdStr = request.getParameter("category_id");
@@ -505,7 +510,18 @@ public class StaffServlet extends HttpServlet {
         product.setName(name);
         product.setSlug(slug);
         product.setDescription(description);
-        product.setImage_url(imageUrl);
+        
+        // Xử lý upload image sử dụng handleImageUpload
+        try {
+            String image = handleImageUpload(request);
+            if (image != null && !image.isBlank()) {
+                product.setImage(image);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Lỗi khi xử lý upload logo: " + e.getMessage(), e);
+            // Tiếp tục tạo category mà không có logo nếu có lỗi
+        }
+
         try {
             if (priceStr != null) {
                 product.setPrice(Double.parseDouble(priceStr));
@@ -560,7 +576,6 @@ public class StaffServlet extends HttpServlet {
         String name = request.getParameter("name");
         String slug = request.getParameter("slug");
         String description = request.getParameter("description");
-        String imageUrl = request.getParameter("image_url");
         String priceStr = request.getParameter("price");
         String stockStr = request.getParameter("stock_quantity");
         String categoryIdStr = request.getParameter("category_id");
@@ -570,7 +585,21 @@ public class StaffServlet extends HttpServlet {
         if (name != null) product.setName(name);
         if (slug != null) product.setSlug(slug);
         if (description != null) product.setDescription(description);
-        if (imageUrl != null) product.setImage_url(imageUrl);
+
+        // Xử lý upload image sử dụng handleImageUpload
+        try {
+            String image = handleImageUpload(request);
+            if (image != null && !image.isBlank()) {
+                product.setImage(image);
+            } else{
+                image = product.getImage();
+                product.setImage(image);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Lỗi khi xử lý upload logo: " + e.getMessage(), e);
+            // Tiếp tục tạo category mà không có logo nếu có lỗi
+        }
+
         try {
             if (priceStr != null) {
                 product.setPrice(Double.parseDouble(priceStr));
@@ -664,6 +693,18 @@ public class StaffServlet extends HttpServlet {
         CategoryDAO category = new CategoryDAO();
         category.setName(name);
         category.setDescription(description);
+
+        // Xử lý upload image sử dụng handleImageUpload
+        try {
+            String image = handleImageUpload(request);
+            if (image != null && !image.isBlank()) {
+                category.setImage(image);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Lỗi khi xử lý upload logo: " + e.getMessage(), e);
+            // Tiếp tục tạo category mà không có logo nếu có lỗi
+        }
+
         try {
             if (parentIdStr != null && !parentIdStr.isBlank()) {
                 int parentId = Integer.parseInt(parentIdStr);
@@ -706,6 +747,20 @@ public class StaffServlet extends HttpServlet {
         String parentIdStr = request.getParameter("parent_id");
         String activeStr = request.getParameter("is_active");
 
+        // Xử lý upload image sử dụng handleImageUpload
+        try {
+            String image = handleImageUpload(request);
+            if (image != null && !image.isBlank()) {
+                category.setImage(image);
+            } else{
+                image = category.getImage();
+                category.setImage(image);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Lỗi khi xử lý upload logo: " + e.getMessage(), e);
+            // Tiếp tục tạo category mà không có logo nếu có lỗi
+        }
+
         if (name != null) category.setName(name);
         if (description != null) category.setDescription(description);
         try {
@@ -742,12 +797,22 @@ public class StaffServlet extends HttpServlet {
             throws IOException {
         String name = request.getParameter("name");
         String code = request.getParameter("code");
-        String logoUrl = request.getParameter("logo_url");
 
         BrandDAO brand = new BrandDAO();
         brand.setName(name);
         brand.setCode(code);
-        brand.setLogo_url(logoUrl);
+
+        // Xử lý upload image sử dụng handleImageUpload
+        try {
+            String image = handleImageUpload(request);
+            if (image != null && !image.isBlank()) {
+                brand.setImage(image);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Lỗi khi xử lý upload image: " + e.getMessage(), e);
+            // Tiếp tục tạo brand mà không có image nếu có lỗi
+        }
+
         brand.setIs_active(true);
 
         brandService.create(brand);
@@ -777,12 +842,25 @@ public class StaffServlet extends HttpServlet {
 
         String name = request.getParameter("name");
         String code = request.getParameter("code");
-        String logoUrl = request.getParameter("logo_url");
         String activeStr = request.getParameter("is_active");
 
         if (name != null) brand.setName(name);
         if (code != null) brand.setCode(code);
-        if (logoUrl != null) brand.setLogo_url(logoUrl);
+
+        // Xử lý upload image sử dụng handleImageUpload
+        try {
+            String image = handleImageUpload(request);
+            if (image != null && !image.isBlank()) {
+                brand.setImage(image);
+            } else{
+                image = brand.getImage();
+                brand.setImage(image);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Lỗi khi xử lý upload image: " + e.getMessage(), e);
+            // Tiếp tục tạo brand mà không có image nếu có lỗi
+        }
+
         if (activeStr != null) {
             brand.setIs_active(Boolean.parseBoolean(activeStr));
         }
@@ -831,4 +909,32 @@ public class StaffServlet extends HttpServlet {
 
         response.sendRedirect(request.getContextPath() + "/staff?action=orders");
     }
+
+    private String handleImageUpload(HttpServletRequest request) throws IOException, ServletException {
+        Part imagePart = request.getPart("image");
+        if (imagePart != null && imagePart.getSize() > 0) {
+            String contentType = imagePart.getContentType();
+            if (contentType != null && contentType.startsWith("image/")) {
+                String submitted = Paths.get(imagePart.getSubmittedFileName()).getFileName().toString();
+                String ext = submitted.contains(".") ? submitted.substring(submitted.lastIndexOf(".")) : ".jpg";
+                String safeName = UUID.randomUUID().toString().replace("-", "") + ext.toLowerCase();
+
+                String appRealPath = request.getServletContext().getRealPath("");
+                if (appRealPath == null) {
+                    appRealPath = System.getProperty("user.home") + "/uploads";
+                }
+
+                Path uploadDir = Paths.get(appRealPath, "uploads", "products");
+                Files.createDirectories(uploadDir);
+
+                try (InputStream in = imagePart.getInputStream()) {
+                    Files.copy(in, uploadDir.resolve(safeName), StandardCopyOption.REPLACE_EXISTING);
+                }
+
+                return request.getContextPath() + "/uploads/products/" + URLEncoder.encode(safeName, "UTF-8");
+            }
+        }
+        return null;
+    }
+
 }

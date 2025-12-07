@@ -349,8 +349,8 @@
                                                     OrderItemDAO firstItem = orderItems.get(0);
                                                     ProductDAO product = productService.findById(firstItem.getProductId());
                                                     String productName = product != null ? product.getName() : "Sản phẩm #" + firstItem.getProductId();
-                                                    String productImage = product != null && product.getImage_url() != null 
-                                                            ? product.getImage_url() 
+                                                    String productImage = product != null && product.getImage() != null 
+                                                            ? product.getImage() 
                                                             : "${pageContext.request.contextPath}/assets/client/images/resource/history-1.png";
                                                     String statusText = "";
                                                     boolean isCancelled = "CANCELLED".equals(order.getStatus()) || 
@@ -524,8 +524,8 @@
                                     for (WishlistDAO wishlistItem : userWishlist) {
                                         ProductDAO product = productService.findById(wishlistItem.getProductId());
                                         if (product != null) {
-                                            String productImage = product.getImage_url() != null && !product.getImage_url().isBlank()
-                                                    ? product.getImage_url()
+                                            String productImage = product.getImage() != null && !product.getImage().isBlank()
+                                                    ? product.getImage()
                                                     : "${pageContext.request.contextPath}/assets/client/images/resource/history-1.png";
                                 %>
                                 <div class="col-lg-3 col-md-4 col-sm-6 single-column" style="margin-bottom: 20px;">

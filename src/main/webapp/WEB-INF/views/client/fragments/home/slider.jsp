@@ -18,7 +18,7 @@
                 if (sliderProducts != null && !sliderProducts.isEmpty()) {
                     int index = 0;
                     for (ProductDAO product : sliderProducts) {
-                        String productImage = product.getImage_url();
+                        String productImage = product.getImage();
                         if (productImage == null || productImage.isBlank()) {
                             productImage = contextPath + "/assets/client/images/banner/banner-img-1.png";
                         } else if (!productImage.startsWith("http")) {

@@ -100,9 +100,9 @@
                                         <td><%= product.getId() %></td>
                                         <td>
                                             <%
-                                                if (product.getImage_url() != null && !product.getImage_url().isEmpty()) {
+                                                if (product.getImage() != null && !product.getImage().isEmpty()) {
                                             %>
-                                                <img src="<%= product.getImage_url() %>" alt="<%= product.getName() %>" 
+                                                <img src="<%= product.getImage() %>" alt="<%= product.getName() %>" 
                                                      style="width: 50px; height: 50px; object-fit: cover;"/>
                                             <%
                                                 }

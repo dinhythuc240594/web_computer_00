@@ -22,8 +22,14 @@ import utilities.FileUpload;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -113,7 +119,6 @@ public class BrandServlet extends HttpServlet {
         try {
             String name = trimToNull(request.getParameter("name"));
             String code = trimToNull(request.getParameter("code"));
-            String logoUrl = trimToNull(request.getParameter("logo_url"));
             
             if (name == null || name.isBlank()) {
                 request.setAttribute("errorMessage", "Tên thương hiệu không được để trống.");
@@ -130,51 +135,19 @@ public class BrandServlet extends HttpServlet {
             BrandDAO brand = new BrandDAO();
             brand.setName(name);
             brand.setCode(code);
-            brand.setLogo_url(logoUrl != null ? logoUrl : "");
             brand.setIs_active(true);
-            
-            // Xử lý upload logo_blob sử dụng FileUpload utility
-            Part imagePart = request.getPart("image");
-            if (imagePart != null && imagePart.getSize() > 0) {
-                try {
-                    // Validate file bằng FileUpload utility - validate trước khi đọc bytes
-                    String contentType = imagePart.getContentType();
-                    if (contentType != null && contentType.startsWith("image/")) {
-                        // Validate file size (5MB max) - giống FileUpload.MAX_IMAGE_SIZE
-                        if (imagePart.getSize() <= 5 * 1024 * 1024) {
-                            // Đọc bytes từ Part để lưu vào logo_blob
-                            // Lưu ý: Part stream chỉ đọc được một lần, nên đọc bytes trước
-                            try (InputStream is = imagePart.getInputStream()) {
-                                byte[] logoBytes = is.readAllBytes();
-                                if (logoBytes.length > 0) {
-                                    // Validate magic bytes để đảm bảo file là ảnh thật
-                                    // Sử dụng logic tương tự FileUpload
-                                    if (isValidImageBytes(logoBytes)) {
-                                        brand.setLogo_blob(logoBytes);
-                                    } else {
-                                        request.setAttribute("errorMessage", 
-                                                "File logo không đúng định dạng ảnh hợp lệ.");
-                                        doGet(request, response);
-                                        return;
-                                    }
-                                }
-                            }
-                        } else {
-                            request.setAttribute("errorMessage", "Kích thước file logo vượt quá 5MB.");
-                            doGet(request, response);
-                            return;
-                        }
-                    } else if (imagePart.getSize() > 0) {
-                        request.setAttribute("errorMessage", "Chỉ chấp nhận file ảnh (JPG, PNG, GIF, WebP).");
-                        doGet(request, response);
-                        return;
-                    }
-                } catch (Exception e) {
-                    LOGGER.log(Level.WARNING, "Lỗi khi xử lý upload logo: " + e.getMessage(), e);
-                    // Tiếp tục tạo brand mà không có logo nếu có lỗi
+
+            // Xử lý upload image sử dụng handleImageUpload
+            try {
+                String image = handleImageUpload(request);
+                if (image != null && !image.isBlank()) {
+                    brand.setImage(image);
                 }
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "Lỗi khi xử lý upload image: " + e.getMessage(), e);
+                // Tiếp tục tạo brand mà không có image nếu có lỗi
             }
-            
+
             boolean success = Boolean.TRUE.equals(brandService.create(brand));
             
             if (success) {
@@ -210,9 +183,7 @@ public class BrandServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/brand");
                 return;
             }
-            
-            // Lưu logo_blob hiện tại để giữ lại nếu không upload mới
-            byte[] existingLogoBlob = brand.getLogo_blob();
+
             
             String name = trimToNull(request.getParameter("name"));
             String code = trimToNull(request.getParameter("code"));
@@ -235,58 +206,23 @@ public class BrandServlet extends HttpServlet {
             
             brand.setName(name);
             brand.setCode(code);
-            brand.setLogo_url(logoUrl != null ? logoUrl : "");
+            
+            // Xử lý upload image sử dụng handleImageUpload
+            try {
+                String image = handleImageUpload(request);
+                if (image != null && !image.isBlank()) {
+                    brand.setImage(image);
+                }else{
+                    image = brand.getImage();
+                    brand.setImage(image);
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "Lỗi khi xử lý upload image: " + e.getMessage(), e);
+                // Tiếp tục tạo brand mà không có image nếu có lỗi
+            }
+
             if (activeStr != null) {
                 brand.setIs_active(Boolean.parseBoolean(activeStr));
-            }
-            
-            // Xử lý upload logo_blob mới - chỉ cập nhật nếu có file mới
-            Part imagePart = request.getPart("image");
-            if (imagePart != null && imagePart.getSize() > 0) {
-                try {
-                    // Validate file bằng FileUpload utility - validate trước khi đọc bytes
-                    String contentType = imagePart.getContentType();
-                    if (contentType != null && contentType.startsWith("image/")) {
-                        // Validate file size (5MB max) - giống FileUpload.MAX_IMAGE_SIZE
-                        if (imagePart.getSize() <= 5 * 1024 * 1024) {
-                            // Đọc bytes từ Part để lưu vào logo_blob
-                            // Lưu ý: Part stream chỉ đọc được một lần, nên đọc bytes trước
-                            try (InputStream is = imagePart.getInputStream()) {
-                                byte[] logoBytes = is.readAllBytes();
-                                if (logoBytes.length > 0) {
-                                    // Validate magic bytes để đảm bảo file là ảnh thật
-                                    // Sử dụng logic tương tự FileUpload
-                                    if (isValidImageBytes(logoBytes)) {
-                                        brand.setLogo_blob(logoBytes);
-                                    } else {
-                                        request.setAttribute("errorMessage", 
-                                                "File logo không đúng định dạng ảnh hợp lệ.");
-                                        request.setAttribute("brand", brand);
-                                        doGet(request, response);
-                                        return;
-                                    }
-                                }
-                            }
-                        } else {
-                            request.setAttribute("errorMessage", "Kích thước file logo vượt quá 5MB.");
-                            request.setAttribute("brand", brand);
-                            doGet(request, response);
-                            return;
-                        }
-                    } else if (imagePart.getSize() > 0) {
-                        request.setAttribute("errorMessage", "Chỉ chấp nhận file ảnh (JPG, PNG, GIF, WebP).");
-                        request.setAttribute("brand", brand);
-                        doGet(request, response);
-                        return;
-                    }
-                } catch (Exception e) {
-                    LOGGER.log(Level.WARNING, "Lỗi khi xử lý upload logo: " + e.getMessage(), e);
-                    // Giữ logo_blob cũ nếu có lỗi
-                    brand.setLogo_blob(existingLogoBlob);
-                }
-            } else {
-                // Không có file mới, giữ logo_blob cũ
-                brand.setLogo_blob(existingLogoBlob);
             }
             
             boolean success = Boolean.TRUE.equals(brandService.update(brand));
@@ -303,45 +239,6 @@ public class BrandServlet extends HttpServlet {
             request.setAttribute("errorMessage", "Có lỗi xảy ra: " + e.getMessage());
             doGet(request, response);
         }
-    }
-    
-    /**
-     * Validate image bytes bằng cách kiểm tra magic bytes
-     * Sử dụng logic tương tự FileUpload utility
-     */
-    private boolean isValidImageBytes(byte[] bytes) {
-        if (bytes == null || bytes.length < 4) {
-            return false;
-        }
-        
-        // JPEG: FF D8 FF
-        if (bytes.length >= 3 && bytes[0] == (byte)0xFF && bytes[1] == (byte)0xD8 && bytes[2] == (byte)0xFF) {
-            return true;
-        }
-        
-        // PNG: 89 50 4E 47 0D 0A 1A 0A
-        if (bytes.length >= 8 && bytes[0] == (byte)0x89 && bytes[1] == 0x50 && 
-            bytes[2] == 0x4E && bytes[3] == 0x47 && bytes[4] == 0x0D && 
-            bytes[5] == 0x0A && bytes[6] == 0x1A && bytes[7] == 0x0A) {
-            return true;
-        }
-        
-        // GIF: 47 49 46 38 37 61 hoặc 47 49 46 38 39 61
-        if (bytes.length >= 6 && bytes[0] == 0x47 && bytes[1] == 0x49 && 
-            bytes[2] == 0x46 && bytes[3] == 0x38 && 
-            (bytes[4] == 0x37 || bytes[4] == 0x39) && bytes[5] == 0x61) {
-            return true;
-        }
-        
-        // WebP: RIFF...WEBP (bytes 0-3: 52 49 46 46, bytes 8-11: 57 45 42 50)
-        if (bytes.length >= 12 && bytes[0] == 0x52 && bytes[1] == 0x49 && 
-            bytes[2] == 0x46 && bytes[3] == 0x46 &&
-            bytes[8] == 0x57 && bytes[9] == 0x45 && 
-            bytes[10] == 0x42 && bytes[11] == 0x50) {
-            return true;
-        }
-        
-        return false;
     }
 
     private List<BrandDAO> fetchBrands() {
@@ -372,4 +269,32 @@ public class BrandServlet extends HttpServlet {
             return 0;
         }
     }
+
+	private String handleImageUpload(HttpServletRequest request) throws IOException, ServletException {
+		Part imagePart = request.getPart("image");
+		if (imagePart != null && imagePart.getSize() > 0) {
+			String contentType = imagePart.getContentType();
+			if (contentType != null && contentType.startsWith("image/")) {
+				String submitted = Paths.get(imagePart.getSubmittedFileName()).getFileName().toString();
+				String ext = submitted.contains(".") ? submitted.substring(submitted.lastIndexOf(".")) : ".jpg";
+				String safeName = UUID.randomUUID().toString().replace("-", "") + ext.toLowerCase();
+				
+				String appRealPath = request.getServletContext().getRealPath("");
+				if (appRealPath == null) {
+					appRealPath = System.getProperty("user.home") + "/uploads";
+				}
+				
+				Path uploadDir = Paths.get(appRealPath, "uploads", "brands");
+				Files.createDirectories(uploadDir);
+				
+				try (InputStream in = imagePart.getInputStream()) {
+					Files.copy(in, uploadDir.resolve(safeName), StandardCopyOption.REPLACE_EXISTING);
+				}
+				
+				return request.getContextPath() + "/uploads/brands/" + URLEncoder.encode(safeName, "UTF-8");
+			}
+		}
+		return null;
+	}
+    
 }

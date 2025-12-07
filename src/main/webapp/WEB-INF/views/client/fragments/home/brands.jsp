@@ -16,7 +16,7 @@
                 <%
                     if (brands != null && !brands.isEmpty()) {
                         for (BrandDAO brand : brands) {
-                            String logoUrl = brand.getLogo_url();
+                            String logoUrl = brand.getImage();
                             if (logoUrl == null || logoUrl.isBlank()) {
                                 logoUrl = fallbackLogo;
                             } else if (!logoUrl.startsWith("http")) {

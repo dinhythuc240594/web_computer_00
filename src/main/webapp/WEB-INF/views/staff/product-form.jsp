@@ -9,6 +9,7 @@
     ProductDAO product = (ProductDAO) request.getAttribute("product");
     List<CategoryDAO> categories = (List<CategoryDAO>) request.getAttribute("categories");
     List<BrandDAO> brands = (List<BrandDAO>) request.getAttribute("brands");
+    String previewImg = product != null && product.getImage() != null && !product.getImage().isEmpty() ? product.getImage():"";
 %>
 <!doctype html>
 <html lang="en" class="layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
@@ -132,38 +133,14 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Hình ảnh sản phẩm</label>
-                                    <input type="file" class="form-control" id="image" name="image" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"/>
-                                    <small class="form-text text-muted">Chỉ chấp nhận file ảnh (JPG, PNG, GIF, WebP). Kích thước tối đa: 5MB.</small>
-                                    <div id="imagePreview" class="mb-3 mt-3 w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50">
-                                        <%
-                                            // Ưu tiên hiển thị image_blob, sau đó mới đến image_url
-                                            if (product != null && product.getImage_blob() != null && product.getImage_blob().length > 0) {
-                                        %>
-                                            <img src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(product.getImage_blob()) %>" 
-                                                 alt="Ảnh sản phẩm hiện tại" id="previewImg" 
-                                                 class="max-w-full max-h-full object-contain"/>
-                                        <%
-                                            } else if (product != null && product.getImage_url() != null && !product.getImage_url().isBlank()) {
-                                        %>
-                                            <img src="<%= product.getImage_url() %>" alt="Ảnh sản phẩm hiện tại" id="previewImg" 
-                                                 class="max-w-full max-h-full object-contain"/>
-                                        <%
-                                            } else {
-                                        %>
-                                            <img src="${pageContext.request.contextPath}/assets/client/images/resource/category-4.png" 
-                                                 alt="Xem trước ảnh" id="previewImg" 
-                                                 class="max-w-full max-h-full object-contain"/>
-                                        <%
-                                            }
-                                        %>
+                                    <div id="imagePreview" class="mb-3 w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50">
+                                        <% if(previewImg == "") { %>
+                                        <img src="${pageContext.request.contextPath}/static/img/food-thumbnail.png" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
+                                        <% } else { %>
+                                        <img src="<%= previewImg  %>" alt="Xem trước ảnh" id="previewImg" class="max-w-full max-h-full object-contain">
+                                        <% } %>
                                     </div>
-                                    <div class="mb-2">
-                                        <label class="form-label">Hoặc nhập URL hình ảnh</label>
-                                        <input type="text" class="form-control" name="image_url" 
-                                               value="<%= product != null && product.getImage_url() != null ? product.getImage_url() : "" %>" 
-                                               placeholder="https://example.com/image.jpg"/>
-                                        <small class="form-text text-muted">Nếu không upload file, có thể nhập URL hình ảnh</small>
-                                    </div>
+                                    <input type="file" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="image" name="image" accept="image/*" />
                                 </div>
 
                                 <%
@@ -199,7 +176,11 @@
         </div>
     </div>
 </div>
-
+<style>
+    .cke_notification_warning {
+        display: none !important;
+    }
+</style>
 <script src="${adminAssetsPath}/vendor/libs/jquery/jquery.js"></script>
 <script src="${adminAssetsPath}/vendor/libs/popper/popper.js"></script>
 <script src="${adminAssetsPath}/vendor/js/bootstrap.js"></script>
@@ -208,33 +189,88 @@
 <script src="${adminAssetsPath}/vendor/js/menu.js"></script>
 <script src="${adminAssetsPath}/js/main.js"></script>
 <script>
-    // Preview image when file is selected
+    CKEDITOR.replace('description', {
+        toolbar: [
+            { name: 'document', items: [ 'Source', '-', 'Preview' ] },
+            { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo' ] },
+            { name: 'styles', items: [ 'Format', 'Font', 'FontSize' ] },
+            { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+            { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
+            { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight' ] },
+            { name: 'insert', items: [ 'Image', 'Table', 'Link', 'Unlink' ] }
+        ],
+        contentsCss: [
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
+            'body { font-family: "Roboto", "Helvetica Neue", Arial, sans-serif; padding: 15px; }'
+        ],
+        filebrowserUploadUrl: '${pageContext.request.contextPath}/upload-image',
+        imageUploadUrl: '${pageContext.request.contextPath}/upload-image',
+
+        extraPlugins: 'uploadimage',
+        removePlugins: 'imagebase64, elementspath',
+        height: 300,
+        resize_enabled: false,
+        image2_alignClasses: ['image-align-left', 'image-align-center', 'image-align-right'],
+    });
+
     $(document).ready(function() {
+
         $('#image').on('change', function() {
             if (this.files && this.files[0]) {
-                var file = this.files[0];
-                
-                // Validate file size (5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('Kích thước file vượt quá 5MB. Vui lòng chọn file nhỏ hơn.');
-                    this.value = '';
-                    return;
-                }
-                
-                // Validate file type
-                var validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-                if (!validTypes.includes(file.type)) {
-                    alert('Chỉ chấp nhận file ảnh (JPG, PNG, GIF, WebP).');
-                    this.value = '';
-                    return;
-                }
-                
                 var reader = new FileReader();
+
                 reader.onload = function(e) {
                     $('#previewImg').attr('src', e.target.result).show();
                 };
-                reader.readAsDataURL(file);
+
+                reader.readAsDataURL(this.files[0]);
+            } else {
+                $('#previewImg').attr('src', "<%= previewImg %>");
             }
+        });
+
+        $('#updateProductForm').on('submit', function(e) {
+            e.preventDefault();
+
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+
+            var editorData = CKEDITOR.instances['description'].getData();
+            // formData.append("description", editorData);
+
+            var formData = new FormData(this);
+
+            if (!formData.has('is_available')) {
+                formData.append('is_available', '0');
+            }
+
+            $.ajax({
+                url: 'foods?action=update',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+
+                beforeSend: function() {
+                    $('#responseMessage').html('<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">Đang cập nhật món ăn...</div>');
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $('#responseMessage').html('<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">' + response.message + '</div>');
+                        setTimeout(function() {
+                            window.location.href = 'foods?action=list';
+                        }, 1500);
+                    } else {
+                        $('#responseMessage').html('<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">Lỗi: ' + response.message + '</div>');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR.responseText);
+                    $('#responseMessage').html('<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">Đã xảy ra lỗi khi gửi dữ liệu. Vui lòng thử lại.</div>');
+                }
+            });
         });
     });
 </script>

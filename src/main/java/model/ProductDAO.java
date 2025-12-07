@@ -8,8 +8,7 @@ public class ProductDAO {
     private String name;
     private String description;
     private Double price;
-    private String image_url;
-    private byte[] image_blob;
+    private String image;
     private String slug;
     private int category_id;
     private int stock_quantity;
@@ -21,13 +20,13 @@ public class ProductDAO {
     public ProductDAO(){}
 
     public ProductDAO(int id, String name, String description, Double price,
-                      String image_url, String slug, int category_id, int stock_quantity,
+                      String image, String slug, int category_id, int stock_quantity,
                       int brand_id, Boolean is_active) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.image_url = image_url;
+        this.image = image;
         this.slug = slug;
         this.category_id = category_id;
         this.stock_quantity = stock_quantity;
@@ -65,14 +64,6 @@ public class ProductDAO {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
     }
 
     public String getSlug() {
@@ -131,12 +122,12 @@ public class ProductDAO {
         this.updated_at = updated_at;
     }
 
-    public byte[] getImage_blob() {
-        return image_blob;
+    public String getImage() {
+        return image;
     }
 
-    public void setImage_blob(byte[] image_blob) {
-        this.image_blob = image_blob;
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }

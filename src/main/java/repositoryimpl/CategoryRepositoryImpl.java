@@ -44,7 +44,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public CategoryDAO findById(int id) {
 
-        String sql = "SELECT id, name, description, is_active, parent_id, logo_blob " +
+        String sql = "SELECT id, name, description, is_active, parent_id, image " +
                     "FROM categories WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
@@ -94,7 +94,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         String sortField = pageRequest.getSortField();
         String orderField = pageRequest.getOrderField();
 
-        String sql = "SELECT id, name, description, is_active, parent_id, logo_blob FROM categories ";
+        String sql = "SELECT id, name, description, is_active, parent_id, image FROM categories ";
 
         List<String> conditions = new ArrayList<>();
         List<Object> params = new ArrayList<>();
@@ -169,7 +169,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public Boolean create(CategoryDAO entity) {
 
-        String sql = "INSERT INTO categories (name, description, is_active, parent_id, logo_blob) " +
+        String sql = "INSERT INTO categories (name, description, is_active, parent_id, image) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
@@ -179,11 +179,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             ps.setString(2, entity.getDescription());
             ps.setBoolean(3, entity.getIs_active());
             ps.setInt(4, entity.getParent_id());
-            if (entity.getLogo_blob() != null && entity.getLogo_blob().length > 0) {
-                ps.setBytes(5, entity.getLogo_blob());
-            } else {
-                ps.setBytes(5, null);
-            }
+            ps.setString(6, entity.getImage());
 
             ps.executeUpdate();
 
@@ -198,7 +194,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public Boolean update(CategoryDAO entity) {
 
-        String sql = "UPDATE categories SET name = ?, description = ?, is_active = ?, parent_id = ?, logo_blob = ?"
+        String sql = "UPDATE categories SET name = ?, description = ?, is_active = ?, parent_id = ?, image = ?"
                 + " WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
@@ -208,12 +204,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             ps.setString(2, entity.getDescription());
             ps.setBoolean(3, entity.getIs_active());
             ps.setInt(4, entity.getParent_id());
-            if (entity.getLogo_blob() != null && entity.getLogo_blob().length > 0) {
-                ps.setBytes(5, entity.getLogo_blob());
-            } else {
-                ps.setBytes(5, null);
-            }
-            ps.setInt(6, entity.getId());
+            ps.setString(6, entity.getImage());
+            ps.setInt(7, entity.getId());
             ps.executeUpdate();
 
             return true;
@@ -233,14 +225,13 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         item.setDescription(rs.getString("description"));
         item.setIs_active(rs.getBoolean("is_active"));
         item.setParent_id(rs.getInt("parent_id"));
-        
-        // Đọc logo_blob từ database
+
         try {
-            byte[] logoBlob = rs.getBytes("logo_blob");
-            item.setLogo_blob(logoBlob);
+            String image = rs.getString("image");
+            item.setImage(image);
         } catch (SQLException e) {
             // Nếu cột không tồn tại hoặc null, set null
-            item.setLogo_blob(null);
+            item.setImage(null);
         }
 
         return item;

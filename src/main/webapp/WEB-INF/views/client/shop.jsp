@@ -141,7 +141,7 @@
             <div class="row clearfix">
                 <%
                     for (ProductDAO product : products) {
-                        String productImage = product.getImage_url();
+                        String productImage = product.getImage();
                         if (productImage == null || productImage.isBlank()) {
                             productImage = contextPath + "/assets/client/images/shop/shop-10.png";
                         } else if (!productImage.startsWith("http")) {

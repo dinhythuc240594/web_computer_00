@@ -6,17 +6,16 @@ public class BrandDAO {
     private String name;
     private String code;
     private Boolean is_active;
-    private String logo_url;
-    private byte[] logo_blob;
+    private String image;
 
     public BrandDAO(){};
 
-    public BrandDAO(int id, String name, String code, Boolean is_active, String logo_url) {
+    public BrandDAO(int id, String name, String code, Boolean is_active, String image) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.is_active = is_active;
-        this.logo_url = logo_url;
+        this.image = image;
     }
 
     public int getId() {
@@ -51,19 +50,11 @@ public class BrandDAO {
         this.is_active = is_active;
     }
 
-    public String getLogo_url() {
-        return logo_url;
+    public String getImage() {
+        return image;
     }
 
-    public void setLogo_url(String logo_url) {
-        this.logo_url = logo_url;
-    }
-
-    public byte[] getLogo_blob() {
-        return logo_blob;
-    }
-
-    public void setLogo_blob(byte[] logo_blob) {
-        this.logo_blob = logo_blob;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

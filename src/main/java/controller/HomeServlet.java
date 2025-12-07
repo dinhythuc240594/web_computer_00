@@ -230,7 +230,7 @@ public class HomeServlet extends HttpServlet {
 
     private NewsItem mapProductToNewsItem(ProductDAO product) {
         String summary = truncateText(product.getDescription());
-        String imagePath = normalizeImagePath(product.getImage_url());
+        String imagePath = normalizeImagePath(product.getImage());
         String productLink = product.getSlug() != null && !product.getSlug().isBlank()
                 ? "/product?slug=" + product.getSlug()
                 : "/product?id=" + product.getId();

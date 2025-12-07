@@ -19,7 +19,7 @@
             <div class="shop-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
                 <%
                     for (ProductDAO product : popularProducts) {
-                        String productImage = product.getImage_url();
+                        String productImage = product.getImage();
                         if (productImage == null || productImage.isBlank()) {
                             productImage = contextPath + "/assets/client/images/shop/shop-10.png";
                         } else if (!productImage.startsWith("http")) {

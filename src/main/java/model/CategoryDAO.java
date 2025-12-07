@@ -6,7 +6,7 @@ public class CategoryDAO {
     private String name;
     private String description;
     private Boolean is_active;
-    private byte[] logo_blob;
+    private String image;
     private int parent_id;
 
     public CategoryDAO(){}
@@ -64,12 +64,12 @@ public class CategoryDAO {
         this.parent_id = parent_id;
     }
 
-    public byte[] getLogo_blob() {
-        return logo_blob;
+    public String getImage() {
+        return image;
     }
 
-    public void setLogo_blob(byte[] logo_blob) {
-        this.logo_blob = logo_blob;
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }

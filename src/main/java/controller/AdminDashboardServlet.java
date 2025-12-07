@@ -187,7 +187,7 @@ public class AdminDashboardServlet extends HttpServlet {
                     ProductDAO product = productService.findById(productId);
                     if (product != null) {
                         stats.setProductName(product.getName());
-                        stats.setProductImage(product.getImage_url());
+                        stats.setProductImage(product.getImage());
                         stats.setCurrentPrice(product.getPrice() != null ? product.getPrice() : 0.0);
                     }
                     
