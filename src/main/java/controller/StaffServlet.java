@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.OrderDAO;
+import model.OrderItemDAO;
 import model.ProductDAO;
 import model.CategoryDAO;
 import model.BrandDAO;
@@ -12,15 +13,18 @@ import model.UserDAO;
 import model.Page;
 import model.PageRequest;
 import service.OrderService;
+import service.OrderItemService;
 import service.ProductService;
 import service.CategoryService;
 import service.BrandService;
 import service.UserService;
 import serviceimpl.OrderServiceImpl;
+import serviceimpl.OrderItemServiceImpl;
 import serviceimpl.ProductServiceImpl;
 import serviceimpl.CategoryServiceImpl;
 import serviceimpl.BrandServiceImpl;
 import serviceimpl.UserServiceImpl;
+import model.OrderItemDAO;
 import utilities.DataSourceUtil;
 
 import javax.sql.DataSource;
@@ -45,6 +49,7 @@ public class StaffServlet extends HttpServlet {
     private transient DataSource dataSource;
     private transient UserService userService;
     private transient OrderService orderService;
+    private transient OrderItemService orderItemService;
     private transient ProductService productService;
     private transient CategoryService categoryService;
     private transient BrandService brandService;
@@ -55,6 +60,7 @@ public class StaffServlet extends HttpServlet {
         this.dataSource = DataSourceUtil.getDataSource();
         this.userService = new UserServiceImpl(dataSource);
         this.orderService = new OrderServiceImpl(dataSource);
+        this.orderItemService = new OrderItemServiceImpl(dataSource);
         this.productService = new ProductServiceImpl(dataSource);
         this.categoryService = new CategoryServiceImpl(dataSource);
         this.brandService = new BrandServiceImpl(dataSource);
@@ -506,7 +512,31 @@ public class StaffServlet extends HttpServlet {
             try {
                 int id = Integer.parseInt(idParam);
                 OrderDAO order = orderService.findById(id);
-                request.setAttribute("order", order);
+                if (order != null) {
+                    request.setAttribute("order", order);
+                    
+                    // Load order items
+                    List<OrderItemDAO> orderItems = orderItemService.findByOrderId(id);
+                    request.setAttribute("orderItems", orderItems);
+                    
+                    // Load product information for each order item
+                    Map<Integer, ProductDAO> productMap = new HashMap<>();
+                    for (OrderItemDAO item : orderItems) {
+                        ProductDAO product = productService.findById(item.getProductId());
+                        if (product != null) {
+                            productMap.put(item.getProductId(), product);
+                        }
+                    }
+                    request.setAttribute("productMap", productMap);
+                    
+                    // Load customer information
+                    UserDAO customer = userService.findById(order.getUser_id());
+                    request.setAttribute("customer", customer);
+                    
+                    // Count total orders by this customer
+                    int customerOrderCount = orderService.findByUserId(order.getUser_id()).size();
+                    request.setAttribute("customerOrderCount", customerOrderCount);
+                }
             } catch (NumberFormatException ignored) {
             }
         }
