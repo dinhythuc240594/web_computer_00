@@ -151,7 +151,7 @@ public class BrandServlet extends HttpServlet {
             boolean success = Boolean.TRUE.equals(brandService.create(brand));
             
             if (success) {
-                response.sendRedirect(request.getContextPath() + "/staff?action=brand");
+                response.sendRedirect(request.getContextPath() + "/staff?action=dashboard&tab=brand");
             } else {
                 request.setAttribute("errorMessage", "Có lỗi xảy ra khi tạo thương hiệu. Vui lòng thử lại.");
                 doGet(request, response);
@@ -228,7 +228,7 @@ public class BrandServlet extends HttpServlet {
             boolean success = Boolean.TRUE.equals(brandService.update(brand));
             
             if (success) {
-                response.sendRedirect(request.getContextPath() + "/staff?action=brand");
+                response.sendRedirect(request.getContextPath() + "/staff?action=dashboard&tab=brand");
             } else {
                 request.setAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật thương hiệu. Vui lòng thử lại.");
                 request.setAttribute("brand", brand);
