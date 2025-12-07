@@ -48,8 +48,8 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" id="updateCategoryForm" enctype="multipart/form-data">
-                                <input type="hidden" name="action" value="<%= category != null ? "category-update" : "category-create" %>"/>
+                            <form method="post" id="updateCategoryForm" action="${contextPath}/category" enctype="multipart/form-data">
+                                <input type="hidden" name="action" value="<%= category != null ? "update" : "create" %>"/>
                                 <%
                                     if (category != null) {
                                 %>

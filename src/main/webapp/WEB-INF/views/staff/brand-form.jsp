@@ -46,8 +46,8 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" id="updateBrandForm" enctype="multipart/form-data">
-                                <input type="hidden" name="action" value="<%= brand != null ? "brand-update" : "brand-create" %>"/>
+                            <form method="post" action="${contextPath}/brand" id="updateBrandForm" enctype="multipart/form-data">
+                                <input type="hidden" name="action" value="<%= brand != null ? "update" : "create" %>"/>
                                 <%
                                     if (brand != null) {
                                 %>
@@ -167,49 +167,54 @@
             }
         });
 
-        $('#updateBrandForm').on('submit', function(e) {
-            // e.preventDefault();
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
 
-            for (instance in CKEDITOR.instances) {
-                CKEDITOR.instances[instance].updateElement();
-            }
+        var editorData = CKEDITOR.instances['description'].getData();
 
-            var editorData = CKEDITOR.instances['description'].getData();
-            // formData.append("description", editorData);
-
-            var formData = new FormData(this);
-
-            if (!formData.has('is_available')) {
-                formData.append('is_available', '0');
-            }
-
-            $.ajax({
-                url: 'staff',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-
-                // beforeSend: function() {
-                //     $('#responseMessage').html('<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">Đang cập nhật món ăn...</div>');
-                // },
-                // success: function(response) {
-                //     if (response.success) {
-                //         $('#responseMessage').html('<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">' + response.message + '</div>');
-                //         setTimeout(function() {
-                //             window.location.href = 'foods?action=list';
-                //         }, 1500);
-                //     } else {
-                //         $('#responseMessage').html('<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">Lỗi: ' + response.message + '</div>');
-                //     }
-                // },
-                // error: function(jqXHR, textStatus, errorThrown) {
-                //     console.log(jqXHR.responseText);
-                //     $('#responseMessage').html('<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">Đã xảy ra lỗi khi gửi dữ liệu. Vui lòng thử lại.</div>');
-                // }
-            });
-        });
+        // $('#updateBrandForm').on('submit', function(e) {
+        //     // e.preventDefault();
+        //
+        //     for (instance in CKEDITOR.instances) {
+        //         CKEDITOR.instances[instance].updateElement();
+        //     }
+        //
+        //     var editorData = CKEDITOR.instances['description'].getData();
+        //     // formData.append("description", editorData);
+        //
+        //     var formData = new FormData(this);
+        //
+        //     if (!formData.has('is_available')) {
+        //         formData.append('is_available', '0');
+        //     }
+        //
+        //     $.ajax({
+        //         url: 'staff',
+        //         type: 'POST',
+        //         data: formData,
+        //         processData: false,
+        //         contentType: false,
+        //         dataType: 'json',
+        //         // beforeSend: function() {
+        //         //     $('#responseMessage').html('<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">Đang cập nhật món ăn...</div>');
+        //         // },
+        //         // success: function(response) {
+        //         //     if (response.success) {
+        //         //         $('#responseMessage').html('<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">' + response.message + '</div>');
+        //         //         setTimeout(function() {
+        //         //             window.location.href = 'foods?action=list';
+        //         //         }, 1500);
+        //         //     } else {
+        //         //         $('#responseMessage').html('<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">Lỗi: ' + response.message + '</div>');
+        //         //     }
+        //         // },
+        //         // error: function(jqXHR, textStatus, errorThrown) {
+        //         //     console.log(jqXHR.responseText);
+        //         //     $('#responseMessage').html('<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">Đã xảy ra lỗi khi gửi dữ liệu. Vui lòng thử lại.</div>');
+        //         // }
+        //     });
+        // });
     });
 </script>
 </body>

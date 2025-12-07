@@ -148,7 +148,7 @@ public class CategoryServlet extends HttpServlet {
             boolean success = Boolean.TRUE.equals(categoryService.create(category));
             
             if (success) {
-                response.sendRedirect(request.getContextPath() + "/category?success=created");
+                response.sendRedirect(request.getContextPath() + "/staff?action=categories");
             } else {
                 request.setAttribute("errorMessage", "Có lỗi xảy ra khi tạo danh mục. Vui lòng thử lại.");
                 doGet(request, response);
@@ -217,7 +217,7 @@ public class CategoryServlet extends HttpServlet {
             boolean success = Boolean.TRUE.equals(categoryService.update(category));
             
             if (success) {
-                response.sendRedirect(request.getContextPath() + "/category?success=updated");
+                response.sendRedirect(request.getContextPath() + "/staff?action=categories");
             } else {
                 request.setAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật danh mục. Vui lòng thử lại.");
                 request.setAttribute("category", category);
