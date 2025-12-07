@@ -414,7 +414,6 @@
 
 <!-- cart-js -->
 <script src="${pageContext.request.contextPath}/assets/client/js/cart.js"></script>
-
 <!-- Clear cart after successful payment -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -135,13 +135,13 @@
                                 <li><i class="icon-11"></i></li>
                                 <li><span>(05)</span></li>
                             </ul> -->
-                            <div class="text-box mb_30">
+                            <!-- <div class="text-box mb_30">
                                 <p>
                                     <%= (product != null && product.getDescription() != null && !product.getDescription().isBlank())
                                             ? product.getDescription()
                                             : "Mô tả sản phẩm đang được cập nhật." %>
                                 </p>
-                            </div>
+                            </div> -->
                             <ul class="discription-box mb_30 clearfix">
                                 <%
                                     int stockQty = (product != null) ? product.getStock_quantity() : 0;
@@ -702,7 +702,6 @@
 <script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
 <!-- Cart Management Script -->
 <script src="${pageContext.request.contextPath}/assets/client/js/cart.js"></script>
-
 <script>
     // Set context path for JavaScript
     window.APP_CONTEXT_PATH = '<%= contextPath %>';

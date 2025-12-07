@@ -21,7 +21,10 @@
                             <%
                                 if (topSoldProducts != null && !topSoldProducts.isEmpty()) {
                                     for (ProductDAO product : topSoldProducts) {
-                                        String productImage = product.getImage() || contextPath + "/assets/client/images/shop/shop-32.png;
+                                        String productImage = product.getImage();
+                                        if (productImage == null || productImage.isBlank()) {
+                                            productImage = contextPath + "/assets/client/images/shop/shop-32.png";
+                                        }
                                         String productLink = product.getSlug() != null && !product.getSlug().isBlank()
                                                 ? contextPath + "/product?slug=" + product.getSlug()
                                                 : contextPath + "/product?id=" + product.getId();
@@ -53,7 +56,7 @@
                                             </li>
                                         </ul> -->
                                         <figure class="image">
-                                            <img src="<%= productImage %>" alt="<%= product.getName() %>">
+                                            <img width="117" height="117" src="<%= productImage %>" alt="<%= product.getName() %>">
                                         </figure>
                                     </div>
                                     <div class="content-box">

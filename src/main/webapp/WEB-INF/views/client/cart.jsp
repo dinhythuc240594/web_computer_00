@@ -452,11 +452,6 @@
                     let productImage = item.image_url || '';
                     if (!productImage || productImage === '') {
                         productImage = contextPath + '/assets/client/images/shop/cart-4.png';
-                    } else if (!productImage.startsWith('http')) {
-                        if (!productImage.startsWith('/')) {
-                            productImage = '/' + productImage;
-                        }
-                        productImage = contextPath + productImage;
                     }
                     
                     const productLink = item.slug 

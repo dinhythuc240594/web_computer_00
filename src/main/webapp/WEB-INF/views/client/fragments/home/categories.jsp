@@ -26,7 +26,10 @@
                     if (categories != null && !categories.isEmpty()) {
                         int index = 0;
                         for (CategoryDAO category : categories) {
-                            String imageSrc =  category.getImage() || contextPath + fallbackImages[index % fallbackImages.length];
+                            String imageSrc =  category.getImage();
+                            if (imageSrc == null || imageSrc.isBlank()) {
+                                imageSrc = contextPath + fallbackImages[index % fallbackImages.length];
+                            }
                             String categoryLink = contextPath + "/products?categoryId=" + category.getId();
                             String description = category.getDescription();
                             if (description == null || description.isBlank()) {
@@ -36,7 +39,7 @@
                 <div class="category-block-one">
                     <div class="inner-box">
                         <figure class="image-box">
-                            <img src="<%= imageSrc %>" alt="<%= category.getName() %>">
+                            <img width="160" height="160" src="<%= imageSrc %>" alt="<%= category.getName() %>">
                         </figure>
                         <div class="lower-content">
                             <h4><a href="<%= categoryLink %>"><%= category.getName() %></a></h4>

@@ -175,14 +175,9 @@ const CartManager = {
                 
                 cartItems.forEach(item => {
                     let productImage = item.image_url || '';
+                    console.log(productImage);
                     if (!productImage || productImage === '') {
                         productImage = contextPath + '/assets/client/images/shop/cart-4.png';
-                    } else if (productImage.startsWith('http')) {
-                        // Already full URL
-                    } else if (productImage.startsWith('/')) {
-                        productImage = contextPath + productImage;
-                    } else {
-                        productImage = contextPath + '/' + productImage;
                     }
                     
                     const productLink = item.slug 

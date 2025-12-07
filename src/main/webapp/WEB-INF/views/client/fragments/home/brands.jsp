@@ -16,12 +16,15 @@
                 <%
                     if (brands != null && !brands.isEmpty()) {
                         for (BrandDAO brand : brands) {
-                            String logoUrl = brand.getImage() getImage() || contextPath + fallbackImages[index % fallbackImages.length];
+                            String logoUrl = brand.getImage();
+                            if (logoUrl == null || logoUrl.isBlank()) {
+                                logoUrl = fallbackLogo;
+                            }
                             String brandLink = contextPath + "/brand?brandId=" + brand.getId();
                 %>
                 <li>
                     <a href="<%= brandLink %>" title="<%= brand.getName() %>">
-                        <img src="<%= logoUrl %>" alt="<%= brand.getName() %>">
+                        <img style="width: 274px; height: 94px; object-fit: contain;" src="<%= logoUrl %>" alt="<%= brand.getName() %>">
                     </a>
                 </li>
                 <%

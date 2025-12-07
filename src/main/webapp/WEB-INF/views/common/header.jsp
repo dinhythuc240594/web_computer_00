@@ -237,11 +237,6 @@ padding: 15px 20px;"></div>
                                                     String productImage = product.getImage();
                                                     if (productImage == null || productImage.isBlank()) {
                                                         productImage = request.getContextPath() + "/assets/client/images/shop/cart-4.png";
-                                                    } else if (!productImage.startsWith("http")) {
-                                                        if (!productImage.startsWith("/")) {
-                                                            productImage = "/" + productImage;
-                                                        }
-                                                        productImage = request.getContextPath() + productImage;
                                                     }
                                                     
                                                     String productLink = product.getSlug() != null && !product.getSlug().isBlank()
