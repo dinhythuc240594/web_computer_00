@@ -24,7 +24,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public List<CategoryDAO> getAll() {
 
         List<CategoryDAO> items = new ArrayList<>();
-        String sql = "SELECT id, name, description, is_active, parent_id, logo_blob FROM categories";
+        String sql = "SELECT id, name, description, is_active, parent_id, image FROM categories";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);

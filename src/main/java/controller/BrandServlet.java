@@ -187,7 +187,6 @@ public class BrandServlet extends HttpServlet {
             
             String name = trimToNull(request.getParameter("name"));
             String code = trimToNull(request.getParameter("code"));
-            String logoUrl = trimToNull(request.getParameter("logo_url"));
             String activeStr = request.getParameter("is_active");
             
             if (name == null || name.isBlank()) {
