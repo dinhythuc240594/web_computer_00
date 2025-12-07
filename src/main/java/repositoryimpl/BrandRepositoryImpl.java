@@ -200,8 +200,8 @@ public class BrandRepositoryImpl implements BrandRepository {
             ps.setString(2, entity.getCode());
             ps.setBoolean(3, entity.getIs_active());
             ps.setString(4, entity.getImage());
+            ps.setInt(5, entity.getId());
 
-            ps.setInt(6, entity.getId());
             ps.executeUpdate();
 
             return true;
