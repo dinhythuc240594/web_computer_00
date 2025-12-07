@@ -179,7 +179,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             ps.setString(2, entity.getDescription());
             ps.setBoolean(3, entity.getIs_active());
             ps.setInt(4, entity.getParent_id());
-            ps.setString(6, entity.getImage());
+            ps.setString(5, entity.getImage());
 
             ps.executeUpdate();
 

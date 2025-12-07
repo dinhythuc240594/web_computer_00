@@ -231,9 +231,9 @@ public class ProductRepositoryImpl implements ProductRepository {
             ps.setDouble(4, entity.getPrice());
             ps.setInt(5, entity.getStock_quantity());
             ps.setString(6, entity.getImage());
-            ps.setInt(8, entity.getCategory_id());
-            ps.setInt(9, entity.getBrand_id());
-            ps.setBoolean(10, entity.getIs_active());
+            ps.setInt(7, entity.getCategory_id());
+            ps.setInt(8, entity.getBrand_id());
+            ps.setBoolean(9, entity.getIs_active());
 
             ps.executeUpdate();
 
