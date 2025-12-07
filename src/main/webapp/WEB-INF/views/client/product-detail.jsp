@@ -7,10 +7,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page import="model.ReviewDAO" %>
 <%@ page import="model.CategoryDAO" %>
 <%@ page import="model.BrandDAO" %>
 <%@ page import="model.ProductSpecDAO" %>
+<%@ page import="model.UserDAO" %>
+<%@ page import="utilities.DataSourceUtil" %>
+<%@ page import="serviceimpl.UserServiceImpl" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,6 +53,32 @@
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/highlights.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/footer.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/responsive.css" rel="stylesheet">
+    
+    <style>
+        /* Review Form Styles */
+        #review-comment:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .star-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .customer-review {
+            transition: box-shadow 0.3s;
+        }
+        
+        .customer-review:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .single-review:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+    </style>
 
 </head>
 
@@ -85,6 +116,35 @@
                 }
                 String contextPath = request.getContextPath();
                 Integer totalReviews = (reviews != null) ? reviews.size() : 0;
+                
+                // Lấy tên người dùng cho các review
+                Map<Integer, String> userNameMap = new HashMap<>();
+                if (reviews != null && !reviews.isEmpty()) {
+                    try {
+                        javax.sql.DataSource ds = DataSourceUtil.getDataSource();
+                        UserServiceImpl userService = new UserServiceImpl(ds);
+                        for (ReviewDAO r : reviews) {
+                            if (!userNameMap.containsKey(r.getUserId())) {
+                                UserDAO user = userService.findById(r.getUserId());
+                                if (user != null) {
+                                    String displayName = (user.getFullname() != null && !user.getFullname().isBlank()) 
+                                            ? user.getFullname() 
+                                            : (user.getUsername() != null ? user.getUsername() : "Người dùng #" + r.getUserId());
+                                    userNameMap.put(r.getUserId(), displayName);
+                                } else {
+                                    userNameMap.put(r.getUserId(), "Người dùng #" + r.getUserId());
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        // Nếu có lỗi, sử dụng tên mặc định
+                        for (ReviewDAO r : reviews) {
+                            if (!userNameMap.containsKey(r.getUserId())) {
+                                userNameMap.put(r.getUserId(), "Người dùng #" + r.getUserId());
+                            }
+                        }
+                    }
+                }
             %>
             <div class="product-details-content mb_70">
                 <div class="row clearfix">
@@ -112,7 +172,7 @@
                     <div class="col-lg-6 col-md-12 col-sm-12 content-column">
                         <div class="content-box ml_30">
                             <span class="upper-text">
-                                <%= (category != null && category.getName() != null) ? category.getName() : "Product" %>
+                                
                             </span>
                             <h2><%= product != null ? product.getName() : "Sản phẩm" %></h2>
                             <h3>
@@ -127,21 +187,7 @@
                                     }
                                 %>
                             </h3>
-                            <!-- <ul class="rating mb_25">
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><span>(05)</span></li>
-                            </ul> -->
-                            <!-- <div class="text-box mb_30">
-                                <p>
-                                    <%= (product != null && product.getDescription() != null && !product.getDescription().isBlank())
-                                            ? product.getDescription()
-                                            : "Mô tả sản phẩm đang được cập nhật." %>
-                                </p>
-                            </div> -->
+
                             <ul class="discription-box mb_30 clearfix">
                                 <%
                                     int stockQty = (product != null) ? product.getStock_quantity() : 0;
@@ -172,64 +218,7 @@
                                 <li><strong>Status :</strong><span style="color: green;">Active</span></li>
                                 <% } %>
                             </ul>
-                            <!-- <div class="color-box mb_30">
-                                <h6>Color<span>*</span></h6>
-                                <ul class="color-list">
-                                    <li>
-                                        <div class="check-box">
-                                            <input class="check" type="radio" id="color1" name="same" checked>
-                                            <label for="color1"></label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="check-box">
-                                            <input class="check" type="radio" id="color2" name="same">
-                                            <label for="color2"></label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="check-box">
-                                            <input class="check" type="radio" id="color3" name="same">
-                                            <label for="color3"></label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="check-box">
-                                            <input class="check" type="radio" id="color4" name="same">
-                                            <label for="color4"></label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div> -->
-                            <!-- <div class="size-box mb_40">
-                                <h6>Size<span>*</span></h6>
-                                <ul class="size-list">
-                                    <li>
-                                        <div class="check-box">
-                                            <input class="check" type="radio" id="size1" name="same2" checked>
-                                            <label for="size1">10.5 KG</label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="check-box">
-                                            <input class="check" type="radio" id="size2" name="same2">
-                                            <label for="size2">11 KG</label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="check-box">
-                                            <input class="check" type="radio" id="size3" name="same2">
-                                            <label for="size3">08 KG</label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="check-box">
-                                            <input class="check" type="radio" id="size4" name="same2">
-                                            <label for="size4">09 KG</label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div> -->
+
                             <div class="addto-cart-box mb_40">
                                 <ul class="clearfix">
                                     <li class="item-quantity">
@@ -256,15 +245,10 @@
                                         </button>
                                     </li>
                                     <% } %>
-                                    <!-- <li><a href="javascript:void(0)"><i class="icon-5"></i></a></li>
-                                    <li class="like-btn"><button type="button"><i class="icon-6"></i></button></li> -->
+
                                 </ul>
                             </div>
-                            <!-- <ul class="other-option clearfix">
-                                <li><strong>Seller :</strong>Daniel Macron</li>
-                                <li><strong>Tag :</strong><span>Best sellers</span>, New Arrivals, On Sale</li>
-                                <li class="social-links"><strong>Share :</strong><a href="shop-details.html"><i class="icon-13"></i></a><a href="shop-details.html"><i class="icon-14"></i></a><a href="shop-details.html"><i class="icon-15"></i></a></li>
-                            </ul> -->
+
                         </div>
                     </div>
                 </div>
@@ -295,31 +279,32 @@
                                     if (reviews != null && !reviews.isEmpty()) {
                                         for (ReviewDAO r : reviews) {
                                 %>
-                                <div class="single-review" style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0;">
-                                    <div class="upper-box">
-                                        <div class="info-box">
-                                            <figure class="image">
-                                                <img src="<%= contextPath %>/assets/client/images/resource/review-1.png" alt="">
+                                <div class="single-review" style="margin-bottom: 30px; padding: 20px; border-bottom: 1px solid #e0e0e0; background-color: #f9f9f9; border-radius: 8px;">
+                                    <div class="upper-box" style="display: flex; align-items: center; margin-bottom: 15px;">
+                                        <div class="info-box" style="display: flex; align-items: center; gap: 15px;">
+                                            <figure class="image" style="margin: 0;">
+                                                <img src="<%= contextPath %>/assets/client/images/resource/review-1.png" alt="" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
                                             </figure>
                                             <div class="inner">
-                                                <h4>Người dùng #<%= r.getUserId() %></h4>
+                                                <h4 style="margin: 0; font-size: 16px; font-weight: 600; color: #333;"><%= userNameMap.getOrDefault(r.getUserId(), "Người dùng #" + r.getUserId()) %></h4>
                                             </div>
                                         </div>
                                     </div>
-                                    <ul class="rating" style="margin: 10px 0;">
+                                    <ul class="rating" style="margin: 10px 0; padding: 0; list-style: none; display: flex; gap: 5px;">
                                         <%
                                             int stars = r.getRating();
                                             for (int i = 0; i < 5; i++) {
                                                 boolean filled = i < stars;
+                                                String starColor = filled ? "#ffc107" : "#ddd";
                                         %>
-                                        <li>
-                                            <i class="icon-11"<%= filled ? "" : " style=\"opacity:0.3;\"" %>></i>
+                                        <li style="display: inline-block;">
+                                            <i class="icon-11" style="color: <%= starColor %>; font-size: 18px;"></i>
                                         </li>
                                         <%
                                             }
                                         %>
                                     </ul>
-                                    <p style="margin-top: 10px; line-height: 1.6;"><%= (r.getComment() != null && !r.getComment().isBlank())
+                                    <p style="margin-top: 15px; line-height: 1.8; color: #555; font-size: 14px;"><%= (r.getComment() != null && !r.getComment().isBlank())
                                             ? r.getComment()
                                             : "Người dùng không để lại nội dung nhận xét." %></p>
                                 </div>
@@ -332,36 +317,48 @@
                                     }
                                 %>
 
-                                <div class="customer-review mt_40">
-                                    <h3>Viết đánh giá của bạn</h3>
+                                <div class="customer-review mt_40" style="background-color: #f9f9f9; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0;">
+                                    <h3 style="margin-bottom: 20px; color: #333; font-size: 22px;">Viết đánh giá của bạn</h3>
                                     <%
                                         if (!isLogin) {
                                     %>
-                                    <p>Bạn cần <a href="<%= contextPath %>/login">đăng nhập</a> để gửi đánh giá.</p>
+                                    <p style="color: #666; font-size: 14px;">Bạn cần <a href="<%= contextPath %>/login" style="color: #007bff; text-decoration: none;">đăng nhập</a> để gửi đánh giá.</p>
                                     <%
                                         } else {
                                     %>
                                     <div class="rating-box mb_25">
-                                        <p>Your Rating <span>*</span></p>
+                                        <p style="margin-bottom: 15px; font-weight: 600; color: #333; font-size: 15px;">Đánh giá của bạn <span style="color: red;">*</span></p>
                                         <div class="rating-inner">
-                                            <form method="post" action="<%= contextPath %>/review">
+                                            <form method="post" action="<%= contextPath %>/review" id="review-form">
                                                 <input type="hidden" name="productId" value="<%= product != null ? product.getId() : 0 %>"/>
                                                 <input type="hidden" name="slug" value="<%= product != null ? product.getSlug() : "" %>"/>
-                                                <select name="rating" class="form-select" style="max-width: 200px;">
-                                                    <option value="5" selected>5 - Excellent</option>
-                                                    <option value="4">4 - Good</option>
-                                                    <option value="3">3 - Average</option>
-                                                    <option value="2">2 - Poor</option>
-                                                    <option value="1">1 - Very bad</option>
-                                                </select>
+                                                <input type="hidden" name="rating" id="rating-input" value="5" required>
+                                                
+                                                <!-- Star Rating -->
+                                                <div class="star-rating-container" style="margin-bottom: 25px;">
+                                                    <div class="star-rating" id="star-rating" style="display: flex; gap: 8px; align-items: center;">
+                                                        <span style="font-size: 14px; color: #666; margin-right: 10px;">Chọn số sao:</span>
+                                                        <div class="stars" style="display: flex; gap: 5px; direction: ltr;">
+                                                            <i class="icon-11 star-icon" data-rating="1" style="font-size: 28px; color: #ffc107; cursor: pointer; transition: all 0.2s;"></i>
+                                                            <i class="icon-11 star-icon" data-rating="2" style="font-size: 28px; color: #ffc107; cursor: pointer; transition: all 0.2s;"></i>
+                                                            <i class="icon-11 star-icon" data-rating="3" style="font-size: 28px; color: #ffc107; cursor: pointer; transition: all 0.2s;"></i>
+                                                            <i class="icon-11 star-icon" data-rating="4" style="font-size: 28px; color: #ffc107; cursor: pointer; transition: all 0.2s;"></i>
+                                                            <i class="icon-11 star-icon" data-rating="5" style="font-size: 28px; color: #ffc107; cursor: pointer; transition: all 0.2s;"></i>
+                                                        </div>
+                                                        <span id="rating-text" style="margin-left: 15px; font-size: 14px; color: #666; font-weight: 500;">Tuyệt vời</span>
+                                                    </div>
+                                                </div>
+                                                
                                                 <div class="form-inner mt_20">
-                                                    <div class="form-group">
-                                                        <label>Write Your Review <span>*</span></label>
-                                                        <textarea name="comment" required></textarea>
+                                                    <div class="form-group" style="margin-bottom: 20px;">
+                                                        <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #333; font-size: 15px;">Nội dung đánh giá <span style="color: red;">*</span></label>
+                                                        <textarea name="comment" id="review-comment" required 
+                                                                  style="width: 100%; height: 150px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: inherit; resize: none; transition: border-color 0.3s;"
+                                                                  placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này..."></textarea>
                                                     </div>
                                                     <div class="message-btn">
-                                                        <button type="submit" class="theme-btn btn-one">
-                                                            Submit Review<span></span><span></span><span></span><span></span>
+                                                        <button type="submit" class="theme-btn btn-one" style="padding: 12px 30px; font-size: 15px; font-weight: 600;">
+                                                            Gửi đánh giá<span></span><span></span><span></span><span></span>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -403,227 +400,6 @@
         </div>
     </section>
     <!-- shop-details end -->
-
-
-    <!-- shop-one -->
-    <!-- <section class="shop-one pb_30">
-        <div class="large-container">
-            <div class="row clearfix">
-                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                    <div class="shop-block-one">
-                        <div class="inner-box">
-                            <span class="text">Featured</span>
-                            <h2>Smart TV’s</h2>
-                            <h4><span>From</span> $99.99</h4>
-                            <div class="link-box"><a href="shop-details.html">Shop now</a></div>
-                            <figure class="image r_0 b_10"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-7.png" alt=""></figure>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                    <div class="shop-block-one">
-                        <div class="inner-box">
-                            <span class="text">Hot Sale</span>
-                            <h2>Kitchen Kits</h2>
-                            <h4><span>From</span> $50 Only</h4>
-                            <div class="link-box"><a href="shop-details.html">Shop now</a></div>
-                            <figure class="image r_0 b_10"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-8.png" alt=""></figure>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                    <div class="shop-block-one">
-                        <div class="inner-box">
-                            <span class="text">Latest Deals</span>
-                            <h2>Smart Device</h2>
-                            <h4><span>From</span> $499.99</h4>
-                            <div class="link-box"><a href="shop-details.html">Shop now</a></div>
-                            <figure class="image r_0 b_10"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-9.png" alt=""></figure>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- shop-one end -->
-
-    <!-- shop-two -->
-    <!-- <section class="shop-two pb_50">
-        <div class="large-container">
-            <div class="sec-title">
-                <h2>You may also like these</h2>
-            </div>
-            <div class="shop-carousel owl-carousel owl-theme owl-dots-none owl-nav-none">
-                <div class="shop-block-two">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <span class="discount-product p_absolute l_0 t_7">-6%</span>
-                            <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-10.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
-                                <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
-                                <li><button type="button"><i class="icon-6"></i></button></li>
-                            </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-10.png" alt=""></figure>
-                        </div>
-                        <div class="lower-content">
-                            <span class="text">Mobile</span>
-                            <h4><a href="shop-details.html">Iphone 12 Red Color Veriant</a></h4>
-                            <h5>$92.99<del>$83.99</del></h5>
-                            <ul class="rating">
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><span>(2)</span></li>
-                            </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
-                            <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="shop-block-two">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <span class="hot-product p_absolute l_0 t_7">Hot</span>
-                            <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-11.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
-                                <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
-                                <li><button type="button"><i class="icon-6"></i></button></li>
-                            </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-11.png" alt=""></figure>
-                        </div>
-                        <div class="lower-content">
-                            <span class="text">Gaming</span>
-                            <h4><a href="shop-details.html">Video Game Stick Lite 4K Console</a></h4>
-                            <h5>$29.99</h5>
-                            <ul class="rating">
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><span>(4)</span></li>
-                            </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
-                            <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="shop-block-two">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-12.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
-                                <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
-                                <li><button type="button"><i class="icon-6"></i></button></li>
-                            </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-12.png" alt=""></figure>
-                        </div>
-                        <div class="lower-content">
-                            <span class="text">Storage</span>
-                            <h4><a href="shop-details.html">32GB Camera CCTV Micro SD Memory Card</a></h4>
-                            <h5>$12.99</h5>
-                            <ul class="rating">
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><span>(5)</span></li>
-                            </ul>
-                            <span class="product-stock-out"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-2.png" alt=""> Stock Out</span>
-                            <div class="cart-btn"><button type="button" class="theme-btn not">Not Available<span></span><span></span><span></span><span></span></button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="shop-block-two">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <span class="hot-product p_absolute l_0 t_7">Hot</span>
-                            <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-13.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
-                                <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
-                                <li><button type="button"><i class="icon-6"></i></button></li>
-                            </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-13.png" alt=""></figure>
-                        </div>
-                        <div class="lower-content">
-                            <span class="text">Music</span>
-                            <h4><a href="shop-details.html">Sony Bluetooth-compatible Speaker Extra</a></h4>
-                            <h5>$45.99</h5>
-                            <ul class="rating">
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><span>(2)</span></li>
-                            </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
-                            <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="shop-block-two">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-14.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
-                                <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
-                                <li><button type="button"><i class="icon-6"></i></button></li>
-                            </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-14.png" alt=""></figure>
-                        </div>
-                        <div class="lower-content">
-                            <span class="text">Music</span>
-                            <h4><a href="shop-details.html">JBL Speaker with Bluetooth Built-in Battery</a></h4>
-                            <h5>$59.99</h5>
-                            <ul class="rating">
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><span>(5)</span></li>
-                            </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
-                            <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="shop-block-two">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <ul class="option-list">
-                                <li><a href="${pageContext.request.contextPath}/assets/client/images/shop/shop-15.png" class="lightbox-image" data-fancybox="gallery"><i class="far fa-eye"></i></a></li>
-                                <li><a href="shop-details.html"><i class="icon-5"></i></a></li>
-                                <li><button type="button"><i class="icon-6"></i></button></li>
-                            </ul>
-                            <figure class="image"><img src="${pageContext.request.contextPath}/assets/client/images/shop/shop-15.png" alt=""></figure>
-                        </div>
-                        <div class="lower-content">
-                            <span class="text">Power</span>
-                            <h4><a href="shop-details.html">Boss Inverter Welding Machine</a></h4>
-                            <h5>$359.99</h5>
-                            <ul class="rating">
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><i class="icon-11"></i></li>
-                                <li><span>(4)</span></li>
-                            </ul>
-                            <span class="product-stock"><img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt=""> In Stock</span>
-                            <div class="cart-btn"><button type="button" class="theme-btn">Add to Cart<span></span><span></span><span></span><span></span></button></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- shop-two end -->
-
 
     <!-- highlights-section -->
     <section class="highlights-section inner-highlights">
@@ -705,6 +481,78 @@
 <script>
     // Set context path for JavaScript
     window.APP_CONTEXT_PATH = '<%= contextPath %>';
+    
+    // Star Rating Handler
+    document.addEventListener('DOMContentLoaded', function() {
+        var starIcons = document.querySelectorAll('.star-icon');
+        var ratingInput = document.getElementById('rating-input');
+        var ratingText = document.getElementById('rating-text');
+        var currentRating = 5; // Default rating
+        
+        var ratingLabels = {
+            1: 'Rất tệ',
+            2: 'Tệ',
+            3: 'Bình thường',
+            4: 'Tốt',
+            5: 'Tuyệt vời'
+        };
+        
+        // Initialize stars
+        function updateStars(rating) {
+            starIcons.forEach(function(star, index) {
+                if (index < rating) {
+                    star.style.color = '#ffc107';
+                    star.style.opacity = '1';
+                } else {
+                    star.style.color = '#ddd';
+                    star.style.opacity = '0.5';
+                }
+            });
+            
+            if (ratingInput) {
+                ratingInput.value = rating;
+            }
+            if (ratingText) {
+                ratingText.textContent = ratingLabels[rating] || '';
+            }
+            currentRating = rating;
+        }
+        
+        // Click event for stars
+        starIcons.forEach(function(star) {
+            star.addEventListener('click', function() {
+                var rating = parseInt(this.getAttribute('data-rating'));
+                updateStars(rating);
+            });
+            
+            star.addEventListener('mouseenter', function() {
+                var rating = parseInt(this.getAttribute('data-rating'));
+                starIcons.forEach(function(s, index) {
+                    if (index < rating) {
+                        s.style.color = '#ffc107';
+                        s.style.opacity = '1';
+                    } else {
+                        s.style.color = '#ddd';
+                        s.style.opacity = '0.5';
+                    }
+                });
+                if (ratingText) {
+                    ratingText.textContent = ratingLabels[rating] || '';
+                }
+            });
+        });
+        
+        // Reset to current rating when mouse leaves
+        var starContainer = document.querySelector('.stars');
+        if (starContainer) {
+            starContainer.addEventListener('mouseleave', function() {
+                updateStars(currentRating);
+            });
+        }
+        
+        // Initialize with default rating
+        updateStars(5);
+    });
     
     // Cập nhật quantity và xử lý thêm vào giỏ hàng
     document.addEventListener('DOMContentLoaded', function() {
