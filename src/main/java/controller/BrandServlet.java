@@ -223,6 +223,8 @@ public class BrandServlet extends HttpServlet {
 
             if (activeStr != null) {
                 brand.setIs_active(Boolean.parseBoolean(activeStr));
+            } else{
+                brand.setIs_active(false);
             }
             
             boolean success = Boolean.TRUE.equals(brandService.update(brand));

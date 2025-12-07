@@ -143,7 +143,6 @@ public class StaffServlet extends HttpServlet {
         if (action == null || action.isBlank()) {
             action = "";
         }
-
         switch (action) {
             // Sản phẩm
             case "product-create" -> handleCreateProduct(request, response, currentUser);
@@ -626,6 +625,8 @@ public class StaffServlet extends HttpServlet {
         }
         if (activeStr != null) {
             product.setIs_active(Boolean.parseBoolean(activeStr));
+        } else{
+            product.setIs_active(false);
         }
 
         productService.update(product);
@@ -772,6 +773,8 @@ public class StaffServlet extends HttpServlet {
         }
         if (activeStr != null) {
             category.setIs_active(Boolean.parseBoolean(activeStr));
+        } else{
+            category.setIs_active(false);
         }
 
         categoryService.update(category);
@@ -863,6 +866,8 @@ public class StaffServlet extends HttpServlet {
 
         if (activeStr != null) {
             brand.setIs_active(Boolean.parseBoolean(activeStr));
+        } else{
+            brand.setIs_active(false);
         }
 
         brandService.update(brand);

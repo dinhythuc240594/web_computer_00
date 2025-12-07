@@ -384,6 +384,8 @@ public class ProductServlet extends HttpServlet {
             product.setBrand_id(brandId);
             if (activeStr != null) {
                 product.setIs_active(Boolean.parseBoolean(activeStr));
+            } else{
+                product.setIs_active(false);
             }
             
             boolean success = Boolean.TRUE.equals(productService.update(product));

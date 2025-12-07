@@ -199,7 +199,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);) {
-
+            System.out.println(entity.getIs_active());
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getDescription());
             ps.setBoolean(3, entity.getIs_active());

@@ -185,7 +185,6 @@ public class CategoryServlet extends HttpServlet {
             String description = trimToNull(request.getParameter("description"));
             int parentId = parsePositiveInt(request.getParameter("parent_id"));
             String activeStr = request.getParameter("is_active");
-            
             if (name == null || name.isBlank()) {
                 request.setAttribute("errorMessage", "Tên danh mục không được để trống.");
                 request.setAttribute("category", category);
@@ -198,6 +197,8 @@ public class CategoryServlet extends HttpServlet {
             category.setParent_id(parentId);
             if (activeStr != null) {
                 category.setIs_active(Boolean.parseBoolean(activeStr));
+            }else{
+                category.setIs_active(false);
             }
             
             // Xử lý upload image sử dụng handleImageUpload
