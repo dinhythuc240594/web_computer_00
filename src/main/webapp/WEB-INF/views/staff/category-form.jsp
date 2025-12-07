@@ -84,7 +84,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Danh mục cha</label>
                                     <select class="form-select" name="parent_id">
-                                        <option value="0">-- Không có (Danh mục gốc) --</option>
+                                        <option value="0">-- Chọn Danh Mục Cha --</option>
                                         <%
                                             if (parentCategories != null) {
                                                 for (CategoryDAO parent : parentCategories) {
