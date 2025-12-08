@@ -35,6 +35,46 @@
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/highlights.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/footer.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/responsive.css" rel="stylesheet">
+    <style>
+        .password-wrapper {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 16px;
+            padding: 5px 10px;
+            z-index: 10;
+        }
+        .password-toggle:hover {
+            color: #333;
+        }
+        .form-group input[type="password"],
+        .form-group input[type="text"] {
+            padding-right: 45px;
+        }
+        .error-message {
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .form-group input.error {
+            border-color: #dc2626;
+        }
+        .form-group input.success {
+            border-color: #16a34a;
+        }
+    </style>
 </head>
 
 <!-- page wrapper -->
@@ -74,12 +114,23 @@
                     <input type="hidden" name="token" value="<%= token %>">
                     <div class="form-group">
                         <label>Mật khẩu mới <span class="text-danger">*</span></label>
-                        <input type="password" name="newPassword" id="newPassword" required minlength="6">
-                        <small class="form-text text-muted">Mật khẩu phải có ít nhất 6 ký tự</small>
+                        <div class="password-wrapper">
+                            <input type="password" name="newPassword" id="newPassword" required minlength="6">
+                            <button type="button" class="password-toggle" id="toggle-newPassword" aria-label="Hiển thị mật khẩu">
+                                <i class="fa fa-eye" id="newPassword-eye-icon"></i>
+                            </button>
+                        </div>
+                        <span class="error-message" id="newPassword-error"></span>
                     </div>
                     <div class="form-group">
                         <label>Xác nhận mật khẩu <span class="text-danger">*</span></label>
-                        <input type="password" name="confirmPassword" id="confirmPassword" required minlength="6">
+                        <div class="password-wrapper">
+                            <input type="password" name="confirmPassword" id="confirmPassword" required minlength="6">
+                            <button type="button" class="password-toggle" id="toggle-confirmPassword" aria-label="Hiển thị mật khẩu">
+                                <i class="fa fa-eye" id="confirmPassword-eye-icon"></i>
+                            </button>
+                        </div>
+                        <span class="error-message" id="confirmPassword-error"></span>
                     </div>
                     <div class="form-group message-btn">
                         <button type="submit" class="theme-btn">Đặt lại mật khẩu<span></span><span></span><span></span><span></span></button>
@@ -172,23 +223,153 @@
 <!-- main-js -->
 <script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
 <script>
-    // Validate password match
-    document.getElementById('resetPasswordForm')?.addEventListener('submit', function(e) {
-        var newPassword = document.getElementById('newPassword').value;
-        var confirmPassword = document.getElementById('confirmPassword').value;
-        
-        if (newPassword !== confirmPassword) {
-            e.preventDefault();
-            alert('Mật khẩu mới và xác nhận mật khẩu không khớp.');
-            return false;
+
+    $(document).ready(function() {
+        // Password toggle functionality
+        $('#toggle-newPassword').on('click', function() {
+            const newPasswordInput = $('#newPassword');
+            const icon = $('#newPassword-eye-icon');
+            if (newPasswordInput.attr('type') === 'password') {
+                newPasswordInput.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                newPasswordInput.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+
+        $('#toggle-confirmPassword').on('click', function() {
+            const confirmPasswordInput = $('#confirmPassword');
+            const icon = $('#confirmPassword-eye-icon');
+            if (confirmPasswordInput.attr('type') === 'password') {
+                confirmPasswordInput.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                confirmPasswordInput.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+
+        function validatePassword(password) {
+            // At least 6 characters
+            if (password.length < 6) {
+                return {
+                    valid: false,
+                    message: 'Mật khẩu phải có ít nhất 6 ký tự'
+                };
+            }
+            // Check for uppercase
+            if (!/[A-Z]/.test(password)) {
+                return {
+                    valid: false,
+                    message: 'Mật khẩu phải có ít nhất một chữ hoa'
+                };
+            }
+            // Check for lowercase
+            if (!/[a-z]/.test(password)) {
+                return {
+                    valid: false,
+                    message: 'Mật khẩu phải có ít nhất một chữ thường'
+                };
+            }
+            // Check for number
+            if (!/[0-9]/.test(password)) {
+                return {
+                    valid: false,
+                    message: 'Mật khẩu phải có ít nhất một số'
+                };
+            }
+            // Check for special character (!@#)
+            if (!/[!@#]/.test(password)) {
+                return {
+                    valid: false,
+                    message: 'Mật khẩu phải có ít nhất một ký tự đặc biệt (!@#)'
+                };
+            }
+            return { valid: true };
         }
-        
-        if (newPassword.length < 6) {
-            e.preventDefault();
-            alert('Mật khẩu phải có ít nhất 6 ký tự.');
-            return false;
+
+        function showError(inputId, errorId, message) {
+            $('#' + inputId).addClass('error').removeClass('success');
+            $('#' + errorId).text(message).addClass('show');
         }
+
+        function showSuccess(inputId, errorId) {
+            $('#' + inputId).addClass('success').removeClass('error');
+            $('#' + errorId).removeClass('show').text('');
+        }
+
+        $('#newPassword').on('blur', function() {
+            const newPassword = $(this).val();
+            if (newPassword === '') {
+                showError('newPassword', 'newPassword-error', 'Mật khẩu không được để trống');
+            } else {
+                const result = validatePassword(newPassword);
+                if (!result.valid) {
+                    showError('newPassword', 'newPassword-error', result.message);
+                } else {
+                    showSuccess('newPassword', 'newPassword-error');
+                    // Re-check confirm password if it has value
+                    if ($('#confirmPassword').val() !== '') {
+                        $('#confirmPassword').trigger('blur');
+                    }
+                }
+            }
+        });
+
+        $('#confirmPassword').on('blur', function() {
+            const confirmPassword = $(this).val();
+            const newPassword = $('#newPassword').val();
+            if (confirmPassword === '') {
+                showError('confirm-password', 'confirm-password-error', 'Xác nhận mật khẩu không được để trống');
+            } else if (confirmPassword !== newPassword) {
+                showError('confirmPassword', 'confirmPassword-error', 'Mật khẩu xác nhận không khớp');
+            } else {
+                showSuccess('confirmPassword', 'confirmPassword-error');
+            }
+        });
+
+        // Form submission validation
+        $('#resetPasswordForm').on('submit', function(e) {
+            let isValid = true;
+
+            // Validate password
+            const newPassword = $('#newPassword').val();
+            if (newPassword === '') {
+                showError('newPassword', 'newPassword-error', 'Mật khẩu không được để trống');
+                isValid = false;
+            } else {
+                const result = validatePassword(newPassword);
+                if (!result.valid) {
+                    showError('newPassword', 'newPassword-error', result.message);
+                    isValid = false;
+                } else {
+                    showSuccess('newPassword', 'newPassword-error');
+                }
+            }
+
+            // Validate confirm password
+            const confirmPassword = $('#confirmPassword').val();
+            if (confirmPassword === '') {
+                showError('confirmPassword', 'confirmPassword-error', 'Xác nhận mật khẩu không được để trống');
+                isValid = false;
+            } else if (confirmPassword !== newPassword) {
+                showError('confirmPassword', 'confirmPassword-error', 'Mật khẩu xác nhận không khớp');
+                isValid = false;
+            } else {
+                showSuccess('confirmPassword', 'confirmPassword-error');
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+                // Scroll to first error
+                $('html, body').animate({
+                    scrollTop: $('.error-message.show').first().offset().top - 100
+                }, 500);
+            }
+        });
     });
+
 </script>
 </body>
 </html>

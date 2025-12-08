@@ -56,6 +56,46 @@
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/highlights.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/footer.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/responsive.css" rel="stylesheet">
+    <style>
+        .password-wrapper {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 16px;
+            padding: 5px 10px;
+            z-index: 10;
+        }
+        .password-toggle:hover {
+            color: #333;
+        }
+        .form-group input[type="password"],
+        .form-group input[type="text"] {
+            padding-right: 45px;
+        }
+        .error-message {
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .form-group input.error {
+            border-color: #dc2626;
+        }
+        .form-group input.success {
+            border-color: #16a34a;
+        }
+    </style>
 </head>
 
 <body>
@@ -101,26 +141,35 @@
                                     <form method="post" action="${pageContext.request.contextPath}/user?action=changePassword" class="needs-validation" novalidate id="changePasswordForm">
                                         <div class="mb-3">
                                             <label for="currentPassword" class="form-label">Mật khẩu hiện tại <span class="text-danger">*</span></label>
-                                            <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
-                                            <div class="invalid-feedback">
-                                                Vui lòng nhập mật khẩu hiện tại.
+                                            <div class="password-wrapper">
+                                                <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                                                <button type="button" class="password-toggle" id="toggle-currentPassword" data-target="currentPassword" aria-label="Hiển thị/ẩn mật khẩu hiện tại">
+                                                    <i id="currentPassword-eye-icon" class="fa fa-eye"></i>
+                                                </button>
                                             </div>
+                                            <span class="error-message" id="currentPassword-error"></span>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="newPassword" class="form-label">Mật khẩu mới <span class="text-danger">*</span></label>
-                                            <input type="password" class="form-control" id="newPassword" name="newPassword" required minlength="6">
-                                            <div class="invalid-feedback">
-                                                Vui lòng nhập mật khẩu mới (tối thiểu 6 ký tự).
+                                            <div class="password-wrapper">
+                                                <input type="password" class="form-control" id="newPassword" name="newPassword" required minlength="7">
+                                                <button type="button" class="password-toggle" id="toggle-newPassword" data-target="newPassword" aria-label="Hiển thị/ẩn mật khẩu mới">
+                                                    <i id="newPassword-eye-icon" class="fa fa-eye"></i>
+                                                </button>
                                             </div>
+                                            <span class="error-message" id="newPassword-error"></span>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="confirmPassword" class="form-label">Xác nhận mật khẩu mới <span class="text-danger">*</span></label>
-                                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                                            <div class="invalid-feedback" id="confirmPasswordFeedback">
-                                                Vui lòng xác nhận mật khẩu mới.
+                                            <div class="password-wrapper">
+                                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required minlength="7">
+                                                <button type="button" class="password-toggle" id="toggle-confirmPassword" data-target="confirmPassword" aria-label="Hiển thị/ẩn xác nhận mật khẩu">
+                                                    <i id="confirmPassword-eye-icon" class="fa fa-eye"></i>
+                                                </button>
                                             </div>
+                                            <span class="error-message" id="confirmPassword-error"></span>
                                         </div>
                                         
                                         <div class="d-flex gap-2 mt-4">
@@ -213,35 +262,164 @@
 <!-- main-js -->
 <script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
 <script>
-// Bootstrap form validation with password confirmation check
-(function() {
-    'use strict';
-    var form = document.getElementById('changePasswordForm');
-    var newPassword = document.getElementById('newPassword');
-    var confirmPassword = document.getElementById('confirmPassword');
-    var confirmPasswordFeedback = document.getElementById('confirmPasswordFeedback');
-    
-    function validatePasswordMatch() {
-        if (confirmPassword.value !== newPassword.value) {
-            confirmPassword.setCustomValidity('Mật khẩu xác nhận không khớp với mật khẩu mới.');
-            confirmPasswordFeedback.textContent = 'Mật khẩu xác nhận không khớp với mật khẩu mới.';
-        } else {
-            confirmPassword.setCustomValidity('');
+
+$(document).ready(function() {
+        // Password toggle functionality
+        $('#toggle-currentPassword').on('click', function() {
+            const passwordInput = $('#currentPassword');
+            const icon = $('#currentPassword-eye-icon');
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordInput.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+
+        $('#toggle-newPassword').on('click', function() {
+            const newpasswordInput = $('#newPassword');
+            const icon = $('#newPassword-eye-icon');
+            if (newpasswordInput.attr('type') === 'password') {
+                newpasswordInput.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                newpasswordInput.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+
+        $('#toggle-confirmPassword').on('click', function() {
+            const confirmPasswordInput = $('#confirmPassword');
+            const icon = $('#confirmPassword-eye-icon');
+            if (confirmPasswordInput.attr('type') === 'password') {
+                confirmPasswordInput.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                confirmPasswordInput.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+
+        function validatePassword(password) {
+            // At least 6 characters
+            if (password.length < 6) {
+                return {
+                    valid: false,
+                    message: 'Mật khẩu phải có ít nhất 6 ký tự'
+                };
+            }
+            // Check for uppercase
+            if (!/[A-Z]/.test(password)) {
+                return {
+                    valid: false,
+                    message: 'Mật khẩu phải có ít nhất một chữ hoa'
+                };
+            }
+            // Check for lowercase
+            if (!/[a-z]/.test(password)) {
+                return {
+                    valid: false,
+                    message: 'Mật khẩu phải có ít nhất một chữ thường'
+                };
+            }
+            // Check for number
+            if (!/[0-9]/.test(password)) {
+                return {
+                    valid: false,
+                    message: 'Mật khẩu phải có ít nhất một số'
+                };
+            }
+            // Check for special character (!@#)
+            if (!/[!@#]/.test(password)) {
+                return {
+                    valid: false,
+                    message: 'Mật khẩu phải có ít nhất một ký tự đặc biệt (!@#)'
+                };
+            }
+            return { valid: true };
         }
-    }
-    
-    newPassword.addEventListener('input', validatePasswordMatch);
-    confirmPassword.addEventListener('input', validatePasswordMatch);
-    
-    form.addEventListener('submit', function(event) {
-        validatePasswordMatch();
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
+
+        function showError(inputId, errorId, message) {
+            $('#' + inputId).addClass('error').removeClass('success');
+            $('#' + errorId).text(message).addClass('show');
         }
-        form.classList.add('was-validated');
-    }, false);
-})();
+
+        function showSuccess(inputId, errorId) {
+            $('#' + inputId).addClass('success').removeClass('error');
+            $('#' + errorId).removeClass('show').text('');
+        }
+
+        $('#newPassword').on('blur', function() {
+            const password = $(this).val();
+            if (password === '') {
+                showError('newPassword', 'newPassword-error', 'Mật khẩu không được để trống');
+            } else {
+                const result = validatePassword(password);
+                if (!result.valid) {
+                    showError('newPassword', 'newPassword-error', result.message);
+                } else {
+                    showSuccess('newPassword', 'newPassword-error');
+                    // Re-check confirm password if it has value
+                    if ($('#confirmPassword').val() !== '') {
+                        $('#confirmPassword').trigger('blur');
+                    }
+                }
+            }
+        });
+
+        $('#confirmPassword').on('blur', function() {
+            const confirmPassword = $(this).val();
+            const newpassword = $('#newPassword').val();
+            if (confirmPassword === '') {
+                showError('confirmPassword', 'confirmPassword-error', 'Xác nhận mật khẩu không được để trống');
+            } else if (confirmPassword !== newpassword) {
+                showError('confirmPassword', 'confirmPassword-error', 'Mật khẩu xác nhận không khớp');
+            } else {
+                showSuccess('confirmPassword', 'confirmPassword-error');
+            }
+        });
+
+        // Form submission validation
+        $('#changePasswordForm').on('submit', function(e) {
+            let isValid = true;
+
+            // Validate password
+            const newpassword = $('#newPassword').val();
+            if (newpassword === '') {
+                showError('newPassword', 'newPassword-error', 'Mật khẩu không được để trống');
+                isValid = false;
+            } else {
+                const result = validatePassword(newpassword);
+                if (!result.valid) {
+                    showError('newPassword', 'newPassword-error', result.message);
+                    isValid = false;
+                } else {
+                    showSuccess('newPassword', 'newPassword-error');
+                }
+            }
+
+            // Validate confirm password
+            const confirmPassword = $('#confirmPassword').val();
+            if (confirmPassword === '') {
+                showError('confirmPassword', 'confirmPassword-error', 'Xác nhận mật khẩu không được để trống');
+                isValid = false;
+            } else if (confirmPassword !== newpassword) {
+                showError('confirmPassword', 'confirmPassword-error', 'Mật khẩu xác nhận không khớp');
+                isValid = false;
+            } else {
+                showSuccess('confirmPassword', 'confirmPassword-error');
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+                // Scroll to first error
+                $('html, body').animate({
+                    scrollTop: $('.error-message.show').first().offset().top - 100
+                }, 500);
+            }
+        });
+    });
 </script>
 </body>
 </html>

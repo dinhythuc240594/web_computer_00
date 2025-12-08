@@ -31,7 +31,7 @@
                                 if (imageSrc == null || imageSrc.isBlank()) {
                                     imageSrc = contextPath + fallbackImages[index % fallbackImages.length];
                                 }
-                                String categoryLink = contextPath + "/products?categoryId=" + category.getId();
+                                String categoryLink = contextPath + "/category?categoryId=" + category.getId();
                                 String description = category.getDescription();
                                 if (description == null || description.isBlank()) {
                                     description = "Đang cập nhật";

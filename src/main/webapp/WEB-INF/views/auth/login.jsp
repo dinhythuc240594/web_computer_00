@@ -35,6 +35,31 @@
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/highlights.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/footer.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/responsive.css" rel="stylesheet">
+<style>
+        .password-wrapper {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 16px;
+            padding: 5px 10px;
+            z-index: 10;
+        }
+        .password-toggle:hover {
+            color: #333;
+        }
+        .form-group input[type="password"],
+        .form-group input[type="text"] {
+            padding-right: 45px;
+        }
+</style>
 </head>
 
 <!-- page wrapper -->
@@ -78,7 +103,12 @@
                     </div>
                     <div class="form-group">
                         <label>Mật khẩu</label>
-                        <input type="password" name="password" required>
+                        <div class="password-wrapper">
+                            <input type="password" name="password" id="password" required>
+                            <button type="button" class="password-toggle" id="toggle-password" aria-label="Hiển thị mật khẩu">
+                                <i class="fa fa-eye" id="password-eye-icon"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="form-group message-btn">
                         <button type="submit" class="theme-btn">Đăng nhập<span></span><span></span><span></span><span></span></button>
@@ -177,6 +207,22 @@
 
 <!-- main-js -->
 <script src="${pageContext.request.contextPath}/assets/client/js/script.js"></script>
+<script>
+    $(document).ready(function() {
+        // Password toggle functionality
+        $('#toggle-password').on('click', function() {
+            const passwordInput = $('#password');
+            const icon = $('#password-eye-icon');
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordInput.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+    });
+</script>
 </body>
 </html>
 

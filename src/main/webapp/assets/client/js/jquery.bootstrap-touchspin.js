@@ -55,7 +55,7 @@
       buttondown_class: 'btn btn-default',
       buttonup_class: 'btn btn-default',
 	  buttondown_txt: '-',
-	  buttonup_txt: '+'
+	  buttonup_txt: ''
     };
 
     var attributeMap = {
