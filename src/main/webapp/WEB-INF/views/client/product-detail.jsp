@@ -23,7 +23,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Shared on THEMELOCK.COM - Nexmart - HTML 5 Template Preview</title>
+    <title>Cửa hàng máy tính HCMUTE</title>
 
     <!-- Fav Icon -->
     <link rel="icon" href="${pageContext.request.contextPath}/assets/client/images/Logo%20HCMUTE_White%20background.png" type="image/x-icon">
