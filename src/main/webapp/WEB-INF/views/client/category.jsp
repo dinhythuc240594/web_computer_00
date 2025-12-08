@@ -31,9 +31,7 @@
     
     String pageTitle = "Tất cả sản phẩm";
     if (selectedCategory != null) {
-        pageTitle = "Danh mục: " + selectedCategory.getName();
-    } else if (selectedCategoryId > 0) {
-        pageTitle = "Danh mục #" + selectedCategoryId;
+        pageTitle = selectedCategory.getName();
     }
 %>
 <!DOCTYPE html>

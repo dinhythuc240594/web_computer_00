@@ -145,7 +145,7 @@
                         </figure>
                     </div>
                     <div class="lower-content">
-                        <span class="text">Danh mục #<%= product.getCategory_id() %></span>
+                        <!-- <span class="text">Danh mục #<%= product.getCategory_id() %></span> -->
                         <h4>
                             <a href="<%= productLink %>"><%= product.getName() %></a>
                         </h4>

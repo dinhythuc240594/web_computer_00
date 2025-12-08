@@ -563,43 +563,7 @@
     <!-- account-section end -->
 
     <!-- highlights-section -->
-    <section class="highlights-section inner-highlights">
-        <div class="large-container">
-            <div class="inner-container clearfix">
-                <div class="shape" style="background-image: url(${pageContext.request.contextPath}/assets/client/images/shape/shape-5.png);"></div>
-                <div class="highlights-block-one">
-                    <div class="inner-box">
-                        <div class="icon-box"><i class="icon-23"></i></div>
-                        <h5>Giao hàng trong ngày</h5>
-                    </div>
-                </div>
-                <div class="highlights-block-one">
-                    <div class="inner-box">
-                        <div class="icon-box"><i class="icon-17"></i></div>
-                        <h5>100% khách hàng hài lòng</h5>
-                    </div>
-                </div>
-                <div class="highlights-block-one">
-                    <div class="inner-box">
-                        <div class="icon-box"><i class="icon-25"></i></div>
-                        <h5>Hỗ trợ tận tâm</h5>
-                    </div>
-                </div>
-                <div class="highlights-block-one">
-                    <div class="inner-box">
-                        <div class="icon-box"><i class="icon-38"></i></div>
-                        <h5>Sản phẩm chính hãng</h5>
-                    </div>
-                </div>
-                <div class="highlights-block-one">
-                    <div class="inner-box">
-                        <div class="icon-box"><i class="icon-27"></i></div>
-                        <h5>Hỗ trợ 24/7</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <jsp:include page="../../common/highlight-section.jsp" />
     <!-- highlights-section end -->
 
     <jsp:include page="../../common/footer.jsp" />

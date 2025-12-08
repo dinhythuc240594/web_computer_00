@@ -136,9 +136,9 @@
                                 Ngày đặt: <%= order != null && order.getOrderDate() != null ? dateFormat.format(order.getOrderDate()) : "" %>
                             </p>
                         </div>
-                        <div class="d-flex align-content-center flex-wrap gap-2">
+                        <!-- <div class="d-flex align-content-center flex-wrap gap-2">
                             <button class="btn btn-outline-danger delete-order">Delete Order</button>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Order Details Table -->

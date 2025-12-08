@@ -195,27 +195,27 @@
                                     Boolean isActive = (product != null) ? product.getIs_active() : null;
                                 %>
                                 <% if (brand != null && brand.getName() != null) { %>
-                                <li><strong>Brand :</strong><%= brand.getName() %></li>
+                                <li><strong>Thương hiệu :</strong><%= brand.getName() %></li>
                                 <% } %>
                                 <% if (category != null && category.getName() != null) { %>
-                                <li><strong>Category :</strong><%= category.getName() %></li>
+                                <li><strong>Danh mục :</strong><%= category.getName() %></li>
                                 <% } %>
                                 <li>
-                                    <strong>Availability :</strong>
+                                    <strong>Tình trạng :</strong>
                                     <% if (inStock) { %>
                                     <span class="product-stock">
                                         <img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-1.png" alt="">
-                                        In Stock (<%= stockQty %>)
+                                        Còn hàng (<%= stockQty %>)
                                     </span>
                                     <% } else { %>
                                     <span class="product-stock-out">
                                         <img src="${pageContext.request.contextPath}/assets/client/images/icons/icon-2.png" alt="">
-                                        Out of Stock
+                                        Hết hàng
                                     </span>
                                     <% } %>
                                 </li>
                                 <% if (isActive != null && isActive) { %>
-                                <li><strong>Status :</strong><span style="color: green;">Active</span></li>
+                                <li><strong>Trạng thái :</strong><span style="color: green;">Hoạt động</span></li>
                                 <% } %>
                             </ul>
 
@@ -257,9 +257,9 @@
                 <div class="tabs-box">
                     <div class="tab-btn-box">
                         <ul class="tab-btns tab-buttons clearfix">
-                            <li class="tab-btn active-btn" data-tab="#tab-1">Description</li>
-                            <li class="tab-btn" data-tab="#tab-2">Reviews</li>
-                            <li class="tab-btn" data-tab="#tab-3">Specification</li>
+                            <li class="tab-btn active-btn" data-tab="#tab-1">Mô tả</li>
+                            <li class="tab-btn" data-tab="#tab-2">Nhận xét</li>
+                            <li class="tab-btn" data-tab="#tab-3">Thông số kỹ thuật</li>
                         </ul>
                     </div>
                     <div class="tabs-content">
@@ -273,7 +273,7 @@
                         </div>
                         <div class="tab" id="tab-2">
                             <div class="review-content pt_40">
-                                <h3>Customer Reviews (<%= totalReviews %>)</h3>
+                                <h3>Nhận xét của khách hàng (<%= totalReviews %>)</h3>
                                 <hr/>
                                 <%
                                     if (reviews != null && !reviews.isEmpty()) {
@@ -402,45 +402,8 @@
     <!-- shop-details end -->
 
     <!-- highlights-section -->
-    <section class="highlights-section inner-highlights">
-        <div class="large-container">
-            <div class="inner-container clearfix">
-                <div class="shape" style="background-image: url(${pageContext.request.contextPath}/assets/client/images/shape/shape-5.png);"></div>
-                <div class="highlights-block-one">
-                    <div class="inner-box">
-                        <div class="icon-box"><i class="icon-23"></i></div>
-                        <h5>Same day Product Delivery</h5>
-                    </div>
-                </div>
-                <div class="highlights-block-one">
-                    <div class="inner-box">
-                        <div class="icon-box"><i class="icon-17"></i></div>
-                        <h5>100% Customer Satisfaction</h5>
-                    </div>
-                </div>
-                <div class="highlights-block-one">
-                    <div class="inner-box">
-                        <div class="icon-box"><i class="icon-25"></i></div>
-                        <h5>Help and access is our mission</h5>
-                    </div>
-                </div>
-                <div class="highlights-block-one">
-                    <div class="inner-box">
-                        <div class="icon-box"><i class="icon-38"></i></div>
-                        <h5>100% quality Car Accessories</h5>
-                    </div>
-                </div>
-                <div class="highlights-block-one">
-                    <div class="inner-box">
-                        <div class="icon-box"><i class="icon-27"></i></div>
-                        <h5>24/7 Support for Clients</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <jsp:include page="../common/highlight-section.jsp" />
     <!-- highlights-section end -->
-
 
     <!-- main-footer -->
     <jsp:include page="../common/footer.jsp" />

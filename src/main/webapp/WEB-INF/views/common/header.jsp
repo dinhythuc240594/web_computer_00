@@ -150,7 +150,7 @@ padding: 15px 20px;"></div>
                         <nav class="main-menu navbar-expand-md navbar-light clearfix">
                             <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
                                 <ul class="navigation clearfix">
-                                    <li class="current"><a href="home">Home</a>
+                                    <li class="current"><a href="home">Trang chủ</a>
                                     </li>
                                     <li><a href="category">Danh Mục</a>
                                     </li>
