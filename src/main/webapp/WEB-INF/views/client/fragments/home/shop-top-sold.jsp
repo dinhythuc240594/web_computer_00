@@ -20,7 +20,11 @@
                         <div class="inner-container clearfix">
                             <%
                                 if (topSoldProducts != null && !topSoldProducts.isEmpty()) {
+                                    int count = 0;
                                     for (ProductDAO product : topSoldProducts) {
+                                        if(count >= 5){
+                                            break;
+                                        }
                                         String productImage = product.getImage();
                                         if (productImage == null || productImage.isBlank()) {
                                             productImage = contextPath + "/assets/client/images/shop/shop-32.png";
@@ -34,6 +38,7 @@
                                                 : "Liên hệ";
 
                                         int stock = product.getStock_quantity();
+                                        count = count + 1;
                             %>
                             <div class="shop-block-five">
                                 <div class="inner-box">
