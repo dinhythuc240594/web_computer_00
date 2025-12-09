@@ -73,11 +73,9 @@
     <jsp:include page="../common/category-menu.jsp" />
     <!-- End Category Menu -->
 
-    <jsp:include page="fragments/product-list/page-title.jsp" />
-
-    <jsp:include page="fragments/product-list/shop-page.jsp" />
-
-    <jsp:include page="fragments/product-list/highlights.jsp" />
+    <!-- highlights-section -->
+    <jsp:include page="../common/highlight-section.jsp" />
+    <!-- highlights-section end -->
 
 
     <!-- main-footer -->

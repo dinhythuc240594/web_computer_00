@@ -46,6 +46,7 @@
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/news.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/footer.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/responsive.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/highlights.css" rel="stylesheet">
     <style>
         .db-status{max-width:1200px;margin:20px auto;padding:18px;border-radius:10px;color:#111;}
         .db-status--ok{border:1px solid #22c55e;background:#ecfdf5;}
@@ -94,6 +95,10 @@
     <jsp:include page="fragments/home/shop-top-sold.jsp" />
 
 <%--    <jsp:include page="fragments/home/news.jsp" />--%>
+
+    <!-- highlights-section -->
+    <jsp:include page="../common/highlight-section.jsp" />
+    <!-- highlights-section end -->
 
     <!-- main-footer -->
     <jsp:include page="../common/footer.jsp" />

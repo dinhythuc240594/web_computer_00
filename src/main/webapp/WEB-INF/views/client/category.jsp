@@ -68,6 +68,7 @@
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/shop-sidebar.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/footer.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/responsive.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/client/css/module-css/highlights.css" rel="stylesheet">
     <style>
         .category-filter-section {
             background: #f8f9fa;
@@ -496,6 +497,10 @@
         </div>
     </section>
     <!-- category-page-section end -->
+
+    <!-- highlights-section -->
+    <jsp:include page="../common/highlight-section.jsp" />
+    <!-- highlights-section end -->
 
     <!-- main-footer -->
     <jsp:include page="../common/footer.jsp" />
