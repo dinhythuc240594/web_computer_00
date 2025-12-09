@@ -113,7 +113,7 @@
             <jsp:include page="../layout/navbar.jsp"/>
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <h4 class="fw-bold py-3 mb-4">Dashboard Quản lý</h4>
+                    <h4 class="fw-bold py-3 mb-4">Quản lý</h4>
 
                     <!-- Tabs Navigation -->
                     <ul class="nav nav-tabs mb-4" role="tablist">
