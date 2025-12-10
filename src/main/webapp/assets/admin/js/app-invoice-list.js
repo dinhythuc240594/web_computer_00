@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   </div>
                 </div>
                 <div class="d-flex flex-column">
-                  <a href="pages-profile-user.html" class="text-heading text-truncate"><span class="fw-medium">${name}</span></a>
+                  <a href="user" class="text-heading text-truncate"><span class="fw-medium">${name}</span></a>
                   <small class="text-truncate">${service}</small>
                 </div>
               </div>

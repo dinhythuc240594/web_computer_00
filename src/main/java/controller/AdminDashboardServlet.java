@@ -6,8 +6,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.OrderDAO;
 import model.OrderItemDAO;
+import model.PageRequest;
 import model.ProductDAO;
 import model.ProductSalesStats;
 import model.UserDAO;
@@ -52,7 +54,23 @@ public class AdminDashboardServlet extends HttpServlet {
             tab = "overview";
         }
 
-        // Quản lý tài khoản - lấy tất cả người dùng
+        // Lấy tham số tìm kiếm & phân trang cho đơn hàng / người dùng
+        String keyword = request.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+        int page = 1;
+        try {
+            String pageStr = request.getParameter("page");
+            if (pageStr != null && !pageStr.isBlank()) {
+                page = Integer.parseInt(pageStr);
+            }
+        } catch (NumberFormatException ignore) {
+            page = 1;
+        }
+        int pageSize = 10;
+
+        // Quản lý tài khoản - lấy tất cả người dùng (phục vụ thống kê)
         List<UserDAO> allUsers;
         try {
             allUsers = userService.getAll();
@@ -76,8 +94,10 @@ public class AdminDashboardServlet extends HttpServlet {
         int activeUsers = 0;
         int totalProducts = 0;
 
+        List<OrderDAO> overviewOrders = java.util.Collections.emptyList();
         try {
             List<OrderDAO> orders = orderService.getAll();
+            overviewOrders = orders;
             totalOrders = orders.size();
             
             Calendar today = Calendar.getInstance();
@@ -136,10 +156,34 @@ public class AdminDashboardServlet extends HttpServlet {
             
             // Đếm tổng sản phẩm
             List<ProductDAO> products = productService.getAll();
-            totalProducts = products.size();
+            // Chỉ đếm các sản phẩm đang hoạt động để hiển thị lên cửa hàng
+            totalProducts = (int) products.stream()
+                    .filter(p -> Boolean.TRUE.equals(p.getIs_active()))
+                    .count();
             
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+
+        // Lấy danh sách đơn hàng có phân trang và tìm kiếm
+        PageRequest pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
+        var orderPage = orderService.findAll(pageRequest);
+        List<OrderDAO> pagedOrders = orderPage.getData() != null ? orderPage.getData() : java.util.Collections.emptyList();
+
+        // Map tên khách hàng cho danh sách phân trang
+        Map<Integer, String> customerNames = new HashMap<>();
+        for (OrderDAO order : pagedOrders) {
+            if (!customerNames.containsKey(order.getUser_id())) {
+                UserDAO customer = userService.findById(order.getUser_id());
+                if (customer != null) {
+                    customerNames.put(order.getUser_id(),
+                            customer.getFullname() != null && !customer.getFullname().isBlank()
+                                    ? customer.getFullname()
+                                    : "Khách hàng #" + order.getUser_id());
+                } else {
+                    customerNames.put(order.getUser_id(), "Khách hàng #" + order.getUser_id());
+                }
+            }
         }
 
         request.setAttribute("totalRevenue", totalRevenue);
@@ -155,6 +199,18 @@ public class AdminDashboardServlet extends HttpServlet {
         request.setAttribute("totalUsers", totalUsers);
         request.setAttribute("activeUsers", activeUsers);
         request.setAttribute("totalProducts", totalProducts);
+        request.setAttribute("orderPage", orderPage);
+        request.setAttribute("orders", pagedOrders);
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("currentPage", page);
+
+        // Phân trang cho người dùng (tab users)
+        PageRequest userPageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword);
+        var userPage = userService.findAll(userPageRequest);
+        List<UserDAO> pagedUsers = userPage != null && userPage.getData() != null
+                ? userPage.getData() : java.util.Collections.emptyList();
+        request.setAttribute("userPage", userPage);
+        request.setAttribute("users", pagedUsers);
 
         // Thống kê sản phẩm bán được
         Map<Integer, ProductSalesStats> productSalesMap = new HashMap<>();
@@ -202,39 +258,14 @@ public class AdminDashboardServlet extends HttpServlet {
         productSalesList.sort((a, b) -> Integer.compare(b.getTotalQuantity(), a.getTotalQuantity()));
         request.setAttribute("productSalesList", productSalesList);
 
-        // Danh sách đơn hàng mới nhất cho dashboard (giới hạn 10)
-        List<OrderDAO> latestOrders;
-        try {
-            List<OrderDAO> allOrders = orderService.getAll();
-            latestOrders = allOrders.stream()
-                    .sorted((a, b) -> {
-                        if (a.getOrderDate() == null && b.getOrderDate() == null) return 0;
-                        if (a.getOrderDate() == null) return 1;
-                        if (b.getOrderDate() == null) return -1;
-                        return b.getOrderDate().compareTo(a.getOrderDate());
-                    })
-                    .limit(10)
-                    .toList();
-        } catch (Exception ex) {
-            latestOrders = java.util.Collections.emptyList();
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("is_login") == null || !(Boolean) session.getAttribute("is_login")) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
         }
-
-        Map<Integer, String> customerNames = new HashMap<>();
-        for (OrderDAO order : latestOrders) {
-            if (!customerNames.containsKey(order.getUser_id())) {
-                UserDAO customer = userService.findById(order.getUser_id());
-                if (customer != null) {
-                        customerNames.put(order.getUser_id(),
-                                customer.getFullname() != null && !customer.getFullname().isBlank()
-                                        ? customer.getFullname()
-                                        : "Khách hàng #" + order.getUser_id());
-                } else {
-                        customerNames.put(order.getUser_id(), "Khách hàng #" + order.getUser_id());
-                }
-            }
-        }
-
-        request.setAttribute("latestOrders", latestOrders);
+        String username = (String) session.getAttribute("username");
+        UserDAO currentUser = userService.findByUsername(username);
+        request.setAttribute("currentUser", currentUser);
         request.setAttribute("customerNames", customerNames);
         request.setAttribute("tab", tab);
 

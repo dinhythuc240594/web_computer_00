@@ -151,6 +151,9 @@ public class StaffServlet extends HttpServlet {
         if (action == null || action.isBlank()) {
             action = "";
         }
+
+
+        request.setAttribute("currentUser", currentUser);
         switch (action) {
             // Sản phẩm
             case "product-create" -> handleCreateProduct(request, response, currentUser);

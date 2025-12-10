@@ -52,8 +52,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserDAO> findAll(PageRequest pageRequest) {
-        // Chưa dùng phân trang cho user, có thể triển khai sau
-        return null;
+        List<UserDAO> data = userRepository.findAll(pageRequest);
+        int total = userRepository.count(pageRequest.getKeyword());
+        return new Page<>(data, pageRequest.getPage(), total, pageRequest.getPageSize());
     }
 
     @Override

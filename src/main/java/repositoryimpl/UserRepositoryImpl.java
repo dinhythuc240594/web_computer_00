@@ -133,6 +133,41 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public int count(String keyword) {
+        String sql = "SELECT COUNT(1) FROM users";
+        List<String> conditions = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
+
+        boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
+        if (hasKeyword) {
+            conditions.add("(username LIKE ? OR email LIKE ? OR full_name LIKE ? OR phone_number LIKE ? OR role LIKE ?)");
+            String like = "%" + keyword + "%";
+            params.add(like);
+            params.add(like);
+            params.add(like);
+            params.add(like);
+            params.add(like);
+        }
+
+        if (!conditions.isEmpty()) {
+            sql += " WHERE " + String.join(" AND ", conditions);
+        }
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setString(i + 1, (String) params.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi đếm người dùng", e);
+        }
         return 0;
     }
 
@@ -229,6 +264,61 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<UserDAO> findAll(PageRequest pageRequest) {
-        return List.of();
+        List<UserDAO> items = new ArrayList<>();
+
+        int pageSize = pageRequest.getPageSize();
+        int offset = pageRequest.getOffset();
+        String keyword = pageRequest.getKeyword();
+        String sortField = pageRequest.getSortField();
+        String orderField = pageRequest.getOrderField();
+
+        String sql = "SELECT id, username, email, password_hash, full_name, phone_number, " +
+                "address, avatar_blob, is_active, role FROM users ";
+
+        List<String> conditions = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
+
+        boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
+        if (hasKeyword) {
+            conditions.add("(username LIKE ? OR email LIKE ? OR full_name LIKE ? OR phone_number LIKE ? OR role LIKE ?)");
+            String like = "%" + keyword + "%";
+            params.add(like);
+            params.add(like);
+            params.add(like);
+            params.add(like);
+            params.add(like);
+        }
+
+        if (!conditions.isEmpty()) {
+            sql += "WHERE " + String.join(" AND ", conditions) + " ";
+        }
+
+        sql += "ORDER BY " + sortField + " " + orderField + " LIMIT ? OFFSET ?";
+        params.add(pageSize);
+        params.add(offset);
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            for (int i = 0; i < params.size(); i++) {
+                Object param = params.get(i);
+                if (param instanceof String) {
+                    ps.setString(i + 1, (String) param);
+                } else if (param instanceof Integer) {
+                    ps.setInt(i + 1, (Integer) param);
+                }
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    items.add(mapResultSetToUserDAO(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi phân trang người dùng", e);
+        }
+
+        return items;
     }
 }

@@ -79,25 +79,25 @@
                     <!-- Tabs Navigation -->
                     <ul class="nav nav-tabs mb-4" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link <%= "orders".equals(tab) ? "active" : "" %>" 
+                            <a class="nav-link item-menu <%= "orders".equals(tab) ? "active" : "" %>" 
                                href="${contextPath}/staff?action=dashboard&tab=orders">
                                 <i class="icon-base ri ri-shopping-cart-line me-2"></i>Đơn hàng
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <%= "products".equals(tab) ? "active" : "" %>" 
+                            <a class="nav-link item-menu <%= "products".equals(tab) ? "active" : "" %>" 
                                href="${contextPath}/staff?action=dashboard&tab=products">
                                 <i class="icon-base ri ri-product-hunt-line me-2"></i>Sản phẩm
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <%= "brands".equals(tab) ? "active" : "" %>" 
+                            <a class="nav-link item-menu <%= "brands".equals(tab) ? "active" : "" %>" 
                                href="${contextPath}/staff?action=dashboard&tab=brands">
                                 <i class="icon-base ri ri-star-line me-2"></i>Thương hiệu
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <%= "categories".equals(tab) ? "active" : "" %>" 
+                            <a class="nav-link item-menu <%= "categories".equals(tab) ? "active" : "" %>" 
                                href="${contextPath}/staff?action=dashboard&tab=categories">
                                 <i class="icon-base ri ri-folder-line me-2"></i>Danh mục
                             </a>

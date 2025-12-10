@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
                   </div>
                 </div>
                 <div class="d-flex flex-column">
-                  <h6 class="m-0"><a href="pages-profile-user.html" class="text-heading">${name}</a></h6>
+                  <h6 class="m-0"><a href="user" class="text-heading">${name}</a></h6>
                   <small>${email}</small>
                 </div>
               </div>`;

@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDAO> getAll() {
-        return List.of();
+        return this.productRepository.getAll();
     }
 
     @Override

@@ -33,6 +33,8 @@
     // Get data for each tab
     List<OrderDAO> orders = (List<OrderDAO>) request.getAttribute("orders");
     Page<OrderDAO> orderPage = (Page<OrderDAO>) request.getAttribute("orderPage");
+    List<UserDAO> users = (List<UserDAO>) request.getAttribute("users");
+    Page<UserDAO> userPage = (Page<UserDAO>) request.getAttribute("userPage");
     
     List<ProductDAO> products = (List<ProductDAO>) request.getAttribute("products");
     Page<ProductDAO> productPage = (Page<ProductDAO>) request.getAttribute("productPage");
@@ -79,6 +81,7 @@
     if (activeUsers == null) activeUsers = 0;
     if (totalProducts == null) totalProducts = 0;
     if (allUsers == null) allUsers = java.util.Collections.emptyList();
+    if (users == null) users = java.util.Collections.emptyList();
     if (productSalesList == null) productSalesList = java.util.Collections.emptyList();
     if (latestOrders == null) latestOrders = java.util.Collections.emptyList();
 %>
@@ -113,10 +116,10 @@
             <jsp:include page="../layout/navbar.jsp"/>
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <h4 class="fw-bold py-3 mb-4">Quản lý</h4>
+                    <!-- <h4 class="fw-bold py-3 mb-4">Quản lý</h4> -->
 
                     <!-- Tabs Navigation -->
-                    <ul class="nav nav-tabs mb-4" role="tablist">
+                    <!-- <ul class="nav nav-tabs mb-4" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link <%= "overview".equals(tab) ? "active" : "" %>" 
                                href="${contextPath}/admin?tab=overview">
@@ -135,14 +138,14 @@
                                 <i class="icon-base ri ri-bar-chart-line me-2"></i>Thống kê sản phẩm
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
 
                     <!-- Tab Content -->
                     <div class="tab-content">
                         <!-- Overview Tab -->
                         <% if ("overview".equals(tab)) { %>
                         <div class="tab-pane fade show active">
-                            <h5 class="mb-4">Tổng quan tình hình kinh doanh</h5>
+                            <h4 class="fw-bold mb-4">Tổng quan tình hình kinh doanh</h4>
                             
                             <!-- Revenue Cards -->
                             <div class="row mb-4">
@@ -263,10 +266,31 @@
                                 </div>
                             </div>
                             
-                            <!-- Latest Orders -->
+                            <!-- Orders Search -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <form method="get" action="${contextPath}/admin">
+                                        <input type="hidden" name="tab" value="overview"/>
+                                        <div class="row g-3">
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" name="keyword"
+                                                       placeholder="Tìm theo ID, khách hàng, trạng thái..."
+                                                       value="<%= keyword %>"/>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="submit" class="btn btn-primary w-100">
+                                                    <i class="icon-base ri ri-search-line me-2"></i>Tìm kiếm
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Orders Table -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="mb-0">Đơn hàng mới nhất</h5>
+                                    <h5 class="mb-0">Đơn hàng</h5>
                                 </div>
                                 <div class="card-datatable table-responsive">
                                     <table class="table table-hover">
@@ -281,8 +305,8 @@
                                         </thead>
                                         <tbody>
                                             <%
-                                                if (latestOrders != null && !latestOrders.isEmpty()) {
-                                                    for (OrderDAO order : latestOrders) {
+                                                if (orders != null && !orders.isEmpty()) {
+                                                    for (OrderDAO order : orders) {
                                                         String status = order.getStatus() != null ? order.getStatus() : "";
                                             %>
                                                 <tr>
@@ -347,6 +371,52 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+                                <!-- Pagination -->
+                                <%
+                                    if (orderPage != null && orderPage.getTotalPage() > 1) {
+                                        int currentPageNum = orderPage.getCurrentPage();
+                                        int totalPages = orderPage.getTotalPage();
+                                        String baseUrl = request.getContextPath() + "/admin?tab=overview";
+                                        if (keyword != null && !keyword.isEmpty()) {
+                                            baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
+                                        }
+                                %>
+                                    <div class="card-footer">
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center mb-0">
+                                                <li class="page-item <%= currentPageNum == 1 ? "disabled" : "" %>">
+                                                    <a class="page-link" href="<%= baseUrl %>&page=<%= currentPageNum - 1 %>">Trước</a>
+                                                </li>
+                                                <%
+                                                    for (int i = 1; i <= totalPages; i++) {
+                                                        if (i == 1 || i == totalPages || (i >= currentPageNum - 2 && i <= currentPageNum + 2)) {
+                                                %>
+                                                    <li class="page-item <%= i == currentPageNum ? "active" : "" %>">
+                                                        <a class="page-link" href="<%= baseUrl %>&page=<%= i %>"><%= i %></a>
+                                                    </li>
+                                                <%
+                                                        }
+                                                        if (i == currentPageNum - 3 || i == currentPageNum + 3) {
+                                                %>
+                                                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
+                                                <li class="page-item <%= currentPageNum == totalPages ? "disabled" : "" %>">
+                                                    <a class="page-link" href="<%= baseUrl %>&page=<%= currentPageNum + 1 %>">Sau</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                        <div class="text-center mt-2">
+                                            <small class="text-muted">Trang <%= currentPageNum %> / <%= totalPages %>
+                                                (Tổng <%= orderPage.getTotalItem() %> đơn hàng)</small>
+                                        </div>
+                                    </div>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                         <% } %>
@@ -355,7 +425,7 @@
                         <% if ("users".equals(tab)) { %>
                         <div class="tab-pane fade show active">
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <h5 class="mb-0">Quản lý tài khoản người dùng</h5>
+                                <h4 class="fw-bold py-3 mb-4">Quản lý tài khoản người dùng</h4>
                             </div>
 
                             <!-- Search Form -->
@@ -397,8 +467,8 @@
                                         </thead>
                                         <tbody>
                                             <%
-                                                if (allUsers != null && !allUsers.isEmpty()) {
-                                                    for (UserDAO user : allUsers) {
+                                                if (users != null && !users.isEmpty()) {
+                                                    for (UserDAO user : users) {
                                                         boolean isActive = Boolean.TRUE.equals(user.getIsActive());
                                                         String role = user.getRole() != null ? user.getRole() : "USER";
                                             %>
@@ -443,6 +513,52 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                
+                                <!-- Pagination -->
+                                <%
+                                    if (userPage != null && userPage.getTotalPage() > 1) {
+                                        int currentPageNum = userPage.getCurrentPage();
+                                        int totalPages = userPage.getTotalPage();
+                                        String baseUrl = request.getContextPath() + "/admin?tab=users";
+                                        if (keyword != null && !keyword.isEmpty()) {
+                                            baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
+                                        }
+                                %>
+                                    <div class="card-footer">
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center mb-0">
+                                                <li class="page-item <%= currentPageNum == 1 ? "disabled" : "" %>">
+                                                    <a class="page-link" href="<%= baseUrl %>&page=<%= currentPageNum - 1 %>">Trước</a>
+                                                </li>
+                                                <%
+                                                    for (int i = 1; i <= totalPages; i++) {
+                                                        if (i == 1 || i == totalPages || (i >= currentPageNum - 2 && i <= currentPageNum + 2)) {
+                                                %>
+                                                    <li class="page-item <%= i == currentPageNum ? "active" : "" %>">
+                                                        <a class="page-link" href="<%= baseUrl %>&page=<%= i %>"><%= i %></a>
+                                                    </li>
+                                                <%
+                                                        }
+                                                        if (i == currentPageNum - 3 || i == currentPageNum + 3) {
+                                                %>
+                                                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
+                                                <li class="page-item <%= currentPageNum == totalPages ? "disabled" : "" %>">
+                                                    <a class="page-link" href="<%= baseUrl %>&page=<%= currentPageNum + 1 %>">Sau</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                        <div class="text-center mt-2">
+                                            <small class="text-muted">Trang <%= currentPageNum %> / <%= totalPages %>
+                                                (Tổng <%= userPage.getTotalItem() %> người dùng)</small>
+                                        </div>
+                                    </div>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                         <% } %>
@@ -451,7 +567,7 @@
                         <% if ("product-sales".equals(tab)) { %>
                         <div class="tab-pane fade show active">
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <h5 class="mb-0">Báo cáo thống kê sản phẩm bán được</h5>
+                                <h4 class="fw-bold py-3 mb-4">Báo cáo thống kê sản phẩm bán được</h4>
                             </div>
 
                             <!-- Product Sales Table -->

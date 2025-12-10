@@ -47,9 +47,14 @@
                     }
                 }
                 
-                // Lấy avatar URL
-                if (currentUser.getAvatar() != null && currentUser.getAvatar().length > 0) {
-                    avatarUrl = request.getContextPath() + "/avatar?username=" + java.net.URLEncoder.encode(currentUser.getUsername(), "UTF-8");
+                // Lấy avatar URL cho admin/staff nếu có ảnh
+                if (role != null
+                        && (role.equalsIgnoreCase("ADMIN") || role.equalsIgnoreCase("STAFF"))
+                        && currentUser.getAvatar() != null
+                        && currentUser.getAvatar().length > 0) {
+                    avatarUrl = request.getContextPath()
+                            + "/avatar?username="
+                            + java.net.URLEncoder.encode(currentUser.getUsername(), "UTF-8");
                 }
             }
         } catch (Exception e) {
@@ -64,84 +69,21 @@
                 </div>
 
                 <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
-                    <ul class="navbar-nav flex-row align-items-center ms-md-auto">
-                        
-                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                <div class="avatar avatar-online">
-                                    <img src="<%= avatarUrl %>" alt="avatar" class="rounded-circle" />
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
-                                <li>
-                                    <a class="dropdown-item" href="pages-account-settings-account.html">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <div class="avatar avatar-online">
-                                                    <img
-                                                            src="<%= avatarUrl %>"
-                                                            alt="avatar"
-                                                            class="w-px-40 h-auto rounded-circle" />
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-0 small"><%= displayName %></h6>
-                                                <small class="text-body-secondary"><%= displayRole %></small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="user">
-                                        <i class="icon-base ri ri-user-3-line icon-22px me-3"></i
-                                        ><span class="align-middle">My Profile</span>
-                                    </a>
-                                </li>
-                                <!-- <li>
-                                    <a class="dropdown-item" href="pages-account-settings-account.html">
-                                        <i class="icon-base ri ri-settings-4-line icon-22px me-3"></i
-                                        ><span class="align-middle">Settings</span>
-                                    </a>
-                                </li> -->
-                                <!-- <li>
-                                    <a class="dropdown-item" href="pages-account-settings-billing.html">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 icon-base ri ri-file-text-line icon-22px me-3"></i>
-                          <span class="flex-grow-1 align-middle">Billing Plan</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger">4</span>
-                        </span>
-                                    </a>
-                                </li> -->
-                                <!-- <li>
-                                    <div class="dropdown-divider"></div>
-                                </li> -->
-                                <!-- <li>
-                                    <a class="dropdown-item" href="pages-pricing.html">
-                                        <i class="icon-base ri ri-money-dollar-circle-line icon-22px me-3"></i
-                                        ><span class="align-middle">Pricing</span>
-                                    </a>
-                                </li> -->
-                                <!-- <li>
-                                    <a class="dropdown-item" href="pages-faq.html">
-                                        <i class="icon-base ri ri-question-line icon-22px me-3"></i
-                                        ><span class="align-middle">FAQ</span>
-                                    </a>
-                                </li> -->
-                                <li>
-                                    <div class="d-grid px-4 pt-2 pb-1">
-                                        <a class="btn btn-sm btn-danger d-flex" href="${pageContext.request.contextPath}/logout">
-                                            <small class="align-middle">Logout</small>
-                                            <i class="icon-base ri ri-logout-box-r-line ms-2 icon-16px"></i>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        
-                    </ul>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar avatar-online me-2">
+                                <img src="<%= avatarUrl %>" alt="avatar" class="rounded-circle" />
+                            </div>
+                            <div class="d-flex flex-column">
+                                <span class="fw-semibold small"><%= displayName %></span>
+                                <span class="text-body-secondary small"><%= displayRole %></span>
+                            </div>
+                        </div>
+                        <a class="btn btn-sm btn-danger d-flex align-items-center" href="${pageContext.request.contextPath}/logout">
+                            <small class="align-middle">Logout</small>
+                            <i class="icon-base ri ri-logout-box-r-line ms-2 icon-16px"></i>
+                        </a>
+                    </div>
                 </div>
             </nav>
 

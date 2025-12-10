@@ -134,8 +134,13 @@ public class UserServlet extends HttpServlet {
         request.setAttribute("ordersTotalPages", totalPages);
         request.setAttribute("ordersTotal", totalOrders);
         request.setAttribute("ordersPageSize", pageSize);
-        
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/account/profile.jsp");
+        String path_page = "";
+        if(currentUser.getRole() == "CUSTOMER"){
+            path_page = "/WEB-INF/views/client/account/profile.jsp";
+        } else {
+            path_page = "/WEB-INF/views/client/account/profile-admin.jsp";
+        }
+        RequestDispatcher rd = request.getRequestDispatcher(path_page);
         rd.forward(request, response);
     }
 

@@ -214,10 +214,10 @@ padding: 15px 20px;"></div>
                                         // Xác định link profile dựa trên role
                                         if (currentUser.getRole() != null && 
                                             (currentUser.getRole().equalsIgnoreCase("STAFF"))) {
-                                            profileLink = request.getContextPath() + "/staff";
+                                            profileLink = request.getContextPath() + "/staff?action=orders";
                                         } else if (currentUser.getRole() != null && 
                                             (currentUser.getRole().equalsIgnoreCase("ADMIN"))) {
-                                            profileLink = request.getContextPath() + "/admin";
+                                            profileLink = request.getContextPath() + "/admin?tab=overview";
                                         }
                                         else {
                                             profileLink = request.getContextPath() + "/user";
@@ -315,7 +315,7 @@ padding: 15px 20px;"></div>
                             </li>
                             <%
                                 } else {
-                                    // Hiển thị nút đăng nhập và đăng ký khi chưa đăng nhập
+                                
                             %>
                             <li><a href="<%= request.getContextPath() %>/login">Đăng nhập</a></li>
                             <li><a href="<%= request.getContextPath() %>/register">Đăng ký</a></li>

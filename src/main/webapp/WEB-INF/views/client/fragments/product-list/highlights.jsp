@@ -36,4 +36,4 @@
             </div>
         </div>
     </section>
-    <!-- highlights-section end -->
+    <!-- highlights-section end -->   

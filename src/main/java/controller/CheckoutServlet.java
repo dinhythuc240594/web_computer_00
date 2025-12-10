@@ -319,7 +319,8 @@ public class CheckoutServlet extends HttpServlet {
         htmlBody.append("<p><strong>Mã đơn hàng:</strong> #").append(order.getId()).append("</p>");
         String orderDateStr = order.getOrderDate() != null ? dateFormat.format(order.getOrderDate()) : "N/A";
         htmlBody.append("<p><strong>Ngày đặt:</strong> ").append(orderDateStr).append("</p>");
-        htmlBody.append("<p><strong>Trạng thái:</strong> ").append(order.getStatus()).append("</p>");
+        // htmlBody.append("<p><strong>Trạng thái:</strong> ").append(order.getStatus()).append("</p>");
+        htmlBody.append("<p><strong>Thời gian giao:</strong> ").append("2-3 ngày làm việc").append("</p>");
         htmlBody.append("<p><strong>Phương thức thanh toán:</strong> ");
         if ("cod".equalsIgnoreCase(order.getPayment())) {
             htmlBody.append("Thanh toán khi nhận hàng (COD)");

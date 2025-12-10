@@ -208,9 +208,11 @@
                         </div>
                         <ul class="tab-btns tab-buttons clearfix">
                             <li class="tab-btn <%= (tab == null || tab.equals("info")) ? "active-btn" : "" %>" data-tab="#tab-1">Thông tin cá nhân</li>
+                            <% if(currentUser.getRole() == "CUSTOMER") {%>
                             <!-- <li class="tab-btn <%= "payment".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-2">Thanh toán & hoá đơn</li> -->
                             <li class="tab-btn <%= "orders".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-3">Lịch sử đơn hàng</li>
 <%--                            <li class="tab-btn <%= "wishlist".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-4">Danh sách yêu thích</li>--%>
+                            <% } %>
                         </ul>
                     </div>
                     <div class="tabs-content">
@@ -278,6 +280,8 @@
                                 </div>
                             </div>
                         </div>
+                        <% if(currentUser.getRole() == "CUSTOMER") {%>
+
                         <!-- <div class="tab <%= "payment".equals(tab) ? "active-tab" : "" %>" id="tab-2">
                             <h3>Thanh toán & hoá đơn</h3>
                             <div class="payment-option">
@@ -304,6 +308,7 @@
                                 </ul>
                             </div>
                         </div> -->
+
                         <div class="tab <%= "orders".equals(tab) ? "active-tab" : "" %>" id="tab-3">
                             <h3>Lịch sử đơn hàng</h3>
                             <%
@@ -555,6 +560,7 @@
                                 }
                             %>
                         </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
