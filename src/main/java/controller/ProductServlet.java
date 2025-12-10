@@ -299,7 +299,7 @@ public class ProductServlet extends HttpServlet {
             boolean success = Boolean.TRUE.equals(productService.create(product));
             
             if (success) {
-                response.sendRedirect(request.getContextPath() + "/staff?action=dashboard&tab=products");
+                response.sendRedirect(request.getContextPath() + "/staff?action=products");
             } else {
                 request.setAttribute("errorMessage", "Có lỗi xảy ra khi tạo sản phẩm. Vui lòng thử lại.");
                 doGet(request, response);
@@ -391,7 +391,7 @@ public class ProductServlet extends HttpServlet {
             boolean success = Boolean.TRUE.equals(productService.update(product));
             
             if (success) {
-                response.sendRedirect(request.getContextPath() + "/staff?action=dashboard&tab=products");
+                response.sendRedirect(request.getContextPath() + "/staff?action=products");
             } else {
                 request.setAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật sản phẩm. Vui lòng thử lại.");
                 request.setAttribute("product", product);

@@ -987,7 +987,7 @@ public class StaffServlet extends HttpServlet {
         String idStr = request.getParameter("id");
         String status = request.getParameter("status");
         if (idStr == null || status == null) {
-            response.sendRedirect(request.getContextPath() + "/staff?dashboard&tab=orders");
+            response.sendRedirect(request.getContextPath() + "/staff?action=orders");
             return;
         }
 
@@ -995,7 +995,7 @@ public class StaffServlet extends HttpServlet {
         try {
             id = Integer.parseInt(idStr);
         } catch (NumberFormatException e) {
-            response.sendRedirect(request.getContextPath() + "/staff?dashboard&tab=orders");
+            response.sendRedirect(request.getContextPath() + "/staff?action=orders");
             return;
         }
 
@@ -1005,7 +1005,7 @@ public class StaffServlet extends HttpServlet {
             orderService.update(order);
         }
 
-        response.sendRedirect(request.getContextPath() + "/staff?dashboard&tab=orders");
+        response.sendRedirect(request.getContextPath() + "/staff?action=orders");
     }
 
     private String handleImageUpload(HttpServletRequest request) throws IOException, ServletException {

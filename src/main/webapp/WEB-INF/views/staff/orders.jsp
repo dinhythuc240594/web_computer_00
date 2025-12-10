@@ -179,7 +179,7 @@
                             if (orderPage != null && orderPage.getTotalPage() > 1) {
                                 int currentPage = orderPage.getCurrentPage();
                                 int totalPages = orderPage.getTotalPage();
-                                String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=orders";
+                                String baseUrl = request.getContextPath() + "/staff?action=orders";
                                 if (keyword != null && !keyword.isEmpty()) {
                                     baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                 }

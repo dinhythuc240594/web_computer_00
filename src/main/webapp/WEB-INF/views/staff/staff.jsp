@@ -80,25 +80,25 @@
                     <ul class="nav nav-tabs mb-4" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link item-menu <%= "orders".equals(tab) ? "active" : "" %>" 
-                               href="${contextPath}/staff?action=dashboard&tab=orders">
+                               href="${contextPath}/staff?action=orders">
                                 <i class="icon-base ri ri-shopping-cart-line me-2"></i>Đơn hàng
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link item-menu <%= "products".equals(tab) ? "active" : "" %>" 
-                               href="${contextPath}/staff?action=dashboard&tab=products">
+                               href="${contextPath}/staff?action=products">
                                 <i class="icon-base ri ri-product-hunt-line me-2"></i>Sản phẩm
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link item-menu <%= "brands".equals(tab) ? "active" : "" %>" 
-                               href="${contextPath}/staff?action=dashboard&tab=brands">
+                               href="${contextPath}/staff?action=brands">
                                 <i class="icon-base ri ri-star-line me-2"></i>Thương hiệu
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link item-menu <%= "categories".equals(tab) ? "active" : "" %>" 
-                               href="${contextPath}/staff?action=dashboard&tab=categories">
+                               href="${contextPath}/staff?action=categories">
                                 <i class="icon-base ri ri-folder-line me-2"></i>Danh mục
                             </a>
                         </li>
@@ -245,7 +245,7 @@
                                     if (orderPage != null && orderPage.getTotalPage() > 1) {
                                         int currentPageNum = orderPage.getCurrentPage();
                                         int totalPages = orderPage.getTotalPage();
-                                        String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=orders";
+                                        String baseUrl = request.getContextPath() + "/staff?action=orders";
                                         if (keyword != null && !keyword.isEmpty()) {
                                             baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                         }
@@ -435,7 +435,7 @@
                                     if (productPage != null && productPage.getTotalPage() > 1) {
                                         int currentPageNum = productPage.getCurrentPage();
                                         int totalPages = productPage.getTotalPage();
-                                        String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=products";
+                                        String baseUrl = request.getContextPath() + "/staff?action=products";
                                         if (keyword != null && !keyword.isEmpty()) {
                                             baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                         }
@@ -593,7 +593,7 @@
                                     if (brandPage != null && brandPage.getTotalPage() > 1) {
                                         int currentPageNum = brandPage.getCurrentPage();
                                         int totalPages = brandPage.getTotalPage();
-                                        String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=brands";
+                                        String baseUrl = request.getContextPath() + "/staff?action=brands";
                                         if (keyword != null && !keyword.isEmpty()) {
                                             baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                         }
@@ -757,7 +757,7 @@
                                     if (categoryPage != null && categoryPage.getTotalPage() > 1) {
                                         int currentPageNum = categoryPage.getCurrentPage();
                                         int totalPages = categoryPage.getTotalPage();
-                                        String baseUrl = request.getContextPath() + "/staff?action=dashboard&tab=categories";
+                                        String baseUrl = request.getContextPath() + "/staff?action=categories";
                                         if (keyword != null && !keyword.isEmpty()) {
                                             baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
                                         }
