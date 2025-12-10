@@ -457,7 +457,7 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Username</th>
-                                                <th>Họ tên</th>
+                                                <!-- <th>Họ tên</th> -->
                                                 <th>Email</th>
                                                 <th>Số điện thoại</th>
                                                 <th>Vai trò</th>
@@ -475,20 +475,23 @@
                                                 <tr>
                                                     <td><%= user.getId() %></td>
                                                     <td><%= user.getUsername() != null ? user.getUsername() : "-" %></td>
-                                                    <td><%= user.getFullname() != null ? user.getFullname() : "-" %></td>
+                                                    <!-- <td><%= user.getFullname() != null ? user.getFullname() : "-" %></td> -->
                                                     <td><%= user.getEmail() != null ? user.getEmail() : "-" %></td>
                                                     <td><%= user.getPhone() != null ? user.getPhone() : "-" %></td>
                                                     <td>
                                                         <span class="badge bg-label-primary text-uppercase"><%= role %></span>
                                                     </td>
                                                     <td>
-                                                        <% if (isActive) { %>
-                                                            <span class="badge bg-label-success">Hoạt động</span>
-                                                        <% } else { %>
-                                                            <span class="badge bg-label-danger">Bị khóa</span>
-                                                        <% } %>
+
+                                                            <% if (isActive) { %>
+                                                                <span class="badge bg-label-success">Hoạt động</span>
+                                                            <% } else { %>
+                                                                <span class="badge bg-label-danger">Bị khóa</span>
+                                                            <% } %>
+
                                                     </td>
                                                     <td>
+                                                        <% if(role.equalsIgnoreCase("STAFF") || role.equalsIgnoreCase("CUSTOMER")){ %>
                                                         <form method="post" action="${contextPath}/admin" style="display: inline;">
                                                             <input type="hidden" name="action" value="toggle-user-status"/>
                                                             <input type="hidden" name="userId" value="<%= user.getId() %>"/>
@@ -498,6 +501,7 @@
                                                                 <%= isActive ? "Khóa" : "Mở khóa" %>
                                                             </button>
                                                         </form>
+                                                        <% } %>
                                                     </td>
                                                 </tr>
                                             <%
