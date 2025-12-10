@@ -134,6 +134,15 @@
                             : "Đang cập nhật";
 
                     boolean inStock = product.getStock_quantity() > 0;
+                    
+                    // Giới hạn tên sản phẩm 6 từ
+                    String productName = product.getName();
+                    if (productName != null && !productName.isBlank()) {
+                        String[] words = productName.trim().split("\\s+");
+                        if (words.length > 6) {
+                            productName = String.join(" ", java.util.Arrays.copyOf(words, 6)) + "...";
+                        }
+                    }
             %>
             <div class="col-lg-3 col-md-4 col-sm-6 shop-block-three">
                 <div class="inner-box">
@@ -147,7 +156,7 @@
                     <div class="lower-content">
                         <!-- <span class="text">Danh mục #<%= product.getCategory_id() %></span> -->
                         <h4>
-                            <a href="<%= productLink %>"><%= product.getName() %></a>
+                            <a href="<%= productLink %>"><%= productName %></a>
                         </h4>
                         <h5><%= priceDisplay %></h5>
                         <%
