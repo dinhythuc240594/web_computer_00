@@ -84,6 +84,15 @@
     if (users == null) users = java.util.Collections.emptyList();
     if (productSalesList == null) productSalesList = java.util.Collections.emptyList();
     if (latestOrders == null) latestOrders = java.util.Collections.emptyList();
+
+    String successMessage = (String) session.getAttribute("adminSuccess");
+    String errorMessage = (String) session.getAttribute("adminError");
+    if (successMessage != null) {
+        session.removeAttribute("adminSuccess");
+    }
+    if (errorMessage != null) {
+        session.removeAttribute("adminError");
+    }
 %>
 <!doctype html>
 <html lang="en" class="layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
@@ -116,6 +125,18 @@
             <jsp:include page="../layout/navbar.jsp"/>
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
+                    <% if (successMessage != null) { %>
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <%= successMessage %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% } %>
+                    <% if (errorMessage != null) { %>
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <%= errorMessage %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% } %>
                     <!-- <h4 class="fw-bold py-3 mb-4">Quản lý</h4> -->
 
                     <!-- Tabs Navigation -->
@@ -426,6 +447,50 @@
                         <div class="tab-pane fade show active">
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <h4 class="fw-bold py-3 mb-4">Quản lý tài khoản người dùng</h4>
+                            </div>
+
+                            <!-- Create Staff Form -->
+                            <div class="card mb-4">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Tạo tài khoản nhân viên</h5>
+                                    <small class="text-muted">Thêm nhanh nhân viên mới</small>
+                                </div>
+                                <div class="card-body">
+                                    <form method="post" action="${contextPath}/admin">
+                                        <input type="hidden" name="action" value="create-staff"/>
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Username *</label>
+                                                <input type="text" class="form-control" name="username" placeholder="vd: staff01" required/>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Email *</label>
+                                                <input type="email" class="form-control" name="email" placeholder="staff@example.com" required/>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Mật khẩu *</label>
+                                                <input type="password" class="form-control" name="password" placeholder="******" required/>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Họ tên</label>
+                                                <input type="text" class="form-control" name="fullname" placeholder="Nguyễn Văn A"/>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Số điện thoại</label>
+                                                <input type="text" class="form-control" name="phone" placeholder="0123456789"/>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Địa chỉ</label>
+                                                <input type="text" class="form-control" name="address" placeholder="Địa chỉ liên hệ"/>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="icon-base ri ri-user-add-line me-2"></i>Tạo nhân viên
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
 
                             <!-- Search Form -->

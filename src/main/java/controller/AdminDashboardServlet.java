@@ -276,7 +276,8 @@ public class AdminDashboardServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        
+        HttpSession session = request.getSession(true);
+
         if ("toggle-user-status".equals(action)) {
             String userIdParam = request.getParameter("userId");
             if (userIdParam != null && !userIdParam.isBlank()) {
@@ -293,7 +294,55 @@ public class AdminDashboardServlet extends HttpServlet {
                 }
             }
         }
-        
+
+        else if ("create-staff".equals(action)) {
+            String username = request.getParameter("username");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String fullname = request.getParameter("fullname");
+            String phone = request.getParameter("phone");
+            String address = request.getParameter("address");
+
+            if (username == null || username.isBlank()
+                    || email == null || email.isBlank()
+                    || password == null || password.isBlank()) {
+                session.setAttribute("adminError", "Vui lòng nhập đầy đủ Username, Email và Mật khẩu.");
+                response.sendRedirect(request.getContextPath() + "/admin?tab=users");
+                return;
+            }
+
+            try {
+                // Kiểm tra trùng username / email
+                boolean usernameExists = userService.findByUsername(username) != null;
+                boolean emailExists = userService.findByEmail(email) != null;
+                if (usernameExists) {
+                    session.setAttribute("adminError", "Username đã tồn tại, vui lòng chọn tên khác.");
+                } else if (emailExists) {
+                    session.setAttribute("adminError", "Email đã tồn tại, vui lòng chọn email khác.");
+                } else {
+                    UserDAO newUser = new UserDAO();
+                    newUser.setUsername(username.trim());
+                    newUser.setEmail(email.trim());
+                    newUser.setPassword(password); // Hệ thống hiện tại đang lưu mật khẩu dạng plain
+                    newUser.setFullname(fullname != null ? fullname.trim() : null);
+                    newUser.setPhone(phone != null ? phone.trim() : null);
+                    newUser.setAddress(address != null ? address.trim() : null);
+                    newUser.setIsActive(true);
+                    newUser.setRole("STAFF");
+
+                    boolean created = Boolean.TRUE.equals(userService.create(newUser));
+                    if (created) {
+                        session.setAttribute("adminSuccess", "Tạo tài khoản nhân viên thành công.");
+                    } else {
+                        session.setAttribute("adminError", "Không thể tạo tài khoản nhân viên. Vui lòng thử lại.");
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                session.setAttribute("adminError", "Có lỗi xảy ra khi tạo tài khoản nhân viên.");
+            }
+        }
+
         response.sendRedirect(request.getContextPath() + "/admin?tab=users");
     }
 }
