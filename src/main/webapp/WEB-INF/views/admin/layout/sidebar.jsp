@@ -79,37 +79,30 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var menuItems = document.querySelectorAll('#layout-menu .menu-item');
-                var storageKey = 'adminSidebarActiveHref';
 
-                // Nếu chưa có item nào active (server không set), thử khôi phục từ localStorage
-                var hasServerActive = document.querySelector('#layout-menu .menu-item.active');
-                if (!hasServerActive) {
-                    var savedHref = localStorage.getItem(storageKey);
-                    if (savedHref) {
-                        menuItems.forEach(function (item) {
-                            var link = item.querySelector('a.menu-link');
-                            if (link && link.getAttribute('href') === savedHref) {
-                                item.classList.add('active');
-                            } else {
-                                item.classList.remove('active');
-                            }
-                        });
-                    }
+                function setActive(targetItem) {
+                    menuItems.forEach(function (el) {
+                        el.classList.remove('active');
+                    });
+                    targetItem.classList.add('active');
                 }
 
-                // Khi click: set active ngay và lưu lại để trang khác khôi phục
+                // Ưu tiên set active theo URL hiện tại (action trên query string)
+                var currentUrl = window.location.pathname + window.location.search;
                 menuItems.forEach(function (item) {
                     var link = item.querySelector('a.menu-link');
                     if (!link) return;
 
-                    link.addEventListener('click', function () {
-                        var href = link.getAttribute('href');
-                        localStorage.setItem(storageKey, href);
+                    var linkUrl = new URL(link.href);
+                    var isMatch = (linkUrl.pathname + linkUrl.search) === currentUrl;
 
-                        menuItems.forEach(function (el) {
-                            el.classList.remove('active');
-                        });
-                        item.classList.add('active');
+                    // Nếu server chưa set active, tự đánh dấu khi khớp URL
+                    if (isMatch && !item.classList.contains('active')) {
+                        setActive(item);
+                    }
+
+                    link.addEventListener('click', function () {
+                        setActive(item);
                     });
                 });
             });
