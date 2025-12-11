@@ -129,6 +129,70 @@
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/highlights.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/module-css/footer.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/client/css/responsive.css" rel="stylesheet">
+    <style>
+        /* Custom pagination style for order history */
+        .order-pagination {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .order-pagination .pagination {
+            display: inline-flex;
+            gap: 8px;
+            padding: 0;
+            margin: 0;
+        }
+        .order-pagination .page-item {
+            list-style: none;
+        }
+        .order-pagination .page-link {
+            padding: 8px 14px;
+            min-width: 42px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #0d6efd;
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+            transition: all 0.15s ease;
+            font-size: 14px;
+            line-height: 1;
+            text-align: center;
+        }
+        .order-pagination .page-link:hover {
+            background-color: #f8fafc;
+            transform: translateY(-1px);
+        }
+        .order-pagination .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(13, 110, 253, 0.2);
+        }
+        .order-pagination .page-item.disabled .page-link {
+            color: #9ca3af;
+            background-color: #f3f4f6;
+            border-color: #e5e7eb;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .order-pagination .page-ellipsis {
+            border: none;
+            background: transparent;
+            color: #9ca3af;
+            cursor: default;
+            box-shadow: none;
+        }
+        .order-pagination .page-summary {
+            margin-top: 10px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
@@ -488,21 +552,21 @@
                                 // Pagination controls
                                 if (ordersTotal > 0 && ordersTotalPages > 1) {
                             %>
-                            <div class="pagination-container" style="margin-top: 30px; text-align: center;">
+                            <div class="pagination-container order-pagination">
                                 <nav aria-label="Phân trang đơn hàng">
-                                    <ul class="pagination justify-content-center" style="display: inline-flex; list-style: none; padding: 0;">
+                                    <ul class="pagination justify-content-center">
                                         <%
                                             // Previous button
                                             if (ordersPage > 1) {
                                         %>
                                         <li class="page-item">
-                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= ordersPage - 1 %>" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #007bff; background-color: #fff;">Trước</a>
+                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= ordersPage - 1 %>">Trước</a>
                                         </li>
                                         <%
                                             } else {
                                         %>
                                         <li class="page-item disabled">
-                                            <span class="page-link" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; color: #6c757d; background-color: #e9ecef; cursor: not-allowed;">Trước</span>
+                                            <span class="page-link">Trước</span>
                                         </li>
                                         <%
                                             }
@@ -514,13 +578,13 @@
                                             if (startPage > 1) {
                                         %>
                                         <li class="page-item">
-                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=1" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #007bff; background-color: #fff;">1</a>
+                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=1">1</a>
                                         </li>
                                         <%
                                             if (startPage > 2) {
                                         %>
                                         <li class="page-item disabled">
-                                            <span class="page-link" style="padding: 8px 15px; margin: 0 5px; border: none; color: #6c757d;">...</span>
+                                            <span class="page-link page-ellipsis">...</span>
                                         </li>
                                         <%
                                             }
@@ -530,13 +594,13 @@
                                                 if (i == ordersPage) {
                                         %>
                                         <li class="page-item active">
-                                            <span class="page-link" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #007bff; border-radius: 4px; background-color: #007bff; color: #fff; font-weight: bold;"><%= i %></span>
+                                            <span class="page-link"><%= i %></span>
                                         </li>
                                         <%
                                                 } else {
                                         %>
                                         <li class="page-item">
-                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= i %>" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #007bff; background-color: #fff;"><%= i %></a>
+                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= i %>"><%= i %></a>
                                         </li>
                                         <%
                                                 }
@@ -546,13 +610,13 @@
                                                 if (endPage < ordersTotalPages - 1) {
                                         %>
                                         <li class="page-item disabled">
-                                            <span class="page-link" style="padding: 8px 15px; margin: 0 5px; border: none; color: #6c757d;">...</span>
+                                            <span class="page-link page-ellipsis">...</span>
                                         </li>
                                         <%
                                                 }
                                         %>
                                         <li class="page-item">
-                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= ordersTotalPages %>" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #007bff; background-color: #fff;"><%= ordersTotalPages %></a>
+                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= ordersTotalPages %>"><%= ordersTotalPages %></a>
                                         </li>
                                         <%
                                             }
@@ -561,20 +625,20 @@
                                             if (ordersPage < ordersTotalPages) {
                                         %>
                                         <li class="page-item">
-                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= ordersPage + 1 %>" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #007bff; background-color: #fff;">Sau</a>
+                                            <a class="page-link" href="${pageContext.request.contextPath}/user?tab=orders&page=<%= ordersPage + 1 %>">Sau</a>
                                         </li>
                                         <%
                                             } else {
                                         %>
                                         <li class="page-item disabled">
-                                            <span class="page-link" style="padding: 8px 15px; margin: 0 5px; border: 1px solid #ddd; border-radius: 4px; color: #6c757d; background-color: #e9ecef; cursor: not-allowed;">Sau</span>
+                                            <span class="page-link">Sau</span>
                                         </li>
                                         <%
                                             }
                                         %>
                                     </ul>
                                 </nav>
-                                <p style="margin-top: 10px; color: #6c757d; font-size: 14px;">
+                                <p class="page-summary">
                                     Hiển thị <%= (ordersPage - 1) * ordersPageSize + 1 %> - <%= Math.min(ordersPage * ordersPageSize, ordersTotal) %> trong tổng số <%= ordersTotal %> đơn hàng
                                 </p>
                             </div>
