@@ -11,6 +11,14 @@
     String avatarUrl = request.getContextPath() + "/assets/admin/img/avatars/1.png";
     String displayName = "User";
     String displayRole = "Admin";
+    String pageTitle = (String) request.getAttribute("pageTitle");
+    if (pageTitle == null || pageTitle.isBlank()) {
+        // Thử lấy từ attribute khác hoặc fallback
+        pageTitle = (String) request.getAttribute("title");
+    }
+    if (pageTitle == null || pageTitle.isBlank()) {
+        pageTitle = "Admin Dashboard";
+    }
     
     if (sessionUsername != null && !sessionUsername.isBlank()) {
         try {
@@ -68,7 +76,10 @@
                 <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
                 </div>
 
-                <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+                <div class="navbar-nav-right d-flex align-items-center justify-content-between flex-grow-1" id="navbar-collapse">
+                    <div class="d-flex align-items-center">
+                        <h5 class="mb-0 fw-semibold text-primary"><%= pageTitle %></h5>
+                    </div>
                     <div class="d-flex align-items-center gap-3">
                         <div class="d-flex align-items-center">
                             <div class="avatar avatar-online me-2">
@@ -80,7 +91,7 @@
                             </div>
                         </div>
                         <a class="btn btn-sm btn-danger d-flex align-items-center" href="${pageContext.request.contextPath}/logout">
-                            <small class="align-middle">Logout</small>
+                            <small class="align-middle">Đăng xuất</small>
                             <i class="icon-base ri ri-logout-box-r-line ms-2 icon-16px"></i>
                         </a>
                     </div>

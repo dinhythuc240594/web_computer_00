@@ -4,7 +4,9 @@
     String activeMenu = (String) request.getAttribute("activeMenu");
     String contextPath = request.getContextPath();
     UserDAO currentUser = (UserDAO) request.getAttribute("currentUser");
-    String sessionRole = currentUser.getRole();
+    String sessionRole = (currentUser != null && currentUser.getRole() != null) 
+            ? currentUser.getRole() 
+            : "CUSTOMER";
 %>
         <sidebar id="layout-menu" class="layout-menu menu-vertical menu">
             <div class="menu-inner-shadow"></div>
@@ -42,6 +44,12 @@
                                 <a href="<%= contextPath %>/admin?tab=product-sales" class="menu-link">
                                     <i class="menu-icon icon-base ri ri-file-list-3-line"></i>
                                     <div data-i18n="Orders">Thống kê sản phẩm</div>
+                                </a>
+                            </li>
+                            <li class="menu-item <%= "newsletter".equals(activeMenu) ? "active" : "" %>">
+                                <a href="<%= contextPath %>/admin/newsletter" class="menu-link">
+                                    <i class="menu-icon icon-base ri ri-mail-line"></i>
+                                    <div data-i18n="Newsletter">Quản lý Newsletter</div>
                                 </a>
                             </li>
                         <%

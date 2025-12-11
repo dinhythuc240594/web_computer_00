@@ -1,16 +1,18 @@
 package repositoryimpl;
 
-import model.PageRequest;
-import model.ProductDAO;
-import repository.ProductRepository;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.sql.DataSource;
+
+import model.PageRequest;
+import model.ProductDAO;
+import repository.ProductRepository;
 
 public class ProductRepositoryImpl implements ProductRepository {
 
@@ -34,6 +36,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         String sql = "SELECT id, name, slug, description, "
                     + "price, stock_quantity, image, category_id, brand_id, is_active, "
+                    + "original_price, discount_percentage, is_on_sale, sale_start_date, sale_end_date, "
                     + "created_at, updated_at FROM products ";
 
         List<String> conditions = new ArrayList<>();
@@ -90,7 +93,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     public List<ProductDAO> getAll() {
         List<ProductDAO> products = new ArrayList<>();
         String sql = "SELECT id, name, slug, description, price, stock_quantity, " +
-                "image, category_id, brand_id, is_active " +
+                "image, category_id, brand_id, is_active, " +
+                "original_price, discount_percentage, is_on_sale, sale_start_date, sale_end_date, " +
+                "created_at, updated_at " +
                 "FROM products";
 
         try (Connection conn = ds.getConnection();
@@ -112,7 +117,8 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         String sql = "SELECT id, name, description, price,"
                     + " image, slug, category_id, stock_quantity, "
-                    + " brand_id, is_active "
+                    + " brand_id, is_active, original_price, discount_percentage, is_on_sale, "
+                    + " sale_start_date, sale_end_date, created_at, updated_at "
                     + "FROM products WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
@@ -135,7 +141,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public ProductDAO findBySlug(String slug) {
         String sql = "SELECT id, name, description, price, image, slug, " +
-                "category_id, stock_quantity, brand_id, is_active " +
+                "category_id, stock_quantity, brand_id, is_active, " +
+                "original_price, discount_percentage, is_on_sale, sale_start_date, sale_end_date, " +
+                "created_at, updated_at " +
                 "FROM products WHERE slug = ?";
 
         try (Connection conn = ds.getConnection();
@@ -220,7 +228,8 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         String sql = "INSERT INTO products (name, slug, description, price, "
                 + "stock_quantity, image, category_id, brand_id, "
-                + "is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "is_active, original_price, discount_percentage, is_on_sale, "
+                + "sale_start_date, sale_end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -234,6 +243,33 @@ public class ProductRepositoryImpl implements ProductRepository {
             ps.setInt(7, entity.getCategory_id());
             ps.setInt(8, entity.getBrand_id());
             ps.setBoolean(9, entity.getIs_active());
+            
+            // Các trường giảm giá
+            if (entity.getOriginal_price() != null) {
+                ps.setDouble(10, entity.getOriginal_price());
+            } else {
+                ps.setNull(10, java.sql.Types.DOUBLE);
+            }
+            if (entity.getDiscount_percentage() != null) {
+                ps.setDouble(11, entity.getDiscount_percentage());
+            } else {
+                ps.setNull(11, java.sql.Types.DOUBLE);
+            }
+            if (entity.getIs_on_sale() != null) {
+                ps.setBoolean(12, entity.getIs_on_sale());
+            } else {
+                ps.setBoolean(12, false);
+            }
+            if (entity.getSale_start_date() != null) {
+                ps.setTimestamp(13, new java.sql.Timestamp(entity.getSale_start_date().getTime()));
+            } else {
+                ps.setNull(13, java.sql.Types.TIMESTAMP);
+            }
+            if (entity.getSale_end_date() != null) {
+                ps.setTimestamp(14, new java.sql.Timestamp(entity.getSale_end_date().getTime()));
+            } else {
+                ps.setNull(14, java.sql.Types.TIMESTAMP);
+            }
 
             ps.executeUpdate();
 
@@ -248,7 +284,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Boolean update(ProductDAO entity) {
 
         String sql = "UPDATE products SET name = ?, slug = ?, description = ?, price = ?, " +
-                "stock_quantity = ?, image = ?, category_id = ?, brand_id = ?, is_active = ? " +
+                "stock_quantity = ?, image = ?, category_id = ?, brand_id = ?, is_active = ?, " +
+                "original_price = ?, discount_percentage = ?, is_on_sale = ?, " +
+                "sale_start_date = ?, sale_end_date = ? " +
                 "WHERE id = ?";
 
         try (Connection conn = ds.getConnection();
@@ -263,7 +301,35 @@ public class ProductRepositoryImpl implements ProductRepository {
             ps.setInt(7, entity.getCategory_id());
             ps.setInt(8, entity.getBrand_id());
             ps.setBoolean(9, entity.getIs_active());
-            ps.setInt(10, entity.getId());
+            
+            // Các trường giảm giá
+            if (entity.getOriginal_price() != null) {
+                ps.setDouble(10, entity.getOriginal_price());
+            } else {
+                ps.setNull(10, java.sql.Types.DOUBLE);
+            }
+            if (entity.getDiscount_percentage() != null) {
+                ps.setDouble(11, entity.getDiscount_percentage());
+            } else {
+                ps.setNull(11, java.sql.Types.DOUBLE);
+            }
+            if (entity.getIs_on_sale() != null) {
+                ps.setBoolean(12, entity.getIs_on_sale());
+            } else {
+                ps.setBoolean(12, false);
+            }
+            if (entity.getSale_start_date() != null) {
+                ps.setTimestamp(13, new java.sql.Timestamp(entity.getSale_start_date().getTime()));
+            } else {
+                ps.setNull(13, java.sql.Types.TIMESTAMP);
+            }
+            if (entity.getSale_end_date() != null) {
+                ps.setTimestamp(14, new java.sql.Timestamp(entity.getSale_end_date().getTime()));
+            } else {
+                ps.setNull(14, java.sql.Types.TIMESTAMP);
+            }
+            
+            ps.setInt(15, entity.getId());
 
             ps.executeUpdate();
 
@@ -319,6 +385,76 @@ public class ProductRepositoryImpl implements ProductRepository {
         } catch (SQLException e) {
             // Nếu cột không tồn tại hoặc null, set null
             item.setImage(null);
+        }
+        
+        // Map các trường giảm giá
+        if (hasColumn(rs, "original_price")) {
+            try {
+                double originalPrice = rs.getDouble("original_price");
+                if (!rs.wasNull()) {
+                    item.setOriginal_price(originalPrice);
+                }
+            } catch (SQLException e) {
+                item.setOriginal_price(null);
+            }
+        }
+        if (hasColumn(rs, "discount_percentage")) {
+            try {
+                double discount = rs.getDouble("discount_percentage");
+                if (!rs.wasNull()) {
+                    item.setDiscount_percentage(discount);
+                }
+            } catch (SQLException e) {
+                item.setDiscount_percentage(null);
+            }
+        }
+        if (hasColumn(rs, "is_on_sale")) {
+            try {
+                item.setIs_on_sale(rs.getBoolean("is_on_sale"));
+            } catch (SQLException e) {
+                item.setIs_on_sale(false);
+            }
+        }
+        if (hasColumn(rs, "sale_start_date")) {
+            try {
+                java.sql.Timestamp startDate = rs.getTimestamp("sale_start_date");
+                if (startDate != null) {
+                    item.setSale_start_date(new Date(startDate.getTime()));
+                }
+            } catch (SQLException e) {
+                item.setSale_start_date(null);
+            }
+        }
+        if (hasColumn(rs, "sale_end_date")) {
+            try {
+                java.sql.Timestamp endDate = rs.getTimestamp("sale_end_date");
+                if (endDate != null) {
+                    item.setSale_end_date(new Date(endDate.getTime()));
+                }
+            } catch (SQLException e) {
+                item.setSale_end_date(null);
+            }
+        }
+        // Map created_at và updated_at
+        if (hasColumn(rs, "created_at")) {
+            try {
+                java.sql.Timestamp createdAt = rs.getTimestamp("created_at");
+                if (createdAt != null) {
+                    item.setCreated_at(new Date(createdAt.getTime()));
+                }
+            } catch (SQLException e) {
+                item.setCreated_at(null);
+            }
+        }
+        if (hasColumn(rs, "updated_at")) {
+            try {
+                java.sql.Timestamp updatedAt = rs.getTimestamp("updated_at");
+                if (updatedAt != null) {
+                    item.setUpdated_at(new Date(updatedAt.getTime()));
+                }
+            } catch (SQLException e) {
+                item.setUpdated_at(null);
+            }
         }
 
         return item;

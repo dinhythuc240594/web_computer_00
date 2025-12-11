@@ -83,10 +83,18 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Giá (VNĐ) <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="price" id="priceInput"
+                                        <label class="form-label">Giá gốc (VNĐ) <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="original_price" id="originalPriceInput"
                                                value="<%
-                                                   if (product != null && product.getPrice() != null) {
+                                                   if (product != null && product.getOriginal_price() != null) {
+                                                       DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                                                       symbols.setGroupingSeparator('.');
+                                                       DecimalFormat df = new DecimalFormat("#,##0", symbols);
+                                                       df.setMaximumFractionDigits(0);
+                                                       df.setGroupingUsed(true);
+                                                       long priceValue = (long) Math.round(product.getOriginal_price());
+                                                       out.print(df.format(priceValue));
+                                                   } else if (product != null && product.getPrice() != null) {
                                                        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
                                                        symbols.setGroupingSeparator('.');
                                                        DecimalFormat df = new DecimalFormat("#,##0", symbols);
@@ -96,11 +104,81 @@
                                                        out.print(df.format(priceValue));
                                                    }
                                                %>" required/>
+                                        <small class="text-muted">Giá gốc của sản phẩm (trước khi giảm giá)</small>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Số lượng tồn kho <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="stock_quantity" 
-                                               value="<%= product != null ? product.getStock_quantity() : "0" %>" required/>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Số lượng tồn kho <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" name="stock_quantity" 
+                                                   value="<%= product != null ? product.getStock_quantity() : "0" %>" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Section Giảm giá -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Thông tin giảm giá</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="is_on_sale" value="true" 
+                                                       id="is_on_sale" <%= product != null && product.getIs_on_sale() != null && product.getIs_on_sale() ? "checked" : "" %>/>
+                                                <label class="form-check-label" for="is_on_sale">
+                                                    Áp dụng giảm giá cho sản phẩm này
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div id="discountFields" style="display: <%=(product != null && product.getIs_on_sale() != null && product.getIs_on_sale()) ? "block" : "none"%>;">
+                                            <div class="alert alert-info mb-3" role="alert">
+                                                <i class="icon-base ri ri-information-line me-2"></i>
+                                                <strong>Lưu ý:</strong> Điền thông tin giảm giá bên dưới. Các trường ngày có thể để trống nếu muốn giảm giá vô thời hạn.
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Phần trăm giảm giá (%)</label>
+                                                    <input type="number" class="form-control" name="discount_percentage" 
+                                                           id="discount_percentage" step="0.01" min="0" max="100"
+                                                           value="<%= product != null && product.getDiscount_percentage() != null ? product.getDiscount_percentage() : "" %>"/>
+                                                    <small class="text-muted">Ví dụ: 20 = giảm 20%</small>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Ngày bắt đầu giảm giá</label>
+                                                    <input type="datetime-local" class="form-control" name="sale_start_date" 
+                                                           id="sale_start_date"
+                                                           value="<%
+                                                               if (product != null && product.getSale_start_date() != null) {
+                                                                   java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                                                                   out.print(sdf.format(product.getSale_start_date()));
+                                                               }
+                                                           %>"/>
+                                                    <small class="text-muted">Để trống nếu muốn giảm giá ngay lập tức</small>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Ngày kết thúc giảm giá</label>
+                                                    <input type="datetime-local" class="form-control" name="sale_end_date" 
+                                                           id="sale_end_date"
+                                                           value="<%
+                                                               if (product != null && product.getSale_end_date() != null) {
+                                                                   java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                                                                   out.print(sdf.format(product.getSale_end_date()));
+                                                               }
+                                                           %>"/>
+                                                    <small class="text-muted">Để trống nếu muốn giảm giá vô thời hạn</small>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Giá sau giảm (tự động tính)</label>
+                                                    <input type="text" class="form-control" id="calculatedPrice" readonly
+                                                           style="background-color: #f5f5f5;"/>
+                                                    <small class="text-muted">Giá này sẽ được lưu vào trường "Giá bán"</small>
+                                                    <!-- Hidden field để lưu giá bán -->
+                                                    <input type="hidden" name="price" id="priceInput"/>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -158,13 +236,15 @@
                                 <%
                                     if (product != null) {
                                 %>
-                                    <div class="mb-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="is_active" value="true" 
-                                                   id="is_active" <%= product.getIs_active() != null && product.getIs_active() ? "checked" : "" %>/>
-                                            <label class="form-check-label" for="is_active">
-                                                Hoạt động
-                                            </label>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="is_active" value="true" 
+                                                       id="is_active" <%= product.getIs_active() != null && product.getIs_active() ? "checked" : "" %>/>
+                                                <label class="form-check-label" for="is_active">
+                                                    Hoạt động
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 <%
@@ -227,21 +307,99 @@
 
     $(document).ready(function() {
 
-        // Format price input with thousand separators
-        $('#priceInput').on('input', function() {
-            var value = $(this).val().replace(/[^\d]/g, ''); // Remove all non-digits
-            if (value) {
-                // Format with dots as thousand separators
-                var formatted = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-                $(this).val(formatted);
-            }
-        });
+        // Format price inputs with thousand separators
+        function formatPriceInput(inputId) {
+            $('#' + inputId).on('input', function() {
+                var value = $(this).val().replace(/[^\d]/g, ''); // Remove all non-digits
+                if (value) {
+                    // Format with dots as thousand separators
+                    var formatted = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                    $(this).val(formatted);
+                }
+            });
+        }
+
+        formatPriceInput('originalPriceInput');
 
         // Remove formatting before form submission
         $('#updateProductForm').on('submit', function() {
-            var priceValue = $('#priceInput').val().replace(/\./g, ''); // Remove dots
-            $('#priceInput').val(priceValue);
+            var originalPriceValue = $('#originalPriceInput').val().replace(/\./g, ''); // Remove dots
+            $('#originalPriceInput').val(originalPriceValue);
+            
+            // Đảm bảo giá bán được tính nếu có giảm giá
+            if ($('#is_on_sale').is(':checked')) {
+                calculateSalePrice();
+            } else {
+                // Nếu không giảm giá, giá bán = giá gốc
+                var originalPriceValue = $('#originalPriceInput').val().replace(/\./g, '');
+                if (originalPriceValue) {
+                    $('#priceInput').val(originalPriceValue);
+                }
+            }
         });
+
+        // Toggle discount fields - gắn event handler bằng jQuery
+        $('#is_on_sale').on('change', function() {
+            var isChecked = $(this).is(':checked');
+            $('#discountFields').toggle(isChecked);
+            if (!isChecked) {
+                $('#discount_percentage').val('');
+                $('#sale_start_date').val('');
+                $('#sale_end_date').val('');
+                $('#calculatedPrice').val('');
+            } else {
+                calculateSalePrice();
+            }
+        });
+        
+        // Đảm bảo hiển thị đúng trạng thái ban đầu
+        var initialSaleState = $('#is_on_sale').is(':checked');
+        $('#discountFields').toggle(initialSaleState);
+
+        // Calculate sale price
+        function calculateSalePrice() {
+            var originalPriceStr = $('#originalPriceInput').val().replace(/\./g, '');
+            var discountPercent = parseFloat($('#discount_percentage').val()) || 0;
+            
+            if (originalPriceStr && discountPercent > 0) {
+                var originalPrice = parseFloat(originalPriceStr);
+                var discountAmount = originalPrice * (discountPercent / 100);
+                var salePrice = originalPrice - discountAmount;
+                
+                // Format và hiển thị giá sau giảm
+                var formatted = Math.round(salePrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                $('#calculatedPrice').val(formatted + ' VNĐ');
+                
+                // Lưu giá bán vào hidden field (không có dấu chấm)
+                $('#priceInput').val(Math.round(salePrice));
+            } else {
+                $('#calculatedPrice').val('');
+                if (originalPriceStr) {
+                    // Nếu không có giảm giá, giá bán = giá gốc
+                    var originalPrice = parseFloat(originalPriceStr);
+                    $('#priceInput').val(Math.round(originalPrice));
+                }
+            }
+        }
+
+        // Auto calculate when discount percentage changes
+        $('#discount_percentage').on('input change', function() {
+            if ($('#is_on_sale').is(':checked')) {
+                calculateSalePrice();
+            }
+        });
+        
+        // Auto calculate when original price changes
+        $('#originalPriceInput').on('input', function() {
+            if ($('#is_on_sale').is(':checked')) {
+                calculateSalePrice();
+            }
+        });
+        
+        // Tính giá sau giảm ngay khi trang load nếu đã có dữ liệu
+        if (initialSaleState) {
+            calculateSalePrice();
+        }
 
         $('#image').on('change', function() {
             if (this.files && this.files[0]) {

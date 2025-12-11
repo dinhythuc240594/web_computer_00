@@ -1,5 +1,9 @@
 package controller;
 
+import java.io.IOException;
+
+import javax.sql.DataSource;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,9 +15,6 @@ import model.UserDAO;
 import service.UserService;
 import serviceimpl.UserServiceImpl;
 import utilities.DataSourceUtil;
-
-import javax.sql.DataSource;
-import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -63,8 +64,19 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("username", user.getUsername());
         session.setAttribute("type_user", user.getRole());
 
+        String role = user.getRole();
+        boolean isStaff = role != null &&
+                (role.equalsIgnoreCase("ADMIN") || role.equalsIgnoreCase("STAFF"));
+
         String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
         if (redirectAfterLogin != null && !redirectAfterLogin.isBlank()) {
+            // Nếu URL đích là khu vực admin/staff nhưng tài khoản không đủ quyền thì chuyển về trang chủ
+            String lowerRedirect = redirectAfterLogin.toLowerCase();
+            if (!isStaff && (lowerRedirect.contains("/admin") || lowerRedirect.contains("/staff"))) {
+                session.removeAttribute("redirectAfterLogin");
+                response.sendRedirect(request.getContextPath() + "/home");
+                return;
+            }
             session.removeAttribute("redirectAfterLogin");
             response.sendRedirect(redirectAfterLogin);
         } else {

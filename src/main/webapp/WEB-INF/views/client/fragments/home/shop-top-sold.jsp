@@ -33,17 +33,34 @@
                                                 ? contextPath + "/product?slug=" + product.getSlug()
                                                 : contextPath + "/product?id=" + product.getId();
 
-                                        String priceDisplay = product.getPrice() != null
-                                                ? currencyFormat.format(product.getPrice())
-                                                : "Liên hệ";
+                                        // Kiểm tra sản phẩm có đang giảm giá không
+                                        boolean isOnSale = product.getIs_on_sale() != null && product.getIs_on_sale() && product.isCurrentlyOnSale();
+                                        Double originalPrice = product.getOriginalPrice();
+                                        Double currentPrice = product.getCurrentPrice();
+                                        // Tính phần trăm giảm giá (tự động tính nếu discount_percentage null)
+                                        Double discountPercent = product.getCalculatedDiscountPercentage();
 
                                         int stock = product.getStock_quantity();
                                         count = count + 1;
                             %>
                             <div class="shop-block-five">
                                 <div class="inner-box">
-                                    <div class="image-box">
-                                        <!-- <ul class="option-list">
+                                    <div class="image-box" style="position: relative;">
+                                        <% if (product.isNewProduct()) { %>
+                                        <span style="position: absolute; top: 5px; right: 5px; background: #28a745; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; z-index: 10; font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                            New
+                                        </span>
+                                        <% if (isOnSale && discountPercent != null && discountPercent > 0) { %>
+                                        <span style="position: absolute; top: 38px; right: 5px; background: #ff4444; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; z-index: 10; font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                            -<%= Math.round(discountPercent) %>%
+                                        </span>
+                                        <% } %>
+                                        <% } else if (isOnSale && discountPercent != null && discountPercent > 0) { %>
+                                        <span style="position: absolute; top: 5px; right: 5px; background: #ff4444; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; z-index: 10; font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                            -<%= Math.round(discountPercent) %>%
+                                        </span>
+                                        <% } %>
+                                        <ul class="option-list">
                                             <li>
                                                 <a href="<%= productImage %>" class="lightbox-image" data-fancybox="top-sold">
                                                     <i class="far fa-eye"></i>
@@ -59,22 +76,35 @@
                                                     <i class="icon-6"></i>
                                                 </button>
                                             </li>
-                                        </ul> -->
+                                        </ul>
                                         <figure class="image">
                                             <img width="117" height="117" src="<%= productImage %>" alt="<%= product.getName() %>">
                                         </figure>
                                     </div>
                                     <div class="content-box">
                                         <h6><a href="<%= productLink %>"><%= product.getName() %></a></h6>
-                                        <!-- <ul class="rating">
+                                        <ul class="rating">
                                             <li><i class="icon-11"></i></li>
                                             <li><i class="icon-11"></i></li>
                                             <li><i class="icon-11"></i></li>
                                             <li><i class="icon-11"></i></li>
                                             <li><i class="icon-11"></i></li>
                                             <li><span>(0)</span></li>
-                                        </ul> -->
-                                        <h5><%= priceDisplay %></h5>
+                                        </ul>
+                                        <div class="price-box">
+                                            <% if (isOnSale && originalPrice != null && currentPrice != null && originalPrice > currentPrice) { %>
+                                                <h5 style="color: #ff4444; font-weight: bold; margin-bottom: 3px;">
+                                                    <%= currencyFormat.format(currentPrice) %>
+                                                </h5>
+                                                <h6 style="color: #999; text-decoration: line-through; font-size: 12px; margin: 0;">
+                                                    <%= currencyFormat.format(originalPrice) %>
+                                                </h6>
+                                            <% } else { %>
+                                                <h5>
+                                                    <%= currentPrice != null ? currencyFormat.format(currentPrice) : "Liên hệ" %>
+                                                </h5>
+                                            <% } %>
+                                        </div>
                                         <div class="product-stock mt_5">
                                             <small>Còn lại: <%= stock > 0 ? stock : 0 %> sản phẩm</small>
                                         </div>

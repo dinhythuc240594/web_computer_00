@@ -1,15 +1,15 @@
     <!-- main-footer -->
     <footer class="main-footer">
         <div class="large-container">
-            <!-- <div class="widget-section">
-                <div class="row clearfix">
+            <div class="widget-section">
+                  <div class="row clearfix">
                     <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                         <div class="footer-widget contact-widget mt_10">
                             <div class="widget-content">
-<%--                                <div class="support-box">--%>
-<%--                                    <div class="icon-box"><i class="icon-3"></i></div>--%>
-<%--                                    <a href="tel:912345678">091 2345 678</a>--%>
-<%--                                </div>--%>
+                                <div class="support-box">
+                                    <div class="icon-box"><i class="icon-3"></i></div>
+                                    <a href="tel:912345678">091 2345 678</a>
+                                </div>
                                 <ul class="info mb_30 clearfix">
                                     <li>Số 1 Võ Văn Ngân, Phường Thủ Đức, TP.HCM</li>
                                     <li><a href="mailto:info@example.com">ptchc@hcmute.edu.vn</a></li>
@@ -76,14 +76,50 @@
                             <div class="widget-content">
                                 <p>Nhận thông báo về sự kiện, sản phẩm và chương trình hấp dẫn sắp tới.</p>
                                 <div class="form-inner">
-                                    <form method="post" action="contact.html">
+                                    <form method="post" id="newsletter-form" action="${pageContext.request.contextPath}/newsletter">
                                         <div class="form-group">
-                                            <input type="email" name="email" placeholder="Địa chỉ email" required="">
+                                            <input type="email" name="email" id="newsletter-email" placeholder="Địa chỉ email" required="">
                                             <button type="submit"><i class="icon-12"></i></button>
                                         </div>
+                                        <div id="newsletter-message" style="margin-top: 10px; font-size: 14px;"></div>
                                     </form>
                                 </div>
                             </div>
+                            <script>
+                                document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+                                    e.preventDefault();
+                                    const email = document.getElementById('newsletter-email').value;
+                                    const messageDiv = document.getElementById('newsletter-message');
+                                    
+                                    // Disable form
+                                    const submitBtn = this.querySelector('button[type="submit"]');
+                                    submitBtn.disabled = true;
+                                    messageDiv.innerHTML = '<span style="color: #666;">Đang xử lý...</span>';
+                                    
+                                    // Send AJAX request
+                                    fetch('${pageContext.request.contextPath}/newsletter', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: 'email=' + encodeURIComponent(email) + '&action=subscribe'
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success) {
+                                            messageDiv.innerHTML = '<span style="color: #28a745;">' + data.message + '</span>';
+                                            document.getElementById('newsletter-email').value = '';
+                                        } else {
+                                            messageDiv.innerHTML = '<span style="color: #dc3545;">' + data.message + '</span>';
+                                        }
+                                        submitBtn.disabled = false;
+                                    })
+                                    .catch(error => {
+                                        messageDiv.innerHTML = '<span style="color: #dc3545;">Đã xảy ra lỗi. Vui lòng thử lại sau.</span>';
+                                        submitBtn.disabled = false;
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>

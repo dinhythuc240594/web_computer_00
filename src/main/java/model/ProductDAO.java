@@ -16,6 +16,13 @@ public class ProductDAO {
     private Boolean is_active;
     private Date created_at;
     private Date updated_at;
+    
+    // Các trường giảm giá
+    private Double original_price;
+    private Double discount_percentage;
+    private Boolean is_on_sale;
+    private Date sale_start_date;
+    private Date sale_end_date;
 
     public ProductDAO(){}
 
@@ -128,6 +135,107 @@ public class ProductDAO {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Double getOriginal_price() {
+        return original_price;
+    }
+
+    public void setOriginal_price(Double original_price) {
+        this.original_price = original_price;
+    }
+
+    public Double getDiscount_percentage() {
+        return discount_percentage;
+    }
+
+    public void setDiscount_percentage(Double discount_percentage) {
+        this.discount_percentage = discount_percentage;
+    }
+
+    public Boolean getIs_on_sale() {
+        return is_on_sale;
+    }
+
+    public void setIs_on_sale(Boolean is_on_sale) {
+        this.is_on_sale = is_on_sale;
+    }
+
+    public Date getSale_start_date() {
+        return sale_start_date;
+    }
+
+    public void setSale_start_date(Date sale_start_date) {
+        this.sale_start_date = sale_start_date;
+    }
+
+    public Date getSale_end_date() {
+        return sale_end_date;
+    }
+
+    public void setSale_end_date(Date sale_end_date) {
+        this.sale_end_date = sale_end_date;
+    }
+    
+    // Helper method để lấy giá gốc (nếu có original_price thì dùng, không thì dùng price)
+    public Double getOriginalPrice() {
+        if (original_price != null) {
+            return original_price;
+        }
+        return price; // Nếu không có original_price thì dùng price làm giá gốc
+    }
+    
+    // Helper method để lấy giá bán hiện tại (nếu có giảm giá thì là price, không thì là original_price hoặc price)
+    public Double getCurrentPrice() {
+        if (isCurrentlyOnSale() && original_price != null) {
+            return price; // Giá sau giảm
+        }
+        return original_price != null ? original_price : price;
+    }
+    
+    // Helper method để kiểm tra có đang trong thời gian giảm giá không
+    public boolean isCurrentlyOnSale() {
+        if (is_on_sale == null || !is_on_sale) {
+            return false;
+        }
+        Date now = new Date();
+        if (sale_start_date != null && now.before(sale_start_date)) {
+            return false;
+        }
+        return sale_end_date == null || !now.after(sale_end_date);
+    }
+    
+    // Helper method để tính phần trăm giảm giá (từ original_price và price nếu discount_percentage null)
+    public Double getCalculatedDiscountPercentage() {
+        // Nếu đã có discount_percentage thì dùng luôn
+        if (discount_percentage != null && discount_percentage > 0) {
+            return discount_percentage;
+        }
+        
+        // Nếu không có, tính từ original_price và price
+        Double origPrice = getOriginalPrice();
+        Double currPrice = getCurrentPrice();
+        
+        if (origPrice != null && currPrice != null && origPrice > 0 && origPrice > currPrice) {
+            double discount = ((origPrice - currPrice) / origPrice) * 100.0;
+            return discount;
+        }
+        
+        return null;
+    }
+    
+    // Helper method để kiểm tra sản phẩm có phải mới không (tạo trong vòng 7 ngày)
+    public boolean isNewProduct() {
+        if (created_at == null) {
+            return false;
+        }
+        
+        Date now = new Date();
+        long diffInMillis = now.getTime() - created_at.getTime();
+        long diffInDays = diffInMillis / (1000 * 60 * 60 * 24); // Chuyển đổi từ milliseconds sang ngày
+        
+        // Sản phẩm mới nếu được tạo trong vòng 7 ngày
+        return diffInDays <= 7;
     }
 
 }

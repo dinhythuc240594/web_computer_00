@@ -1,6 +1,37 @@
 
 /** header-upper **/
 
+.main-header{
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.main-header.fixed-header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.main-header.fixed-header .header-upper{
+  padding: 12px 0;
+}
+
+.main-header.fixed-header .header-upper .logo-box img{
+  height: 56px;
+  width: 56px;
+}
+
+.main-header.fixed-header .header-lower{
+  box-shadow: none;
+}
+
+.header-fixed-active .boxed_wrapper{
+  padding-top: 140px;
+}
+
 .header-upper{
   position: relative;
   background: var(--theme-color);

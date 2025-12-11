@@ -4,6 +4,7 @@
 <%@ page import="model.OrderItemDAO" %>
 <%@ page import="model.WishlistDAO" %>
 <%@ page import="model.ProductDAO" %>
+<%@ page import="model.NewsletterDAO" %>
 <%@ page import="service.UserService" %>
 <%@ page import="service.OrderService" %>
 <%@ page import="service.OrderItemService" %>
@@ -158,6 +159,20 @@
                 %>
                 <p style="color: #28a745; margin-top: 10px;">Đổi mật khẩu thành công!</p>
                 <%
+                    } else if ("newsletter_unsubscribed".equals(success)) {
+                %>
+                <p style="color: #28a745; margin-top: 10px;">Đã hủy đăng ký newsletter thành công!</p>
+                <%
+                    }
+                    String error = request.getParameter("error");
+                    if ("newsletter_unsubscribe_failed".equals(error)) {
+                %>
+                <p style="color: #dc3545; margin-top: 10px;">Không thể hủy đăng ký newsletter. Vui lòng thử lại sau.</p>
+                <%
+                    } else if ("no_email".equals(error)) {
+                %>
+                <p style="color: #dc3545; margin-top: 10px;">Không tìm thấy email để hủy đăng ký newsletter.</p>
+                <%
                     }
                     if (message != null) {
                         if ("added".equals(message)) {
@@ -273,6 +288,61 @@
                                                     <a href="${pageContext.request.contextPath}/user?action=change-password" class="btn btn-warning">
                                                         <i class="fas fa-key"></i> Đổi mật khẩu
                                                     </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <%
+                                        NewsletterDAO newsletterSubscription = (NewsletterDAO) request.getAttribute("newsletterSubscription");
+                                        boolean isSubscribed = newsletterSubscription != null && 
+                                                               "active".equals(newsletterSubscription.getStatus());
+                                    %>
+                                    <div class="row mt-4">
+                                        <div class="col-md-8 offset-md-2">
+                                            <div class="card shadow-sm">
+                                                <div class="card-body p-4">
+                                                    <h5 class="card-title mb-3">
+                                                        <i class="fas fa-envelope"></i> Newsletter
+                                                    </h5>
+                                                    <p class="text-muted mb-3">
+                                                        Quản lý đăng ký nhận tin từ chúng tôi. Bạn sẽ nhận được thông tin về sản phẩm mới, khuyến mãi và tin tức công nghệ.
+                                                    </p>
+                                                    
+                                                    <% if (isSubscribed) { %>
+                                                    <div class="alert alert-success mb-3">
+                                                        <i class="fas fa-check-circle"></i> 
+                                                        <strong>Bạn đang đăng ký nhận tin</strong>
+                                                        <br>
+                                                        <small>Email: <%= currentUser.getEmail() %></small>
+                                                        <% if (newsletterSubscription.getSubscribed_at() != null) { %>
+                                                        <br>
+                                                        <small>Đăng ký từ: <%= new java.text.SimpleDateFormat("dd/MM/yyyy").format(newsletterSubscription.getSubscribed_at()) %></small>
+                                                        <% } %>
+                                                    </div>
+                                                    <form method="post" action="${pageContext.request.contextPath}/user" 
+                                                          onsubmit="return confirm('Bạn có chắc chắn muốn hủy đăng ký newsletter? Bạn sẽ không nhận được thông tin về sản phẩm mới và khuyến mãi nữa.');">
+                                                        <input type="hidden" name="action" value="unsubscribeNewsletter">
+                                                        <button type="submit" class="btn btn-danger">
+                                                            <i class="fas fa-times-circle"></i> Hủy đăng ký Newsletter
+                                                        </button>
+                                                    </form>
+                                                    <% } else { %>
+                                                    <div class="alert alert-secondary mb-3">
+                                                        <i class="fas fa-info-circle"></i> 
+                                                        <strong>Bạn chưa đăng ký nhận tin</strong>
+                                                        <% if (newsletterSubscription != null && "unsubscribed".equals(newsletterSubscription.getStatus())) { %>
+                                                        <br>
+                                                        <small>Bạn đã hủy đăng ký trước đó. Bạn có thể đăng ký lại từ trang chủ.</small>
+                                                        <% } else { %>
+                                                        <br>
+                                                        <small>Đăng ký ngay từ form ở footer trang chủ để nhận thông tin mới nhất!</small>
+                                                        <% } %>
+                                                    </div>
+                                                    <a href="${pageContext.request.contextPath}/home" class="btn btn-primary">
+                                                        <i class="fas fa-arrow-right"></i> Đăng ký Newsletter
+                                                    </a>
+                                                    <% } %>
                                                 </div>
                                             </div>
                                         </div>

@@ -24,9 +24,11 @@
 			if (windowpos >= 150) {
 				siteHeader.addClass('fixed-header');
 				scrollLink.addClass('open');
+				$('body').addClass('header-fixed-active');
 			} else {
 				siteHeader.removeClass('fixed-header');
 				scrollLink.removeClass('open');
+				$('body').removeClass('header-fixed-active');
 			}
 		}
 	}
@@ -827,7 +829,9 @@
 
 	//shopping-cart-bar sticky
 	$(".shopping-cart-two").on("click", function () {
-		$(".cart-menu-two").addClass('cart-visible');
+		const $cart = $(".cart-menu-two");
+		$cart.toggleClass('cart-visible');
+		return false; // prevent page jump on #
 	});
 	$(".close-icon-two").click(function () {
 		$(".cart-menu-two").removeClass('cart-visible');

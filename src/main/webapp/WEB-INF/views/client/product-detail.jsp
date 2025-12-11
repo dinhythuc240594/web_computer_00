@@ -152,7 +152,7 @@
                         <div class="bxslider">
                             <div class="slider-content">
                                 <div class="image-inner">
-                                    <div class="image-box">
+                                    <div class="image-box" style="position: relative;">
                                         <%
                                             String imageUrl = (product != null && product.getImage() != null && !product.getImage().isBlank())
                                                     ? product.getImage()
@@ -163,6 +163,11 @@
                                                 imageUrl = contextPath + imageUrl;
                                             }
                                         %>
+                                        <% if (product != null && product.isNewProduct()) { %>
+                                        <span style="position: absolute; top: 15px; right: 15px; background: #28a745; color: white; padding: 8px 15px; border-radius: 5px; font-weight: bold; z-index: 10; font-size: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
+                                            New
+                                        </span>
+                                        <% } %>
                                         <figure class="image"><a href="<%= imageUrl %>" class="lightbox-image" data-fancybox="gallery"><img src="<%= imageUrl %>" alt="<%= product != null ? product.getName() : "" %>"></a></figure>
                                     </div>
                                 </div>
@@ -175,18 +180,35 @@
                                 
                             </span>
                             <h2><%= product != null ? product.getName() : "Sản phẩm" %></h2>
-                            <h3>
-                                <%
-                                    if (product != null && product.getPrice() != null) {
-                                        double price = product.getPrice();
-                                        // Format với dấu chấm phân cách hàng nghìn và đuôi VNĐ
-                                        java.text.DecimalFormat df = new java.text.DecimalFormat("#,###");
-                                        out.print(df.format(price) + " VNĐ");
-                                    } else {
-                                        out.print("0 VNĐ");
-                                    }
-                                %>
-                            </h3>
+                            <%
+                                // Kiểm tra sản phẩm có đang giảm giá không
+                                boolean isOnSale = product != null && product.getIs_on_sale() != null && product.getIs_on_sale() && product.isCurrentlyOnSale();
+                                Double originalPrice = product != null ? product.getOriginalPrice() : null;
+                                Double currentPrice = product != null ? product.getCurrentPrice() : null;
+                                // Tính phần trăm giảm giá (tự động tính nếu discount_percentage null)
+                                Double discountPercent = product != null ? product.getCalculatedDiscountPercentage() : null;
+                                
+                                java.text.DecimalFormat df = new java.text.DecimalFormat("#,###");
+                            %>
+                            <div class="price-section" style="margin-bottom: 20px;">
+                                <% if (isOnSale && originalPrice != null && currentPrice != null && originalPrice > currentPrice) { %>
+                                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                        <h3 style="color: #ff4444; font-weight: bold; margin: 0;">
+                                            <%= df.format(currentPrice) %> VNĐ
+                                        </h3>
+                                        <span style="background: #ff4444; color: white; padding: 5px 12px; border-radius: 5px; font-weight: bold; font-size: 0.9em;">
+                                            Giảm <%= discountPercent != null ? Math.round(discountPercent) : 0 %>%
+                                        </span>
+                                    </div>
+                                    <h4 style="color: #999; text-decoration: line-through; font-size: 1.2em; margin-top: 10px; font-weight: normal;">
+                                        <%= df.format(originalPrice) %> VNĐ
+                                    </h4>
+                                <% } else { %>
+                                    <h3>
+                                        <%= currentPrice != null ? df.format(currentPrice) + " VNĐ" : "0 VNĐ" %>
+                                    </h3>
+                                <% } %>
+                            </div>
 
                             <ul class="discription-box mb_30 clearfix">
                                 <%

@@ -70,7 +70,7 @@
         <div class="header-upper">
             <div class="large-container">
                 <div class="upper-inner">
-                    <figure class="logo-box"><a href="index.html"><img src="${pageContext.request.contextPath}/assets/client/images/Logo%20HCMUTE_Color%20background.png" alt="" style="height: 70px; width: 70px;"></a></figure>
+                    <figure class="logo-box"><a href="home"><img src="${pageContext.request.contextPath}/assets/client/images/Logo%20HCMUTE_Color%20background.png" alt="" style="height: 70px; width: 70px;"></a></figure>
                     <div class="search-area">
                         <%
                             // Load categories từ database

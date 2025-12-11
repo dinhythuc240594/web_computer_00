@@ -15,7 +15,7 @@
     };
 %>
 <!-- category-section -->
-    <section class="category-section pt_70 pb_75">
+    <section class="category-section pt_10 pb_75">
         <div class="large-container">
             <div class="sec-title">
                 <h2>Danh Mục</h2>

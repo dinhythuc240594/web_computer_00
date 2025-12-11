@@ -1,5 +1,20 @@
 package controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.sql.DataSource;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -28,21 +43,6 @@ import serviceimpl.ProductServiceImpl;
 import serviceimpl.ProductSpecServiceImpl;
 import serviceimpl.ReviewServiceImpl;
 import utilities.DataSourceUtil;
-import utilities.FileUpload;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @WebServlet(name="product", urlPatterns="/product")
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024) // 5MB file, 10MB request
@@ -282,6 +282,18 @@ public class ProductServlet extends HttpServlet {
             } catch (NumberFormatException ignored) {
             }
             
+            // Xử lý giá gốc
+            String originalPriceStr = request.getParameter("original_price");
+            try {
+                if (originalPriceStr != null && !originalPriceStr.isBlank()) {
+                    product.setOriginal_price(Double.parseDouble(originalPriceStr));
+                } else if (priceStr != null && !priceStr.isBlank()) {
+                    // Nếu không có original_price, dùng price làm giá gốc
+                    product.setOriginal_price(Double.parseDouble(priceStr));
+                }
+            } catch (NumberFormatException ignored) {
+            }
+            
             try {
                 if (stockStr != null && !stockStr.isBlank()) {
                     product.setStock_quantity(Integer.parseInt(stockStr));
@@ -292,9 +304,46 @@ public class ProductServlet extends HttpServlet {
                 product.setStock_quantity(0);
             }
             
+            // Xử lý các trường giảm giá
+            String isOnSaleStr = request.getParameter("is_on_sale");
+            if (isOnSaleStr != null && "true".equals(isOnSaleStr)) {
+                product.setIs_on_sale(true);
+                
+                String discountPercentStr = request.getParameter("discount_percentage");
+                try {
+                    if (discountPercentStr != null && !discountPercentStr.isBlank()) {
+                        product.setDiscount_percentage(Double.parseDouble(discountPercentStr));
+                    }
+                } catch (NumberFormatException ignored) {
+                }
+                
+                // Xử lý ngày bắt đầu và kết thúc giảm giá
+                String saleStartDateStr = request.getParameter("sale_start_date");
+                if (saleStartDateStr != null && !saleStartDateStr.isBlank()) {
+                    try {
+                        java.time.LocalDateTime localDateTime = java.time.LocalDateTime.parse(saleStartDateStr);
+                        product.setSale_start_date(java.sql.Timestamp.valueOf(localDateTime));
+                    } catch (Exception ignored) {
+                    }
+                }
+                
+                String saleEndDateStr = request.getParameter("sale_end_date");
+                if (saleEndDateStr != null && !saleEndDateStr.isBlank()) {
+                    try {
+                        java.time.LocalDateTime localDateTime = java.time.LocalDateTime.parse(saleEndDateStr);
+                        product.setSale_end_date(java.sql.Timestamp.valueOf(localDateTime));
+                    } catch (Exception ignored) {
+                    }
+                }
+            } else {
+                product.setIs_on_sale(false);
+            }
+            
             product.setCategory_id(categoryId);
             product.setBrand_id(brandId);
             product.setIs_active(true);
+            
+            // is_new sẽ được tự động tính dựa trên created_at, không cần set thủ công
             
             boolean success = Boolean.TRUE.equals(productService.create(product));
             
@@ -373,11 +422,61 @@ public class ProductServlet extends HttpServlet {
             } catch (NumberFormatException ignored) {
             }
             
+            // Xử lý giá gốc
+            String originalPriceStr = request.getParameter("original_price");
+            try {
+                if (originalPriceStr != null && !originalPriceStr.isBlank()) {
+                    product.setOriginal_price(Double.parseDouble(originalPriceStr));
+                } else if (priceStr != null && !priceStr.isBlank()) {
+                    // Nếu không có original_price, dùng price làm giá gốc
+                    product.setOriginal_price(Double.parseDouble(priceStr));
+                }
+            } catch (NumberFormatException ignored) {
+            }
+            
             try {
                 if (stockStr != null && !stockStr.isBlank()) {
                     product.setStock_quantity(Integer.parseInt(stockStr));
                 }
             } catch (NumberFormatException ignored) {
+            }
+            
+            // Xử lý các trường giảm giá
+            String isOnSaleStr = request.getParameter("is_on_sale");
+            if (isOnSaleStr != null && "true".equals(isOnSaleStr)) {
+                product.setIs_on_sale(true);
+                
+                String discountPercentStr = request.getParameter("discount_percentage");
+                try {
+                    if (discountPercentStr != null && !discountPercentStr.isBlank()) {
+                        product.setDiscount_percentage(Double.parseDouble(discountPercentStr));
+                    }
+                } catch (NumberFormatException ignored) {
+                }
+                
+                // Xử lý ngày bắt đầu và kết thúc giảm giá
+                String saleStartDateStr = request.getParameter("sale_start_date");
+                if (saleStartDateStr != null && !saleStartDateStr.isBlank()) {
+                    try {
+                        java.time.LocalDateTime localDateTime = java.time.LocalDateTime.parse(saleStartDateStr);
+                        product.setSale_start_date(java.sql.Timestamp.valueOf(localDateTime));
+                    } catch (Exception ignored) {
+                    }
+                }
+                
+                String saleEndDateStr = request.getParameter("sale_end_date");
+                if (saleEndDateStr != null && !saleEndDateStr.isBlank()) {
+                    try {
+                        java.time.LocalDateTime localDateTime = java.time.LocalDateTime.parse(saleEndDateStr);
+                        product.setSale_end_date(java.sql.Timestamp.valueOf(localDateTime));
+                    } catch (Exception ignored) {
+                    }
+                }
+            } else {
+                product.setIs_on_sale(false);
+                product.setDiscount_percentage(null);
+                product.setSale_start_date(null);
+                product.setSale_end_date(null);
             }
             
             product.setCategory_id(categoryId);
@@ -387,6 +486,8 @@ public class ProductServlet extends HttpServlet {
             } else{
                 product.setIs_active(false);
             }
+            
+            // is_new sẽ được tự động tính dựa trên created_at, không cần set thủ công
             
             boolean success = Boolean.TRUE.equals(productService.update(product));
             

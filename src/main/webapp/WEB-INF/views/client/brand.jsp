@@ -268,9 +268,12 @@
                                 ? contextPath + "/product?slug=" + product.getSlug()
                                 : contextPath + "/product?id=" + product.getId();
 
-                        String priceDisplay = product.getPrice() != null
-                                ? currencyFormat.format(product.getPrice())
-                                : "Đang cập nhật";
+                        // Kiểm tra sản phẩm có đang giảm giá không
+                        boolean isOnSale = product.getIs_on_sale() != null && product.getIs_on_sale() && product.isCurrentlyOnSale();
+                        Double originalPrice = product.getOriginalPrice();
+                        Double currentPrice = product.getCurrentPrice();
+                        // Tính phần trăm giảm giá (tự động tính nếu discount_percentage null)
+                        Double discountPercent = product.getCalculatedDiscountPercentage();
 
                         boolean inStock = product.getStock_quantity() > 0;
                         
@@ -285,7 +288,17 @@
                 %>
                 <div class="col-lg-3 col-md-4 col-sm-6 shop-block-three">
                     <div class="inner-box">
-                        <div class="image-box">
+                        <div class="image-box" style="position: relative;">
+                            <% if (isOnSale && discountPercent != null) { %>
+                            <span class="sale-badge" style="position: absolute; top: 10px; left: 10px; background: #ff4444; color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold; z-index: 10;">
+                                -<%= Math.round(discountPercent) %>%
+                            </span>
+                            <% } %>
+                            <% if (product.isNewProduct()) { %>
+                            <span class="new-badge" style="position: absolute; top: 10px; right: 10px; background: #28a745; color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold; z-index: 10;">
+                                New
+                            </span>
+                            <% } %>
                             <figure class="image">
                                 <a href="<%= productLink %>">
                                     <img src="<%= productImage %>" alt="<%= product.getName() %>">
@@ -303,7 +316,20 @@
                             <h4>
                                 <a href="<%= productLink %>"><%= productName %></a>
                             </h4>
-                            <h5><%= priceDisplay %></h5>
+                            <div class="price-box">
+                                <% if (isOnSale && originalPrice != null && currentPrice != null && originalPrice > currentPrice) { %>
+                                    <h5 style="color: #ff4444; font-weight: bold; margin-bottom: 5px;">
+                                        <%= currencyFormat.format(currentPrice) %>
+                                    </h5>
+                                    <h6 style="color: #999; text-decoration: line-through; font-size: 0.9em; margin: 0;">
+                                        <%= currencyFormat.format(originalPrice) %>
+                                    </h6>
+                                <% } else { %>
+                                    <h5>
+                                        <%= currentPrice != null ? currencyFormat.format(currentPrice) : "Đang cập nhật" %>
+                                    </h5>
+                                <% } %>
+                            </div>
                             <%
                                 if (inStock) {
                             %>

@@ -1,5 +1,11 @@
 package controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -9,20 +15,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import model.NewsletterDAO;
 import model.OrderDAO;
 import model.UserDAO;
 import service.OrderService;
 import service.UserService;
+import serviceimpl.NewsletterServiceImpl;
 import serviceimpl.OrderServiceImpl;
 import serviceimpl.UserServiceImpl;
 import utilities.DataSourceUtil;
-import utilities.FileUpload;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @WebServlet(name = "user", urlPatterns = "/user")
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024) // 5MB file, 10MB request
@@ -31,6 +32,7 @@ public class UserServlet extends HttpServlet {
     private transient DataSource dataSource;
     private transient UserService userService;
     private transient OrderService orderService;
+    private transient NewsletterServiceImpl newsletterService;
 
     @Override
     public void init() throws ServletException {
@@ -38,6 +40,7 @@ public class UserServlet extends HttpServlet {
         this.dataSource = DataSourceUtil.getDataSource();
         this.userService = new UserServiceImpl(dataSource);
         this.orderService = new OrderServiceImpl(dataSource);
+        this.newsletterService = new NewsletterServiceImpl();
     }
 
     @Override
@@ -105,6 +108,7 @@ public class UserServlet extends HttpServlet {
             case "changePassword" -> handleChangePassword(request, response, currentUser);
             case "updateProfile" -> handleUpdateProfile(request, response, currentUser);
             case "cancelOrder" -> handleCancelOrder(request, response, currentUser);
+            case "unsubscribeNewsletter" -> handleUnsubscribeNewsletter(request, response, currentUser);
             default -> handleUpdateProfile(request, response, currentUser);
         }
     }
@@ -129,13 +133,20 @@ public class UserServlet extends HttpServlet {
         int totalOrders = orderService.countByUserId(currentUser.getId());
         int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
 
+        // Lấy thông tin newsletter subscription
+        NewsletterDAO newsletterSubscription = null;
+        if (currentUser.getEmail() != null && !currentUser.getEmail().isBlank()) {
+            newsletterSubscription = newsletterService.findByEmail(currentUser.getEmail());
+        }
+        
         request.setAttribute("currentUser", currentUser);
+        request.setAttribute("newsletterSubscription", newsletterSubscription);
         request.setAttribute("ordersPage", page);
         request.setAttribute("ordersTotalPages", totalPages);
         request.setAttribute("ordersTotal", totalOrders);
         request.setAttribute("ordersPageSize", pageSize);
         String path_page = "";
-        if(currentUser.getRole() == "CUSTOMER"){
+        if (currentUser.getRole() != null && currentUser.getRole().equalsIgnoreCase("CUSTOMER")) {
             path_page = "/WEB-INF/views/client/account/profile.jsp";
         } else {
             path_page = "/WEB-INF/views/client/account/profile-admin.jsp";
@@ -343,6 +354,23 @@ public class UserServlet extends HttpServlet {
 
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/user?tab=orders&error=invalid_order");
+        }
+    }
+
+    private void handleUnsubscribeNewsletter(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
+            throws ServletException, IOException {
+        
+        String email = currentUser.getEmail();
+        if (email == null || email.isBlank()) {
+            response.sendRedirect(request.getContextPath() + "/user?error=no_email");
+            return;
+        }
+
+        boolean success = newsletterService.unsubscribe(email);
+        if (success) {
+            response.sendRedirect(request.getContextPath() + "/user?success=newsletter_unsubscribed");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/user?error=newsletter_unsubscribe_failed");
         }
     }
 }

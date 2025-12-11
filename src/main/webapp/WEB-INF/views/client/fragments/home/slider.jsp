@@ -62,14 +62,41 @@
             <%
                         index++;
                     }
-                } else {
+                }
+
+                // Bổ sung các banner tĩnh từ banner-5 đến banner-12
+                String[] staticBanners = {
+                        "/assets/client/images/background/banner5.webp",
+                        "/assets/client/images/background/banner6.png",
+                        "/assets/client/images/background/banner7.webp",
+                        "/assets/client/images/background/banner8.webp",
+                        "/assets/client/images/background/banner9.webp",
+                        "/assets/client/images/background/banner10.webp",
+                        "/assets/client/images/background/banner11.webp",
+                        "/assets/client/images/background/banner12.webp"
+                };
+
+                for (int i = 0; i < staticBanners.length; i += 2) {
+                    String bannerUrl1 = contextPath + staticBanners[i];
+                    String bannerUrl2 = (i + 1 < staticBanners.length) ? contextPath + staticBanners[i + 1] : null;
             %>
             <div class="slide-item p_relative">
                 <div class="large-container">
-                    <div class="content-box text-center">
-                        <span class="upper-text">Đang cập nhật</span>
-                        <h2>Chưa có sản phẩm nổi bật cho banner</h2>
-                        <p>Vui lòng quay lại sau để xem các chương trình khuyến mãi mới.</p>
+                    <div class="content-box p_relative dual-banner-wrapper">
+                        <div class="dual-banner">
+                            <div class="dual-banner__item">
+                                <img src="<%= bannerUrl1 %>" alt="Banner" class="dual-banner__img">
+                            </div>
+                            <%
+                                if (bannerUrl2 != null) {
+                            %>
+                            <div class="dual-banner__item">
+                                <img src="<%= bannerUrl2 %>" alt="Banner" class="dual-banner__img">
+                            </div>
+                            <%
+                                }
+                            %>
+                        </div>
                     </div>
                 </div>
             </div>

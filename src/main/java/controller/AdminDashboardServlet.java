@@ -1,5 +1,17 @@
 package controller;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,27 +20,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.OrderDAO;
-import model.OrderItemDAO;
 import model.PageRequest;
 import model.ProductDAO;
 import model.ProductSalesStats;
 import model.UserDAO;
-import repositoryimpl.OrderItemRepositoryImpl;
-import service.UserService;
 import service.OrderService;
 import service.ProductService;
-import serviceimpl.UserServiceImpl;
+import service.UserService;
 import serviceimpl.OrderServiceImpl;
 import serviceimpl.ProductServiceImpl;
+import serviceimpl.UserServiceImpl;
 import utilities.DataSourceUtil;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @WebServlet("/admin")
 public class AdminDashboardServlet extends HttpServlet {
@@ -37,6 +39,35 @@ public class AdminDashboardServlet extends HttpServlet {
     private transient UserService userService;
     private transient OrderService orderService;
     private transient ProductService productService;
+
+    private boolean isAdmin(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return false;
+        }
+
+        Object roleObj = session.getAttribute("type_user");
+        if (roleObj == null) {
+            return false;
+        }
+
+        String role = roleObj.toString();
+        return "ADMIN".equalsIgnoreCase(role);
+    }
+
+    private boolean ensureAuthorized(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("is_login") == null || !(Boolean) session.getAttribute("is_login")) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return false;
+        }
+
+        if (!isAdmin(request)) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập trang quản trị.");
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public void init() throws ServletException {
@@ -49,6 +80,17 @@ public class AdminDashboardServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ensureAuthorized(request, response)) {
+            return;
+        }
+
+        HttpSession session = request.getSession(false);
+        String username = session != null ? (String) session.getAttribute("username") : null;
+        if (username != null && !username.isBlank()) {
+            UserDAO currentUser = userService.findByUsername(username);
+            request.setAttribute("currentUser", currentUser);
+        }
+
         String tab = request.getParameter("tab");
         if (tab == null || tab.isBlank()) {
             tab = "overview";
@@ -258,14 +300,6 @@ public class AdminDashboardServlet extends HttpServlet {
         productSalesList.sort((a, b) -> Integer.compare(b.getTotalQuantity(), a.getTotalQuantity()));
         request.setAttribute("productSalesList", productSalesList);
 
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("is_login") == null || !(Boolean) session.getAttribute("is_login")) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
-        String username = (String) session.getAttribute("username");
-        UserDAO currentUser = userService.findByUsername(username);
-        request.setAttribute("currentUser", currentUser);
         request.setAttribute("customerNames", customerNames);
         request.setAttribute("tab", tab);
 
@@ -275,6 +309,10 @@ public class AdminDashboardServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ensureAuthorized(request, response)) {
+            return;
+        }
+
         String action = request.getParameter("action");
         HttpSession session = request.getSession(true);
 

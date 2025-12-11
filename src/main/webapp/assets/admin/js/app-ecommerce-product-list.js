@@ -12,6 +12,56 @@ document.addEventListener('DOMContentLoaded', function (e) {
   bodyBg = config.colors.bodyBg;
   headingColor = config.colors.headingColor;
 
+  // Helpers to detect sale/discount info even when field names vary
+  const parseAmount = val => {
+    if (val === undefined || val === null) return null;
+    if (typeof val === 'number') return val;
+    const num = parseFloat(String(val).replace(/[^0-9.,-]/g, '').replace(',', ''));
+    return isNaN(num) ? null : num;
+  };
+
+  const getDiscountInfo = product => {
+    // Support multiple possible field names coming from API/backend
+    const original =
+      parseAmount(product.original_price) ??
+      parseAmount(product.price_original) ??
+      parseAmount(product.old_price) ??
+      parseAmount(product.base_price) ??
+      parseAmount(product.regular_price) ??
+      parseAmount(product.price_old) ??
+      null;
+    const current =
+      parseAmount(product.sale_price) ??
+      parseAmount(product.current_price) ??
+      parseAmount(product.price) ??
+      null;
+
+    let discountPercent = null;
+    if (product.discount_percent !== undefined) discountPercent = product.discount_percent;
+    if (product.discount_percentage !== undefined) discountPercent = product.discount_percentage;
+    if (product.discount !== undefined) discountPercent = product.discount;
+
+    if (discountPercent === null && original && current && original > current) {
+      discountPercent = Math.round(((original - current) / original) * 100);
+    }
+    // Nếu chỉ có giá đã giảm + phần trăm, tính ngược giá gốc để hiển thị
+    let inferredOriginal = original;
+    if (!inferredOriginal && current && discountPercent) {
+      const ratio = 1 - discountPercent / 100;
+      if (ratio > 0) {
+        inferredOriginal = Math.round(current / ratio);
+      }
+    }
+
+    const isOnSale =
+      product.is_on_sale === true ||
+      product.on_sale === true ||
+      product.sale === true ||
+      (discountPercent !== null && discountPercent > 0);
+
+    return { isOnSale, discountPercent, original: inferredOriginal, current };
+  };
+
   // Variable declaration for table
   const dt_product_table = document.querySelector('.datatables-products'),
     productAdd = 'app-ecommerce-product-add.html',
@@ -82,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
               productBrand = full['product_brand'],
               image = full['image'];
 
+            const { isOnSale, discountPercent } = getDiscountInfo(full);
+
             let output;
 
             if (image) {
@@ -104,7 +156,16 @@ document.addEventListener('DOMContentLoaded', function (e) {
                   <div class="avatar avatar me-2 me-sm-4 rounded-2 bg-label-secondary">${output}</div>
                 </div>
                 <div class="d-flex flex-column">
-                  <h6 class="text-nowrap mb-0">${name}</h6>
+                  <div class="d-flex align-items-center gap-2">
+                    <h6 class="text-nowrap mb-0">${name}</h6>
+                    ${
+                      isOnSale
+                        ? `<span class="badge bg-label-danger text-uppercase fw-medium">Sale${
+                            discountPercent ? ` -${discountPercent}%` : ''
+                          }</span>`
+                        : ''
+                    }
+                  </div>
                   <small class="text-truncate d-none d-sm-block">${productBrand}</small>
                 </div>
               </div>
@@ -192,9 +253,49 @@ document.addEventListener('DOMContentLoaded', function (e) {
           // price
           targets: 6,
           render: function (data, type, full, meta) {
-            const price = full['price'];
+            const { isOnSale, discountPercent, original, current } = getDiscountInfo(full);
 
-            return '<span>' + price + '</span>';
+            const formatMoney = amount => {
+              if (amount === null || amount === undefined) return '';
+              // preserve original prefix/symbol if available
+              const raw = full.price || full.original_price || '';
+              const currencySymbolMatch = String(raw).match(/^[^\d]+/);
+              const symbol = currencySymbolMatch ? currencySymbolMatch[0] : '₫';
+              // format with thousand separators if number
+              const number = parseAmount(amount);
+              const formatted =
+                number !== null
+                  ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+                  : amount;
+              return `${formatted} ${symbol}`.trim();
+            };
+
+            if (isOnSale && original && current) {
+              return `
+                <div class="d-flex flex-column">
+                  <span class="fw-semibold text-danger">${formatMoney(current)}</span>
+                  <small class="text-muted text-decoration-line-through">${formatMoney(original)}</small>
+                  ${
+                    discountPercent
+                      ? `<small class="text-danger fw-semibold">-${discountPercent}%</small>`
+                      : ''
+                  }
+                </div>
+              `;
+            }
+
+            // If có original & current khác nhau dù không set flag sale, vẫn hiển thị 2 dòng
+            if (original && current && original > current) {
+              return `
+                <div class="d-flex flex-column">
+                  <span class="fw-semibold text-danger">${formatMoney(current)}</span>
+                  <small class="text-muted text-decoration-line-through">${formatMoney(original)}</small>
+                </div>
+              `;
+            }
+
+            // fallback to raw price
+            return '<span>' + (full.price || '') + '</span>';
           }
         },
         {
@@ -245,6 +346,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
       ],
       select: { style: 'multi', selector: 'td:nth-child(2)' },
       order: [2, 'asc'],
+      createdRow: function (row, data) {
+        const { isOnSale } = getDiscountInfo(data);
+        if (isOnSale) {
+          row.classList.add('table-warning');
+        }
+      },
       layout: {
         topStart: {
           rowClass: 'card-header d-flex border-top rounded-0 flex-wrap py-0 flex-column flex-md-row align-items-start',

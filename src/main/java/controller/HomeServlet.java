@@ -1,5 +1,16 @@
 package controller;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.sql.DataSource;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,16 +30,6 @@ import repositoryimpl.CategoryRepositoryImpl;
 import repositoryimpl.ProductRepositoryImpl;
 import utilities.DataSourceUtil;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
 
@@ -39,6 +40,8 @@ public class HomeServlet extends HttpServlet {
     private static final int POPULAR_PRODUCT_LIMIT = 10;
     private static final int TOP_SOLD_LIMIT = 6;
     private static final int NEWS_LIMIT = 4;
+    private static final int SHOP_MIXED_PHONE_LIMIT = 4;
+    private static final String PHONE_CATEGORY_NAME = "Điện thoại";
 
     private transient DataSource dataSource;
     private transient ProductRepository productRepository;
@@ -58,8 +61,13 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // Dữ liệu dùng chung cho trang home
-        request.setAttribute("homeCategories", fetchCategories());
+        List<CategoryDAO> homeCategories = fetchCategories();
+        request.setAttribute("homeCategories", homeCategories);
         request.setAttribute("homeBrands", fetchBrands());
+
+        // Lấy danh mục điện thoại cho block shop-mixed (giữ nguyên layout, chỉ thay dữ liệu)
+        int phoneCategoryId = findCategoryIdByName(homeCategories, PHONE_CATEGORY_NAME);
+        request.setAttribute("homePhoneProducts", fetchProductsByCategory(phoneCategoryId, SHOP_MIXED_PHONE_LIMIT));
 
         // Xử lý tham số tìm kiếm & lọc (keyword, categoryId, brandId)
         String keyword = trimToNull(request.getParameter("keyword"));
@@ -265,5 +273,39 @@ public class HomeServlet extends HttpServlet {
             return "/" + imagePath;
         }
         return imagePath;
+    }
+
+    private List<ProductDAO> fetchProductsByCategory(int categoryId, int limit) {
+        if (categoryId <= 0) {
+            return Collections.emptyList();
+        }
+
+        try {
+            PageRequest pageRequest = new PageRequest(
+                    1,
+                    Math.max(limit, 1),
+                    "created_at",
+                    "DESC",
+                    "",
+                    0,
+                    categoryId,
+                    0
+            );
+            return productRepository.findAll(pageRequest);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "Không thể tải danh sách sản phẩm theo danh mục id=" + categoryId, ex);
+            return Collections.emptyList();
+        }
+    }
+
+    private int findCategoryIdByName(List<CategoryDAO> categories, String targetName) {
+        if (categories == null || targetName == null) {
+            return 0;
+        }
+        return categories.stream()
+                .filter(c -> c.getName() != null && c.getName().trim().equalsIgnoreCase(targetName.trim()))
+                .map(CategoryDAO::getId)
+                .findFirst()
+                .orElse(0);
     }
 }

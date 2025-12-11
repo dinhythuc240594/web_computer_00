@@ -80,7 +80,7 @@
     <jsp:include page="../common/category-menu.jsp" />
 
     <!-- cart section -->
-    <section class="cart-section pb_80">
+    <section class="cart-section pb_80" style="padding-top: 40px;">
         <div class="large-container">
             <div class="sec-title centred pb_30">
                 <h2>Giỏ hàng của bạn</h2>

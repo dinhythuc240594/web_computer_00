@@ -84,10 +84,7 @@
   position: relative;
   display: block;
   margin-bottom: 10px;
-  -webkit-transition: opacity 0.25s cubic-bezier(.17,.62,.44,.99),background-color 0.1s cubic-bezier(.28,.12,.22,1),color 0.1s cubic-bezier(.28,.12,.22,1),border-color 0.1s cubic-bezier(.28,.12,.22,1),-webkit-transform 0.25s cubic-bezier(.17,.62,.44,.99),-webkit-box-shadow 0.1s cubic-bezier(.28,.12,.22,1);
-  transition: opacity 0.25s cubic-bezier(.17,.62,.44,.99),background-color 0.1s cubic-bezier(.28,.12,.22,1),color 0.1s cubic-bezier(.28,.12,.22,1),border-color 0.1s cubic-bezier(.28,.12,.22,1),-webkit-transform 0.25s cubic-bezier(.17,.62,.44,.99),-webkit-box-shadow 0.1s cubic-bezier(.28,.12,.22,1);
-  transition: opacity 0.25s cubic-bezier(.17,.62,.44,.99),transform 0.25s cubic-bezier(.17,.62,.44,.99),background-color 0.1s cubic-bezier(.28,.12,.22,1),color 0.1s cubic-bezier(.28,.12,.22,1),border-color 0.1s cubic-bezier(.28,.12,.22,1),box-shadow 0.1s cubic-bezier(.28,.12,.22,1);
-  transition: opacity 0.25s cubic-bezier(.17,.62,.44,.99),transform 0.25s cubic-bezier(.17,.62,.44,.99),background-color 0.1s cubic-bezier(.28,.12,.22,1),color 0.1s cubic-bezier(.28,.12,.22,1),border-color 0.1s cubic-bezier(.28,.12,.22,1),box-shadow 0.1s cubic-bezier(.28,.12,.22,1),-webkit-transform 0.25s cubic-bezier(.17,.62,.44,.99),-webkit-box-shadow 0.1s cubic-bezier(.28,.12,.22,1); */
+  transition: opacity 0.25s cubic-bezier(.17,.62,.44,.99), transform 0.25s cubic-bezier(.17,.62,.44,.99), background-color 0.1s cubic-bezier(.28,.12,.22,1), color 0.1s cubic-bezier(.28,.12,.22,1), border-color 0.1s cubic-bezier(.28,.12,.22,1), box-shadow 0.1s cubic-bezier(.28,.12,.22,1);
   will-change: opacity,transform;
   opacity: 0;
   -webkit-transform: translateX(0.625rem);
@@ -145,6 +142,10 @@
   color: #fff;
 }
 
+.shop-block-two .inner-box .image-box .option-list{
+  display: none !important;
+}
+
 .shop-block-two .inner-box .lower-content{
   position: relative;
   display: block;
@@ -172,10 +173,6 @@
 .shop-block-two .inner-box .lower-content h4 a{
   display: inline-block;
   color: var(--title-color);
-}
-
-.shop-block-two .inner-box .lower-content h4 a:hover{
-
 }
 
 .shop-block-two .inner-box .lower-content h5{
@@ -429,10 +426,6 @@
   font-weight: 500;
   margin-right: 8px;
   margin-left: 0px;
-}
-
-.shop-two.medical-shop .shop-block-two .inner-box .lower-content h5{
-  
 }
 
 .shop-four.kids-shop .shop-block-two .inner-box:hover .lower-content .cart-btn{

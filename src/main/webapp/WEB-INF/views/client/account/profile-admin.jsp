@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../../admin/layout/init.jspf" %>
 <%@ page import="model.UserDAO" %>
+<%@ page import="model.NewsletterDAO" %>
 <%@ page import="service.UserService" %>
 <%@ page import="serviceimpl.UserServiceImpl" %>
 <%@ page import="utilities.DataSourceUtil" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%
     String sessionUsername = (String) session.getAttribute("username");
     String sessionRole = (String) session.getAttribute("type_user");
@@ -166,6 +168,64 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+<%--                    <%--%>
+<%--                        NewsletterDAO newsletterSubscription = (NewsletterDAO) request.getAttribute("newsletterSubscription");--%>
+<%--                        boolean isSubscribed = newsletterSubscription != null && "active".equals(newsletterSubscription.getStatus());--%>
+<%--                    %>--%>
+<%--                    <div class="row gy-4 mt-2">--%>
+<%--                        <div class="col-lg-8 offset-lg-4">--%>
+<%--                            <div class="card h-100">--%>
+<%--                                <div class="card-header d-flex align-items-center justify-content-between">--%>
+<%--                                    <div>--%>
+<%--                                        <p class="text-muted mb-1">Bản tin</p>--%>
+<%--                                        <h5 class="mb-0">Quản lý Newsletter</h5>--%>
+<%--                                    </div>--%>
+<%--                                    <span class="badge bg-label-primary text-uppercase">Newsletter</span>--%>
+<%--                                </div>--%>
+<%--                                <div class="card-body">--%>
+<%--                                    <p class="text-muted mb-3">--%>
+<%--                                        Nhận thông tin sản phẩm mới, khuyến mãi và tin tức công nghệ. Bạn có thể hủy đăng ký bất cứ lúc nào.--%>
+<%--                                    </p>--%>
+<%--                                    <% if (isSubscribed) { %>--%>
+<%--                                    <div class="alert alert-success d-flex align-items-start">--%>
+<%--                                        <i class="ri ri-checkbox-circle-line me-2 fs-5"></i>--%>
+<%--                                        <div>--%>
+<%--                                            <strong>Bạn đang đăng ký nhận tin</strong><br>--%>
+<%--                                            <small>Email: <%= currentUser != null ? currentUser.getEmail() : displayEmail %></small>--%>
+<%--                                            <% if (newsletterSubscription.getSubscribed_at() != null) { %>--%>
+<%--                                            <br>--%>
+<%--                                            <small>Đăng ký từ: <%= new SimpleDateFormat("dd/MM/yyyy").format(newsletterSubscription.getSubscribed_at()) %></small>--%>
+<%--                                            <% } %>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                    <form method="post" action="<%= contextPath %>/user"--%>
+<%--                                          onsubmit="return confirm('Bạn có chắc chắn muốn hủy đăng ký newsletter? Bạn sẽ không nhận được thông tin về sản phẩm mới và khuyến mãi nữa.');">--%>
+<%--                                        <input type="hidden" name="action" value="unsubscribeNewsletter">--%>
+<%--                                        <button type="submit" class="btn btn-danger">--%>
+<%--                                            <i class="ri ri-close-circle-line me-1"></i> Hủy đăng ký Newsletter--%>
+<%--                                        </button>--%>
+<%--                                    </form>--%>
+<%--                                    <% } else { %>--%>
+<%--                                    <div class="alert alert-secondary d-flex align-items-start">--%>
+<%--                                        <i class="ri ri-information-line me-2 fs-5"></i>--%>
+<%--                                        <div>--%>
+<%--                                            <strong>Bạn chưa đăng ký nhận tin</strong><br>--%>
+<%--                                            <% if (newsletterSubscription != null && "unsubscribed".equals(newsletterSubscription.getStatus())) { %>--%>
+<%--                                            <small>Bạn đã hủy đăng ký trước đó. Đăng ký lại từ form ở footer trang chủ.</small>--%>
+<%--                                            <% } else { %>--%>
+<%--                                            <small>Đăng ký ngay từ form ở footer trang chủ để nhận thông tin mới nhất!</small>--%>
+<%--                                            <% } %>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                    <a href="<%= contextPath %>/home" class="btn btn-primary">--%>
+<%--                                        <i class="ri ri-send-plane-2-line me-1"></i> Đăng ký Newsletter--%>
+<%--                                    </a>--%>
+<%--                                    <% } %>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
                     </div>
                 </div>
                 <jsp:include page="../../admin/layout/footer.jsp"/>
