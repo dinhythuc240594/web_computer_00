@@ -68,7 +68,7 @@
     <!-- error-section end -->
 
     <!-- highlights-section -->
-    <jsp:include page="../common/highlight-section.jsp" />
+    <jsp:include page="../../common/highlight-section.jsp" />
     <!-- highlights-section end -->
 
     <jsp:include page="../../common/footer.jsp" />
