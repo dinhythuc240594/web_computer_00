@@ -223,7 +223,7 @@
                         </div>
                         <ul class="tab-btns tab-buttons clearfix">
                             <li class="tab-btn <%= (tab == null || tab.equals("info")) ? "active-btn" : "" %>" data-tab="#tab-1">Thông tin cá nhân</li>
-                            <% if(currentUser.getRole() == "CUSTOMER") {%>
+                            <% if(currentUser.getRole().equalsIgnoreCase("CUSTOMER")) {%>
                             <!-- <li class="tab-btn <%= "payment".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-2">Thanh toán & hoá đơn</li> -->
                             <li class="tab-btn <%= "orders".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-3">Lịch sử đơn hàng</li>
 <%--                            <li class="tab-btn <%= "wishlist".equals(tab) ? "active-btn" : "" %>" data-tab="#tab-4">Danh sách yêu thích</li>--%>
@@ -350,7 +350,7 @@
                                 </div>
                             </div>
                         </div>
-                        <% if(currentUser.getRole() == "CUSTOMER") {%>
+                        <% if(currentUser.getRole().equalsIgnoreCase("CUSTOMER")) {%>
 
                         <!-- <div class="tab <%= "payment".equals(tab) ? "active-tab" : "" %>" id="tab-2">
                             <h3>Thanh toán & hoá đơn</h3>
