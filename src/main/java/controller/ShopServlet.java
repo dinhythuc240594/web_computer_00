@@ -1,5 +1,13 @@
 package controller;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.sql.DataSource;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,20 +18,11 @@ import model.CategoryDAO;
 import model.Page;
 import model.PageRequest;
 import model.ProductDAO;
-import repository.CategoryRepository;
-import repositoryimpl.CategoryRepositoryImpl;
 import service.CategoryService;
 import service.ProductService;
 import serviceimpl.CategoryServiceImpl;
 import serviceimpl.ProductServiceImpl;
 import utilities.DataSourceUtil;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @WebServlet(name = "shop", urlPatterns = "/shop")
 public class ShopServlet extends HttpServlet {

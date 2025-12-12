@@ -7,6 +7,7 @@ import model.ProductDAO;
 public interface ProductService extends Service<ProductDAO>{
 
     Page<ProductDAO> findAll(PageRequest pageRequest);
-    public int count(String keyword, int brandId, int categoryId);
+    int count(String keyword, int brandId, int categoryId);
+    int count(String keyword, int brandId, int categoryId, Boolean isActive);
 
 }

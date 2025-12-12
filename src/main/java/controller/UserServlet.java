@@ -139,6 +139,7 @@ public class UserServlet extends HttpServlet {
             newsletterSubscription = newsletterService.findByEmail(currentUser.getEmail());
         }
         
+        request.setAttribute("pageTitle", "Thông tin tài khoản");
         request.setAttribute("currentUser", currentUser);
         request.setAttribute("newsletterSubscription", newsletterSubscription);
         request.setAttribute("ordersPage", page);

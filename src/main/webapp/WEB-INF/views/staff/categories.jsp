@@ -40,7 +40,6 @@
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h4 class="fw-bold py-3 mb-4">Quản lý Danh mục</h4>
                         <a href="${contextPath}/staff?action=category-add" class="btn btn-primary">
                             <i class="icon-base ri ri-add-line me-2"></i>Thêm danh mục
                         </a>

@@ -12,7 +12,7 @@
         <div class="large-container">
             <div class="tabs-box">
                 <div class="sec-title">
-                    <h2>Sản phẩm đang bán</h2>
+                    <h2>Sản phẩm bán chạy</h2>
                     <a href="<%= contextPath %>/product?action=list">Xem tất cả</a>
                 </div>
                 <div class="tabs-content">

@@ -10,6 +10,7 @@ public class PageRequest {
     private int productId;
     private int categoryId;
     private int brandId;
+    private Boolean isActive;
 
     public PageRequest() {
 
@@ -125,5 +126,13 @@ public class PageRequest {
 
     public void setBrandId(int brandId) {
         this.brandId = brandId;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 }

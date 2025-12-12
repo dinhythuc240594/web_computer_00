@@ -92,7 +92,7 @@
 
     <!-- sign-section -->
     <section class="sign-section pb_80">
-        <div class="large-container">
+        <div class="large-container pt_45">
             <div class="sec-title centred pb_30">
                 <h2>Tạo tài khoản mới</h2>
                 <%

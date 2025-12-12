@@ -102,7 +102,7 @@
     <jsp:include page="../common/category-menu.jsp" />
 
     <!-- shop-details -->
-    <section class="shop-details pb_70">
+    <section class="shop-details pb_70 pt_35">
         <div class="large-container">
             <%
                 model.ProductDAO product = (model.ProductDAO) request.getAttribute("product");

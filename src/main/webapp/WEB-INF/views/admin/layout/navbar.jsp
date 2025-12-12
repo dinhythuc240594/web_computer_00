@@ -17,7 +17,7 @@
         pageTitle = (String) request.getAttribute("title");
     }
     if (pageTitle == null || pageTitle.isBlank()) {
-        pageTitle = "Admin Dashboard";
+        pageTitle = "Quản lý đơn hàng";
     }
     
     if (sessionUsername != null && !sessionUsername.isBlank()) {

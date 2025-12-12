@@ -4,19 +4,27 @@
 <%@ page import="java.util.Locale" %>
 <%@ page import="model.ProductDAO" %>
 <%@ page import="model.CategoryDAO" %>
+<%@ page import="model.BrandDAO" %>
 <%@ page import="model.Page" %>
 <%
     String contextPath = request.getContextPath();
     
     String searchKeyword = (String) request.getAttribute("searchKeyword");
     Integer selectedCategoryId = (Integer) request.getAttribute("selectedCategoryId");
+    Integer selectedBrandId = (Integer) request.getAttribute("selectedBrandId");
+    String selectedSort = (String) request.getAttribute("selectedSort");
+    String selectedOrder = (String) request.getAttribute("selectedOrder");
     Integer currentPage = (Integer) request.getAttribute("currentPage");
     CategoryDAO selectedCategory = (CategoryDAO) request.getAttribute("selectedCategory");
     
     if (selectedCategoryId == null) selectedCategoryId = 0;
+    if (selectedBrandId == null) selectedBrandId = 0;
+    if (selectedSort == null) selectedSort = "created_at";
+    if (selectedOrder == null) selectedOrder = "DESC";
     if (currentPage == null) currentPage = 1;
     
     List<CategoryDAO> categories = (List<CategoryDAO>) request.getAttribute("categories");
+    List<BrandDAO> brands = (List<BrandDAO>) request.getAttribute("brands");
     Page<ProductDAO> productPage = (Page<ProductDAO>) request.getAttribute("productPage");
     List<ProductDAO> products = (List<ProductDAO>) request.getAttribute("products");
     
@@ -25,6 +33,9 @@
     }
     if (categories == null) {
         categories = java.util.Collections.emptyList();
+    }
+    if (brands == null) {
+        brands = java.util.Collections.emptyList();
     }
     
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
@@ -185,6 +196,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            width: 1000px;
         }
         .widget-title {
             margin-bottom: 20px;
@@ -207,6 +219,56 @@
         }
         .category-list li:last-child {
             margin-bottom: 0;
+        }
+        .filter-select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #fff;
+            color: #111;
+            margin-bottom: 15px;
+            appearance: none;
+        }
+        .filter-select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+        .filter-btn {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .filter-btn:hover {
+            background: #0056b3;
+        }
+        .filter-btn-reset {
+            width: 100%;
+            padding: 12px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+        .filter-btn-reset:hover {
+            background: #5a6268;
         }
     </style>
 </head>
@@ -280,50 +342,76 @@
                 <!-- Sidebar -->
                 <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
                     <div class="shop-sidebar">
-                        <!-- Categories Widget -->
-                        <div class="category-widget sidebar-widget">
-                            <div class="widget-title">
-                                <h4>Danh mục sản phẩm</h4>
-                            </div>
-                            <div class="widget-content">
-                                <ul class="category-list">
-                                    <li>
+                        <!-- Filter Form -->
+                        <form method="GET" action="<%= contextPath %>/category" class="filter-form">
+
+                            <!-- Categories Widget -->
+                            <div class="category-widget sidebar-widget">
+                                <div class="widget-title">
+                                    <h4>Danh mục sản phẩm</h4>
+                                </div>
+                                <div class="widget-content">
+                                    <select name="categoryId" id="categoryId" class="filter-select">
+                                        <option value="0" <%= selectedCategoryId == 0 ? "selected" : "" %>>Tất cả danh mục</option>
                                         <%
-                                            // Khi click "Tất cả", reset categoryId, chỉ giữ keyword nếu có
-                                            String allUrl = contextPath + "/category";
-                                            if (searchKeyword != null && !searchKeyword.isBlank()) {
-                                                allUrl += "?keyword=" + java.net.URLEncoder.encode(searchKeyword, "UTF-8");
-                                            }
-                                            // Chỉ active khi không có category nào được chọn
-                                            boolean isAllActive = selectedCategoryId == 0;
+                                            for (CategoryDAO category : categories) {
                                         %>
-                                        <a href="<%= allUrl %>" 
-                                           class="sidebar-nav-link <%= isAllActive ? "active" : "" %>">
-                                            Tất cả
-                                        </a>
-                                    </li>
-                                    <%
-                                        for (CategoryDAO category : categories) {
-                                            // Active category khi categoryId được chọn
-                                            boolean isActive = category.getId() == selectedCategoryId;
-                                            // Khi click vào category, filter theo categoryId
-                                            String categoryUrl = contextPath + "/category?categoryId=" + category.getId();
-                                            if (searchKeyword != null && !searchKeyword.isBlank()) {
-                                                categoryUrl += "&keyword=" + java.net.URLEncoder.encode(searchKeyword, "UTF-8");
-                                            }
-                                    %>
-                                    <li>
-                                        <a href="<%= categoryUrl %>" 
-                                           class="sidebar-nav-link <%= isActive ? "active" : "" %>">
+                                        <option value="<%= category.getId() %>" <%= selectedCategoryId == category.getId() ? "selected" : "" %>>
                                             <%= category.getName() %>
-                                        </a>
-                                    </li>
-                                    <%
-                                        }
-                                    %>
-                                </ul>
+                                        </option>
+                                        <%
+                                            }
+                                        %>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+
+                            <!-- Brands Widget -->
+                            <div class="brand-widget sidebar-widget">
+                                <div class="widget-title">
+                                    <h4>Thương hiệu</h4>
+                                </div>
+                                <div class="widget-content">
+                                    <select name="brandId" id="brandId" class="filter-select">
+                                        <option value="0" <%= selectedBrandId == 0 ? "selected" : "" %>>Tất cả thương hiệu</option>
+                                        <%
+                                            for (BrandDAO brand : brands) {
+                                        %>
+                                        <option value="<%= brand.getId() %>" <%= selectedBrandId == brand.getId() ? "selected" : "" %>>
+                                            <%= brand.getName() %>
+                                        </option>
+                                        <%
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Sort Widget -->
+                            <div class="sort-widget sidebar-widget">
+                                <div class="widget-title">
+                                    <h4>Sắp xếp</h4>
+                                </div>
+                                <div class="widget-content">
+                                    <select name="sort" id="sort" class="filter-select">
+                                        <option value="created_at" <%= "created_at".equals(selectedSort) ? "selected" : "" %>>Mới nhất</option>
+                                        <option value="name" <%= "name".equals(selectedSort) ? "selected" : "" %>>Tên A-Z</option>
+                                        <option value="price" <%= "price".equals(selectedSort) ? "selected" : "" %>>Giá</option>
+                                        <option value="stock_quantity" <%= "stock_quantity".equals(selectedSort) ? "selected" : "" %>>Tồn kho</option>
+                                    </select>
+                                    <select name="order" id="order" class="filter-select">
+                                        <option value="DESC" <%= "DESC".equals(selectedOrder) ? "selected" : "" %>>Giảm dần</option>
+                                        <option value="ASC" <%= "ASC".equals(selectedOrder) ? "selected" : "" %>>Tăng dần</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Filter Buttons -->
+                            <div class="sidebar-widget">
+                                <button type="submit" class="filter-btn">Áp dụng bộ lọc</button>
+                                <a href="<%= contextPath %>/category" class="filter-btn-reset" style="display: block; text-align: center; text-decoration: none;">Đặt lại</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -448,6 +536,15 @@
                     }
                     if (selectedCategoryId > 0) {
                         baseUrl += "categoryId=" + selectedCategoryId + "&";
+                    }
+                    if (selectedBrandId > 0) {
+                        baseUrl += "brandId=" + selectedBrandId + "&";
+                    }
+                    if (selectedSort != null && !selectedSort.equals("created_at")) {
+                        baseUrl += "sort=" + selectedSort + "&";
+                    }
+                    if (selectedOrder != null && !selectedOrder.equals("DESC")) {
+                        baseUrl += "order=" + selectedOrder + "&";
                     }
             %>
             <div class="pagination">

@@ -123,7 +123,7 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
             <div class="footer-bottom">
                 <div class="bottom-inner">
                     <div class="copyright"><p>Bản quyền &copy; 2025 <a href="index.html">HCMUTE</a>, Inc. Đã đăng ký bản quyền</p></div>

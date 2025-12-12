@@ -33,6 +33,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         String orderField = pageRequest.getOrderField();
         int brandId = pageRequest.getBrandId();
         int categoryId = pageRequest.getCategoryId();
+        Boolean isActive = pageRequest.getIsActive();
 
         String sql = "SELECT id, name, slug, description, "
                     + "price, stock_quantity, image, category_id, brand_id, is_active, "
@@ -56,6 +57,11 @@ public class ProductRepositoryImpl implements ProductRepository {
         if(categoryId > 0) {
             conditions.add("category_id = ?");
             params.add(categoryId);
+        }
+
+        if (isActive != null) {
+            conditions.add("is_active = ?");
+            params.add(isActive);
         }
 
         if(!conditions.isEmpty()) {
@@ -170,6 +176,11 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public int count(String keyword, int brandId, int categoryId) {
+        return count(keyword, brandId, categoryId, null);
+    }
+
+    @Override
+    public int count(String keyword, int brandId, int categoryId, Boolean isActive) {
 
         String sql = "SELECT COUNT(1) FROM products";
         List<String> conditions = new ArrayList<>();
@@ -191,6 +202,11 @@ public class ProductRepositoryImpl implements ProductRepository {
         if(categoryId > 0) {
             conditions.add("category_id = ?");
             params.add(categoryId);
+        }
+
+        if (isActive != null) {
+            conditions.add("is_active = ?");
+            params.add(isActive);
         }
 
         if(!conditions.isEmpty()) {

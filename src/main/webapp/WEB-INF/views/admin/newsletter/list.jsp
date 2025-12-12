@@ -50,7 +50,6 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">Quản lý Newsletter</h5>
                             <div class="d-flex gap-2">
                                 <a href="?includeUnsubscribed=<%= !includeUnsubscribed %>" class="btn btn-outline-primary btn-sm">
                                     <%= includeUnsubscribed ? "Chỉ hiển thị đang đăng ký" : "Hiển thị tất cả" %>

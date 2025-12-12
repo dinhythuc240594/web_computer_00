@@ -70,7 +70,7 @@
         <div class="header-upper">
             <div class="large-container">
                 <div class="upper-inner">
-                    <figure class="logo-box"><a href="home"><img src="${pageContext.request.contextPath}/assets/client/images/Logo%20HCMUTE_Color%20background.png" alt="" style="height: 70px; width: 70px;"></a></figure>
+                    <figure class="logo-box"><a href="home"><img src="${pageContext.request.contextPath}/assets/client/images/Logo%20HCMUTE_Color%20background.png" alt="" style="height: 110px; width: 110px;"></a></figure>
                     <div class="search-area">
                         <%
                             // Load categories từ database
@@ -152,7 +152,7 @@ padding: 15px 20px;"></div>
                                 <ul class="navigation clearfix">
                                     <li class="current"><a href="home">Trang chủ</a>
                                     </li>
-                                    <li><a href="category">Danh Mục</a>
+                                    <li><a href="category">Sản phẩm</a>
                                     </li>
                                     <li><a href="brand">Thương Hiệu</a>
                                     </li>

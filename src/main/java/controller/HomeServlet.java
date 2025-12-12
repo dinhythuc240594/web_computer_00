@@ -40,8 +40,12 @@ public class HomeServlet extends HttpServlet {
     private static final int POPULAR_PRODUCT_LIMIT = 10;
     private static final int TOP_SOLD_LIMIT = 6;
     private static final int NEWS_LIMIT = 4;
-    private static final int SHOP_MIXED_PHONE_LIMIT = 4;
+    private static final int SHOP_MIXED_PHONE_LIMIT = 8;
+    private static final int SHOP_MIXED_LAPTOP_LIMIT = 8;
     private static final String PHONE_CATEGORY_NAME = "Điện thoại";
+    private static final String LAPTOP_CATEGORY_NAME = "Laptop";
+    private static final String LAPTOP_GAMING_CATEGORY_NAME = "Laptop gaming";
+    private static final String LAPTOP_OFFICE_CATEGORY_NAME = "Laptop văn phòng";
 
     private transient DataSource dataSource;
     private transient ProductRepository productRepository;
@@ -65,9 +69,16 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("homeCategories", homeCategories);
         request.setAttribute("homeBrands", fetchBrands());
 
-        // Lấy danh mục điện thoại cho block shop-mixed (giữ nguyên layout, chỉ thay dữ liệu)
+        // Lấy danh mục điện thoại và laptop cho block shop-mixed (giữ nguyên layout, chỉ thay dữ liệu)
         int phoneCategoryId = findCategoryIdByName(homeCategories, PHONE_CATEGORY_NAME);
+        int laptopCategoryId = findCategoryIdByName(homeCategories, LAPTOP_CATEGORY_NAME);
+        int laptopGamingCategoryId = findCategoryIdByName(homeCategories, LAPTOP_GAMING_CATEGORY_NAME);
+        int laptopOfficeCategoryId = findCategoryIdByName(homeCategories, LAPTOP_OFFICE_CATEGORY_NAME);
+
         request.setAttribute("homePhoneProducts", fetchProductsByCategory(phoneCategoryId, SHOP_MIXED_PHONE_LIMIT));
+        request.setAttribute("homeLaptopProducts", fetchProductsByCategories(
+                List.of(laptopCategoryId, laptopGamingCategoryId, laptopOfficeCategoryId),
+                SHOP_MIXED_LAPTOP_LIMIT));
 
         // Xử lý tham số tìm kiếm & lọc (keyword, categoryId, brandId)
         String keyword = trimToNull(request.getParameter("keyword"));
@@ -296,6 +307,46 @@ public class HomeServlet extends HttpServlet {
             LOGGER.log(Level.SEVERE, "Không thể tải danh sách sản phẩm theo danh mục id=" + categoryId, ex);
             return Collections.emptyList();
         }
+    }
+
+    private List<ProductDAO> fetchProductsByCategories(List<Integer> categoryIds, int limit) {
+        if (categoryIds == null || categoryIds.isEmpty() || limit <= 0) {
+            return Collections.emptyList();
+        }
+
+        List<ProductDAO> result = new java.util.ArrayList<>();
+        java.util.Set<Integer> seenIds = new java.util.HashSet<>();
+
+        for (Integer cid : categoryIds) {
+            if (cid == null || cid <= 0) continue;
+            int remaining = limit - result.size();
+            if (remaining <= 0) break;
+
+            try {
+                PageRequest pageRequest = new PageRequest(
+                        1,
+                        remaining,
+                        "created_at",
+                        "DESC",
+                        "",
+                        0,
+                        cid,
+                        0
+                );
+                List<ProductDAO> items = productRepository.findAll(pageRequest);
+                for (ProductDAO p : items) {
+                    if (p == null) continue;
+                    if (seenIds.add(p.getId())) {
+                        result.add(p);
+                        if (result.size() >= limit) break;
+                    }
+                }
+                if (result.size() >= limit) break;
+            } catch (Exception ex) {
+                LOGGER.log(Level.SEVERE, "Không thể tải danh sách sản phẩm theo danh mục id=" + cid, ex);
+            }
+        }
+        return result;
     }
 
     private int findCategoryIdByName(List<CategoryDAO> categories, String targetName) {

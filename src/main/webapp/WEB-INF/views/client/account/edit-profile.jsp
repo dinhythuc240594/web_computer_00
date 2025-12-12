@@ -71,7 +71,7 @@
 
     <!-- account-section -->
     <section class="account-section pb_80">
-        <div class="large-container">
+        <div class="large-container pt_45">
             <div class="sec-title centred pb_20">
                 <h2>Chỉnh sửa thông tin cá nhân</h2>
                 <%

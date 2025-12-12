@@ -14,6 +14,15 @@
     Page<ProductDAO> productPage = (Page<ProductDAO>) request.getAttribute("productPage");
     String keyword = (String) request.getAttribute("keyword");
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+
+    Integer filterCategoryId = (Integer) request.getAttribute("selectedCategoryId");
+    if (filterCategoryId == null) filterCategoryId = 0;
+    Integer filterBrandId = (Integer) request.getAttribute("selectedBrandId");
+    if (filterBrandId == null) filterBrandId = 0;
+    String filterSort = (String) request.getAttribute("selectedSort");
+    if (filterSort == null || filterSort.isBlank()) filterSort = "id_desc";
+    String filterStatus = (String) request.getAttribute("selectedStatus");
+    if (filterStatus == null || filterStatus.isBlank()) filterStatus = "all";
 %>
 <!doctype html>
 <html lang="en" class="layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
@@ -47,7 +56,7 @@
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h4 class="fw-bold py-3 mb-4">Quản lý Sản phẩm</h4>
+                        
                         <a href="${contextPath}/staff?action=product-add" class="btn btn-primary">
                             <i class="icon-base ri ri-add-line me-2"></i>Thêm sản phẩm
                         </a>
@@ -59,14 +68,63 @@
                             <form method="get" action="${contextPath}/staff">
                                 <input type="hidden" name="action" value="products"/>
                                 <div class="row g-3">
-                                    <div class="col-md-8">
+                                    <div class="col-md-4">
                                         <input type="text" class="form-control" name="keyword" 
                                                placeholder="Tìm kiếm theo tên hoặc giá..." 
                                                value="<%= keyword != null ? keyword : "" %>"/>
                                     </div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary w-100">
-                                            <i class="icon-base ri ri-search-line me-2"></i>Tìm kiếm
+                                    <div class="col-md-2">
+                                        <select class="form-select" name="categoryId">
+                                            <option value="0">Tất cả danh mục</option>
+                                            <%
+                                                if (categories != null) {
+                                                    for (CategoryDAO cat : categories) {
+                                            %>
+                                            <option value="<%= cat.getId() %>" <%= filterCategoryId == cat.getId() ? "selected" : "" %>>
+                                                <%= cat.getName() %>
+                                            </option>
+                                            <%
+                                                    }
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-select" name="brandId">
+                                            <option value="0">Tất cả thương hiệu</option>
+                                            <%
+                                                if (brands != null) {
+                                                    for (BrandDAO b : brands) {
+                                            %>
+                                            <option value="<%= b.getId() %>" <%= filterBrandId == b.getId() ? "selected" : "" %>>
+                                                <%= b.getName() %>
+                                            </option>
+                                            <%
+                                                    }
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-select" name="sort">
+                                            <%
+                                            %>
+                                            <option value="id_desc" <%= "id_desc".equals(filterSort) ? "selected" : "" %>>Mới nhất</option>
+                                            <option value="price_asc" <%= "price_asc".equals(filterSort) ? "selected" : "" %>>Giá tăng dần</option>
+                                            <option value="price_desc" <%= "price_desc".equals(filterSort) ? "selected" : "" %>>Giá giảm dần</option>
+                                            <option value="name_asc" <%= "name_asc".equals(filterSort) ? "selected" : "" %>>Tên A-Z</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-select" name="status">
+                                            <option value="all" <%= "all".equals(filterStatus) ? "selected" : "" %>>Tất cả trạng thái</option>
+                                            <option value="active" <%= "active".equals(filterStatus) ? "selected" : "" %>>Đang hiển thị</option>
+                                            <option value="hidden" <%= "hidden".equals(filterStatus) ? "selected" : "" %>>Đang ẩn</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="icon-base ri ri-search-line me-2"></i>Lọc
                                         </button>
                                     </div>
                                 </div>
@@ -191,6 +249,18 @@
                                 String baseUrl = request.getContextPath() + "/staff?action=products";
                                 if (keyword != null && !keyword.isEmpty()) {
                                     baseUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
+                                }
+                                if (filterCategoryId != null && filterCategoryId > 0) {
+                                    baseUrl += "&categoryId=" + filterCategoryId;
+                                }
+                                if (filterBrandId != null && filterBrandId > 0) {
+                                    baseUrl += "&brandId=" + filterBrandId;
+                                }
+                                if (filterSort != null && !filterSort.isBlank() && !"id_desc".equals(filterSort)) {
+                                    baseUrl += "&sort=" + filterSort;
+                                }
+                                if (filterStatus != null && !"all".equals(filterStatus)) {
+                                    baseUrl += "&status=" + filterStatus;
                                 }
                         %>
                             <div class="card-footer">

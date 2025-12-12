@@ -1,33 +1,5 @@
 package controller;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
-import model.OrderDAO;
-import model.OrderItemDAO;
-import model.ProductDAO;
-import model.CategoryDAO;
-import model.BrandDAO;
-import model.UserDAO;
-import model.Page;
-import model.PageRequest;
-import service.OrderService;
-import service.OrderItemService;
-import service.ProductService;
-import service.CategoryService;
-import service.BrandService;
-import service.UserService;
-import serviceimpl.OrderServiceImpl;
-import serviceimpl.OrderItemServiceImpl;
-import serviceimpl.ProductServiceImpl;
-import serviceimpl.CategoryServiceImpl;
-import serviceimpl.BrandServiceImpl;
-import serviceimpl.UserServiceImpl;
-import model.OrderItemDAO;
-import utilities.DataSourceUtil;
-
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -41,6 +13,38 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.sql.DataSource;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import model.BrandDAO;
+import model.CategoryDAO;
+import model.OrderDAO;
+import model.OrderItemDAO;
+import model.Page;
+import model.PageRequest;
+import model.ProductDAO;
+import model.UserDAO;
+import service.BrandService;
+import service.CategoryService;
+import service.OrderItemService;
+import service.OrderService;
+import service.ProductService;
+import service.UserService;
+import serviceimpl.BrandServiceImpl;
+import serviceimpl.CategoryServiceImpl;
+import serviceimpl.OrderItemServiceImpl;
+import serviceimpl.OrderServiceImpl;
+import serviceimpl.ProductServiceImpl;
+import serviceimpl.UserServiceImpl;
+import utilities.DataSourceUtil;
 
 @WebServlet(name = "staff", urlPatterns = "/staff")
 public class StaffServlet extends HttpServlet {
@@ -295,6 +299,17 @@ public class StaffServlet extends HttpServlet {
         request.setAttribute("keyword", keyword);
         request.setAttribute("currentPage", page);
         
+        // Set pageTitle based on tab
+        String pageTitle;
+        switch (tab.toLowerCase()) {
+            case "orders" -> pageTitle = "Quản lý đơn hàng";
+            case "products" -> pageTitle = "Quản lý sản phẩm";
+            case "brands" -> pageTitle = "Quản lý thương hiệu";
+            case "categories" -> pageTitle = "Quản lý danh mục";
+            default -> pageTitle = "Quản lý đơn hàng";
+        }
+        request.setAttribute("pageTitle", pageTitle);
+        
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/staff.jsp");
         rd.forward(request, response);
     }
@@ -306,6 +321,12 @@ public class StaffServlet extends HttpServlet {
         // Lấy tham số pagination và search
         String keyword = request.getParameter("keyword");
         if (keyword == null) keyword = "";
+        int selectedCategoryId = parsePositiveInt(request.getParameter("categoryId"));
+        int selectedBrandId = parsePositiveInt(request.getParameter("brandId"));
+        String sort = request.getParameter("sort");
+        if (sort == null || sort.isBlank()) sort = "id_desc";
+        String status = request.getParameter("status");
+        if (status == null || status.isBlank()) status = "all";
         int page = 1;
         try {
             String pageStr = request.getParameter("page");
@@ -317,13 +338,44 @@ public class StaffServlet extends HttpServlet {
         }
         
         int pageSize = 10;
-        PageRequest pageRequest = new PageRequest(page, pageSize, "id", "DESC", keyword, 0, 0, 0);
+        String sortField = "id";
+        String orderField = "DESC";
+        switch (sort) {
+            case "price_asc" -> {
+                sortField = "price";
+                orderField = "ASC";
+            }
+            case "price_desc" -> {
+                sortField = "price";
+                orderField = "DESC";
+            }
+            case "name_asc" -> {
+                sortField = "name";
+                orderField = "ASC";
+            }
+            default -> {
+                sortField = "id";
+                orderField = "DESC";
+            }
+        }
+
+        PageRequest pageRequest = new PageRequest(page, pageSize, sortField, orderField, keyword, 0, selectedCategoryId, selectedBrandId);
+
+        if ("hidden".equalsIgnoreCase(status)) {
+            pageRequest.setIsActive(false);
+        } else if ("active".equalsIgnoreCase(status)) {
+            pageRequest.setIsActive(true);
+        }
         Page<ProductDAO> productPage = productService.findAll(pageRequest);
         
         request.setAttribute("productPage", productPage);
         request.setAttribute("products", productPage.getData());
         request.setAttribute("keyword", keyword);
         request.setAttribute("currentPage", page);
+        request.setAttribute("selectedCategoryId", selectedCategoryId);
+        request.setAttribute("selectedBrandId", selectedBrandId);
+        request.setAttribute("selectedSort", sort);
+        request.setAttribute("selectedStatus", status);
         
         // Load categories and brands for filters
         List<CategoryDAO> categories = categoryService.getAll();
@@ -331,8 +383,22 @@ public class StaffServlet extends HttpServlet {
         request.setAttribute("categories", categories);
         request.setAttribute("brands", brands);
         
+        request.setAttribute("pageTitle", "Quản lý sản phẩm");
+        
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/products.jsp");
         rd.forward(request, response);
+    }
+
+    private int parsePositiveInt(String value) {
+        if (value == null || value.isBlank()) {
+            return 0;
+        }
+        try {
+            int parsed = Integer.parseInt(value);
+            return Math.max(parsed, 0);
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
     }
 
     private void showProductAddForm(HttpServletRequest request, HttpServletResponse response, UserDAO currentUser)
@@ -399,6 +465,8 @@ public class StaffServlet extends HttpServlet {
         request.setAttribute("keyword", keyword);
         request.setAttribute("currentPage", page);
         
+        request.setAttribute("pageTitle", "Quản lý danh mục");
+        
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/categories.jsp");
         rd.forward(request, response);
     }
@@ -462,6 +530,8 @@ public class StaffServlet extends HttpServlet {
         request.setAttribute("brands", brandPage.getData());
         request.setAttribute("keyword", keyword);
         request.setAttribute("currentPage", page);
+        
+        request.setAttribute("pageTitle", "Quản lý thương hiệu");
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/staff/brands.jsp");
         rd.forward(request, response);
@@ -539,6 +609,7 @@ public class StaffServlet extends HttpServlet {
         request.setAttribute("orderPage", orderPage);
         request.setAttribute("orders", orderPage.getData());
         request.setAttribute("customerNames", customerNames);
+        request.setAttribute("pageTitle", "Quản lý đơn hàng");
         request.setAttribute("keyword", keyword);
         request.setAttribute("currentPage", page);
         

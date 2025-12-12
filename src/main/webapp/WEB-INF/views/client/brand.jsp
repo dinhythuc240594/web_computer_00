@@ -183,7 +183,7 @@
 
     <!-- brand-page-section -->
     <section class="shop-three pt_40 pb_80">
-        <div class="large-container">
+        <div class="large-container pt_45">
             <!-- Page Header -->
             <div class="page-header">
                 <h2><%= pageTitle %></h2>

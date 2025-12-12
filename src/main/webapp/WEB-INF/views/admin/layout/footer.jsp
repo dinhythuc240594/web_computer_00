@@ -8,7 +8,7 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                , làm bởi Nhóm 6
+                làm bởi Nhóm 6, HCMUTE
                 <!-- <a href="https://pixinvent.com" target="_blank" class="footer-link fw-medium">Pixinvent</a> -->
             </div>
             <!-- <div class="d-none d-lg-inline-block">

@@ -87,15 +87,16 @@
     <jsp:include page="fragments/home/shop-mixed.jsp" />
 
     <jsp:include page="fragments/home/brands.jsp" />
+    <jsp:include page="fragments/home/shop-mixed-laptop.jsp" />
 
-    <jsp:include page="fragments/home/shop-tabs.jsp" />
+<%--    <jsp:include page="fragments/home/shop-tabs.jsp" />--%>
 
 <%--    <jsp:include page="fragments/home/cta.jsp" />--%>
 
-<%--    <jsp:include page="fragments/home/shop-top-sold.jsp" />--%>
+<jsp:include page="fragments/home/shop-top-sold.jsp" />
 
 <%--    <jsp:include page="fragments/home/news.jsp" />--%>
-
+    <jsp:include page="/WEB-INF/views/client/fragments/home/banner-two.jsp"/>
     <!-- highlights-section -->
     <jsp:include page="../common/highlight-section.jsp" />
     <!-- highlights-section end -->

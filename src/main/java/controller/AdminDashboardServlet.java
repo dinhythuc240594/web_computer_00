@@ -302,6 +302,18 @@ public class AdminDashboardServlet extends HttpServlet {
 
         request.setAttribute("customerNames", customerNames);
         request.setAttribute("tab", tab);
+        
+        // Set pageTitle based on tab
+        String pageTitle;
+        switch (tab.toLowerCase()) {
+            case "orders" -> pageTitle = "Quản lý đơn hàng";
+            case "products" -> pageTitle = "Quản lý sản phẩm";
+            case "users" -> pageTitle = "Quản lý người dùng";
+            case "overview" -> pageTitle = "Tổng quan";
+            case "product-sales" -> pageTitle = "Thống kê sản phẩm";
+            default -> pageTitle = "Quản lý đơn hàng";
+        }
+        request.setAttribute("pageTitle", pageTitle);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/dashboard/index.jsp");
         rd.forward(request, response);

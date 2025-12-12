@@ -8,12 +8,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import model.BrandDAO;
 import model.CategoryDAO;
 import model.Page;
 import model.PageRequest;
 import model.ProductDAO;
+import service.BrandService;
 import service.CategoryService;
 import service.ProductService;
+import serviceimpl.BrandServiceImpl;
 import serviceimpl.CategoryServiceImpl;
 import serviceimpl.ProductServiceImpl;
 import utilities.DataSourceUtil;
@@ -45,6 +48,7 @@ public class CategoryServlet extends HttpServlet {
     private transient DataSource dataSource;
     private transient ProductService productService;
     private transient CategoryService categoryService;
+    private transient BrandService brandService;
 
     @Override
     public void init() throws ServletException {
@@ -52,25 +56,46 @@ public class CategoryServlet extends HttpServlet {
         this.dataSource = DataSourceUtil.getDataSource();
         this.productService = new ProductServiceImpl(dataSource);
         this.categoryService = new CategoryServiceImpl(dataSource);
+        this.brandService = new BrandServiceImpl(dataSource);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Load categories từ database
+        // Load categories và brands từ database
         List<CategoryDAO> categories = fetchCategories();
+        List<BrandDAO> brands = fetchBrands();
         request.setAttribute("categories", categories);
+        request.setAttribute("brands", brands);
 
         // Lấy tham số từ request
         String keyword = trimToNull(request.getParameter("keyword"));
         int categoryId = parsePositiveInt(request.getParameter("categoryId"));
+        int brandId = parsePositiveInt(request.getParameter("brandId"));
         int page = parsePositiveInt(request.getParameter("page"));
         if (page <= 0) {
             page = 1;
         }
+        
+        // Lấy tham số sắp xếp
+        String sortField = request.getParameter("sort");
+        String orderField = request.getParameter("order");
+        if (sortField == null || sortField.isBlank()) {
+            sortField = "created_at";
+        }
+        if (orderField == null || orderField.isBlank()) {
+            orderField = "DESC";
+        }
+        
+        // Validate sort field
+        sortField = sanitizeSortField(sortField);
+        orderField = sanitizeOrderField(orderField);
 
         // Đưa lại tham số ra view để giữ trạng thái form
         request.setAttribute("searchKeyword", keyword);
         request.setAttribute("selectedCategoryId", categoryId);
+        request.setAttribute("selectedBrandId", brandId);
+        request.setAttribute("selectedSort", sortField);
+        request.setAttribute("selectedOrder", orderField);
         request.setAttribute("currentPage", page);
 
         // Tạo PageRequest với phân trang
@@ -78,12 +103,12 @@ public class CategoryServlet extends HttpServlet {
         PageRequest pageRequest = new PageRequest(
                 page,
                 DEFAULT_PAGE_SIZE,
-                "created_at",
-                "DESC",
+                sortField,
+                orderField,
                 keyword != null ? keyword : "",
                 0,
                 categoryId > 0 ? categoryId : 0,  // Nếu categoryId = 0, không filter theo category
-                0  // Không filter theo brand trong CategoryServlet
+                brandId  // Filter theo brand
         );
 
         // Lấy kết quả với phân trang
@@ -238,6 +263,32 @@ public class CategoryServlet extends HttpServlet {
             LOGGER.log(Level.SEVERE, "Không thể tải danh mục", ex);
             return Collections.emptyList();
         }
+    }
+
+    private List<BrandDAO> fetchBrands() {
+        try {
+            return brandService.getAll();
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "Không thể tải thương hiệu", ex);
+            return Collections.emptyList();
+        }
+    }
+
+    private String sanitizeSortField(String sortField) {
+        if (sortField == null) {
+            return "created_at";
+        }
+        return switch (sortField) {
+            case "price", "name", "created_at", "stock_quantity" -> sortField;
+            default -> "created_at";
+        };
+    }
+
+    private String sanitizeOrderField(String orderField) {
+        if (orderField == null) {
+            return "DESC";
+        }
+        return "ASC".equalsIgnoreCase(orderField) ? "ASC" : "DESC";
     }
 
     private String trimToNull(String value) {

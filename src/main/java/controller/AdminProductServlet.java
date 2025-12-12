@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,8 +9,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
 
 /**
  * Servlet quản lý trang sản phẩm trong khu vực admin.
@@ -55,6 +55,9 @@ public class AdminProductServlet extends HttpServlet {
             case "edit" -> view = "/WEB-INF/views/admin/product/add.jsp";
             default -> view = "/WEB-INF/views/admin/product/list.jsp";
         }
+        
+        // Set pageTitle for product management
+        request.setAttribute("pageTitle", "Quản lý sản phẩm");
 
         RequestDispatcher rd = request.getRequestDispatcher(view);
         rd.forward(request, response);

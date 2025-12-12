@@ -75,6 +75,9 @@ public class AdminNewsletterServlet extends HttpServlet {
         }
 
         String view = "/WEB-INF/views/admin/newsletter/list.jsp";
+        
+        // Set pageTitle for newsletter management
+        request.setAttribute("pageTitle", "Quản lý Newsletter");
 
         switch (action) {
             case "list":
