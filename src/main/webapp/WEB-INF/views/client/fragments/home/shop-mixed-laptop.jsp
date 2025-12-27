@@ -83,9 +83,9 @@
                                 if (productImage == null || productImage.isBlank()) {
                                     productImage = fallbackImage;
                                 }
-                                if (!productImage.startsWith("http")) {
-                                    productImage = productImage.startsWith("/") ? contextPath + productImage : productImage;
-                                }
+//                                if (!productImage.startsWith("http")) {
+//                                    productImage = productImage.startsWith("/") ? contextPath + productImage : productImage;
+//                                }
 
                                 String productLink = product.getSlug() != null && !product.getSlug().isBlank()
                                         ? contextPath + "/product?slug=" + product.getSlug()

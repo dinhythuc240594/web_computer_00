@@ -19,12 +19,13 @@
                             String imagePath = news.getImagePath();
                             if (imagePath == null || imagePath.isBlank()) {
                                 imagePath = contextPath + "/assets/client/images/news/news-1.jpg";
-                            } else if (!imagePath.startsWith("http")) {
-                                if (!imagePath.startsWith("/")) {
-                                    imagePath = "/" + imagePath;
-                                }
-                                imagePath = contextPath + imagePath;
                             }
+//                            else if (!imagePath.startsWith("http")) {
+//                                if (!imagePath.startsWith("/")) {
+//                                    imagePath = "/" + imagePath;
+//                                }
+//                                imagePath = contextPath + imagePath;
+//                            }
 
                             String newsLink = news.getLink() != null && !news.getLink().isBlank()
                                     ? (news.getLink().startsWith("http") ? news.getLink() : contextPath + news.getLink())

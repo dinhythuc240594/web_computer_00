@@ -155,13 +155,12 @@
                                     <div class="image-box" style="position: relative;">
                                         <%
                                             String imageUrl = (product != null && product.getImage() != null && !product.getImage().isBlank())
-                                                    ? product.getImage()
-                                                    : contextPath + "/assets/client/images/shop/shop-details-1.png";
-                                            if (!imageUrl.startsWith("http") && !imageUrl.startsWith("/")) {
-                                                imageUrl = contextPath + "/" + imageUrl;
-                                            } else if (!imageUrl.startsWith("http") && imageUrl.startsWith("/") && !imageUrl.startsWith(contextPath)) {
-                                                imageUrl = contextPath + imageUrl;
-                                            }
+                                                    ? product.getImage() : contextPath + "/assets/client/images/shop/shop-details-1.png";
+//                                            if (!imageUrl.startsWith("http") && !imageUrl.startsWith("/")) {
+//                                                imageUrl = contextPath + "/" + imageUrl;
+//                                            } else if (!imageUrl.startsWith("http") && imageUrl.startsWith("/") && !imageUrl.startsWith(contextPath)) {
+//                                                imageUrl = contextPath + imageUrl;
+//                                            }
                                         %>
                                         <% if (product != null && product.isNewProduct()) { %>
                                         <span style="position: absolute; top: 15px; right: 15px; background: #28a745; color: white; padding: 8px 15px; border-radius: 5px; font-weight: bold; z-index: 10; font-size: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
